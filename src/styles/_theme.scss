@@ -1,0 +1,108 @@
+.search-wrapper {
+  position: relative;
+  margin-bottom: pxToVW(24);
+
+  .input__box input.input-change {
+    width: 100%;
+    height: pxToVW(64);
+    border: pxToVW(1) solid $color-notice-border;
+    background: $color-light2;
+    padding: 0 pxToVW(47) 0 pxToVW(37);
+    font-size: pxToVW(17);
+    font-weight: $medium;
+    color: $color-notice-title;
+
+    &::-webkit-input-placeholder {
+      letter-spacing: pxToVW(-0.29);
+      opacity: 0.3;
+      font-size: pxToVW(17);
+      font-weight: $medium;
+      text-align: left;
+      color: $color-input;
+    }
+
+    &::placeholder {
+      letter-spacing: pxToVW(-0.29);
+      opacity: 0.3;
+      font-size: pxToVW(17);
+      font-weight: $medium;
+      text-align: left;
+      color: $color-input;
+    }
+
+    &::-moz-placeholder {
+      letter-spacing: pxToVW(-0.29);
+      opacity: 0.3;
+      font-size: pxToVW(17);
+      font-weight: $medium;
+      text-align: left;
+      color: $color-input;
+    }
+
+    &:-ms-input-placeholder {
+      letter-spacing: pxToVW(-0.29);
+      opacity: 0.3;
+      font-size: pxToVW(17);
+      font-weight: $medium;
+      text-align: left;
+      color: $color-input;
+    }
+  }
+
+  &.pl-wrapper{
+    .input__box input.input-change{
+      padding-left: pxToVW(15);
+    }
+  }
+
+  .search-delete,
+  .back-btn {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    right: pxToRem(19);
+  }
+
+  .search-delete {
+    padding: pxToVW(10);
+    right: pxToRem(10);
+
+    img {
+      width: pxToVW(15);
+      height: pxToVW(15);
+    }
+  }
+
+  .back-btn {
+    left: pxToVW(15);
+    right: auto;
+    width: pxToVW(25);
+    
+    img {
+      width: pxToVW(15);
+    }
+  }
+}
+
+[role='button'] {
+  &:focus {
+    outline: none;
+  }
+}
+
+.input__box .css-1wa3eu0-placeholder {
+  color: $color-placeholder;
+  font-size: pxToVW(16);
+}
+
+a,
+button {
+  outline: none;
+
+  &:focus {
+    border: 0;
+    box-shadow: none;
+  }
+}

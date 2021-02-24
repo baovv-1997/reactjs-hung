@@ -1,0 +1,13 @@
+.error-msg {
+  font-size: pxToVW(13);
+  font-weight: $medium;
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-align: left;
+  color: $color-number-point;
+  margin-top: pxToVW(-5);
+  padding-bottom: pxToVW(5);
+}
+.pt-7{
+  padding-top: pxToVW(50);
+}
