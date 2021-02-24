@@ -3,8 +3,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 // Import Swiper styles
-import 'swiper/swiper.scss';
-import 'swiper/components/pagination/pagination.scss';
+// import 'swiper/swiper.scss';
+// import 'swiper/components/pagination/pagination.scss';
 import './App.scss';
 import { Provider } from 'react-redux';
 // import Router from "routers";
