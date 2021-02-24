@@ -10,7 +10,7 @@ type Props = {
   type?: string,
 };
 
-const Button = ({
+export const Button = ({
   isDisabled = false,
   onClick,
   customClass = '',
