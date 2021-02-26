@@ -1,0 +1,12 @@
+.checkbox {
+  appearance: auto;
+  box-sizing: border-box;
+  margin: 3px 3px 3px 4px;
+  padding: initial;
+}
+
+input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  zoom: 1.25;
+}
