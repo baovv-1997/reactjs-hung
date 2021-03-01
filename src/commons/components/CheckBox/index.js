@@ -3,10 +3,10 @@ import React, { memo, useState } from 'react';
 
 type Props = {
   id?: any,
-  name?: String,
-  label?: String,
+  name?: string,
+  label?: string,
   disabled?: boolean,
-  customClass?: String,
+  customClass?: string,
 };
 
 const CheckBox = ({ id, name, label, disabled, customClass }: Props) => {
