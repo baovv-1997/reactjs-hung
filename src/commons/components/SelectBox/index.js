@@ -17,7 +17,7 @@ const SelectBox = ({ options, label }: Props) => {
       <label htmlFor={label}>{label}</label>
       <select
         className="form-control"
-        onChange={handleSelectChange}
+        onChange={(e) => handleSelectChange(e)}
         value={defaultvalue}
       >
         {options.length ? (
