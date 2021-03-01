@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { memo } from 'react';
 
 type Props = {
   children?: any,
@@ -34,4 +34,4 @@ CheckBoxGroup.defaultProps = {
   legend: '',
 };
 
-export default CheckBoxGroup;
+export default memo<Props>(CheckBoxGroup);
