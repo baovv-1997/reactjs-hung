@@ -33,9 +33,13 @@
 // css layout
 @import 'layout/MainLayout/styles';
 
+// css component Checkbox
+@import './commons/components/CheckBox/style';
+
+// css component GroupCheckbox
+@import './commons/components/CheckBoxGroup/style';
 
 // css header
 // @import './commons/components/Header/styles';
 
 // @import './commons/components/Footer/styles';
-
