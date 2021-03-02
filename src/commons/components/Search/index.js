@@ -4,9 +4,10 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 type Props = {
   placeholder?: String,
+  onClick: Function,
 };
 
-const Search = ({ placeholder }: Props) => {
+const Search = ({ placeholder, onClick }: Props) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleInputChange = (e) => {
@@ -22,7 +23,10 @@ const Search = ({ placeholder }: Props) => {
         value={searchValue}
         onChange={(e) => handleInputChange(e)}
       />
-      <AiOutlineSearch className="search__icon" />
+      <AiOutlineSearch
+        className="search__icon"
+        onClick={() => onClick(searchValue)}
+      />
     </div>
   );
 };
