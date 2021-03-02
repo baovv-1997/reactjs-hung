@@ -1,0 +1,247 @@
+.input__box {
+  text-align: left;
+
+  .css-1pahdxg-control {
+    min-height: auto;
+    max-height: initial;
+    box-shadow: none;
+    border-color: transparent;
+    background-color: transparent;
+
+    * {
+      background-color: transparent;
+    }
+  }
+}
+
+.react-datepicker__header__dropdown {
+  display: flex;
+  justify-content: center;
+}
+
+.react-datepicker__month-select {
+  padding: pxToRem(5);
+}
+
+.react-datepicker__year-select {
+  padding: pxToRem(5);
+}
+
+.customer-select {
+  line-height: pxToRem(30);
+
+  * {
+    cursor: pointer;
+  }
+
+  .error-msg {
+    margin-top: pxToRem(5);
+    margin-bottom: pxToRem(5);
+    line-height: pxToRem(16);
+  }
+
+  .input__label {
+    font-size: 3.88889vw;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 2.77778vw;
+    display: flex;
+  }
+
+  .css-1uccc91-singleValue {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: pxToRem(30);
+    padding-right: pxToRem(30);
+    padding-left: 0 !important;
+    font-weight: $black;
+    font-family: $NanumSquare-Font;
+    font-size: pxToRem(14);
+    position: absolute;
+  }
+
+  .css-yk16xz-control {
+    min-height: pxToRem(40);
+    max-height: pxToRem(40);
+    border: pxToRem(1) solid $color-light8;
+    background-color: transparent;
+
+    .css-g1d714-ValueContainer,
+    .css-1uccc91-singleValue {
+      padding-left: pxToRem(10);
+    }
+  }
+
+  .input__box {
+    position: relative;
+    background: transparent;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      background-image: url('../../../assets/images/icon_arrowBB.svg');
+      background-repeat: no-repeat;
+      width: pxToRem(12);
+      height: pxToRem(7);
+      top: 50%;
+      @include transform-translateY(-50%);
+      right: pxToRem(15);
+      left: auto;
+      background-size: cover;
+      background-size: pxToRem(12);
+      @include transition(0.3s)
+    }
+
+    &.down {
+      &::before {
+        @include rotate(180deg);
+        top: calc(50% - #{pxToRem(4)});
+      }
+    }
+
+    input {
+      font-size: pxToRem(14);
+      color: $black-light-2;
+      font-weight: $black;
+
+      &::-webkit-input-placeholder {
+        color: $color-placeholder;
+        font-weight: $light;
+        font-size: pxToRem(14);
+        line-height: pxToRem(20);
+        letter-spacing: pxToRem(-0.28);
+      }
+
+      &::placeholder {
+        color: $color-placeholder;
+        font-weight: $light;
+        font-size: pxToRem(14);
+        line-height: pxToRem(20);
+        letter-spacing: pxToRem(-0.28);
+      }
+
+      &::-moz-placeholder {
+        color: $color-placeholder;
+        font-weight: $light;
+        font-size: pxToRem(14);
+        line-height: pxToRem(20);
+        letter-spacing: pxToRem(-0.28);
+      }
+
+      &:-ms-input-placeholder {
+        color: $color-placeholder;
+        font-weight: $light;
+        font-size: pxToRem(14);
+        line-height: pxToRem(20);
+        letter-spacing: pxToRem(-0.28);
+      }
+    }
+
+    .css-1hb7zxy-IndicatorsContainer {
+      display: none;
+    }
+
+    .icon__wrapper {
+      position: absolute;
+      top: 50%;
+      right: pxToRem(15);
+      z-index: -1;
+      @include transform-translateY(-50%);
+
+      .icon {
+        width: pxToRem(13);
+        height: pxToRem(13);
+      }
+    }
+  }
+
+  .css-1uccc91-singleValue {
+    top: 50%;
+    @include transform-translateY(-50%);
+  }
+
+  .css-1okebmr-indicatorSeparator {
+    display: none;
+  }
+
+  .css-1pahdxg-control {
+    min-height: pxToRem(40);
+    max-height: pxToRem(40);
+    box-shadow: none;
+    border-color: $color-light8;
+
+    .css-g1d714-ValueContainer,
+    .css-1uccc91-singleValue {
+      padding-left: pxToRem(10);
+      min-height: pxToRem(40);
+      max-height: pxToRem(40);
+    }
+  }
+
+  .css-tlfecz-indicatorContainer {
+    padding: pxToRem(7) pxToRem(8);
+  }
+
+  .css-26l3qy-menu {
+    z-index: 10;
+    margin-bottom: pxToRem(60);
+  }
+}
+
+.css-4ljt47-MenuList {
+  padding: 0 !important;
+}
+
+.css-9gakcf-option {
+  background-color: $athens-gray-2 !important;
+  color: $black-light-2 !important;
+  border-top: pxToRem(1) solid $color-light8;
+  border-bottom: pxToRem(1) solid $color-light8;
+  font-weight: $medium;
+  padding: pxToRem(8) pxToRem(17) !important;
+  letter-spacing: pxToRem(-0.33);
+
+  &:nth-child(1) {
+    border-top: 0;
+  }
+}
+
+.css-9gakcf-option:active {
+  background-color: $athens-gray-2;
+}
+
+.css-g1d714-ValueContainer {
+  min-height: pxToRem(40);
+  max-height: pxToRem(40);
+  overflow: visible i !important;
+}
+
+.css-yt9ioa-option,
+.css-1n7v3ny-option {
+  padding: pxToRem(8) pxToRem(17) !important;
+  letter-spacing: pxToRem(-0.33);
+}
+
+.css-1n7v3ny-option {
+  background-color: transparent !important;
+}
+
+.css-4ljt47-MenuList {
+  max-height: pxToRem(220) !important;
+}
+
+.css-1wa3eu0-placeholder {
+  color: $color-placeholder !important;
+  font-weight: normal;
+  font-size: pxToRem(14);
+  line-height: pxToRem(20);
+  letter-spacing: pxToRem(-0.38);
+
+  @media not all and (min-resolution:.001dpcm) {
+    @supports (-webkit-appearance:none) {
+      padding-left: pxToRem(5);
+    }
+  }
+}
