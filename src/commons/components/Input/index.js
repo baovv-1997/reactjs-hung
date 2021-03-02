@@ -1,7 +1,7 @@
 // @flow
 
 import React, { memo } from 'react';
-import IMAGES from 'commons/components/Radio/node_modules/themes/images';
+import IMAGES from 'themes/images';
 
 type Props = {
   placeholder?: string,
@@ -37,7 +37,7 @@ type Props = {
   autoFocus?: boolean,
 };
 
-const Input = ({
+export const Input = ({
   placeholder = '',
   value = '',
   errorMsg = '',
