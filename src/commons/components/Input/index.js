@@ -1,7 +1,7 @@
 // @flow
 
 import React, { memo } from 'react';
-import IMAGES from 'themes/images';
+import IMAGES from 'commons/components/Radio/node_modules/themes/images';
 
 type Props = {
   placeholder?: string,
