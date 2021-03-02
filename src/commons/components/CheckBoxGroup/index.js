@@ -2,7 +2,7 @@
 import React, { memo } from 'react';
 
 type Props = {
-  children?: any,
+  children: any,
   legend?: String,
 };
 
@@ -30,7 +30,6 @@ const CheckBoxGroup = ({ children, legend }: Props) => {
 };
 
 CheckBoxGroup.defaultProps = {
-  children: null,
   legend: '',
 };
 
