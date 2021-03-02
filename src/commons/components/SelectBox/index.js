@@ -2,12 +2,12 @@
 import React, { memo, useState } from 'react';
 
 type Props = {
-  options?: Array,
+  options: Array<{ key: number, value: string }>,
   label?: String,
 };
 
 const SelectBox = ({ options, label }: Props) => {
-  const [defaultvalue, setDefaultValue] = useState(options[0]);
+  const [defaultvalue, setDefaultValue] = useState(options && options[0]);
 
   const handleSelectChange = (e) => {
     setDefaultValue(e.target.value);
@@ -20,10 +20,10 @@ const SelectBox = ({ options, label }: Props) => {
         onChange={(e) => handleSelectChange(e)}
         value={defaultvalue}
       >
-        {options.length ? (
+        {options && options.length ? (
           options.map((option) => {
             return (
-              <option value={option} key={option}>
+              <option value={option.value} key={option.key}>
                 {option}
               </option>
             );
@@ -37,7 +37,6 @@ const SelectBox = ({ options, label }: Props) => {
 };
 
 SelectBox.defaultProps = {
-  options: [],
   label: '',
 };
 

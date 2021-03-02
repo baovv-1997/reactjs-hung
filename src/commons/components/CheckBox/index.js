@@ -1,5 +1,5 @@
 // @flow
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 
 type Props = {
   id?: any,
@@ -7,14 +7,19 @@ type Props = {
   label?: string,
   disabled?: boolean,
   customClass?: string,
+  handleToggleCheckbox: Function,
+  isChecked?: boolean,
 };
 
-const CheckBox = ({ id, name, label, disabled, customClass }: Props) => {
-  const [isChecked, setIsChecked] = useState(true);
-
-  const toggleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
+export const CheckBox = ({
+  id,
+  name,
+  label,
+  disabled,
+  customClass = '',
+  handleToggleCheckbox,
+  isChecked = false,
+}: Props) => {
   return (
     <>
       <input
@@ -25,7 +30,7 @@ const CheckBox = ({ id, name, label, disabled, customClass }: Props) => {
         value={label}
         checked={isChecked}
         disabled={disabled}
-        onChange={toggleCheckboxChange}
+        onChange={handleToggleCheckbox}
       />
       <label htmlFor={label} label={label}>
         {label}
@@ -40,6 +45,7 @@ CheckBox.defaultProps = {
   label: '',
   disabled: false,
   customClass: '',
+  isChecked: false,
 };
 
 export default memo<Props>(CheckBox);
