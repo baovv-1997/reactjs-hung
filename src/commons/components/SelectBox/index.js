@@ -24,7 +24,7 @@ const SelectBox = ({ options, label }: Props) => {
           options.map((option) => {
             return (
               <option value={option.value} key={option.key}>
-                {option}
+                {option.value}
               </option>
             );
           })
