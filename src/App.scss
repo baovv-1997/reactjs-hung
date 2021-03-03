@@ -37,7 +37,13 @@
 @import './commons/components/CheckBox/style';
 
 // css component GroupCheckbox
-@import './commons/components/CheckBoxGroup/style';
+@import './commons/components/MultipleCheckbox/style';
+
+// css component select box
+@import './commons/components/SelectBox/style';
+
+// css component Search
+@import './commons/components/Search/style';
 
 // css component select box
 @import './commons/components/SelectBox/style';
@@ -49,3 +55,10 @@
 // @import './commons/components/Header/styles';
 
 // @import './commons/components/Footer/styles';
+
+
+// css component Select
+@import './commons/components/Select/styles';
+
+// css component Radio
+@import './commons/components/Radio/styles';
