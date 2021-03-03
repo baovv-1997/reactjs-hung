@@ -12,15 +12,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 0 pxToVW(30);
+    padding: 0;
     margin: 0;
-    max-width: pxToVW(500);
+    max-width: pxToRem(500);
   }
 }
 
 .modal-backdrop {
   &.show {
-    opacity: 0.4;
+    opacity: 0.6;
   }
 }
 
@@ -34,22 +34,22 @@
   color: $popup-txt;
   padding: 0;
   border: none;
-  @include radius(#{pxToVW(39)});
+  border-radius: pxToRem(10);
 
   &__iconClose {
     position: absolute;
-    right: pxToVW(30);
-    top: pxToVW(20);
-    width: pxToVW(20);
-    height: pxToVW(18);
+    right: pxToRem(30);
+    top: pxToRem(30);
+    width: pxToRem(20);
+    height: pxToRem(20);
 
     &:focus {
       outline: none;
     }
 
     img {
-      width: pxToVW(19);
-      height: pxToVW(19);
+      width: pxToRem(20);
+      height: pxToRem(20);
 
       &:focus {
         outline: none;
@@ -58,78 +58,86 @@
   }
 
   .modal-title {
+    height: pxToRem(80);
+    padding: pxToRem(18) pxToRem(30) pxToRem(17) pxToRem(30);
+    background-color: $bg-button;
     width: 100%;
-    @include fontSize(#{pxToVW(20)}, $bold);
-    line-height: pxToVW(29);
-    letter-spacing: pxToVW(-0.71);
-    letter-spacing: pxToVW(-0.63);
-    color: $popup-title;
-    padding: pxToVW(44) pxToVW(0) pxToVW(14);
+    border-top-left-radius: pxToRem(10);
+    border-top-right-radius: pxToRem(10);
+    font-size: pxToRem(30);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: pxToRem(0.6);
+    color: $white;
   }
 
   .modal-body {
     width: 100%;
     white-space: pre-line;
-    padding: 0 pxToVW(50);
+    padding: 0 pxToRem(30);
     margin: 0;
 
     &__has-header {
-      padding: 0 0 pxToVW(31);
-      font-size: pxToVW(13);
-      line-height: pxToVW(18);
+      padding: pxToRem(50) 0;
+      font-size: pxToRem(20);
       color: $popup-txt;
+      font-weight: normal;
+      line-height: 1.45;
+      letter-spacing: normal;
+      text-align: center;
+      color: rgba($color-black, 0.8);
     }
 
     &__no-header {
-      padding: pxToVW(44) 0;
-      font-size: pxToVW(13);
+      padding: pxToRem(44) 0;
+      font-size: pxToRem(13);
     }
 
     .content {
-      @include fontSize(#{pxToVW(13)}, $regular);
-      line-height: pxToVW(18);
-      letter-spacing: pxToVW(-0.46);
+      @include fontSize(#{pxToRem(13)}, $regular);
+      line-height: pxToRem(18);
+      letter-spacing: pxToRem(-0.46);
       text-align: center;
 
       &--login-success {
         img {
-          margin-bottom: pxToVW(20);
-          width: pxToVW(280);
-          height: pxToVW(149);
+          margin-bottom: pxToRem(20);
+          width: pxToRem(280);
+          height: pxToRem(149);
         }
 
         p {
-          @include fontSize(#{pxToVW(20)}, $bold);
-          line-height: pxToVW(27);
-          letter-spacing: pxToVW(-0.71);
+          @include fontSize(#{pxToRem(20)}, $bold);
+          line-height: pxToRem(27);
+          letter-spacing: pxToRem(-0.71);
           color: $popup-title;
           margin: 0;
 
           &.text-welcome {
             width: 100%;
-            padding-bottom: pxToVW(14);
+            padding-bottom: pxToRem(14);
           }
 
           &.pointSuccess {
-            width: pxToVW(190);
+            width: pxToRem(190);
           }
         }
 
         h2 {
-          font-size: pxToVW(25);
-          line-height: pxToVW(27);
+          font-size: pxToRem(25);
+          line-height: pxToRem(27);
           color: $btn-bg;
           font-weight: $bold;
         }
 
         h3 {
-          @include fontSize(#{pxToVW(13)}, $regular);
-          line-height: pxToVW(18);
-          letter-spacing: pxToVW(-0.46);
+          @include fontSize(#{pxToRem(13)}, $regular);
+          line-height: pxToRem(18);
+          letter-spacing: pxToRem(-0.46);
           color: $popup-txt;
 
           &.text-middle {
-            padding-bottom: pxToVW(15);
+            padding-bottom: pxToRem(15);
           }
         }
       }
@@ -142,24 +150,34 @@
     justify-content: center;
     background-color: $white;
     border: none;
-    padding: pxToVW(21) pxToVW(46) pxToVW(19);
-    border-top: 1px solid $popup-border;
-    border-bottom-right-radius: pxToVW(39);
-    border-bottom-left-radius: pxToVW(39);
+    padding-bottom: pxToRem(30);
+    border-top: 0;
+    padding-top: 0;
+    border-bottom-right-radius: pxToRem(10);
+    border-bottom-left-radius: pxToRem(10);
     position: relative;
     z-index: 999;
-    .group-button{
+
+    .group-button {
       display: flex;
       justify-content: space-between;
       width: 100%;
     }
+
     .button {
-      height: auto;
-      @include fontSize(#{pxToVW(15)}, $bold);
-      line-height: 1.4;
-      color: $popup-btn1;
       padding: 0;
-      background-color: transparent;
+      min-width: pxToRem(300);
+      height: pxToRem(60);
+      padding: pxToRem(12);
+      border-radius: pxToRem(10);
+      background-color: $bg-button;
+
+      font-size: pxToRem(24);
+      font-weight: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      text-align: center;
+      color: $white;
 
       &.clr-gray {
         color: $popup-btn2;
@@ -172,20 +190,6 @@
   }
 }
 
-.modal-welcome {
-  .modal-content {
-    .modal-body {
-      padding: 0 pxToVW(34);
-
-      &__no-header {
-        padding: pxToVW(20) 0 pxToVW(30) 0;
-      }
-    }
-    .modal-footer{
-      padding: pxToVW(21) 0 pxToVW(19);
-    }
-  }
-}
-.modal-footer>*{
+.modal-footer>* {
   margin: 0;
 }

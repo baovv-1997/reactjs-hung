@@ -5,19 +5,25 @@ import React, { memo } from 'react';
 import CardItem from './CardItem';
 
 type Props = {
+  isLogoTop?: boolean,
   title?: string,
   listItem?: Array,
   listCompany?: Array,
   logoClick: Function,
   titleClick: Function,
+  customClass?: string,
+  isCardCompany?: boolean,
 };
 
 export const Card = ({
+  isLogoTop = false,
   title = '',
   listItem = [],
   listCompany = [],
   logoClick,
   titleClick,
+  customClass = '',
+  isCardCompany = false,
 }: Props) => {
   // loop listItem and return to card
   const cardItem = listItem.map((item) => {
@@ -55,7 +61,7 @@ export const Card = ({
           />
         );
 
-      default:
+      case 'power':
         return (
           <CardItem
             key={item.title}
@@ -65,12 +71,31 @@ export const Card = ({
             progress={item.progress}
           />
         );
+
+      default:
+        return (
+          <CardItem
+            key={item.title}
+            customClass=""
+            specifications={item.specifications}
+            progress={item.progress}
+          />
+        );
     }
   });
 
   return (
     <div className="card">
-      <div className="card__header">
+      {isLogoTop && (
+        <div className="card__company card__company--top">
+          <img
+            src={listCompany.logo}
+            alt="logocompany"
+            className="card__company__item"
+          />
+        </div>
+      )}
+      <div className={`card__header ${customClass}`}>
         <p className="card__title" onClick={titleClick} role="presentation">
           {title}
         </p>
@@ -80,19 +105,21 @@ export const Card = ({
         {/* list item in card */}
         <div className="card__list">{cardItem}</div>
 
-        <div className="card__company">
-          {/* list company in card */}
-          {listCompany.map((item) => (
-            <img
-              key={item.id}
-              src={item.logo}
-              alt="logocompany"
-              className="card__company__item"
-              onClick={logoClick}
-              role="presentation"
-            />
-          ))}
-        </div>
+        {!isLogoTop && (
+          <div className="card__company">
+            {/* list company in card */}
+            {listCompany.map((item) => (
+              <img
+                key={item.id}
+                src={item.logo}
+                alt="logocompany"
+                className="card__company__item"
+                onClick={logoClick}
+                role="presentation"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -102,6 +129,9 @@ Card.defaultProps = {
   title: '',
   listItem: [],
   listCompany: [],
+  isLogoTop: false,
+  customClass: '',
+  isCardCompany: false,
 };
 
 export default memo<Props>(Card);

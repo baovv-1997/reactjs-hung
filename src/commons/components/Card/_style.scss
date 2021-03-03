@@ -3,7 +3,9 @@
   background-color: $white;
   border-radius: pxToRem(15);
   box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $box-shadow-card;
-
+  .title-middle {
+    border-radius: unset;
+  }
   &__header {
     background-color: $bg-card-header;
     padding: pxToRem(10) pxToRem(30);
@@ -34,9 +36,8 @@
   }
 
   &__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     margin-bottom: pxToRem(7);
     &__name {
       color: $text-card;
@@ -44,7 +45,6 @@
       line-height: pxToRem(22);
       font-weight: $medium;
       letter-spacing: pxToRem(-0.45);
-      width: pxToRem(70);
     }
 
     &__number {
@@ -54,7 +54,6 @@
       letter-spacing: pxToRem(-0.6);
       text-align: right;
       color: $color-number-card;
-      width: pxToRem(50);
     }
   }
 
@@ -92,6 +91,9 @@
       margin: 0 pxToRem(10);
       object-fit: contain;
       cursor: pointer;
+    }
+    &--top {
+      margin: pxToRem(9) 0;
     }
   }
 }

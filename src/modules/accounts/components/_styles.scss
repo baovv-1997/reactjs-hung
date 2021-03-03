@@ -1,0 +1,116 @@
+.page-login {
+  height: 100vh;
+  position: relative;
+  background-image: url("../../../assets/images/bg-login.jpg");
+  background-size: cover;
+  background-position: pxToRem(-4) pxToRem(-140);
+
+  &::after {
+    content: '';
+    background-color: rgba($bg-button, 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .sign-up {
+    width: pxToRem(600);
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    left: 50%;
+    @include transform-translate(-50%, -50%);
+
+    .login-name {
+      font-size: pxToRem(100);
+      font-weight: $black;
+      line-height: 1.45;
+      letter-spacing: normal;
+      text-align: center;
+      color: $white;
+    }
+
+    .from-login {
+      margin-top: pxToRem(20);
+      height: pxToRem(450);
+      width: pxToRem(600);
+      padding: pxToRem(50) pxToRem(50) pxToRem(48);
+      border-radius: pxToRem(15);
+      background-color: $bg-button;
+
+      .input__box {
+        margin-bottom: pxToRem(15);
+
+        input {
+          padding: pxToRem(11) pxToRem(15);
+          border-radius: pxToRem(10);
+          background-color: rgba($white, 0.78);
+
+          &::-webkit-input-placeholder {
+            color: $color-black;
+          }
+
+          &::placeholder {
+            color: $color-black;
+          }
+
+          &::-moz-placeholder {
+            color: $color-black;
+          }
+
+          &:-ms-input-placeholder {
+            color: $color-black;
+          }
+        }
+      }
+
+      .login-title {
+        font-size: pxToRem(30);
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: pxToRem(0.6);
+        text-align: center;
+        color: $white;
+        margin-bottom: pxToRem(40);
+      }
+
+      .btn-wrapper {
+        margin-top: pxToRem(30);
+        margin-bottom: pxToRem(40);
+
+        button {
+          width: 100%;
+        }
+      }
+
+      .register-wrapper {
+        text-align: center;
+
+        .name {
+          display: inline-block;
+          font-size: pxToRem(20);
+          font-weight: 300;
+          line-height: 1.45;
+          letter-spacing: normal;
+          color: rgba($white, 0.9);
+          position: relative;
+          cursor: pointer;
+
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            bottom: pxToRem(2);
+            border-bottom: pxToRem(1) solid rgba($white, 0.9);
+          }
+        }
+      }
+    }
+  }
+}

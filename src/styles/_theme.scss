@@ -1,3 +1,12 @@
+body,
+html {
+  // min-width: pxToRem(1700);
+
+  * {
+    outline: none;
+  }
+}
+
 .search-wrapper {
   position: relative;
   margin-bottom: pxToVW(24);
@@ -49,8 +58,8 @@
     }
   }
 
-  &.pl-wrapper{
-    .input__box input.input-change{
+  &.pl-wrapper {
+    .input__box input.input-change {
       padding-left: pxToVW(15);
     }
   }
@@ -79,7 +88,7 @@
     left: pxToVW(15);
     right: auto;
     width: pxToVW(25);
-    
+
     img {
       width: pxToVW(15);
     }
@@ -105,4 +114,9 @@ button {
     border: 0;
     box-shadow: none;
   }
+}
+
+.selection_bubble_root,
+.selection_img_search {
+  display: none
 }

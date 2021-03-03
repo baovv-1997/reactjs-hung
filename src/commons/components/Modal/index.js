@@ -4,7 +4,7 @@
 import React, { memo } from 'react';
 import { Modal } from 'react-bootstrap';
 import Button from 'commons/components/Button';
-import images from 'commons/components/Radio/node_modules/themes/images';
+import images from 'themes/images';
 
 type Props = {
   title?: string,

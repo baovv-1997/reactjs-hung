@@ -31,3 +31,18 @@ storiesOf('Card', module).add('Default', () => {
     />
   );
 });
+
+storiesOf('Card', module).add('logoTop', () => {
+  const { title, listItem, listCompany } = cardData;
+  return (
+    <Card
+      title={title}
+      listItem={listItem}
+      listCompany={listCompany[0]}
+      logoClick={action('on-logo-click')}
+      titleClick={action('on-title-click')}
+      isLogoTop
+      customClass="title-middle"
+    />
+  );
+});
