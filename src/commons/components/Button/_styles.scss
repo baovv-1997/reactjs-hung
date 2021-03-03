@@ -1,13 +1,19 @@
 .button {
   border: 0 solid;
-  background-color: $btn-bg;
-  font-size: pxToVW(14);
-  line-height: pxToVW(20);
+  background-color: $bg-button;
+  font-size: pxToRem(24);
   color: $white;
-  padding: pxToVW(4) pxToVW(10);
+  padding: pxToRem(4) pxToRem(15);
   margin: 0;
-  height: pxToVW(40);
+  height: pxToRem(60);
   font-weight: $bold;
+  min-width: pxToRem(100);
+  border-radius: pxToRem(10);
+  line-height: 1.5;
+
+  &.bg-primary {
+    background-color: $bg-button-primary;
+  }
 
   &:focus {
     outline: none;
@@ -28,29 +34,29 @@
   }
 
   &--mw-100 {
-    width: pxToVW(100);
+    width: pxToRem(100);
   }
 
   &--w-100 {
-    width: calc(100% - #{pxToVW(100)});
+    width: calc(100% - #{pxToRem(100)});
   }
 
   &__icon {
-    height: pxToVW(25);
-    border-radius: pxToVW(3);
-    padding-right: pxToVW(15);
+    height: pxToRem(25);
+    border-radius: pxToRem(3);
+    padding-right: pxToRem(15);
 
     &:after {
       content: "";
       border: solid $white;
-      border-width: 0 pxToVW(0.5) pxToVW(0.5) 0;
+      border-width: 0 pxToRem(0.5) pxToRem(0.5) 0;
       display: inline-block;
-      padding: pxToVW(2);
+      padding: pxToRem(2);
       transform: rotate(-45deg);
       -webkit-transform: rotate(-45deg);
       position: relative;
-      top: pxToVW(-4);
-      right: pxToVW(-5);
+      top: pxToRem(-4);
+      right: pxToRem(-5);
     }
   }
 
