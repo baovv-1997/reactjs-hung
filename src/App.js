@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 // import 'swiper/components/pagination/pagination.scss';
 import './App.scss';
 import { Provider } from 'react-redux';
-// import Router from "routers";
+import Router from 'routers/index';
 
 import createStore from './stores/createStore';
 
@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <PersistGate loading={null} persistor={persistor}>
         <Provider store={store}>
-          <h1>main page</h1>
+          <Router />
         </Provider>
       </PersistGate>
     </div>
