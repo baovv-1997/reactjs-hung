@@ -4,11 +4,9 @@ $viewPort: 360;
 
 // font weight
 
-$Noto-Sans-Font: 'Noto Sans KR',
-'sans-serif';
+$Noto-Sans-Font: 'Noto Sans KR', 'sans-serif';
 $NanumSquare-Font: 'NanumSquare';
-$Roboto-Font: 'Roboto',
-'sans-serif';
+$Roboto-Font: 'Roboto', 'sans-serif';
 $thin: 100;
 $extraLight: 200;
 $light: 300;
@@ -136,3 +134,16 @@ $gray-light: #d7d8df;
 $black-transparent: #0000003d;
 $black-light: #222222;
 $alto-ess: #eee;
+
+$box-shadow-card: rgba(21, 27, 35, 0.46);
+$bg-card-header: #1d2b36;
+$text-card: #3b3b3b;
+$color-number-card: #232323;
+$progress-default: rgba(
+  $color: #d1d1d1,
+  $alpha: 0.42,
+);
+$progress-date: #5d86ff;
+$progress-month: #f5a500;
+$progress-year: #fe5e6a;
+$progress-power: #6d5ebd;
