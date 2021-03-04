@@ -4,14 +4,14 @@ import React from 'react';
 type Props = {
   name?: string,
   customClass?: string,
-  specifications?: number,
+  specifications?: string,
   progress?: number,
 };
 
 const CardItem = ({
   name = '',
   customClass = '',
-  specifications = null,
+  specifications = '',
   progress = null,
 }: Props) => {
   return (
@@ -31,7 +31,7 @@ const CardItem = ({
 CardItem.defaultProps = {
   name: '',
   customClass: '',
-  specifications: null,
+  specifications: '',
   progress: null,
 };
 

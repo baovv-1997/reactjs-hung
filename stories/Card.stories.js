@@ -19,6 +19,18 @@ const cardData = {
   ],
 };
 
+const cardCompanyData = {
+  title: '벤치 벽면',
+  listItem: [
+    { title: 'power-day', specifications: 100, progress: 5 },
+    { title: 'max-power-day', specifications: 500, progress: 30 },
+    { title: 'rate-power-day', specifications: 20, progress: 10 },
+    { title: 'current-month', specifications: 1621, progress: 35 },
+    { title: 'current-year', specifications: 1611, progress: 40 },
+    { title: 'amount-power', specifications: 4.1, progress: 45 },
+  ],
+};
+
 storiesOf('Card', module).add('Default', () => {
   const { title, listItem, listCompany } = cardData;
   return (
@@ -43,6 +55,19 @@ storiesOf('Card', module).add('logoTop', () => {
       titleClick={action('on-title-click')}
       isLogoTop
       customClass="title-middle"
+    />
+  );
+});
+
+storiesOf('Card', module).add('cardCompany', () => {
+  const { title, listItem } = cardCompanyData;
+  return (
+    <Card
+      title={title}
+      listItem={listItem}
+      titleClick={action('on-title-click')}
+      customClass="header-company"
+      isCardCompany
     />
   );
 });

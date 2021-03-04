@@ -33,7 +33,7 @@ export const Card = ({
           <CardItem
             key={item.title}
             name={CARD.date}
-            customClass="progress-date"
+            customClass="progress-color1"
             specifications={item.specifications}
             progress={item.progress}
           />
@@ -44,7 +44,7 @@ export const Card = ({
           <CardItem
             key={item.title}
             name={CARD.month}
-            customClass="progress-month"
+            customClass="progress-color2"
             specifications={item.specifications}
             progress={item.progress}
           />
@@ -55,7 +55,7 @@ export const Card = ({
           <CardItem
             key={item.title}
             name={CARD.year}
-            customClass="progress-year"
+            customClass="progress-color3"
             specifications={item.specifications}
             progress={item.progress}
           />
@@ -66,8 +66,74 @@ export const Card = ({
           <CardItem
             key={item.title}
             name={CARD.power}
-            customClass="progress-power"
+            customClass="progress-color4"
             specifications={item.specifications}
+            progress={item.progress}
+          />
+        );
+
+      case 'power-day':
+        return (
+          <CardItem
+            key={item.title}
+            name={CARD.powerDay}
+            customClass="progress-color1"
+            specifications={`${item.specifications}kHw`}
+            progress={item.progress}
+          />
+        );
+
+      case 'max-power-day':
+        return (
+          <CardItem
+            key={item.title}
+            name={CARD.maxPowerDay}
+            customClass="progress-color2"
+            specifications={`${item.specifications}kHw`}
+            progress={item.progress}
+          />
+        );
+
+      case 'rate-power-day':
+        return (
+          <CardItem
+            key={item.title}
+            name={CARD.ratePowerDay}
+            customClass="progress-color3"
+            specifications={`${item.specifications}%`}
+            progress={item.progress}
+          />
+        );
+
+      case 'current-month':
+        return (
+          <CardItem
+            key={item.title}
+            name={CARD.currentMonth}
+            customClass="progress-color4"
+            specifications={`${item.specifications}kHw`}
+            progress={item.progress}
+          />
+        );
+
+      case 'current-year':
+        return (
+          <CardItem
+            key={item.title}
+            name={CARD.currentYear}
+            customClass="progress-color5"
+            specifications={`${item.specifications}MWh`}
+            progress={item.progress}
+          />
+        );
+
+      case 'amount-power':
+        return (
+          <CardItem
+            key={item.title}
+            name={CARD.amountPower}
+            customClass="progress-color6"
+            specifications={`${item.specifications}MW`}
             progress={item.progress}
           />
         );
@@ -101,7 +167,11 @@ export const Card = ({
         </p>
         <p className="card__unit">kWh</p>
       </div>
-      <div className="card__body">
+      <div
+        className={
+          isCardCompany ? 'card__body card__body--company' : 'card__body'
+        }
+      >
         {/* list item in card */}
         <div className="card__list">{cardItem}</div>
 
