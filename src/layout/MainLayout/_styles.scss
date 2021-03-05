@@ -14,7 +14,7 @@
 .main-content {
   width: calc(100% - #{pxToRem(200)});
   margin-left: pxToRem(200);
-  padding: pxToRem(15);
+  // padding: pxToRem(15);
 
   .content {
     word-wrap: break-word;
@@ -26,6 +26,13 @@
       border: pxToRem(1) solid $gray-light;
     }
   }
+}
+
+.main-wrap-content {
+  height: 100vh;
+  background-image: url('../../assets/images/bg_dashboard.png');
+  background-size: cover;
+  // background-position: pxToRem(-4) pxToRem(-140);
 }
 
 .wrapper-content {

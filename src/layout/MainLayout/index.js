@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
 // import Header from '../../components/Header';
+import Header from 'commons/components/Header';
 import Menu from '../Menu';
 
 type Props = {
@@ -50,7 +51,8 @@ export const MainLayout = ({ children }: Props) => {
       <div className="main-content" ref={mainContent}>
         <div className="content">
           {/* <Header name="admin님 안녕하세요" urlUser="#" /> */}
-          <div>{children}</div>
+          <Header isSearch />
+          <div className="main-wrap-content">{children}</div>
         </div>
       </div>
     </div>

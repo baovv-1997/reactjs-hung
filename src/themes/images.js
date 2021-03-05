@@ -6,6 +6,8 @@ const images = {
   icon_power: require('assets/images/icon_label/icon-power.png'),
   icon_temperature: require('assets/images/icon_label/icon-temperature.png'),
   icon_insolation: require('assets/images/icon_label/icon-insolation.png'),
+  icon_event: require('assets/images/icon-event.png'),
+  icon_search: require('assets/images/icon-search.png'),
 };
 
 export default images;

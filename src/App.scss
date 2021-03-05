@@ -52,7 +52,7 @@
 @import './commons/components/Search/style';
 
 // css header
-// @import './commons/components/Header/styles';
+@import './commons/components/Header/styles';
 
 // @import './commons/components/Footer/styles';
 
@@ -63,10 +63,10 @@
 @import './commons/components/Radio/styles';
 
 // css component Card
-@import './commons/components/Card/style';
+@import './commons/components/Card/styles';
 
 // css component Login
 @import './modules/accounts/components/styles';
 
 // css component Label
-@import './commons/components/Label/LabelStatus/style';
+@import './commons/components/Label/LabelStatus/styles';

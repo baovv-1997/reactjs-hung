@@ -20,9 +20,9 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
+        <MainLayout></MainLayout>
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
-          <Route exact path={ROUTERS.ROOT} component={MainLayout} />
         </Switch>
       </Suspense>
     </BrowserRouter>
