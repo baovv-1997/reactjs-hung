@@ -11,11 +11,11 @@
     padding: pxToRem(10) pxToRem(20);
     border-bottom: pxToRem(1) solid $color-border-card;
     & .card__title {
-      color: $bg-card-header;
+      color: $bg-button;
     }
   }
   &__header {
-    background-color: $bg-card-header;
+    background-color: $bg-button;
     padding: pxToRem(10) pxToRem(30);
     color: $white;
     display: flex;
