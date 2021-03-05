@@ -25,6 +25,7 @@ type Props = {
   textBtnRight?: string,
   handleSubmit?: Function,
   isDisabledButton?: boolean,
+  handleCloseIcon?: Function,
 };
 
 export const ModalPopup = ({
@@ -46,6 +47,7 @@ export const ModalPopup = ({
   textBtnRight = 'OK',
   handleSubmit = () => {},
   isDisabledButton,
+  handleCloseIcon = () => {},
 }: Props) => (
   <Modal
     animation={animation}
@@ -59,10 +61,10 @@ export const ModalPopup = ({
     {isShowIconClose && (
       <div
         className="modal-content__iconClose"
-        onClick={handleClose}
+        onClick={handleCloseIcon}
         role="button"
         tabIndex={0}
-        onKeyUp={handleClose}
+        onKeyUp={handleCloseIcon}
       >
         <img src={images.icon_close} alt="" />
       </div>
@@ -127,5 +129,6 @@ ModalPopup.defaultProps = {
   textBtnRight: 'OK',
   handleSubmit: () => {},
   isDisabledButton: false,
+  handleCloseIcon: () => {},
 };
 export default memo<Props>(ModalPopup);

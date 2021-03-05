@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import ModalPopup from 'commons/components/Modal';
 import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
+import SignIn from './signIn';
 
 const SignUp = () => {
   // const history = useHistory();
@@ -12,6 +13,8 @@ const SignUp = () => {
     userName: '',
     password: '',
   });
+
+  const [isShowModalRegister, setIsShowModalRegister] = useState(true);
 
   const [modalLogin, setModalLogin] = useState({
     isShow: false,
@@ -63,7 +66,6 @@ const SignUp = () => {
       });
       return;
     }
-    
   };
 
   const handleKeyDown = (e) => {
@@ -114,10 +116,37 @@ const SignUp = () => {
         title="알림"
         isShowIconClose
         isShowFooter
-        handleClose={() => {}}
+        handleCloseIcon={() =>
+          setModalLogin({
+            ...modalLogin,
+            isShow: false,
+            content: '',
+          })
+        }
+        handleClose={() =>
+          setModalLogin({
+            ...modalLogin,
+            isShow: false,
+            content: '',
+          })
+        }
         textBtnRight="확인"
       >
         {modalLogin.content}
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isShowModalRegister}
+        isShowHeader
+        size="lg"
+        title="실증단지 계정 등록 양식"
+        isShowIconClose
+        handleCloseIcon={() => setIsShowModalRegister(false)}
+        isShowFooter
+        handleClose={() => {}}
+        textBtnRight="등록요청"
+      >
+        <SignIn />
       </ModalPopup>
     </div>
   );
