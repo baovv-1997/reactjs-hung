@@ -15,6 +15,10 @@
     padding: 0;
     margin: 0;
     max-width: pxToRem(500);
+
+    &.modal-lg {
+      max-width: pxToRem(900);
+    }
   }
 }
 
@@ -69,6 +73,7 @@
     line-height: 1.5;
     letter-spacing: pxToRem(0.6);
     color: $white;
+    margin-top: pxToRem(-1);
   }
 
   .modal-body {
@@ -76,6 +81,8 @@
     white-space: pre-line;
     padding: 0 pxToRem(30);
     margin: 0;
+    max-height: pxToRem(680);
+    overflow: auto;
 
     &__has-header {
       padding: pxToRem(50) 0;
