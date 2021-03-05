@@ -45,11 +45,16 @@
 // css component Search
 @import './commons/components/Search/style';
 
+// css component select box
+@import './commons/components/SelectBox/style';
+
+// css component Search
+@import './commons/components/Search/style';
+
 // css header
 // @import './commons/components/Header/styles';
 
 // @import './commons/components/Footer/styles';
-
 
 // css component Select
 @import './commons/components/Select/styles';
@@ -57,5 +62,11 @@
 // css component Radio
 @import './commons/components/Radio/styles';
 
+// css component Card
+@import './commons/components/Card/style';
+
 // css component Login
 @import './modules/accounts/components/styles';
+
+// css component Label
+@import './commons/components/Label/LabelStatus/style';

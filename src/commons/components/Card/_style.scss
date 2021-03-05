@@ -1,0 +1,117 @@
+.card {
+  width: fit-content;
+  background-color: $white;
+  border-radius: pxToRem(15);
+  box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $box-shadow-card;
+  .title-middle {
+    border-radius: unset;
+  }
+  .header-company {
+    background-color: $white;
+    padding: pxToRem(10) pxToRem(20);
+    border-bottom: pxToRem(1) solid $color-border-card;
+    & .card__title {
+      color: $bg-button;
+    }
+  }
+  &__header {
+    background-color: $bg-button;
+    padding: pxToRem(10) pxToRem(30);
+    color: $white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: pxToRem(15) pxToRem(15) 0 0;
+  }
+
+  &__title {
+    font-size: pxToRem(20);
+    font-weight: $medium;
+    line-height: pxToRem(29);
+    letter-spacing: pxToRem(-0.6);
+    cursor: pointer;
+  }
+
+  &__unit {
+    font-size: pxToRem(14);
+    line-height: pxToRem(17);
+    letter-spacing: pxToRem(-0.42);
+    font-family: $Roboto-Font;
+  }
+
+  &__body {
+    padding: pxToRem(20) pxToRem(30);
+    &--company {
+      padding: pxToRem(20);
+    }
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: pxToRem(7);
+    &__name {
+      color: $text-card;
+      font-size: pxToRem(15);
+      line-height: pxToRem(22);
+      font-weight: $medium;
+      letter-spacing: pxToRem(-0.45);
+    }
+
+    &__number {
+      font-size: pxToRem(20);
+      font-weight: bold;
+      line-height: pxToRem(24);
+      letter-spacing: pxToRem(-0.6);
+      text-align: right;
+      color: $color-number-card;
+    }
+  }
+
+  &__progress {
+    width: pxToRem(100);
+    height: pxToRem(12);
+    background-color: $progress-default;
+    margin: 0 pxToRem(10);
+    &-bar {
+      height: 100%;
+    }
+
+    .progress-color1 {
+      background-color: $color-progress1;
+    }
+    .progress-color2 {
+      background-color: $color-progress2;
+    }
+    .progress-color3 {
+      background-color: $color-progress3;
+    }
+    .progress-color4 {
+      background-color: $color-progress4;
+    }
+    .progress-color5 {
+      background-color: $color-progress5;
+    }
+    .progress-color6 {
+      background-color: $color-progress6;
+    }
+  }
+
+  &__company {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: pxToRem(15);
+    &__item {
+      width: pxToRem(45);
+      height: pxToRem(30);
+      margin: 0 pxToRem(10);
+      object-fit: contain;
+      cursor: pointer;
+    }
+    &--top {
+      margin: pxToRem(9) 0;
+    }
+  }
+}

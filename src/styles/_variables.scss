@@ -4,11 +4,9 @@ $viewPort: 360;
 
 // font weight
 
-$Noto-Sans-Font: 'Noto Sans KR',
-'sans-serif';
+$Noto-Sans-Font: 'Noto Sans KR', 'sans-serif';
 $NanumSquare-Font: 'NanumSquare';
-$Roboto-Font: 'Roboto',
-'sans-serif';
+$Roboto-Font: 'Roboto', 'sans-serif';
 $thin: 100;
 $extraLight: 200;
 $light: 300;
@@ -135,8 +133,26 @@ $gray-light: #d7d8df;
 $black-transparent: #0000003d;
 $black-light: #222222;
 $alto-ess: #eee;
+
+$box-shadow-card: rgba(21, 27, 35, 0.46);
+$text-card: #3b3b3b;
+$color-border-card: #e3e3e3;
+$color-number-card: #232323;
+$progress-default: rgba(
+  $color: #d1d1d1,
+  $alpha: 0.42,
+);
+$color-progress1: #5d86ff;
+$color-progress2: #f5a500;
+$color-progress3: #fe5e6a;
+$color-progress4: #6d5ebd;
+$color-progress5: #619d39;
+$color-progress6: #b43bb4;
 $bg-button: #1d2b36;
 $bg-button-primary: #3694e8;
 $color-black: #111111;
+$color-label-power: #97c95e;
+$color-label-temperature: #ab47bc;
+$color-label-insolation: #3b74e7;
 $color-light10: #e3e3e3;
-$bg-light10: #f3f5f8
+$bg-light10: #f3f5f8;
