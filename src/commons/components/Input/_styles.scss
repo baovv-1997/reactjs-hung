@@ -1,9 +1,10 @@
 .input {
   &__error-msg {
     color: $color-number-point;
-    margin-top: pxToRem(10);
+    margin-top: pxToRem(5);
     font-size: pxToRem(13);
     font-weight: $medium;
+    text-align: left;
   }
 
   &__label {

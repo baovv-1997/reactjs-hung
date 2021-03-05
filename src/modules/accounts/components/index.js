@@ -1,6 +1,7 @@
 // @flow
 import React, { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
+import { Validator } from '../../../helpers/validator';
 import ModalPopup from 'commons/components/Modal';
 import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
@@ -8,13 +9,51 @@ import SignIn from './signIn';
 
 const SignUp = () => {
   // const history = useHistory();
-
+  const listCompany = [
+    {
+      id: 1,
+      value: 'Company 1',
+      label: 'Company 1',
+    },
+    {
+      id: 2,
+      value: 'Company 2',
+      label: 'Company 2',
+    },
+    {
+      id: 3,
+      value: 'Company 3',
+      label: 'Company 3',
+    },
+  ];
+  const optionDefault = {
+    id: 0,
+    value: '',
+    label: '업체 선택',
+  };
+  const [optionCompany, seOptionCompany] = useState(optionDefault);
   const [dataLogin, setDataLogin] = useState({
     userName: '',
     password: '',
   });
+  const [dataRegister, setDataRegister] = useState({
+    username: '',
+    passwords: '',
+    email: '',
+    phone: '',
+    person: '',
+    role: 'superAdmin',
+  });
+  const [error, setError] = useState({
+    username: '',
+    passwords: '',
+    email: '',
+    phone: '',
+    person: '',
+    role: '',
+  });
 
-  const [isShowModalRegister, setIsShowModalRegister] = useState(true);
+  const [isShowModalRegister, setIsShowModalRegister] = useState(false);
 
   const [modalLogin, setModalLogin] = useState({
     isShow: false,
@@ -40,6 +79,7 @@ const SignUp = () => {
     }
   };
   const { userName, password } = dataLogin;
+  const { username, email, phone, person } = dataRegister;
 
   const handleSubmit = () => {
     if (!userName && !password) {
@@ -74,6 +114,108 @@ const SignUp = () => {
     }
   };
 
+  const handleChangeRegister = (value, name) => {
+    switch (name) {
+      case 'username':
+        setDataRegister({
+          ...dataRegister,
+          username: value,
+        });
+        setError({
+          ...error,
+          username: '',
+        });
+        break;
+      case 'email':
+        setDataRegister({
+          ...dataRegister,
+          email: value,
+        });
+        setError({
+          ...error,
+          email: '',
+        });
+        break;
+      case 'phone':
+        setDataRegister({
+          ...dataRegister,
+          phone: value,
+        });
+        setError({
+          ...error,
+          phone: '',
+        });
+        break;
+      case 'person':
+        setDataRegister({
+          ...dataRegister,
+          person: value,
+        });
+        setError({
+          ...error,
+          person: '',
+        });
+        break;
+      case 'superAdmin':
+        setDataRegister({
+          ...dataRegister,
+          role: 'superAdmin',
+        });
+
+        break;
+      case 'company':
+        setDataRegister({
+          ...dataRegister,
+          role: 'company',
+        });
+
+        break;
+      case 'monitoring':
+        setDataRegister({
+          ...dataRegister,
+          role: 'monitoring',
+        });
+
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleChangeOptionCompany = (option) => {
+    seOptionCompany(option);
+  };
+
+  const handleRegisterSubmit = () => {
+    let validation = {};
+    const rules = {
+      username: ['required'],
+      email: ['required', 'email'],
+      phone: ['required', 'phoneNumber'],
+      person: ['required'],
+    };
+
+    const dataValidate = {
+      username,
+      email,
+      phone,
+      person,
+    };
+    validation = Validator(dataValidate, rules);
+    if (Object.keys(validation).length > 0) {
+      setError(validation);
+      return;
+    }
+
+    // submit data
+  };
+
+  const handleKeyDownRegister = (e) => {
+    if (e.key === 'Enter') {
+      handleRegisterSubmit();
+    }
+  };
+
   return (
     <div className="page-login">
       <div className="sign-up">
@@ -104,7 +246,12 @@ const SignUp = () => {
               로그인
             </Button>
           </div>
-          <div className="register-wrapper">
+          <div
+            className="register-wrapper"
+            onClick={() => setIsShowModalRegister(true)}
+            onKeyPress={() => {}}
+            role="button"
+          >
             <div className="name">계정 등록 요청</div>
           </div>
         </div>
@@ -143,10 +290,18 @@ const SignUp = () => {
         isShowIconClose
         handleCloseIcon={() => setIsShowModalRegister(false)}
         isShowFooter
-        handleClose={() => {}}
+        handleClose={() => handleRegisterSubmit()}
         textBtnRight="등록요청"
       >
-        <SignIn />
+        <SignIn
+          dataRegister={dataRegister}
+          handleKeyDown={handleKeyDownRegister}
+          handleChangeRegister={handleChangeRegister}
+          handleChangeOptionCompany={handleChangeOptionCompany}
+          optionCompany={optionCompany}
+          listCompany={listCompany}
+          texTerror={error}
+        />
       </ModalPopup>
     </div>
   );
