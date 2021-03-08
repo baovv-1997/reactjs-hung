@@ -28,4 +28,6 @@ module.name_mapper='^themes' ->'<PROJECT_ROOT>/src/themes'
 module.name_mapper='^mockData' ->'<PROJECT_ROOT>/src/mockData'
 module.name_mapper='^apis' ->'<PROJECT_ROOT>/src/apis'
 module.name_mapper='^helpers' ->'<PROJECT_ROOT>/src/helpers'
+module.name_mapper='^layout' ->'<PROJECT_ROOT>/src/layout'
+
 [strict]

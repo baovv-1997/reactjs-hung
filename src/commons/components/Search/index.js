@@ -1,6 +1,5 @@
 // @flow
 import React, { memo, useEffect, useRef, useState } from 'react';
-// import useClickOutside from 'customHooks/useClickOutSide';
 import images from 'themes/images';
 import AutoSuggest from './AutoSuggest';
 
@@ -10,15 +9,7 @@ type Props = {
 };
 
 const Search = ({ placeholder, handleClick }: Props) => {
-  const mockData = [
-    { id: 0, name: '본관 남측' },
-    { id: 1, name: '본관 동측' },
-    { id: 2, name: '본관 동측 창호' },
-    { id: 3, name: '본관 건물 앞' },
-  ];
-
   const [display, setDisplay] = useState(false);
-
   const [searchValue, setSearchValue] = useState('');
   const wrapperRef = useRef(null);
 
@@ -40,15 +31,10 @@ const Search = ({ placeholder, handleClick }: Props) => {
     };
   });
 
-  // useClickOutside(
-  //   wrapperRef,
-  //   () => {
-  //     if (display) {
-  //       setDisplay(false);
-  //     }
-  //   },
-  //   wrapperRef
-  // );
+  const updateSearchInput = (value) => {
+    setSearchValue(value);
+    setDisplay(false);
+  };
 
   return (
     <div ref={wrapperRef} className="search">
@@ -67,7 +53,9 @@ const Search = ({ placeholder, handleClick }: Props) => {
         onClick={() => handleClick(searchValue)}
         role="presentation"
       />
-      {display && <AutoSuggest data={mockData} search={searchValue} />}
+      {display && (
+        <AutoSuggest search={searchValue} onClick={updateSearchInput} />
+      )}
     </div>
   );
 };

@@ -34,6 +34,8 @@
 .auto-suggest {
   position: absolute;
   z-index: 999;
+  max-height: pxToRem(155);
+  overflow: auto;
   background-color: $white;
   padding: pxToRem(20) 0;
   border-radius: 0 0 15px 15px;
@@ -41,6 +43,14 @@
   margin-top: pxToRem(16);
   left: 0;
   right: 0;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &__item {
     padding: 0 pxToRem(40);

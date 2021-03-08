@@ -28,11 +28,8 @@
   }
 }
 
-.main-wrap-content {
-  height: 100vh;
-  background-image: url('../../assets/images/bg_dashboard.png');
-  background-size: cover;
-  // background-position: pxToRem(-4) pxToRem(-140);
+.main-content-children {
+  margin-top: pxToRem(68);
 }
 
 .wrapper-content {

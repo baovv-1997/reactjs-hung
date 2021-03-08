@@ -9,49 +9,49 @@ html {
 
 .search-wrapper {
   position: relative;
-  margin-bottom: pxToVW(24);
+  margin-bottom: pxToRem(24);
 
   .input__box input.input-change {
     width: 100%;
-    height: pxToVW(64);
-    border: pxToVW(1) solid $color-notice-border;
+    height: pxToRem(64);
+    border: pxToRem(1) solid $color-notice-border;
     background: $color-light2;
-    padding: 0 pxToVW(47) 0 pxToVW(37);
-    font-size: pxToVW(17);
+    padding: 0 pxToRem(47) 0 pxToRem(37);
+    font-size: pxToRem(17);
     font-weight: $medium;
     color: $color-notice-title;
 
     &::-webkit-input-placeholder {
-      letter-spacing: pxToVW(-0.29);
+      letter-spacing: pxToRem(-0.29);
       opacity: 0.3;
-      font-size: pxToVW(17);
+      font-size: pxToRem(17);
       font-weight: $medium;
       text-align: left;
       color: $color-input;
     }
 
     &::placeholder {
-      letter-spacing: pxToVW(-0.29);
+      letter-spacing: pxToRem(-0.29);
       opacity: 0.3;
-      font-size: pxToVW(17);
+      font-size: pxToRem(17);
       font-weight: $medium;
       text-align: left;
       color: $color-input;
     }
 
     &::-moz-placeholder {
-      letter-spacing: pxToVW(-0.29);
+      letter-spacing: pxToRem(-0.29);
       opacity: 0.3;
-      font-size: pxToVW(17);
+      font-size: pxToRem(17);
       font-weight: $medium;
       text-align: left;
       color: $color-input;
     }
 
     &:-ms-input-placeholder {
-      letter-spacing: pxToVW(-0.29);
+      letter-spacing: pxToRem(-0.29);
       opacity: 0.3;
-      font-size: pxToVW(17);
+      font-size: pxToRem(17);
       font-weight: $medium;
       text-align: left;
       color: $color-input;
@@ -60,7 +60,7 @@ html {
 
   &.pl-wrapper {
     .input__box input.input-change {
-      padding-left: pxToVW(15);
+      padding-left: pxToRem(15);
     }
   }
 
@@ -75,22 +75,22 @@ html {
   }
 
   .search-delete {
-    padding: pxToVW(10);
+    padding: pxToRem(10);
     right: pxToRem(10);
 
     img {
-      width: pxToVW(15);
-      height: pxToVW(15);
+      width: pxToRem(15);
+      height: pxToRem(15);
     }
   }
 
   .back-btn {
-    left: pxToVW(15);
+    left: pxToRem(15);
     right: auto;
-    width: pxToVW(25);
+    width: pxToRem(25);
 
     img {
-      width: pxToVW(15);
+      width: pxToRem(15);
     }
   }
 }
@@ -103,7 +103,7 @@ html {
 
 .input__box .css-1wa3eu0-placeholder {
   color: $color-placeholder;
-  font-size: pxToVW(16);
+  font-size: pxToRem(16);
 }
 
 a,

@@ -7,7 +7,7 @@ import Loading from 'commons/components/Loading';
 // import { API } from '../apis';
 
 import SingIn from 'modules/accounts/components/index';
-import MainLayout from '../layout/MainLayout';
+import MainPage from 'modules/mainPage/components';
 
 const Router = () => {
   // const dispatch = useDispatch();
@@ -20,9 +20,9 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
-        <MainLayout></MainLayout>
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
+          <Route exact path={ROUTERS.ROOT} component={MainPage} />
         </Switch>
       </Suspense>
     </BrowserRouter>
