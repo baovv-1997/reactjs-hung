@@ -5,10 +5,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
-import { API } from '../apis';
 // components
 import SingIn from 'modules/accounts/components/index';
 import MainPage from 'modules/main/components';
+import { API } from '../apis';
 
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);

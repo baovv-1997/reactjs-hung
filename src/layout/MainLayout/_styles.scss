@@ -1,14 +1,12 @@
-
-
 .heightMenu.sidebar {
   position: absolute;
   min-height: 100%;
 }
 
 .main-content {
-  width: calc(100% - #{pxToRem(200)});
-  margin-left: pxToRem(200);
-  padding: pxToRem(15);
+  width: calc(100% - #{pxToRem(210)});
+  margin-left: pxToRem(210);
+  // padding: pxToRem(15);
 
   .content {
     word-wrap: break-word;
@@ -16,10 +14,16 @@
     background-clip: border-box;
     border-radius: pxToRem(4);
 
+    margin-top: pxToRem(68);
+
     .home-main {
       border: pxToRem(1) solid $gray-light;
     }
   }
+}
+
+.main-content-children {
+  margin-top: pxToRem(68);
 }
 
 .wrapper-content {
