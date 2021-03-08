@@ -2,13 +2,20 @@
 import React, { useState, useRef } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
 // import Header from '../../components/Header';
+import Header from 'commons/components/Header';
 import SidebarMenu from '../Menu';
 
 type Props = {
   children: React.AbstractComponent<{}>,
+  isSearch?: boolean,
+  isSelect?: boolean,
 };
 
-export const MainLayout = ({ children }: Props) => {
+export const MainLayout = ({
+  children,
+  isSearch = false,
+  isSelect = false,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const refMenu = useRef(null);
   const iconRef = useRef(null);
@@ -27,6 +34,11 @@ export const MainLayout = ({ children }: Props) => {
   if (window.innerHeight < 900) {
     classHeight = 'heightMenu';
   }
+
+  let showHeader;
+  if (isSearch) showHeader = <Header isSearch />;
+  else if (isSelect) showHeader = <Header isSelect />;
+  else showHeader = <Header />;
 
   return (
     <div className={`wrapper-content ${isOpen ? 'open' : ''}`}>
@@ -48,13 +60,18 @@ export const MainLayout = ({ children }: Props) => {
         <SidebarMenu innerRef={refMenu} />
       </div>
       <div className="main-content" ref={mainContent}>
+        {showHeader}
         <div className="content">
-          {/* <Header name="admin님 안녕하세요" urlUser="#" /> */}
           <div>{children}</div>
         </div>
       </div>
     </div>
   );
+};
+
+MainLayout.defaultProps = {
+  isSearch: false,
+  isSelect: false,
 };
 
 export default MainLayout;
