@@ -68,6 +68,7 @@ export const ItemDevice = ({
           <SelectDropdown
             placeholder="구역 선택"
             listItem={listArea}
+            disabled={optionDevice?.area?.isDisable}
             onChange={(option) =>
               handleChangeOptionCompany(option, 'area', optionDevice?.idx)
             }
