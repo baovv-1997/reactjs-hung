@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useRef } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
+// eslint-disable-next-line import/no-named-as-default-member
 import Header from 'commons/components/Header';
-import Menu from '../Menu';
+
+import SidebarMenu from '../Menu';
 
 type Props = {
   children: React.AbstractComponent<{}>,
@@ -56,13 +58,12 @@ export const MainLayout = ({
         </div>
       </div>
       <div className={`sidebar ${isOpen ? 'show' : ''} ${classHeight}`}>
-        <Menu innerRef={refMenu} />
+        <SidebarMenu innerRef={refMenu} />
       </div>
       <div className="main-content" ref={mainContent}>
+        {showHeader}
         <div className="content">
-          {/* Header  */}
-          {showHeader}
-          <div className="main-content-children">{children}</div>
+          <div>{children}</div>
         </div>
       </div>
     </div>

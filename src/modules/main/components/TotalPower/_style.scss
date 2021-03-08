@@ -1,0 +1,56 @@
+.total-power {
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: pxToRem(10);
+  }
+
+  &__item {
+    padding: pxToRem(12);
+    width: pxToRem(135);
+    border-radius: pxToRem(10);
+    color: $white;
+
+    &-name {
+      font-size: pxToRem(14);
+      line-height: pxToRem(20);
+      letter-spacing: pxToRem(-0.4);
+      opacity: 0.7;
+    }
+
+    &-value {
+      font-family: $Roboto-Font;
+      font-size: pxToRem(26);
+      font-weight: bold;
+      line-height: pxToRem(34);
+      letter-spacing: pxToRem(-0.78);
+      text-align: right;
+    }
+  }
+
+  &__content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: pxToRem(3);
+  }
+
+  &__icon {
+    width: pxToRem(14);
+    height: pxToRem(20);
+    object-fit: contain;
+  }
+
+  .bg-color-day {
+    background-color: $color-progress1;
+  }
+  .bg-color-month {
+    background-color: $color-progress3;
+  }
+  .bg-color-year {
+    background-color: $bg-color-year;
+  }
+  .bg-color-plus {
+    background-color: $color-progress4;
+  }
+}

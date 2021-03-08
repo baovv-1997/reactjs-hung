@@ -1,73 +1,29 @@
 // @flow
-import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalPopup from 'commons/components/Modal';
 import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
+import Loading from 'commons/components/Loading';
 import { Validator } from '../../../helpers/validator';
 import SignIn from './signIn';
+import { API } from 'apis';
 import * as SignInAction from '../redux';
+import ROUTERS from 'constants/routers';
+import { listType } from 'constants/listKey';
 
 const SignUp = () => {
-  // const history = useHistory();
-  const listCompany = [
-    {
-      id: 1,
-      value: 'Company 1',
-      label: 'Company 1',
-    },
-    {
-      id: 2,
-      value: 'Company 2',
-      label: 'Company 2',
-    },
-    {
-      id: 3,
-      value: 'Company 3',
-      label: 'Company 3',
-    },
-  ];
-  const listArea = [
-    {
-      id: 1,
-      value: 'Area 1',
-      label: 'Area 1',
-    },
-    {
-      id: 2,
-      value: 'Area 2',
-      label: 'Area 2',
-    },
-    {
-      id: 3,
-      value: 'Area 3',
-      label: 'Area 3',
-    },
-  ];
-
-  const listInverter = [
-    {
-      id: 1,
-      value: 'Inverter 1',
-      label: 'Inverter 1',
-    },
-    {
-      id: 2,
-      value: 'Inverter 2',
-      label: 'Inverter 2',
-    },
-    {
-      id: 3,
-      value: 'Inverter 3',
-      label: 'Inverter 3',
-    },
-  ];
-  // const optionDefault = {
-  //   id: 0,
-  //   value: null,
-  //   label: null,
-  // };
+  const history = useHistory();
+  const {
+    type,
+    isProcessing,
+    errorMsg,
+    token,
+    listCompany,
+    listArea,
+    listInverter,
+  } = useSelector((state) => state?.account);
 
   const dispatch = useDispatch();
   const [dataLogin, setDataLogin] = useState({
@@ -80,7 +36,7 @@ const SignUp = () => {
     email: '',
     phone: '',
     person: '',
-    role: 'superAdmin',
+    role: 'admin',
   });
   const [error, setError] = useState({
     username: '',
@@ -104,8 +60,40 @@ const SignUp = () => {
       area: null,
       company: null,
       inverter: null,
+      type: null,
     },
   ]);
+
+  /** Show popup sign in success */
+  useEffect(() => {
+    switch (type) {
+      case SignInAction.signInRequestSuccess:
+        API.setHeader('Authorization', `Bearer ${token}`);
+        history.push(ROUTERS.ROOT);
+        break;
+      case SignInAction.signInRequestFailed:
+        setModalLogin({
+          ...modalLogin,
+          isShow: true,
+          content: errorMsg,
+        });
+        break;
+      default:
+        break;
+    }
+    // eslint-disable-next-line
+  }, [type, token]);
+
+  // get list getListCompany
+
+  useEffect(() => {
+    if (isShowModalRegister) {
+      dispatch(SignInAction.getListCompany());
+      dispatch(SignInAction.getListArea());
+    }
+    //eslint-disable-next-line
+  }, [isShowModalRegister]);
+
   const handleChange = (value, name) => {
     switch (name) {
       case 'username':
@@ -203,10 +191,10 @@ const SignUp = () => {
           person: '',
         });
         break;
-      case 'superAdmin':
+      case 'admin':
         setDataRegister({
           ...dataRegister,
-          role: 'superAdmin',
+          role: 'admin',
         });
 
         break;
@@ -228,21 +216,76 @@ const SignUp = () => {
         break;
     }
   };
-
   const handleChangeOptionCompany = (option, name, idx) => {
     const itemChange = listItemDevice.find((item) => item.idx === idx);
-    const listItemChange = listItemDevice.map((item) => {
-      return item.idx === itemChange?.idx
-        ? {
-            ...item,
-            area: (name === 'area' ? option : item.area) || null,
-            company: (name === 'company' ? option : item.company) || null,
-            inverter: (name === 'inverter' ? option : item.inverter) || null,
-          }
-        : item;
-    });
+    const { company } = itemChange;
 
-    setListItemDevice(listItemChange);
+    dispatch(
+      SignInAction.getListInverter({
+        per_page: 0,
+        pos_id: option?.value,
+        com_id: company?.value,
+        type: itemChange?.type?.value,
+      })
+    );
+    //  Nếu chọn type bằng 실증단지 thì  disable  select area
+    if (name === 'type' && option?.value !== 0) {
+      const listItemChange = listItemDevice.map((item) => {
+        return item.idx === itemChange?.idx
+          ? {
+              ...item,
+              area:
+                (name === 'area'
+                  ? option
+                  : {
+                      isDisable: true,
+                    }) || null,
+              company: (name === 'company' ? option : item.company) || null,
+              inverter: (name === 'inverter' ? option : item.inverter) || null,
+              type: (name === 'type' ? option : item.type) || null,
+            }
+          : item;
+      });
+      setListItemDevice(listItemChange);
+    } else if (itemChange && itemChange?.type?.value !== 0) {
+      const listItemChange = listItemDevice.map((item) => {
+        return item.idx === itemChange?.idx
+          ? {
+              ...item,
+              area:
+                (name === 'area'
+                  ? option
+                  : {
+                      isDisable: true,
+                    }) || null,
+              company: (name === 'company' ? option : item.company) || null,
+              inverter: (name === 'inverter' ? option : item.inverter) || null,
+              type: (name === 'type' ? option : item.type) || null,
+            }
+          : item;
+      });
+      setListItemDevice(listItemChange);
+    } else {
+      //  Nếu chọn cả 3 trường là type và area, company thì sẽ gọi api cho inverter
+      const listItemChange = listItemDevice.map((item) => {
+        return item.idx === itemChange?.idx
+          ? {
+              ...item,
+              area:
+                (name === 'area'
+                  ? option
+                  : {
+                      ...item.area,
+                      isDisable: false,
+                    }) || null,
+              company: (name === 'company' ? option : item.company) || null,
+              inverter: (name === 'inverter' ? option : item.inverter) || null,
+              type: (name === 'type' ? option : item.type) || null,
+            }
+          : item;
+      });
+      setListItemDevice(listItemChange);
+    }
   };
 
   const handleRegisterSubmit = () => {
@@ -277,8 +320,19 @@ const SignUp = () => {
         isShow: true,
         content: `관리기기 정보 입력을 완료해주세요.`,
       });
+      return;
     }
+    const listItemDevices = listItemDevice.map((item) => item.area?.value);
+    const dataSubmit = {
+      role: dataRegister.role,
+      username: dataRegister.username || '',
+      email,
+      name: person || '',
+      phone,
+      inverter_ids: listItemDevices,
+    };
     // submit data
+    dispatch(SignInAction.signUpRequest(dataSubmit));
   };
 
   const handleKeyDownRegister = (e) => {
@@ -309,6 +363,8 @@ const SignUp = () => {
 
   return (
     <div className="page-login">
+      {isProcessing && <Loading />}
+
       <div className="sign-up">
         <div className="login-name">LOGIN</div>
         <div className="from-login">
@@ -397,6 +453,7 @@ const SignUp = () => {
           handleRemove={handleRemove}
           listInverter={listInverter}
           listArea={listArea}
+          listType={listType}
         />
       </ModalPopup>
     </div>

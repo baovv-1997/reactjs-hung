@@ -40,6 +40,14 @@
   left: pxToRem(34);
 }
 
+.wrapper-loader {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: $box-shadow-card;
+  z-index: 9999999;
+}
+
 @-webkit-keyframes load7 {
 
   0%,

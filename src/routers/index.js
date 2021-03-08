@@ -2,21 +2,19 @@
 
 import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
-// import { API } from '../apis';
-
+// components
 import SingIn from 'modules/accounts/components/index';
-import MainPage from 'modules/mainPage/components/Dashboard';
+import MainPage from 'modules/main/components/Dashboard';
+import { API } from '../apis';
 
 const Router = () => {
-  // const dispatch = useDispatch();
-
-  // const token = useSelector((state) => state?.account?.token);
-  // if (token) {
-  //   API.setHeader('Authorization', `Bearer ${token}`);
-  // }
-  // const isAuthenticated = token !== '';
+  const token = useSelector((state) => state?.account?.token);
+  if (token) {
+    API.setHeader('Authorization', `Bearer ${token}`);
+  }
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>

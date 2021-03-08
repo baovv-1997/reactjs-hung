@@ -6,10 +6,11 @@ const initialState = {
   type: '',
   token: '',
   statusCode: null,
-  dateLogin: null,
-  errorSignUp: '',
   dataLogin: {},
   errorMessage: '',
+  listCompany: [],
+  listArea: [],
+  listInverter: [],
 };
 
 const accountSlice = createSlice({
@@ -17,19 +18,99 @@ const accountSlice = createSlice({
   initialState,
   reducers: {
     signInRequest: (state, action) => {
-      console.log('signInRequest', action);
       state.type = action.type;
       state.isProcessing = true;
     },
     signInRequestSuccess: (state, action) => {
+      const { data } = action;
       state.type = action.type;
       state.isProcessing = false;
+      state.token = data?.access_token;
+      state.userInfo = data?.user_data;
+      state.errorMsg = '';
     },
 
     signInRequestFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.errorMsg = action?.errorMsg || '';
     },
+
+    getListCompany: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getListCompanySuccess: (state, action) => {
+      const { data } = action;
+      const listCompany =
+        data &&
+        data.map((item) => ({
+          id: item.id,
+          value: item.id,
+          label: item.com_name,
+        }));
+      state.listCompany = listCompany || [];
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    getListCompanyFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.listCompany = [];
+    },
+
+    getListArea: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getListAreaSuccess: (state, action) => {
+      const { data } = action;
+      const listArea =
+        data &&
+        data.map((item) => ({
+          id: item.id,
+          value: item.id,
+          label: item.pos_name,
+          isDisable: false,
+        }));
+      state.listArea = listArea || [];
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    getListAreaFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.listArea = [];
+    },
+
+    getListInverter: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getListInverterSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.isProcessing = false;
+      const listInverter =
+        data &&
+        data.map((item) => ({
+          id: item.id,
+          value: item.id,
+          label: item.ds_name,
+        }));
+      state.listInverter = listInverter || [];
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    getListInverterFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.listInverter = [];
+    },
+
     signUpRequest: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
@@ -54,6 +135,15 @@ export const {
   signUpRequest,
   signUpRequestSuccess,
   signUpRequestFailed,
+  getListCompany,
+  getListCompanySuccess,
+  getListCompanyFailed,
+  getListArea,
+  getListAreaSuccess,
+  getListAreaFailed,
+  getListInverter,
+  getListInverterSuccess,
+  getListInverterFailed,
 } = actions;
 
 export default reducer;

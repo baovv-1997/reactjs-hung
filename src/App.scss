@@ -72,4 +72,10 @@
 @import './commons/components/Label/LabelStatus/styles';
 
 // css main page
-@import './modules/mainPage/components/Dashboard/style';
+@import './modules/main/components/Dashboard/style';
+
+// css component main page
+@import './modules/main/components/TotalPower/style';
+@import './modules/main/components/WeeklyElectric/style';
+@import './modules/main/components/InfoReality/style';
+@import './modules/main/components/VitualData/style';

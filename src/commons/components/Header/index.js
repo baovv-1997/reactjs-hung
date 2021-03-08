@@ -1,7 +1,6 @@
 // @flow
 import React, { memo, useState } from 'react';
 import images from 'themes/images';
-
 import Search from '../Search';
 import SelectDropdown from '../Select';
 
