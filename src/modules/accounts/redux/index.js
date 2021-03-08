@@ -17,6 +17,7 @@ const accountSlice = createSlice({
   initialState,
   reducers: {
     signInRequest: (state, action) => {
+      console.log('signInRequest', action);
       state.type = action.type;
       state.isProcessing = true;
     },
