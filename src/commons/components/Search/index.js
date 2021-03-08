@@ -1,5 +1,6 @@
 // @flow
 import React, { memo, useEffect, useRef, useState } from 'react';
+// import useClickOutside from 'customHooks/useClickOutSide';
 import images from 'themes/images';
 import AutoSuggest from './AutoSuggest';
 
@@ -38,6 +39,16 @@ const Search = ({ placeholder, handleClick }: Props) => {
       window.removeEventListener('mousedown', handleClickOutside);
     };
   });
+
+  // useClickOutside(
+  //   wrapperRef,
+  //   () => {
+  //     if (display) {
+  //       setDisplay(false);
+  //     }
+  //   },
+  //   wrapperRef
+  // );
 
   return (
     <div ref={wrapperRef} className="search">
