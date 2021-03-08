@@ -9,12 +9,12 @@ import { API } from '../apis';
 // components
 import SingIn from 'modules/accounts/components/index';
 import MainPage from 'modules/main/components';
-const token = useSelector((state) => state?.account?.token);
-if (token) {
-  API.setHeader('Authorization', `Bearer ${token}`);
-}
 
 const Router = () => {
+  const token = useSelector((state) => state?.account?.token);
+  if (token) {
+    API.setHeader('Authorization', `Bearer ${token}`);
+  }
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
