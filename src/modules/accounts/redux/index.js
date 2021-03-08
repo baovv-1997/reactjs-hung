@@ -72,6 +72,7 @@ const accountSlice = createSlice({
           id: item.id,
           value: item.id,
           label: item.pos_name,
+          isDisable: false,
         }));
       state.listArea = listArea || [];
       state.type = action.type;
@@ -111,7 +112,6 @@ const accountSlice = createSlice({
     },
 
     signUpRequest: (state, action) => {
-      console.log(state, action, 'state, action');
       state.type = action.type;
       state.isProcessing = true;
     },

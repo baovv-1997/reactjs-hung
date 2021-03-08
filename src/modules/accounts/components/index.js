@@ -91,7 +91,6 @@ const SignUp = () => {
       dispatch(SignInAction.getListCompany());
       dispatch(SignInAction.getListArea());
     }
-    // dispatch(SignInAction.getListCompany());
     //eslint-disable-next-line
   }, [isShowModalRegister]);
 
@@ -219,43 +218,76 @@ const SignUp = () => {
   };
   const handleChangeOptionCompany = (option, name, idx) => {
     const itemChange = listItemDevice.find((item) => item.idx === idx);
-    const { area, company } = itemChange;
-    //  Nếu chọn cả 3 trường là type và area, company thì sẽ gọi api cho inverter
-    if (area && company && type) {
-      dispatch(
-        SignInAction.getListInverter({
-          per_page: 0,
-          pos_id: area.value,
-          com_id: company.value,
-          type: type.value,
-        })
-      );
-      //  Nếu chọn type 실증단지  và  company thì sẽ gọi api cho inverter ( Không có area)
-    } else if (company && type.value === 0) {
-      dispatch(
-        SignInAction.getListInverter({
-          per_page: 0,
-          com_id: company.value,
-          type: type.value,
-        })
-      );
-    }
-    const listItemChange = listItemDevice.map((item) => {
-      return item.idx === itemChange?.idx
-        ? {
-            ...item,
-            area: (name === 'area' ? option : item.area) || null,
-            company: (name === 'company' ? option : item.company) || null,
-            inverter: (name === 'inverter' ? option : item.inverter) || null,
-            type: (name === 'type' ? option : item.type) || null,
-          }
-        : item;
-    });
+    const { company } = itemChange;
 
-    setListItemDevice(listItemChange);
+    dispatch(
+      SignInAction.getListInverter({
+        per_page: 0,
+        pos_id: option?.value,
+        com_id: company?.value,
+        type: itemChange?.type?.value,
+      })
+    );
+    //  Nếu chọn type bằng 실증단지 thì  disable  select area
+    if (name === 'type' && option?.value !== 0) {
+      const listItemChange = listItemDevice.map((item) => {
+        return item.idx === itemChange?.idx
+          ? {
+              ...item,
+              area:
+                (name === 'area'
+                  ? option
+                  : {
+                      isDisable: true,
+                    }) || null,
+              company: (name === 'company' ? option : item.company) || null,
+              inverter: (name === 'inverter' ? option : item.inverter) || null,
+              type: (name === 'type' ? option : item.type) || null,
+            }
+          : item;
+      });
+      setListItemDevice(listItemChange);
+    } else if (itemChange && itemChange?.type?.value !== 0) {
+      const listItemChange = listItemDevice.map((item) => {
+        return item.idx === itemChange?.idx
+          ? {
+              ...item,
+              area:
+                (name === 'area'
+                  ? option
+                  : {
+                      isDisable: true,
+                    }) || null,
+              company: (name === 'company' ? option : item.company) || null,
+              inverter: (name === 'inverter' ? option : item.inverter) || null,
+              type: (name === 'type' ? option : item.type) || null,
+            }
+          : item;
+      });
+      setListItemDevice(listItemChange);
+    } else {
+      //  Nếu chọn cả 3 trường là type và area, company thì sẽ gọi api cho inverter
+      const listItemChange = listItemDevice.map((item) => {
+        return item.idx === itemChange?.idx
+          ? {
+              ...item,
+              area:
+                (name === 'area'
+                  ? option
+                  : {
+                      ...item.area,
+                      isDisable: false,
+                    }) || null,
+              company: (name === 'company' ? option : item.company) || null,
+              inverter: (name === 'inverter' ? option : item.inverter) || null,
+              type: (name === 'type' ? option : item.type) || null,
+            }
+          : item;
+      });
+      setListItemDevice(listItemChange);
+    }
   };
 
-  console.log(listItemDevice, 'listItemDevice');
   const handleRegisterSubmit = () => {
     let validation = {};
     const rules = {
@@ -290,13 +322,14 @@ const SignUp = () => {
       });
       return;
     }
+    const listItemDevices = listItemDevice.map((item) => item.area?.value);
     const dataSubmit = {
       role: dataRegister.role,
       username: dataRegister.username || '',
       email,
       name: person || '',
       phone,
-      company: 1,
+      inverter_ids: listItemDevices,
     };
     // submit data
     dispatch(SignInAction.signUpRequest(dataSubmit));
