@@ -1,11 +1,13 @@
 // @flow
 import React, { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import ModalPopup from 'commons/components/Modal';
 import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
 import { Validator } from '../../../helpers/validator';
 import SignIn from './signIn';
+import * as SignInAction from '../redux';
 
 const SignUp = () => {
   // const history = useHistory();
@@ -67,8 +69,9 @@ const SignUp = () => {
   //   label: null,
   // };
 
+  const dispatch = useDispatch();
   const [dataLogin, setDataLogin] = useState({
-    userName: '',
+    username: '',
     password: '',
   });
   const [dataRegister, setDataRegister] = useState({
@@ -105,10 +108,10 @@ const SignUp = () => {
   ]);
   const handleChange = (value, name) => {
     switch (name) {
-      case 'userName':
+      case 'username':
         setDataLogin({
           ...dataLogin,
-          userName: value,
+          username: value,
         });
         break;
       case 'password':
@@ -122,11 +125,11 @@ const SignUp = () => {
     }
   };
 
-  const { userName, password } = dataLogin;
-  const { username, email, phone, person } = dataRegister;
+  const { username, password } = dataLogin;
+  const { email, phone, person } = dataRegister;
 
   const handleSubmit = () => {
-    if (!userName && !password) {
+    if (!username && !password) {
       setModalLogin({
         ...modalLogin,
         isShow: true,
@@ -134,7 +137,7 @@ const SignUp = () => {
       });
       return;
     }
-    if (!userName) {
+    if (!username) {
       setModalLogin({
         ...modalLogin,
         isShow: true,
@@ -149,6 +152,7 @@ const SignUp = () => {
         content: '아이디를 입력 해주세요.',
       });
     }
+    dispatch(SignInAction.signInRequest(dataLogin));
   };
 
   const handleKeyDown = (e) => {
@@ -251,7 +255,7 @@ const SignUp = () => {
     };
 
     const dataValidate = {
-      username,
+      username: dataRegister.username,
       email,
       phone,
       person,
@@ -313,9 +317,9 @@ const SignUp = () => {
             <Input
               placeholder="아이디를 입력하세요."
               type="text"
-              name="userName"
-              value={userName}
-              onChange={(e) => handleChange(e.target.value, 'userName')}
+              name="username"
+              value={username}
+              onChange={(e) => handleChange(e.target.value, 'username')}
               onKeyPress={handleKeyDown}
             />
 

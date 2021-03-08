@@ -1,7 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import COLOR_LABEL from 'constants/label';
-import IMG from 'constants/image';
+import images from 'themes/images';
 
 type Props = {
   data?: any,
@@ -22,17 +22,17 @@ export const LabelStatus = ({
 
   // set icon, unit and color label
   if (isPower) {
-    icon = IMG.POWER;
+    icon = images.icon_power;
     unit = '';
     color = COLOR_LABEL.POWER;
   }
   if (isTemperature) {
-    icon = IMG.TEMPERATURE;
+    icon = images.icon_temperature;
     unit = '단위 : ℃';
     color = COLOR_LABEL.TEMPERATURE;
   }
   if (isInsolation) {
-    icon = IMG.INSOLATION;
+    icon = images.icon_insolation;
     unit = '단위 : kWh/㎡·10초';
     color = COLOR_LABEL.INSOLATION;
   }
