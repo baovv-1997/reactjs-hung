@@ -7,8 +7,8 @@ import CardItem from './CardItem';
 type Props = {
   isLogoTop?: boolean,
   title?: string,
-  listItem?: Array,
-  listCompany?: Array,
+  listItem?: any,
+  listCompany?: any,
   logoClick: Function,
   titleClick: Function,
   customClass?: string,
