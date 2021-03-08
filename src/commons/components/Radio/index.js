@@ -6,17 +6,17 @@ type Props = {
   name?: string,
   onChange: Function,
   disabled?: boolean,
-  labelRadio?: string,
+  labelRadio: string,
   isChecked: boolean,
-  id?: string,
+  id: string,
 };
 
 export const Radio = ({
-  labelRadio = '',
+  labelRadio,
   name = '',
   isChecked,
   onChange,
-  id = '',
+  id,
   disabled = false,
 }: Props) => {
   return (
@@ -40,8 +40,6 @@ export const Radio = ({
 Radio.defaultProps = {
   name: '',
   disabled: false,
-  labelRadio: '',
-  id: '',
 };
 
 export default memo<Props>(Radio);

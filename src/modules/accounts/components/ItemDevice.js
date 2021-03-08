@@ -22,6 +22,7 @@ type Props = {
     value: any,
     label: string,
   }>,
+  listType: Array<{ id: number, value: any, label: string }>,
   handleRemove: Function,
   handleAddListDevice: Function,
   idx: any,
@@ -36,10 +37,22 @@ export const ItemDevice = ({
   handleRemove,
   handleAddListDevice,
   idx,
+  listType,
 }: Props) => {
   return (
     <div className="item-role mt-2">
       <div className="group-select">
+        <div className="group-item">
+          <SelectDropdown
+            placeholder="구분"
+            listItem={listType}
+            onChange={(option) =>
+              handleChangeOptionCompany(option, 'type', optionDevice?.idx)
+            }
+            option={optionDevice?.type || null}
+          />
+          <img src={images.icon_next} alt="" />
+        </div>
         <div className="group-item">
           <SelectDropdown
             placeholder="업체 선택"
