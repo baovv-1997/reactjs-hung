@@ -7,7 +7,7 @@ import Loading from 'commons/components/Loading';
 // import { API } from '../apis';
 
 import SingIn from 'modules/accounts/components/index';
-import MainPage from 'modules/mainPage/components';
+import MainPage from 'modules/mainPage/components/Dashboard';
 
 const Router = () => {
   // const dispatch = useDispatch();
