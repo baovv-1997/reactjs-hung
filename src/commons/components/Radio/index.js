@@ -5,19 +5,19 @@ import React, { memo } from 'react';
 type Props = {
   name?: string,
   onChange: Function,
-  disabled: boolean,
-  labelRadio: string,
+  disabled?: boolean,
+  labelRadio?: string,
   isChecked: boolean,
-  id: string,
+  id?: string,
 };
 
 export const Radio = ({
-  labelRadio,
+  labelRadio = '',
   name = '',
   isChecked,
   onChange,
-  id,
-  disabled,
+  id = '',
+  disabled = false,
 }: Props) => {
   return (
     <div className="wrap-radio">
@@ -39,6 +39,9 @@ export const Radio = ({
 
 Radio.defaultProps = {
   name: '',
+  disabled: false,
+  labelRadio: '',
+  id: '',
 };
 
 export default memo<Props>(Radio);

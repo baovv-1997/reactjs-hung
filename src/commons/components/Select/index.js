@@ -69,6 +69,7 @@ const SelectDropdown = ({
           value={option || null}
           onChange={onChange}
           noOptionsMessage={noOptionsMessage}
+          // menuIsOpen
           options={
             noLabel
               ? listOptionString.map((item) => ({

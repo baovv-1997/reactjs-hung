@@ -6,7 +6,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 import { persistStore, persistReducer } from 'redux-persist';
 import { seamlessImmutableReconciler } from 'redux-persist-seamless-immutable';
 import appReducers from './rootReducer';
-// import rootSagas from './rootSagas';
+import rootSagas from './rootSagas';
 
 // creates the store
 export default () => {
@@ -46,7 +46,7 @@ export default () => {
   const persistor = persistStore(store);
 
   // kick off root saga
-  // sagaMiddleware.run(rootSagas);
+  sagaMiddleware.run(rootSagas);
 
   return { store, persistor };
 };

@@ -1,0 +1,67 @@
+.label-status {
+  background-color: $bg-button;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: pxToRem(452);
+  height: pxToRem(139);
+
+  &__icon {
+    width: pxToRem(127);
+    height: pxToRem(127);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    object-fit: contain;
+    opacity: 0.35;
+  }
+
+  &__body {
+    display: flex;
+  }
+
+  &__content {
+    margin: 0 pxToRem(10);
+  }
+
+  &__title {
+    font-size: pxToRem(15);
+    line-height: pxToRem(22);
+    letter-spacing: pxToRem(-0.45);
+    margin-bottom: pxToRem(10);
+    color: $white;
+  }
+
+  &__group-value {
+    // color: $color-label-power;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  &__value {
+    font-family: $Roboto-Font;
+    font-weight: bold;
+    font-size: pxToRem(40);
+    line-height: pxToRem(48);
+    letter-spacing: pxToRem(-1.2);
+    margin-right: pxToRem(7);
+  }
+
+  &__unit {
+    font-size: pxToRem(14);
+    line-height: pxToRem(20);
+    letter-spacing: pxToRem(-0.42);
+  }
+
+  &__group-unit {
+    position: absolute;
+    bottom: pxToRem(6);
+    right: pxToRem(10);
+    // color: $color-label-power;
+    font-size: pxToRem(14);
+    line-height: pxToRem(20);
+    letter-spacing: pxToRem(-0.42);
+  }
+}

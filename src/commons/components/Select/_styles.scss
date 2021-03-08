@@ -31,7 +31,7 @@
   line-height: pxToRem(30);
 
   * {
-    cursor: pointer;
+    cursor: pointer !important;
   }
 
   .error-msg {
@@ -55,16 +55,16 @@
     line-height: pxToRem(30);
     padding-right: pxToRem(30);
     padding-left: 0 !important;
-    font-weight: $black;
-    font-family: $NanumSquare-Font;
     font-size: pxToRem(14);
     position: absolute;
+    height: auto !important;
+    min-height: auto !important;
   }
 
   .css-yk16xz-control {
     min-height: pxToRem(40);
     max-height: pxToRem(40);
-    border: pxToRem(1) solid $color-light8;
+    border: pxToRem(1) solid $color-light8 !important;
     background-color: transparent;
 
     .css-g1d714-ValueContainer,
@@ -81,10 +81,10 @@
       content: "";
       position: absolute;
       display: inline-block;
-      background-image: url('../../../assets/images/icon_arrowBB.svg');
+      background-image: url('../../../assets/images/icon_boxarrow_d.svg');
       background-repeat: no-repeat;
       width: pxToRem(12);
-      height: pxToRem(7);
+      height: pxToRem(9);
       top: 50%;
       @include transform-translateY(-50%);
       right: pxToRem(15);
@@ -187,6 +187,11 @@
   .css-26l3qy-menu {
     z-index: 10;
     margin-bottom: pxToRem(60);
+
+    * {
+      font-size: pxToRem(16);
+      border-bottom: 0.0625rem solid #e6e6e6;
+    }
   }
 }
 
@@ -215,7 +220,7 @@
 .css-g1d714-ValueContainer {
   min-height: pxToRem(40);
   max-height: pxToRem(40);
-  overflow: visible i !important;
+  overflow: visible !important;
 }
 
 .css-yt9ioa-option,
