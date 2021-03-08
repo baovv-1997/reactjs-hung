@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
 // import Header from '../../components/Header';
-import Menu from '../Menu';
+import SidebarMenu from '../Menu';
 
 type Props = {
   children: React.AbstractComponent<{}>,
@@ -45,7 +45,7 @@ export const MainLayout = ({ children }: Props) => {
         </div>
       </div>
       <div className={`sidebar ${isOpen ? 'show' : ''} ${classHeight}`}>
-        <Menu innerRef={refMenu} />
+        <SidebarMenu innerRef={refMenu} />
       </div>
       <div className="main-content" ref={mainContent}>
         <div className="content">

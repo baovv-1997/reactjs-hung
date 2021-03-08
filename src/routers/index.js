@@ -1,26 +1,22 @@
 // @flow
 
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
 // import { API } from '../apis';
-
+// components
 import SingIn from 'modules/accounts/components/index';
 
-const Router = () => {
-  // const dispatch = useDispatch();
+const MainPage = lazy(() => import('modules/main/components'));
 
-  // const token = useSelector((state) => state?.account?.token);
-  // if (token) {
-  //   API.setHeader('Authorization', `Bearer ${token}`);
-  // }
-  // const isAuthenticated = token !== '';
+const Router = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
+          <Route exact path={ROUTERS.ROOT} component={MainPage} />
         </Switch>
       </Suspense>
     </BrowserRouter>
