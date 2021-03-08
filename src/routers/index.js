@@ -1,14 +1,18 @@
 // @flow
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
-// import { API } from '../apis';
+import { API } from '../apis';
 // components
 import SingIn from 'modules/accounts/components/index';
-
-const MainPage = lazy(() => import('modules/main/components'));
+import MainPage from 'modules/main/components';
+const token = useSelector((state) => state?.account?.token);
+if (token) {
+  API.setHeader('Authorization', `Bearer ${token}`);
+}
 
 const Router = () => {
   return (

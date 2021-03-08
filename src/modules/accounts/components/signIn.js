@@ -26,6 +26,7 @@ type Props = {
     value: any,
     label: string,
   }>,
+  listType: Array<{}>,
   handleRemove: Function,
   listItemDevice: Array<{
     idx: any,
@@ -48,6 +49,7 @@ const SignIn = ({
   handleRemove,
   listItemDevice,
   handleAddListDevice,
+  listType,
 }: Props) => {
   const { username, email, phone, person, role } = dataRegister;
 
@@ -63,6 +65,7 @@ const SignIn = ({
         listCompany={listCompany}
         listArea={listArea}
         listInverter={listInverter}
+        listType={listType}
         handleRemove={handleRemove}
         handleAddListDevice={handleAddListDevice}
       />
@@ -85,25 +88,23 @@ const SignIn = ({
             <div className="item-content">
               <div className="group-radio">
                 <Radio
-                  onChange={() =>
-                    handleChangeRegister('superAdmin', 'superAdmin')
-                  }
-                  isChecked={role === 'superAdmin'}
-                  name="superAdmin"
+                  onChange={() => handleChangeRegister('admin', 'admin')}
+                  isChecked={role === 'admin'}
+                  name="role"
                   labelRadio="최고 관리자"
                 />
                 <Radio
                   onChange={() => handleChangeRegister('company', 'company')}
                   isChecked={role === 'company'}
                   labelRadio="업체"
-                  name="company"
+                  name="role"
                 />
                 <Radio
                   onChange={() =>
                     handleChangeRegister('monitoring', 'monitoring')
                   }
                   isChecked={role === 'monitoring'}
-                  name="monitoring"
+                  name="role"
                   labelRadio="모니터링"
                 />
               </div>

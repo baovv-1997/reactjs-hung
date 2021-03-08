@@ -12,17 +12,15 @@ function* signIn(action) {
     );
 
     if (response.ok) {
-      const { data } = response.data;
-
+      const { data } = response;
       // In case: signup request success
       yield put({ type: SignInAction.signInRequestSuccess, data });
     } else {
-      const { msg, code } = response?.data?.status;
+      const { data } = response;
       // In case: signup request failed
       yield put({
         type: SignInAction.signInRequestFailed,
-        errorMsg: msg.message,
-        status: code,
+        errorMsg: data?.error_msg,
       });
     }
   } catch (error) {
