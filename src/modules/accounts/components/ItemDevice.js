@@ -7,10 +7,24 @@ import images from 'themes/images';
 type Props = {
   handleChangeOptionCompany: Function,
   optionDevice: Object,
-  listCompany: Array<{}>,
-  listArea: Array<{}>,
-  listInverter: Array<{}>,
+  listCompany: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
+  listArea: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
+  listInverter: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
   handleRemove: Function,
+  handleAddListDevice: Function,
+  idx: any,
 };
 
 export const ItemDevice = ({
@@ -20,6 +34,8 @@ export const ItemDevice = ({
   listArea,
   listInverter,
   handleRemove,
+  handleAddListDevice,
+  idx,
 }: Props) => {
   return (
     <div className="item-role mt-2">
@@ -28,7 +44,9 @@ export const ItemDevice = ({
           <SelectDropdown
             placeholder="업체 선택"
             listItem={listCompany}
-            onChange={(option) => handleChangeOptionCompany(option)}
+            onChange={(option) =>
+              handleChangeOptionCompany(option, 'company', optionDevice?.idx)
+            }
             option={optionDevice?.company || null}
           />
           <img src={images.icon_next} alt="" />
@@ -37,7 +55,9 @@ export const ItemDevice = ({
           <SelectDropdown
             placeholder="구역 선택"
             listItem={listArea}
-            onChange={(option) => handleChangeOptionCompany(option)}
+            onChange={(option) =>
+              handleChangeOptionCompany(option, 'area', optionDevice?.idx)
+            }
             option={optionDevice?.area || null}
           />
           <img src={images.icon_next} alt="" />
@@ -46,12 +66,18 @@ export const ItemDevice = ({
           <SelectDropdown
             placeholder="인버터 선택"
             listItem={listInverter}
-            onChange={(option) => handleChangeOptionCompany(option)}
+            onChange={(option) =>
+              handleChangeOptionCompany(option, 'inverter', optionDevice?.idx)
+            }
             option={optionDevice?.inverter || null}
           />
         </div>
       </div>
-      <Button onClick={() => handleRemove()}>삭제</Button>
+      {idx === 0 ? (
+        <Button onClick={handleAddListDevice}>추가</Button>
+      ) : (
+        <Button onClick={() => handleRemove(optionDevice)}>삭제</Button>
+      )}
     </div>
   );
 };

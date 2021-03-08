@@ -1,25 +1,39 @@
 // @flow
 import React, { memo } from 'react';
 import Input from 'commons/components/Input';
-import Button from 'commons/components/Button';
 import Radio from 'commons/components/Radio';
-import SelectDropdown from 'commons/components/Select';
-import ItemDevice from './ItemDevice';
-import images from 'themes/images';
 import { isNumberKey, isOnPasteNumber } from 'helpers/index';
+import ItemDevice from './ItemDevice';
 
 type Props = {
   dataRegister: Object,
   handleKeyDown: Function,
   handleChangeRegister: Function,
   handleChangeOptionCompany: Function,
-  optionCompany: Object,
-  listCompany: Array<{}>,
+  listCompany: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
   texTerror: Object,
-  optionDevice: Object,
-  listArea: Array<{}>,
-  listInverter: Array<{}>,
+  listArea: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
+  listInverter: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
   handleRemove: Function,
+  listItemDevice: Array<{
+    idx: any,
+    company: Object,
+    area: Object,
+    inverter: Object,
+  }>,
+  handleAddListDevice: Function,
 };
 
 const SignIn = ({
@@ -27,15 +41,32 @@ const SignIn = ({
   handleKeyDown,
   handleChangeRegister,
   handleChangeOptionCompany,
-  optionCompany,
   listCompany,
   texTerror,
-  optionDevice,
   listArea,
   listInverter,
   handleRemove,
+  listItemDevice,
+  handleAddListDevice,
 }: Props) => {
   const { username, email, phone, person, role } = dataRegister;
+
+  const renderListItemDevice =
+    listItemDevice &&
+    listItemDevice.map((item, index) => (
+      <ItemDevice
+        key={item.idx}
+        {...item}
+        optionDevice={item}
+        idx={index}
+        handleChangeOptionCompany={handleChangeOptionCompany}
+        listCompany={listCompany}
+        listArea={listArea}
+        listInverter={listInverter}
+        handleRemove={handleRemove}
+        handleAddListDevice={handleAddListDevice}
+      />
+    ));
 
   return (
     <div className="page-register">
@@ -158,47 +189,7 @@ const SignIn = ({
             <div className="item-label">
               관리기기<span>*</span>
             </div>
-            <div className="item-content">
-              <div className="item-role">
-                <div className="group-select">
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="업체 선택"
-                      listItem={listCompany}
-                      onChange={(option) => handleChangeOptionCompany(option)}
-                      option={optionCompany}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="구역 선택"
-                      listItem={listCompany}
-                      onChange={(option) => handleChangeOptionCompany(option)}
-                      option={optionCompany}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="인버터 선택"
-                      listItem={listCompany}
-                      onChange={(option) => handleChangeOptionCompany(option)}
-                      option={optionCompany}
-                    />
-                  </div>
-                </div>
-                <Button onClick={() => {}}>추가</Button>
-              </div>
-              <ItemDevice
-                handleChangeOptionCompany={handleChangeOptionCompany}
-                optionDevice={optionDevice}
-                listCompany={listCompany}
-                listArea={listArea}
-                listInverter={listInverter}
-                handleRemove={handleRemove}
-              />
-            </div>
+            <div className="item-content">{renderListItemDevice}</div>
           </div>
         </div>
       </div>

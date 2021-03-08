@@ -4,7 +4,7 @@ import COLOR_LABEL from 'constants/label';
 import IMG from 'constants/image';
 
 type Props = {
-  data?: Array,
+  data?: any,
   isPower?: boolean,
   isTemperature?: boolean,
   isInsolation?: boolean,

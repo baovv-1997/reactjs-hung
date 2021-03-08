@@ -8,7 +8,6 @@ import ERROR_MESSAGE from '../constants/errorMsg';
 export const Validator = (objectVal: Object, validate: Object) => {
   const error = {};
   const keys = Object.keys(objectVal);
-  console.log(validate, 'keys');
   for (let i = 0, { length } = keys; i < length; i += 1) {
     const key = keys[i];
     const rules = validate[key];
