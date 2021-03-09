@@ -64,7 +64,7 @@ const MenuItem = ({ item, listSub, handleClickItem, isActive }: Props) => {
       onKeyPress={() => {}}
     >
       <Link
-        to={to}
+        to={to || '#'}
         className={`item__link ${isActive ? 'active' : ''} ${
           isActive && !sub ? 'active-link' : ''
         }`}

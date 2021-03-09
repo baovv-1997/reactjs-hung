@@ -1,6 +1,6 @@
 import React from 'react';
 import MainLayout from 'layout/MainLayout';
-import mockDataMain, { mockLocationArea } from 'constants/mainData';
+import mockDataMain, { mockLocationArea } from 'mockData/mainData';
 
 import images from 'themes/images';
 import InfoReality from '../InfoReality';

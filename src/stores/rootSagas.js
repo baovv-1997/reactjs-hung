@@ -7,6 +7,8 @@ import getListCompanySaga from 'modules/accounts/sagas/getListCompanySaga';
 import getListAreaSaga from 'modules/accounts/sagas/getListAreaSaga';
 import getListInverterSaga from 'modules/accounts/sagas/getListInverterSaga';
 
+import getListStatusCompanySaga from 'modules/statusCompany/sagas/getListCompanySaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -14,5 +16,6 @@ export default function* RootSagas() {
     getListCompanySaga(),
     getListAreaSaga(),
     getListInverterSaga(),
+    getListStatusCompanySaga(),
   ]);
 }

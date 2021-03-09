@@ -5,9 +5,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
+
 // components
 import SingIn from 'modules/accounts/components/index';
 import MainPage from 'modules/main/components/Dashboard';
+import StatusCompany from 'modules/statusCompany/components';
 import { API } from '../apis';
 
 const Router = () => {
@@ -21,6 +23,11 @@ const Router = () => {
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
           <Route exact path={ROUTERS.ROOT} component={MainPage} />
+          <Route
+            exact
+            path={ROUTERS.STATUS_COMPANY}
+            component={StatusCompany}
+          />
         </Switch>
       </Suspense>
     </BrowserRouter>

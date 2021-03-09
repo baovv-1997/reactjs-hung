@@ -1,0 +1,100 @@
+table {
+  text-align: center;
+
+  tbody td,
+  th {
+    vertical-align: middle !important;
+    border: solid pxToRem(1) $color-light-dd;
+  }
+
+  thead th {
+    white-space: nowrap;
+    height: pxToRem(50);
+    padding: pxToRem(12) pxToRem(1) pxToRem(15) pxToRem(15);
+    background-color: $color-light-68;
+    border: 0;
+    color: $white;
+    text-align: center;
+    font-size: pxToRem(17);
+    font-weight: bold;
+    line-height: 1.18;
+    letter-spacing: pxToRem(-0.51);
+  }
+
+  tbody {
+    tbody {
+      tr {
+        background-color: $bg-light10;
+
+        &:nth-of-type(odd) {
+          background-color: $white;
+        }
+      }
+
+      td {
+        font-size: pxToRem(15);
+        font-weight: normal;
+        line-height: 1.2;
+        letter-spacing: pxToRem(-0.51);
+        text-align: center;
+        color: $black-active;
+      }
+    }
+
+    .row-active {
+      @include transition(0.3s);
+
+      td {
+        color: $white;
+      }
+
+      &:hover {
+        td {
+          color: $white;
+        }
+
+        @include transition(0.1s);
+      }
+    }
+  }
+}
+
+
+@include breakpoint(lg1280) {
+  .table {
+    width: 150% !important;
+
+    tr th {
+      min-width: pxToRem(150);
+    }
+  }
+
+  .table-status {
+    padding-right: 0 !important;
+    margin-top: pxToRem(16);
+
+    .table {
+      width: 100% !important;
+    }
+  }
+}
+
+.row-cursor-pointer {
+  cursor: pointer;
+}
+
+.selectorActive {
+  position: relative;
+  padding-right: 20px;
+
+  .customer-select {
+    min-width: pxToRem(100);
+  }
+
+  .spinner-border {
+    width: pxToRem(15) !important;
+    height: pxToRem(15) !important;
+    position: absolute;
+    right: pxToRem(0);
+  }
+}
