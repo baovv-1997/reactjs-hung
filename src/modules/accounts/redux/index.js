@@ -72,7 +72,6 @@ const accountSlice = createSlice({
           id: item.id,
           value: item.id,
           label: item.pos_name,
-          isDisable: false,
         }));
       state.listArea = listArea || [];
       state.type = action.type;

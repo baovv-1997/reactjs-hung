@@ -26,13 +26,14 @@ type Props = {
     value: any,
     label: string,
   }>,
-  listType: Array<{}>,
+  listType: Array<{ id: number, value: any, label: string }>,
   handleRemove: Function,
   listItemDevice: Array<{
     idx: any,
     company: Object,
     area: Object,
     inverter: Object,
+    type: Object,
   }>,
   handleAddListDevice: Function,
 };
@@ -92,12 +93,14 @@ const SignIn = ({
                   isChecked={role === 'admin'}
                   name="role"
                   labelRadio="최고 관리자"
+                  id="admin"
                 />
                 <Radio
                   onChange={() => handleChangeRegister('company', 'company')}
                   isChecked={role === 'company'}
                   labelRadio="업체"
                   name="role"
+                  id="company"
                 />
                 <Radio
                   onChange={() =>
@@ -106,6 +109,7 @@ const SignIn = ({
                   isChecked={role === 'monitoring'}
                   name="role"
                   labelRadio="모니터링"
+                  id="monitoring"
                 />
               </div>
             </div>
