@@ -6,7 +6,9 @@ import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import * as StatusCompanyAction from '../redux';
-import { listMockupType } from 'mockData/listCompany';
+import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
+import { headStatusCompany } from 'constants/headerTable';
+import Table from 'commons/components/Table';
 
 const StatusCompanyPage = () => {
   const { isProcessing, listStatusCompanySelect } = useSelector(
@@ -84,6 +86,13 @@ const StatusCompanyPage = () => {
 
             <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
             <ul className="list-item-select">{renderListMocKup}</ul>
+          </div>
+          <div className="content-body-left">
+            <Table
+              tableHeads={headStatusCompany}
+              tableBody={listMockupDataCompany}
+              // isShowId
+            />
           </div>
         </div>
       </div>
