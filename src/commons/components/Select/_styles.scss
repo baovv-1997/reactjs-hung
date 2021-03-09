@@ -188,6 +188,10 @@
     z-index: 10;
     margin-bottom: pxToRem(60);
 
+    .css-4ljt47-MenuList * {
+      padding: 0.3125rem 0.5rem !important;
+    }
+
     * {
       font-size: pxToRem(16);
       border-bottom: 0.0625rem solid #e6e6e6;
