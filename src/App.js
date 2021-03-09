@@ -6,12 +6,13 @@ import './App.scss';
 import { Provider } from 'react-redux';
 import Router from 'routers';
 import createStore from './stores/createStore';
+import Loading from 'commons/components/Loading';
 
 function App() {
   const { store, persistor } = createStore();
   return (
     <div className="App">
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
         <Provider store={store}>
           <Router />
         </Provider>

@@ -43,9 +43,10 @@ const Submenu = ({
           tabIndex={0}
           role="menuitem"
           onKeyPress={() => {}}
+          key={item.id}
         >
           <Link
-            to={item.to}
+            to={item?.to || '#'}
             className={`item__link item-link-nest-sub ${
               activeNestItem ? 'active-link' : ''
             }`}

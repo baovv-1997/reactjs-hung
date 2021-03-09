@@ -6,6 +6,7 @@
   align-items: center;
   width: calc(100% - 200px);
   padding: pxToRem(15) pxToRem(40) pxToRem(15) 0;
+  z-index: 999;
 
   &__right {
     display: flex;
