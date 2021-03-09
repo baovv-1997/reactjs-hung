@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import Circle from 'react-colorful-circle';
 
 type Props = {
   data: any,
@@ -21,8 +20,7 @@ const VitualData = ({ data }: Props) => {
               <p className="vitual-data__name">{item.name}</p>
               <p className="vitual-data__unit">{item.unit}</p>
             </div>
-            {/* <div className="vitual-data__param">{item.value}</div> */}
-            <Circle progress={item.value} bgColor="#ecedf0" size="70" />
+            <div className="vitual-data__param">{item.value}</div>
           </div>
         ))}
       </div>
