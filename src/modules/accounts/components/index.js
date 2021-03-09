@@ -6,12 +6,12 @@ import ModalPopup from 'commons/components/Modal';
 import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
 import Loading from 'commons/components/Loading';
-import { Validator } from '../../../helpers/validator';
-import SignIn from './signIn';
 import { API } from 'apis';
-import * as SignInAction from '../redux';
 import ROUTERS from 'constants/routers';
 import { listType } from 'constants/listKey';
+import { Validator } from '../../../helpers/validator';
+import SignIn from './signIn';
+import * as SignInAction from '../redux';
 
 const SignUp = () => {
   const history = useHistory();
@@ -47,6 +47,7 @@ const SignUp = () => {
     role: '',
   });
 
+  const [isModalRegisterSuccess, setIsModalRegisterSuccess] = useState(false);
   const [isShowModalRegister, setIsShowModalRegister] = useState(false);
 
   const [modalLogin, setModalLogin] = useState({
@@ -78,6 +79,16 @@ const SignUp = () => {
           content: errorMsg,
         });
         break;
+      case SignInAction.signUpRequestSuccess:
+        setIsModalRegisterSuccess(true);
+        break;
+      case SignInAction.signUpRequestFailed:
+        setModalLogin({
+          ...modalLogin,
+          isShow: true,
+          content: '등록 요청이 완료되지 않았습니다.',
+        });
+        break;
       default:
         break;
     }
@@ -91,7 +102,7 @@ const SignUp = () => {
       dispatch(SignInAction.getListCompany());
       dispatch(SignInAction.getListArea());
     }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [isShowModalRegister]);
 
   const handleChange = (value, name) => {
@@ -216,75 +227,84 @@ const SignUp = () => {
         break;
     }
   };
+
   const handleChangeOptionCompany = (option, name, idx) => {
     const itemChange = listItemDevice.find((item) => item.idx === idx);
-    const { company } = itemChange;
+    const listItemChange = listItemDevice.map((item) => {
+      return {
+        ...item,
+        area: null,
+        company: null,
+        inverter: null,
+        type: (name === 'type' ? option : item.type) || null,
+      };
+    });
+    const listItemCompany = listItemDevice.map((item) => {
+      return item.idx === itemChange?.idx
+        ? {
+            ...item,
+            area: null,
+            company: (name === 'company' ? option : item.company) || null,
+            inverter: null,
+          }
+        : item;
+    });
 
-    dispatch(
-      SignInAction.getListInverter({
-        per_page: 0,
-        pos_id: option?.value,
-        com_id: company?.value,
-        type: itemChange?.type?.value,
-      })
-    );
-    //  Nếu chọn type bằng 실증단지 thì  disable  select area
-    if (name === 'type' && option?.value !== 0) {
-      const listItemChange = listItemDevice.map((item) => {
-        return item.idx === itemChange?.idx
-          ? {
-              ...item,
-              area:
-                (name === 'area'
-                  ? option
-                  : {
-                      isDisable: true,
-                    }) || null,
-              company: (name === 'company' ? option : item.company) || null,
-              inverter: (name === 'inverter' ? option : item.inverter) || null,
-              type: (name === 'type' ? option : item.type) || null,
-            }
-          : item;
-      });
-      setListItemDevice(listItemChange);
-    } else if (itemChange && itemChange?.type?.value !== 0) {
-      const listItemChange = listItemDevice.map((item) => {
-        return item.idx === itemChange?.idx
-          ? {
-              ...item,
-              area:
-                (name === 'area'
-                  ? option
-                  : {
-                      isDisable: true,
-                    }) || null,
-              company: (name === 'company' ? option : item.company) || null,
-              inverter: (name === 'inverter' ? option : item.inverter) || null,
-              type: (name === 'type' ? option : item.type) || null,
-            }
-          : item;
-      });
-      setListItemDevice(listItemChange);
-    } else {
-      //  Nếu chọn cả 3 trường là type và area, company thì sẽ gọi api cho inverter
-      const listItemChange = listItemDevice.map((item) => {
-        return item.idx === itemChange?.idx
-          ? {
-              ...item,
-              area:
-                (name === 'area'
-                  ? option
-                  : {
-                      ...item.area,
-                      isDisable: false,
-                    }) || null,
-              company: (name === 'company' ? option : item.company) || null,
-              inverter: (name === 'inverter' ? option : item.inverter) || null,
-              type: (name === 'type' ? option : item.type) || null,
-            }
-          : item;
-      });
-      setListItemDevice(listItemChange);
+    const listItemArea = listItemDevice.map((item) => {
+      return item.idx === itemChange?.idx
+        ? {
+            ...item,
+            area: (name === 'area' ? option : item.area) || null,
+            inverter: null,
+          }
+        : item;
+    });
+
+    const listItemChange2 = listItemDevice.map((item) => {
+      return item.idx === itemChange?.idx
+        ? {
+            ...item,
+            area: (name === 'area' ? option : item.area) || null,
+            company: (name === 'company' ? option : item.company) || null,
+            inverter: (name === 'inverter' ? option : item.inverter) || null,
+            type: (name === 'type' ? option : item.type) || null,
+          }
+        : item;
+    });
+    switch (name) {
+      case 'type':
+        setListItemDevice(listItemChange);
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            type: option?.value,
+          })
+        );
+        break;
+      case 'company':
+        setListItemDevice(listItemCompany);
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            type: itemChange?.type?.value,
+            com_id: option?.value,
+          })
+        );
+        break;
+      case 'area':
+        setListItemDevice(listItemArea);
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            type: itemChange?.type?.value,
+            com_id: itemChange?.company?.value,
+            pos_id: option?.value,
+          })
+        );
+        break;
+      default:
+        setListItemDevice(listItemChange2);
+        break;
     }
   };
 
@@ -311,7 +331,7 @@ const SignUp = () => {
 
     const checkValidator = listItemDevice.filter(
       (item) =>
-        item.area === null || item.company === null || item.inverter === null
+        item.type === null || item.company === null || item.inverter === null
     );
 
     if (checkValidator && checkValidator.length > 0) {
@@ -348,6 +368,9 @@ const SignUp = () => {
         idx: Math.random(),
         company: null,
         area: null,
+        type:
+          (listItemDevice && listItemDevice[0] && listItemDevice[0].type) ||
+          null,
         inverter: null,
       },
     ]);
@@ -455,6 +478,25 @@ const SignUp = () => {
           listArea={listArea}
           listType={listType}
         />
+      </ModalPopup>
+      {/* Modal register success */}
+      <ModalPopup
+        isOpen={isModalRegisterSuccess}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() => {
+          setIsModalRegisterSuccess(false);
+          setIsShowModalRegister(false);
+        }}
+        handleClose={() => {
+          setIsModalRegisterSuccess(false);
+          setIsShowModalRegister(false);
+        }}
+        textBtnRight="확인"
+      >
+        등록 요청이 완료되었습니다.
       </ModalPopup>
     </div>
   );

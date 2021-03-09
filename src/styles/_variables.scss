@@ -4,9 +4,11 @@ $viewPort: 360;
 
 // font weight
 
-$Noto-Sans-Font: 'Noto Sans KR', 'sans-serif';
+$Noto-Sans-Font: 'Noto Sans KR',
+'sans-serif';
 $NanumSquare-Font: 'NanumSquare';
-$Roboto-Font: 'Roboto', 'sans-serif';
+$Roboto-Font: 'Roboto',
+'sans-serif';
 $thin: 100;
 $extraLight: 200;
 $light: 300;
@@ -132,14 +134,13 @@ $bg-sidebar: #2f353a;
 $gray-light: #d7d8df;
 $black-transparent: #0000003d;
 $black-light: #222222;
-$alto-ess: #eee;
+$alto-ess: #eeeeee;
 
 $box-shadow-card: rgba(21, 27, 35, 0.46);
 $text-card: #3b3b3b;
 $color-border-card: #e3e3e3;
 $color-number-card: #232323;
-$progress-default: rgba(
-  $color: #d1d1d1,
+$progress-default: rgba($color: #d1d1d1,
   $alpha: 0.42,
 );
 $color-progress1: #5d86ff;
@@ -160,3 +161,9 @@ $bg-light10: #f3f5f8;
 $color-label-event: #ff3020;
 $color-input-search: #5b5b5b;
 $color-hover: #dddddd;
+$color-light-e7: #e7e7e7;
+$color-light-f8: #f8f8f8;
+$color-light-b8: #b8b8b8;
+$color-light-db: #dbdbdb;
+$color-light-68: #686d7a;
+$color-light-dd: #dddedf

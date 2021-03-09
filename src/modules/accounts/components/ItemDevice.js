@@ -50,6 +50,7 @@ export const ItemDevice = ({
               handleChangeOptionCompany(option, 'type', optionDevice?.idx)
             }
             option={optionDevice?.type || null}
+            disabled={idx !== 0}
           />
           <img src={images.icon_next} alt="" />
         </div>
@@ -68,11 +69,17 @@ export const ItemDevice = ({
           <SelectDropdown
             placeholder="구역 선택"
             listItem={listArea}
-            disabled={optionDevice?.area?.isDisable}
+            disabled={
+              optionDevice?.type?.value
+                ? optionDevice?.type?.value !== 0
+                : false
+            }
             onChange={(option) =>
               handleChangeOptionCompany(option, 'area', optionDevice?.idx)
             }
-            option={optionDevice?.area || null}
+            option={
+              optionDevice?.type?.value ? null : optionDevice?.area || null
+            }
           />
           <img src={images.icon_next} alt="" />
         </div>

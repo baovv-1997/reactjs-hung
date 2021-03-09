@@ -13,6 +13,8 @@ const IMAGES = {
   icon_search: require('assets/images/icon-search.png'),
   setup: require('assets/images/setup.png'),
   iconTitle: require('assets/images/icon_title.png'),
+  icon_title_header: require('assets/images/title_icon.png'),
+  icon_arrow: require('assets/images/icon_arrow.png'),
 };
 
 export default IMAGES;

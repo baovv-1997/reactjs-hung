@@ -1,0 +1,54 @@
+.wrap-title {
+  position: relative;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: pxToRem(20);
+
+    img {
+      width: pxToRem(17);
+      height: pxToRem(17);
+      margin-right: pxToRem(10);
+    }
+
+    &__name {
+      font-size: pxToRem(20);
+      font-weight: $black;
+      line-height: 1.45;
+      letter-spacing: pxToRem(-0.6);
+      text-align: left;
+      color: $bg-button;
+    }
+  }
+}
+
+.wrap-title-sub {
+  position: relative;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: pxToRem(15);
+
+    img {
+      width: pxToRem(12);
+      height: pxToRem(14);
+      margin-right: pxToRem(10);
+    }
+
+    &__name {
+      font-size: pxToRem(18);
+      font-weight: $black;
+      line-height: 1.45;
+      letter-spacing: pxToRem(-0.54);
+      text-align: left;
+      color: $bg-button;
+
+      span {
+        font-size: pxToRem(15);
+        font-weight: normal;
+      }
+    }
+  }
+}

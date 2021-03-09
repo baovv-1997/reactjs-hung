@@ -39,7 +39,7 @@ export const DASHBOARD = {
             {
               id: 1,
               name: '업체별 현황',
-              to: '#',
+              to: ROUTERS.STATUS_COMPANY,
             },
             {
               id: 2,

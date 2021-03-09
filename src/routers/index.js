@@ -5,11 +5,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
-// components
+import StatusCompany from 'modules/statusCompany/components';
 import { API } from '../apis';
 
 // components
-
 const MainPage = lazy(() => import('modules/main/components'));
 const DeviceManagement = lazy(() => import('modules/device/components'));
 const SingIn = lazy(() => import('modules/accounts/components'));
@@ -25,6 +24,11 @@ const Router = () => {
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
           <Route exact path={ROUTERS.ROOT} component={MainPage} />
+          <Route
+            exact
+            path={ROUTERS.STATUS_COMPANY}
+            component={StatusCompany}
+          />
           <Route
             exact
             path={ROUTERS.DeviceManagement}
