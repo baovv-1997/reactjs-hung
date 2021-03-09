@@ -11,6 +11,8 @@ const IMAGES = {
   icon_insolation: require('assets/images/icon_label/icon-insolation.png'),
   icon_event: require('assets/images/icon-event.png'),
   icon_search: require('assets/images/icon-search.png'),
+  setup: require('assets/images/setup.png'),
+  iconTitle: require('assets/images/icon_title.png'),
 };
 
 export default IMAGES;
