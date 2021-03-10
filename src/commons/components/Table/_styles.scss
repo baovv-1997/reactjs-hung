@@ -22,23 +22,22 @@ table {
   }
 
   tbody {
-    tbody {
-      tr {
-        background-color: $bg-light10;
+    tr {
+      background-color: $bg-light10;
 
-        &:nth-of-type(odd) {
-          background-color: $white;
-        }
+      &:nth-of-type(odd) {
+        background-color: $white;
       }
+    }
 
-      td {
-        font-size: pxToRem(15);
-        font-weight: normal;
-        line-height: 1.2;
-        letter-spacing: pxToRem(-0.51);
-        text-align: center;
-        color: $black-active;
-      }
+    td {
+      font-size: pxToRem(15);
+      font-weight: normal;
+      line-height: 1.2;
+      letter-spacing: pxToRem(-0.51);
+      text-align: center;
+      color: $black-active;
+      padding: pxToRem(12) pxToRem(5)
     }
 
     .row-active {

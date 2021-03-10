@@ -44,3 +44,111 @@
     }
   }
 }
+
+.page-company {
+  display: flex;
+
+  .content-body-left {
+    margin-left: pxToRem(20);
+  }
+}
+
+.tab-list.nav.nav-tabs {
+  border: 0;
+
+  .nav-item {
+    height: pxToRem(60);
+    padding: pxToRem(10) pxToRem(15);
+    border: solid pxToRem(1) $color-light10;
+    background-color: $white;
+    margin: 0 pxToRem(2.5);
+    min-width: pxToRem(250);
+    text-align: center;
+    font-size: pxToRem(17);
+    font-weight: bold;
+    line-height: 1.47;
+    letter-spacing: pxToRem(-0.51);
+    border-radius: 0;
+    color: $bg-button;
+    border-bottom: 0;
+
+    &.active {
+      border-color: $color-light-b8;
+      position: relative;
+      bottom: pxToRem(-1);
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    .tab-name {
+      line-height: 1.47;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      span {
+        font-size: pxToRem(12);
+        font-weight: 500;
+        line-height: 1.5;
+        margin-left: pxToRem(5);
+      }
+    }
+  }
+}
+
+.tab-content {
+  padding: pxToRem(21) pxToRem(20) pxToRem(50);
+  border: solid pxToRem(1) $color-light-b8;
+  background-color: $white;
+}
+
+.content-wrap-tab {
+  .box-group {
+    display: flex;
+    margin-bottom: pxToRem(20);
+
+    .label-status {
+      margin-right: pxToRem(15);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .group-char {
+    display: flex;
+    height: pxToRem(410);
+    background-color: $color-light-66;
+    margin-bottom: pxToRem(20);
+
+    .group-char-left {
+      width: pxToRem(150);
+      height: 100%;
+      border-right: pxToRem(1) solid $color-light10;
+      padding: pxToRem(30) pxToRem(12) pxToRem(20) pxToRem(12);
+
+      .group-char-checkbox {
+        padding-left: pxToRem(10);
+      }
+
+      .checkbox-header {
+        margin-bottom: pxToRem(5);
+        font-size: pxToRem(17);
+        font-weight: bold;
+        line-height: 1.47;
+        letter-spacing: pxToRem(-0.51);
+        color: $bg-button;
+      }
+    }
+  }
+}
+
+.group-option-table {
+  .customer-select {
+    width: pxToRem(140);
+  }
+}
