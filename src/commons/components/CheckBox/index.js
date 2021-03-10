@@ -10,6 +10,7 @@ type Props = {
   handleToggleCheckbox: Function,
   isChecked?: boolean,
   onKeyPress?: Function,
+  subLabel?: string,
 };
 
 export const CheckBox = ({
@@ -21,6 +22,7 @@ export const CheckBox = ({
   handleToggleCheckbox,
   isChecked = false,
   onKeyPress = () => {},
+  subLabel = '',
 }: Props) => {
   return (
     <div
@@ -40,7 +42,10 @@ export const CheckBox = ({
           onKeyPress={onKeyPress}
           onChange={handleToggleCheckbox}
         />
-        <span>{label}</span>
+        <span>
+          {label}
+          <i>{subLabel}</i>
+        </span>
       </label>
     </div>
   );
@@ -54,6 +59,7 @@ CheckBox.defaultProps = {
   customClass: '',
   isChecked: false,
   onKeyPress: () => {},
+  subLabel: '',
 };
 
 export default memo<Props>(CheckBox);

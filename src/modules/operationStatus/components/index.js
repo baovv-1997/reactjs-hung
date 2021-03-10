@@ -9,10 +9,10 @@ import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
 import { headStatusCompany } from 'constants/headerTable';
-import * as StatusCompanyAction from '../redux';
+import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import ItemContentTab from './ItemContentTab';
 
-const StatusCompanyPage = () => {
+const OperationStatusPage = () => {
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
@@ -26,13 +26,16 @@ const StatusCompanyPage = () => {
     label: '6 개씩 보기',
   };
   const defaultCheckBox = {
-    power: false,
-    temperature: false,
-    insolation: false,
+    PVVoltage: false,
+    PVCurrent: false,
+    outputVoltage: false,
+    outputCurrent: false,
+    print: false,
   };
   const [itemSelect, setItemSelect] = useState({});
   const [paginationType, setPaginationType] = useState(defaultOption);
   const [activePage, setActivePage] = useState(1);
+
   const [checkBox, setCheckBox] = useState(defaultCheckBox);
 
   const [paramsSearch, setParamsSearch] = useState({
@@ -116,9 +119,11 @@ const StatusCompanyPage = () => {
   const handleDownloadTrend = () => {
     console.log('download Trend');
   };
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
+
   const renderListCompany =
     listStatusCompanySelect &&
     listStatusCompanySelect.map((item) => (
@@ -168,11 +173,7 @@ const StatusCompanyPage = () => {
               >
                 <Tab
                   eventKey="bulk"
-                  title={
-                    <div className="tab-name">
-                      아반시스 코리아 <span>전체</span>
-                    </div>
-                  }
+                  title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
                     powerData={powerData}
@@ -193,7 +194,7 @@ const StatusCompanyPage = () => {
                   eventKey="bulk2"
                   title={
                     <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
+                      코에스 <span>인버터 ID</span>
                     </div>
                   }
                 >
@@ -216,7 +217,7 @@ const StatusCompanyPage = () => {
                   eventKey="bulk3"
                   title={
                     <div className="tab-name">
-                      인버터 ID <span>본관 동측</span>
+                      에스케이솔라 <span>인버터 ID</span>
                     </div>
                   }
                 >
@@ -260,4 +261,4 @@ const StatusCompanyPage = () => {
   );
 };
 
-export default StatusCompanyPage;
+export default OperationStatusPage;

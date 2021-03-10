@@ -1,16 +1,23 @@
-// @flow
-
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
+import { API } from '../apis';
 
 // components
-import SingIn from 'modules/accounts/components/index';
-import MainPage from 'modules/main/components/Dashboard';
-import StatusCompany from 'modules/statusCompany/components';
-import { API } from '../apis';
+const StatusCompany = lazy(() => import('modules/statusCompany/components'));
+const StatusCompanyByArea = lazy(() =>
+  import('modules/statusCompany/components/statusByArea')
+);
+// OPERATION_STATUS_BY_COMPANY
+const operationStatusByCompany = lazy(() =>
+  import('modules/operationStatus/components')
+);
+
+const MainPage = lazy(() => import('modules/main/components/Dashboard'));
+// const DeviceManagement = lazy(() => import('modules/device/components'));
+const SingIn = lazy(() => import('modules/accounts/components'));
 
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
@@ -28,6 +35,21 @@ const Router = () => {
             path={ROUTERS.STATUS_COMPANY}
             component={StatusCompany}
           />
+          <Route
+            exact
+            path={ROUTERS.STATUS_COMPANY_BY_AREA}
+            component={StatusCompanyByArea}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY}
+            component={operationStatusByCompany}
+          />
+          {/* <Route
+            exact
+            path={ROUTERS.DeviceManagement}
+            component={DeviceManagement}
+          /> */}
         </Switch>
       </Suspense>
     </BrowserRouter>
