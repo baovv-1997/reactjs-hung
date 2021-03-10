@@ -173,7 +173,7 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                   />
                 </Tab>
-                <Tab
+                {/* <Tab
                   eventKey="bulk2"
                   title={
                     <div className="tab-name">
@@ -193,8 +193,8 @@ const OperationStatusPage = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-                </Tab>
-                <Tab
+                </Tab> */}
+                {/* <Tab
                   eventKey="bulk3"
                   title={
                     <div className="tab-name">
@@ -214,7 +214,7 @@ const OperationStatusPage = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-                </Tab>
+                </Tab> */}
 
                 <div className="opacity d-block pagination">
                   {totalPage > perPage && (
