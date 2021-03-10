@@ -1,7 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
-import { LabelStatus } from 'commons/components/Label/LabelStatus';
+import LabelStatusV2 from 'commons/components/Label/LabelStatus/LabelStatusV2';
 import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
@@ -13,9 +13,7 @@ type Props = {
   headStatusCompany: Array<{ id: number, name: string }>,
   listMockupDataCompany: any,
   dataContent: Object,
-  powerData: Object,
-  temperatureData: Object,
-  insolationData: Object,
+  dataBoxContent: Object,
   handleToggleCheckbox: Function,
   checkBox: Object,
   paginationType: Object,
@@ -28,9 +26,7 @@ const ItemContentTab = ({
   headStatusCompany,
   listMockupDataCompany,
   dataContent,
-  powerData,
-  temperatureData,
-  insolationData,
+  dataBoxContent,
   handleToggleCheckbox,
   checkBox,
   paginationType,
@@ -69,16 +65,32 @@ const ItemContentTab = ({
   return (
     <div className="content-wrap-tab">
       <div className="box-group">
-        <LabelStatus type={powerData?.type} data={powerData?.data} isPower />
-        <LabelStatus
-          type={temperatureData?.type}
-          data={temperatureData?.data}
-          isTemperature
+        <LabelStatusV2
+          nameStatus={dataBoxContent?.angleOfIncidence}
+          angle="˚"
+          title="입사각"
+          keyStatus={1}
+          color="#97c95e"
         />
-        <LabelStatus
-          type={insolationData?.type}
-          data={insolationData?.data}
-          isInsolation
+        <LabelStatusV2
+          nameStatus={dataBoxContent?.azimuth}
+          angle="˚"
+          title="방위각"
+          keyStatus={2}
+          color="#ab47bc"
+        />
+        <LabelStatusV2
+          nameStatus={dataBoxContent?.moduleOutput}
+          unit="W"
+          title="모듈 출력"
+          keyStatus={3}
+          color="#3b74e7"
+        />
+        <LabelStatusV2
+          nameStatus={dataBoxContent?.moduleColor}
+          title="모듈 색상"
+          keyStatus={4}
+          color="#f55662"
         />
       </div>
 
