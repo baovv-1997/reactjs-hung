@@ -6,11 +6,11 @@
 .main-content {
   width: calc(100% - #{pxToRem(210)});
   margin-left: pxToRem(210);
-  // padding: pxToRem(15);
-  background-color: $alto-ess;
+  background: $gray;
 
   .content {
     word-wrap: break-word;
+    // background-color: $white;
     background-clip: border-box;
     border-radius: pxToRem(4);
     background-color: $alto-ess;

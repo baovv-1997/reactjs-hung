@@ -26,7 +26,7 @@ export const Radio = ({
           type="radio"
           checked={`${isChecked ? 'checked' : ''}`}
           name={name}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           id={id}
           disabled={disabled}
         />

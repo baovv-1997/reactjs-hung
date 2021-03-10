@@ -1,0 +1,113 @@
+.wrapper-device {
+  background-color: white;
+  // margin-top: pxToRem(97);
+  // margin-bottom: pxToRem(20);
+  border-radius: pxToRem(15);
+  padding: 0 pxToRem(20);
+
+  &__head-menu {
+    &__title {
+      font-family: $Noto-Sans-Font;
+      &__text {
+        font-size: pxToRem(20);
+        font-weight: 900;
+        line-height: 1.45;
+        letter-spacing: -0.6px;
+        text-align: left;
+        color: $bg-button;
+        margin-left: pxToRem(10);
+      }
+      
+      &__des {
+        margin-left: pxToRem(10);
+        font-size: pxToRem(14);
+        line-height: 1.43;
+        letter-spacing: -0.42px;
+        text-align: left;
+        color: $gray-shadow;
+      }
+
+    }
+    &__search {
+      margin-left: pxToRem(10);
+      display: flex;
+      align-items: center;
+      margin-top: pxToRem(25);
+      &__options {
+        display: flex;
+
+        .search-option-title {
+          font-size: pxToRem(17);
+          line-height: 1.47;
+          letter-spacing: -0.51px;
+          text-align: left;
+          color: $bg-button;
+          font-weight: bold;
+        }
+        .search-option-character {
+          color: $bg-button;
+          opacity: 0.3;
+          margin-left: pxToRem(20);
+          width: pxToRem(2);
+          margin-right: pxToRem(30);
+        }
+      }
+    
+      .customer-select  {
+        max-width: pxToRem(140);
+      }
+      .wrapper-input-search {
+        border-radius: pxToRem(3);
+        border: solid 1px $color-light10;
+        margin-left: pxToRem(50);
+        width: pxToRem(939);
+        height: pxToRem(37);
+      
+        img {
+          left: pxToRem(20);
+        }
+      }
+      .wrapper-input-search::placeholder {
+        font-size: pxToRem(15);
+        line-height: 1.47;
+        letter-spacing: -0.45px;
+        text-align: left;
+        color: $color-input-search;
+      }
+
+      ::-webkit-input-placeholder { /* Edge */
+        font-size: pxToRem(15);
+        line-height: 1.47;
+        letter-spacing: -0.45px;
+        text-align: left;
+        color: $color-input-search;
+      }
+      
+      :-ms-input-placeholder { /* Internet Explorer */
+        font-size: pxToRem(15);
+        line-height: 1.47;
+        letter-spacing: -0.45px;
+        text-align: left;
+        color: $color-input-search;
+      }
+
+      .custom-btn {
+        width: pxToRem(100);
+        height: pxToRem(37);
+        border-radius: pxToRem(3);
+        margin-left: pxToRem(10);
+        width: 27px;
+        font-size: pxToRem(15);
+        line-height: 1.28;
+        letter-spacing: -0.6px;
+        text-align: center;
+        color: $white;
+        font-weight: normal;
+      }
+    }
+  }
+
+  &__table {
+    margin-top: pxToRem(30);
+  }
+}

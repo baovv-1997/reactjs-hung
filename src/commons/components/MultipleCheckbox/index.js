@@ -27,7 +27,7 @@ export const MutipleCheckbox = ({
   };
 
   return (
-    <div>
+    <>
       <div>{label}</div>
       {listCheckBox.map((item) => (
         <div className={`${customClass}`}>
@@ -41,7 +41,7 @@ export const MutipleCheckbox = ({
           </label>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 

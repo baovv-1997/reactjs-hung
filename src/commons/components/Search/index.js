@@ -4,11 +4,12 @@ import images from 'themes/images';
 import AutoSuggest from './AutoSuggest';
 
 type Props = {
-  placeholder?: String,
+  placeholder?: string,
   handleClick: Function,
+  customClass?: string,
 };
 
-const Search = ({ placeholder, handleClick }: Props) => {
+const Search = ({ placeholder, handleClick, customClass = '' }: Props) => {
   const [display, setDisplay] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const wrapperRef = useRef(null);
@@ -37,7 +38,7 @@ const Search = ({ placeholder, handleClick }: Props) => {
   };
 
   return (
-    <div ref={wrapperRef} className="search">
+    <div ref={wrapperRef} className={`search ${customClass}`}>
       <input
         className="search__input"
         onClick={() => setDisplay(true)}
@@ -62,6 +63,7 @@ const Search = ({ placeholder, handleClick }: Props) => {
 
 Search.defaultProps = {
   placeholder: '',
+  customClass: '',
 };
 
 export default memo<Props>(Search);
