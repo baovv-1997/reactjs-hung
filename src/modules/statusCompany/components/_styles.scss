@@ -1,4 +1,5 @@
 .content-wrap {
+  margin: pxToRem(98) pxToRem(20) pxToRem(20);
   padding: pxToRem(20);
   min-height: 50vh;
   background-color: $white;
@@ -10,7 +11,7 @@
   min-height: 50vh;
   padding: pxToRem(20);
   background-color: $white;
-  border: solid pxToRem(1)$color-light-b8;
+  border: solid pxToRem(1) $color-light-b8;
 
   .list-item-select {
     width: pxToRem(144);

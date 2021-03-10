@@ -68,10 +68,10 @@
 // css component Card
 @import './commons/components/Card/styles';
 
-// css title header 
+// css title header
 @import './commons/components/TitleHeader/styles';
 
-// css table header 
+// css table header
 @import './commons/components/Table/styles';
 
 // css component Login
@@ -81,8 +81,13 @@
 @import './commons/components/Label/LabelStatus/styles';
 
 // css main page
-@import './modules/mainPage/components/style';
+@import './modules/main/components/Dashboard/style';
 
+// css component main page
+@import './modules/main/components/TotalPower/style';
+@import './modules/main/components/WeeklyElectric/style';
+@import './modules/main/components/InfoReality/style';
+@import './modules/main/components/VitualData/style';
 
 // css status page
 @import './modules/statusCompany/components/styles';
