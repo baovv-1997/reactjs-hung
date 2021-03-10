@@ -1,0 +1,63 @@
+.info-reality {
+  &__body {
+    padding: 0;
+    border-radius: 0 0 pxToRem(15) pxToRem(15);
+  }
+  &__item {
+    padding: pxToRem(5) pxToRem(40);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:nth-child(even) {
+      background: $bg-light10;
+    }
+
+    &:nth-last-child(1) {
+      border-radius: 0 0 pxToRem(15) pxToRem(15);
+    }
+  }
+
+  &__group-name {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: $black-active;
+  }
+
+  &__group-value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $Roboto-Font;
+    color: $black-light;
+  }
+
+  &__name {
+    line-height: pxToRem(22);
+    letter-spacing: pxToRem(-0.45);
+    font-size: pxToRem(15);
+    margin-right: pxToRem(3);
+  }
+
+  &__sub-name {
+    line-height: pxToRem(15);
+    letter-spacing: pxToRem(-0.3);
+    font-weight: $medium;
+    font-size: pxToRem(10);
+  }
+
+  &__value {
+    font-size: pxToRem(20);
+    font-weight: bold;
+    line-height: pxToRem(26);
+    letter-spacing: pxToRem(-0.6);
+    margin-right: pxToRem(3);
+  }
+
+  &__unit {
+    font-size: pxToRem(15);
+    font-weight: bold;
+    line-height: pxToRem(20);
+    letter-spacing: pxToRem(-0.45);
+  }
+}

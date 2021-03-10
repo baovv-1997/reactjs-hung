@@ -11,6 +11,12 @@ const IMAGES = {
   icon_insolation: require('assets/images/icon_label/icon-insolation.png'),
   icon_event: require('assets/images/icon-event.png'),
   icon_search: require('assets/images/icon-search.png'),
+  icon_title: require('assets/images/icon_main/icon_title.png'),
+  icon_day: require('assets/images/icon_main/icon_day.png'),
+  icon_month: require('assets/images/icon_main/icon_month.png'),
+  icon_year: require('assets/images/icon_main/icon_year.png'),
+  icon_plus: require('assets/images/icon_main/icon_plus.png'),
+  icon_location: require('assets/images/icon_main/icon_location.png'),
   icon_title_header: require('assets/images/title_icon.png'),
   icon_arrow: require('assets/images/icon_arrow.png'),
 };
