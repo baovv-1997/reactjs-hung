@@ -44,7 +44,7 @@ export const DASHBOARD = {
             {
               id: 2,
               name: '구역별 현황',
-              to: '#',
+              to: ROUTERS.STATUS_COMPANY_BY_AREA,
             },
           ],
         },
@@ -55,7 +55,7 @@ export const DASHBOARD = {
             {
               id: 1,
               name: '업체별 현황',
-              to: '#',
+              to: ROUTERS.OPERATION_STATUS_BY_COMPANY,
             },
             {
               id: 2,
@@ -64,25 +64,41 @@ export const DASHBOARD = {
             },
           ],
         },
+      ],
+    },
+    {
+      id: 2,
+      name: '통계',
+      sub: [
         {
-          id: 3,
-          name: '통계',
+          id: 1,
+          name: '발전 통계',
           sub: [
             {
               id: 1,
-              name: '발전 통계',
-              sub: [
-                {
-                  id: 1,
-                  name: '업체별 통계',
-                  to: '#',
-                },
-                {
-                  id: 2,
-                  name: '구역별 통계',
-                  to: '#',
-                },
-              ],
+              name: '업체별 통계',
+              to: '#',
+            },
+            {
+              id: 2,
+              name: '구역별 통계',
+              to: '#',
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: '운영 통계',
+          sub: [
+            {
+              id: 1,
+              name: '업체별 통계',
+              to: '#',
+            },
+            {
+              id: 2,
+              name: '구역별 통계',
+              to: '#',
             },
           ],
         },
