@@ -4,7 +4,7 @@ import images from 'themes/images';
 import AutoSuggest from './AutoSuggest';
 
 type Props = {
-  placeholder?: String,
+  placeholder?: string,
   handleClick: Function,
 };
 
