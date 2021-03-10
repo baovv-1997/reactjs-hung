@@ -60,14 +60,14 @@ export const DASHBOARD = {
             {
               id: 2,
               name: '구역별 현황',
-              to: '#',
+              to: ROUTERS.OPERATION_STATUS_BY_AREA,
             },
           ],
         },
       ],
     },
     {
-      id: 2,
+      id: 3,
       name: '통계',
       sub: [
         {

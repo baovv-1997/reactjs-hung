@@ -16,56 +16,57 @@ export const TotalPower = ({ data }: Props) => {
       </div>
 
       <div className="total-power__body main-card__body">
-        {data.map((item) => {
-          switch (item.type) {
-            case 'day':
-              return (
-                <TotalPowerItem
-                  icon={images.icon_day}
-                  name={item.name}
-                  value={item.value}
-                  customClass="bg-color-day"
-                  key={item.id}
-                />
-              );
+        {data &&
+          data.map((item) => {
+            switch (item.type) {
+              case 'day':
+                return (
+                  <TotalPowerItem
+                    icon={images.icon_day}
+                    name={item.name}
+                    value={item.value}
+                    customClass="bg-color-day"
+                    key={item.id}
+                  />
+                );
 
-            case 'month':
-              return (
-                <TotalPowerItem
-                  icon={images.icon_month}
-                  name={item.name}
-                  value={item.value}
-                  customClass="bg-color-month"
-                  key={item.id}
-                />
-              );
+              case 'month':
+                return (
+                  <TotalPowerItem
+                    icon={images.icon_month}
+                    name={item.name}
+                    value={item.value}
+                    customClass="bg-color-month"
+                    key={item.id}
+                  />
+                );
 
-            case 'year':
-              return (
-                <TotalPowerItem
-                  icon={images.icon_year}
-                  name={item.name}
-                  value={item.value}
-                  customClass="bg-color-year"
-                  key={item.id}
-                />
-              );
+              case 'year':
+                return (
+                  <TotalPowerItem
+                    icon={images.icon_year}
+                    name={item.name}
+                    value={item.value}
+                    customClass="bg-color-year"
+                    key={item.id}
+                  />
+                );
 
-            case 'plus':
-              return (
-                <TotalPowerItem
-                  icon={images.icon_plus}
-                  name={item.name}
-                  value={item.value}
-                  customClass="bg-color-plus"
-                  key={item.id}
-                />
-              );
+              case 'plus':
+                return (
+                  <TotalPowerItem
+                    icon={images.icon_plus}
+                    name={item.name}
+                    value={item.value}
+                    customClass="bg-color-plus"
+                    key={item.id}
+                  />
+                );
 
-            default:
-              return <TotalPowerItem key={item.id} />;
-          }
-        })}
+              default:
+                return <TotalPowerItem key={item.id} />;
+            }
+          })}
       </div>
     </div>
   );

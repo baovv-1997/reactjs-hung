@@ -1,36 +1,40 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupDataCompany } from 'mockData/listCompany';
-import { headStatusCompany } from 'constants/headerTable';
-import * as StatusCompanyAction from '../../redux';
-import ItemContentTab from '../ItemContentTab';
+import Table from 'commons/components/Table';
+import SelectDropdown from 'commons/components/Select';
+import Pagination from 'react-js-pagination';
+import Button from 'commons/components/Button';
+import {
+  tableOperationStatusByAreaCompany,
+  listMockupType,
+  listParkingLot,
+} from 'mockData/listCompany';
+import { headOperationStatusByAreaCompany } from 'constants/headerTable';
+import { listPaginationType } from 'constants/listKey';
+import * as StatusCompanyAction from 'modules/statusCompany/redux';
 
 const StatusByAreaCompany = () => {
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
+  const perPage = 6;
+  const totalPage = 100;
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
   const defaultOption = {
     id: 1,
-    value: 6,
-    label: '6 개씩 보기',
+    value: 12,
+    label: '12 개씩 보기',
   };
-  const defaultCheckBox = {
-    power: false,
-    temperature: false,
-    insolation: false,
-  };
-  const [itemSelect, setItemSelect] = useState({});
-  const [paginationType, setPaginationType] = useState(defaultOption);
 
-  const [checkBox, setCheckBox] = useState(defaultCheckBox);
+  const [itemSelect, setItemSelect] = useState({});
+  const [itemSelectMocKup, setItemSelectMocKup] = useState({});
+  const [itemParkingLot, setItemParkingLot] = useState({});
+  const [activePage, setActivePage] = useState(1);
+  const [paginationType, setPaginationType] = useState(defaultOption);
 
   const [paramsSearch, setParamsSearch] = useState({
     sort_by: '',
@@ -38,30 +42,6 @@ const StatusByAreaCompany = () => {
     page: '',
     keyword: '',
   });
-
-  const powerData = {
-    type: 'power',
-    data: [
-      { title: '일일 평균 1시간 발전량', value: '60' },
-      { title: '일일발전량 달성율', value: '85.2' },
-    ],
-  };
-
-  const temperatureData = {
-    type: 'temperature',
-    data: [
-      { title: '현재 모듈 온도', value: '30.8' },
-      { title: '최고 모듈 온도', value: '35.2' },
-    ],
-  };
-
-  const insolationData = {
-    type: 'insolation',
-    data: [
-      { title: '수평 일사량', value: '22' },
-      { title: '경사 일사량', value: '46' },
-    ],
-  };
 
   const dispatch = useDispatch();
   // call api get list all video
@@ -84,30 +64,25 @@ const StatusByAreaCompany = () => {
     });
   };
 
-  const handleToggleCheckbox = (check, name) => {
-    setCheckBox({
-      ...checkBox,
-      [name]: !check,
-    });
-  };
-
   const handleChangePagination = (option) => {
     setPaginationType(option);
-  };
-
-  const onSelect = (eventKey) => {
-    window.scrollTo(0, 0);
-    setMenuTab(eventKey);
-    setPaginationType(defaultOption);
-    setCheckBox(defaultCheckBox);
   };
 
   const handleDownloadRaw = () => {
     console.log('download Raw');
   };
+  const handleClickSelectMocKup = (item) => {
+    console.log(item);
+    setItemSelectMocKup(item);
+  };
 
-  const handleDownloadTrend = () => {
-    console.log('download Trend');
+  const handleClickSelectParkingLot = (item) => {
+    console.log(item);
+    setItemParkingLot(item);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
   };
 
   const renderListCompany =
@@ -124,6 +99,33 @@ const StatusByAreaCompany = () => {
       </li>
     ));
 
+  const renderListMocKup =
+    listMockupType &&
+    listMockupType.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleClickSelectMocKup(item)}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${itemSelectMocKup?.id === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
+
+  const renderListParkingLot =
+    listParkingLot &&
+    listParkingLot.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleClickSelectParkingLot(item)}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${itemParkingLot?.id === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
@@ -132,80 +134,53 @@ const StatusByAreaCompany = () => {
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
             <ul className="list-item-select">{renderListCompany}</ul>
+            <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
+            <ul className="list-item-select">{renderListMocKup}</ul>
+            <TitleSubHeader title="주차장" className="mt-5" />
+            <ul className="list-item-select">{renderListParkingLot}</ul>
           </div>
-          <div className="content-body-left">
-            <div>
-              <Tabs
-                defaultActiveKey="bulk"
-                className="list-order tab-list"
-                onSelect={(eventKey) => onSelect(eventKey)}
-              >
-                <Tab
-                  eventKey="bulk"
-                  title={<div className="tab-name">전체</div>}
-                >
-                  <ItemContentTab
-                    powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
+          <div className="content-body-left w-100 content-body-border">
+            <TitleSubHeader title="이벤트 현황" />
+            <div className="group-option-table d-flex  justify-content-between mb-3">
+              <SelectDropdown
+                placeholder="구분"
+                listItem={listPaginationType}
+                onChange={(option) => handleChangePagination(option)}
+                option={paginationType || null}
+              />
+              <div className="group-btn-download">
+                <Button onClick={() => handleDownloadRaw()}>
+                  Raw Date 다운
+                </Button>
+              </div>
+            </div>
+            <Table
+              tableHeads={headOperationStatusByAreaCompany}
+              tableBody={tableOperationStatusByAreaCompany}
+              // isShowId
+              handleCheckboxSort={() => {}}
+              showModalSort={{
+                isShow: true,
+                keyItem: 5,
+              }}
+            />
+            <div className="group-btn-register text-right">
+              <Button onClick={() => {}}>등록</Button>
+            </div>
+            <div className="opacity d-block pagination mt-4">
+              {totalPage > perPage && (
+                <div className="wrapper-device__pagination">
+                  <Pagination
+                    activePage={activePage}
+                    itemsCountPerPage={perPage}
+                    totalItemsCount={totalPage}
+                    pageRangeDisplayed={5}
+                    onChange={handlePageChange}
+                    itemClass="page-item"
+                    linkClass="page-link"
                   />
-                </Tab>
-                <Tab
-                  eventKey="bulk2"
-                  title={
-                    <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="bulk3"
-                  title={
-                    <div className="tab-name">
-                      에스케이솔라 <span>인버터 ID</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                  />
-                </Tab>
-              </Tabs>
+                </div>
+              )}
             </div>
           </div>
         </div>

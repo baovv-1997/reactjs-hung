@@ -33,6 +33,7 @@ const OperationStatusPage = () => {
     print: false,
   };
   const [itemSelect, setItemSelect] = useState({});
+  const [itemSelectMocKup, setItemSelectMocKup] = useState({});
   const [paginationType, setPaginationType] = useState(defaultOption);
   const [activePage, setActivePage] = useState(1);
 
@@ -45,28 +46,11 @@ const OperationStatusPage = () => {
     keyword: '',
   });
 
-  const powerData = {
-    type: 'power',
-    data: [
-      { title: '일일 평균 1시간 발전량', value: '60' },
-      { title: '일일발전량 달성율', value: '85.2' },
-    ],
-  };
-
-  const temperatureData = {
-    type: 'temperature',
-    data: [
-      { title: '현재 모듈 온도', value: '30.8' },
-      { title: '최고 모듈 온도', value: '35.2' },
-    ],
-  };
-
-  const insolationData = {
-    type: 'insolation',
-    data: [
-      { title: '수평 일사량', value: '22' },
-      { title: '경사 일사량', value: '46' },
-    ],
+  const dataBoxContent = {
+    angleOfIncidence: '15',
+    azimuth: '남동10',
+    moduleOutput: '378',
+    moduleColor: '보라',
   };
 
   const dispatch = useDispatch();
@@ -92,6 +76,7 @@ const OperationStatusPage = () => {
 
   const handleClickSelectMocKup = (item) => {
     console.log(item);
+    setItemSelectMocKup(item);
   };
 
   const handleToggleCheckbox = (check, name) => {
@@ -146,7 +131,7 @@ const OperationStatusPage = () => {
         onClick={() => handleClickSelectMocKup(item)}
         onKeyPress={() => {}}
         role="menuitem"
-        className={`${itemSelect?.id === item.id ? 'active' : ''}`}
+        className={`${itemSelectMocKup?.id === item.id ? 'active' : ''}`}
       >
         {item.label}
       </li>
@@ -176,9 +161,7 @@ const OperationStatusPage = () => {
                   title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
-                    powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
+                    dataBoxContent={dataBoxContent}
                     headStatusCompany={headStatusCompany}
                     listMockupDataCompany={listMockupDataCompany}
                     handleToggleCheckbox={handleToggleCheckbox}
@@ -199,9 +182,7 @@ const OperationStatusPage = () => {
                   }
                 >
                   <ItemContentTab
-                    powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
+                    dataBoxContent={dataBoxContent}
                     headStatusCompany={headStatusCompany}
                     listMockupDataCompany={listMockupDataCompany}
                     handleToggleCheckbox={handleToggleCheckbox}
@@ -222,9 +203,7 @@ const OperationStatusPage = () => {
                   }
                 >
                   <ItemContentTab
-                    powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
+                    dataBoxContent={dataBoxContent}
                     headStatusCompany={headStatusCompany}
                     listMockupDataCompany={listMockupDataCompany}
                     handleToggleCheckbox={handleToggleCheckbox}
