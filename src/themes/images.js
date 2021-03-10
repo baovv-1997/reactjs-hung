@@ -17,6 +17,7 @@ const IMAGES = {
   icon_year: require('assets/images/icon_main/icon_year.png'),
   icon_plus: require('assets/images/icon_main/icon_plus.png'),
   icon_location: require('assets/images/icon_main/icon_location.png'),
+  icon_location_on: require('assets/images/icon_main/icon_location_on.png'),
   icon_title_header: require('assets/images/title_icon.png'),
   icon_arrow: require('assets/images/icon_arrow.png'),
 };

@@ -12,6 +12,7 @@ type Props = {
   isSearch?: boolean,
   isSelect?: boolean,
   isProcessing?: boolean,
+  listOptionString: Array<{ id: number, name: any }>,
 };
 
 export const MainLayout = ({
@@ -19,6 +20,7 @@ export const MainLayout = ({
   isSearch = false,
   isSelect = false,
   isProcessing = false,
+  listOptionString,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const refMenu = useRef(null);
@@ -41,7 +43,8 @@ export const MainLayout = ({
 
   let showHeader;
   if (isSearch) showHeader = <Header isSearch />;
-  else if (isSelect) showHeader = <Header isSelect />;
+  else if (isSelect)
+    showHeader = <Header isSelect listOptionString={listOptionString} />;
   else showHeader = <Header />;
 
   return (

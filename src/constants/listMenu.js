@@ -19,7 +19,7 @@ export const DASHBOARD = {
         {
           id: 2,
           name: '구역 대시보드',
-          to: '#',
+          to: ROUTERS.DASHBOARD_AREA,
         },
         {
           id: 3,
