@@ -31,6 +31,7 @@ const StatusCompanyPage = () => {
     insolation: false,
   };
   const [itemSelect, setItemSelect] = useState({});
+  const [itemSelectMocKup, setItemSelectMocKup] = useState({});
   const [paginationType, setPaginationType] = useState(defaultOption);
   const [activePage, setActivePage] = useState(1);
   const [checkBox, setCheckBox] = useState(defaultCheckBox);
@@ -89,6 +90,7 @@ const StatusCompanyPage = () => {
 
   const handleClickSelectMocKup = (item) => {
     console.log(item);
+    setItemSelectMocKup(item);
   };
 
   const handleToggleCheckbox = (check, name) => {
@@ -141,7 +143,7 @@ const StatusCompanyPage = () => {
         onClick={() => handleClickSelectMocKup(item)}
         onKeyPress={() => {}}
         role="menuitem"
-        className={`${itemSelect?.id === item.id ? 'active' : ''}`}
+        className={`${itemSelectMocKup?.id === item.id ? 'active' : ''}`}
       >
         {item.label}
       </li>

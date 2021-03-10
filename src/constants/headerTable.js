@@ -53,6 +53,38 @@ export const headStatusCompany = [
   },
 ];
 
+export const headOperationStatusByAreaCompany = [
+  {
+    id: 0,
+    name: 'No.',
+  },
+  {
+    id: 1,
+    name: '발생 일시',
+  },
+  {
+    id: 2,
+    name: '설치업체',
+  },
+  {
+    id: 3,
+    name: '인버터ID',
+  },
+  {
+    id: 4,
+    name: '설치위치',
+  },
+  {
+    id: 5,
+    name: '이벤트명',
+  },
+  {
+    id: 6,
+    name: '내용',
+  },
+];
+
 export default {
   headStatusCompany,
+  headOperationStatusByAreaCompany,
 };
