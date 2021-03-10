@@ -8,6 +8,7 @@ import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
+
 import { headStatusCompany } from 'constants/headerTable';
 import * as StatusCompanyAction from '../redux';
 import ItemContentTab from './ItemContentTab';
@@ -191,7 +192,7 @@ const StatusCompanyPage = () => {
                     dataContent={{}}
                   />
                 </Tab>
-                <Tab
+                {/* <Tab
                   eventKey="bulk2"
                   title={
                     <div className="tab-name">
@@ -236,8 +237,8 @@ const StatusCompanyPage = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-                </Tab>
 
+                </Tab> */}
                 <div className="opacity d-block pagination">
                   {totalPage > perPage && (
                     <div className="wrapper-device__pagination">

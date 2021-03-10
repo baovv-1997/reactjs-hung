@@ -8,6 +8,7 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
+import LineSeriesChart from './chart';
 
 type Props = {
   headStatusCompany: Array<{ id: number, name: string }>,
@@ -38,7 +39,7 @@ const ItemContentTab = ({
   handleDownloadTrend,
   handleDownloadRaw,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
+  console.log('dataContent', dataContent);
   const dataLengthChart = [
     {
       id: 1,
@@ -110,7 +111,9 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          <LineSeriesChart />
+        </div>
       </div>
       <TitleSubHeader title="발전 현황" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
