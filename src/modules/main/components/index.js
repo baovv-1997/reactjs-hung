@@ -1,10 +1,12 @@
-// @flow
-/* eslint-disable react-hooks/exhaustive-deps */
+import MainLayout from 'layout/MainLayout';
 import React from 'react';
-import MainLayout from '../../../layout/MainLayout';
 
 const MainPage = () => {
-  return <MainLayout>main page</MainLayout>;
+  return (
+    <MainLayout isSearch>
+      <div className="main-page">mainPage</div>
+    </MainLayout>
+  );
 };
 
 export default MainPage;
