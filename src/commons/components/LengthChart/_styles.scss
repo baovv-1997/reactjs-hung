@@ -1,0 +1,36 @@
+.length-chart {
+  .item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0 0 0;
+
+    span {
+      width: pxToRem(14);
+      height: 0;
+      border: solid pxToRem(1) #c05e13;
+      border-radius: pxToRem(1);
+      top: 1px;
+      display: inline-block;
+      position: relative;
+    }
+
+    .name-length {
+      margin-left: pxToRem(5);
+      font-size: pxToRem(10);
+      font-weight: normal;
+      line-height: 1.5;
+      letter-spacing: pxToRem(-0.3);
+      text-align: left;
+      color: $bg-button;
+    }
+  }
+}
+
+.group-char-left {
+  position: relative;
+}
+
+.group-length-chart {
+  position: absolute;
+  bottom: pxToRem(20);
+}

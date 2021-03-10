@@ -24,7 +24,7 @@ export const DASHBOARD = {
         {
           id: 3,
           name: '업체 대시보드',
-          to: '#',
+          to: ROUTERS.DASHBOARD_COMPANY,
         },
       ],
     },

@@ -12,6 +12,7 @@ import MainPage from 'modules/main/components/Dashboard';
 import DashboardArea from 'modules/main/components/Dashboard/DashboardArea';
 
 import StatusCompany from 'modules/statusCompany/components';
+import DashboardCompany from 'modules/main/components/Dashboard/DashboardCompany';
 import { API } from '../apis';
 
 const Router = () => {
@@ -29,6 +30,11 @@ const Router = () => {
             exact
             path={ROUTERS.DASHBOARD_AREA}
             component={DashboardArea}
+          />
+          <Route
+            exact
+            path={ROUTERS.DASHBOARD_COMPANY}
+            component={DashboardCompany}
           />
           <Route
             exact

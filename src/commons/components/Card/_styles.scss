@@ -3,6 +3,7 @@
   background-color: $white;
   border-radius: pxToRem(15);
   box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $box-shadow-card;
+
   .title-middle {
     border-radius: unset;
   }
@@ -14,6 +15,9 @@
       color: $bg-button;
     }
   }
+  &__event {
+    color: $color-label-event !important;
+  }
   &__header {
     background-color: $bg-button;
     padding: pxToRem(10) pxToRem(30);
@@ -22,6 +26,10 @@
     justify-content: space-between;
     align-items: flex-end;
     border-radius: pxToRem(15) pxToRem(15) 0 0;
+  }
+  &__logo-event {
+    width: pxToRem(25);
+    height: pxToRem(25);
   }
 
   &__title {
@@ -53,6 +61,7 @@
     margin-bottom: pxToRem(7);
     &__name {
       color: $text-card;
+      width: pxToRem(100);
       font-size: pxToRem(15);
       line-height: pxToRem(22);
       font-weight: $medium;

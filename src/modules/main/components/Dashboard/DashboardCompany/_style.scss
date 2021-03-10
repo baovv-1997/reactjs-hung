@@ -1,0 +1,46 @@
+.list-company {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: pxToRem(20);
+
+  .item-1 {
+    grid-column-end: span 1;
+  }
+  .item-2 {
+    grid-column-end: span 2;
+  }
+  .item-3 {
+    grid-column-end: span 3;
+  }
+  .item-4 {
+    grid-column-end: span 4;
+  }
+
+  .company-item {
+    padding: pxToRem(20);
+    border-radius: pxToRem(15);
+    background-color: $color-gray1;
+
+    .company-name {
+      color: $bg-button;
+      line-height: 1.45;
+      letter-spacing: pxToRem(-0.6);
+      font-size: pxToRem(20);
+      font-weight: bold;
+      margin-bottom: pxToRem(20);
+    }
+
+    .list-card-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .company-hasevent {
+    background-color: $color-label-event !important;
+  }
+  .company-hasevent-title {
+    color: $white !important;
+  }
+}

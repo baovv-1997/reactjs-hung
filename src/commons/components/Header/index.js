@@ -21,7 +21,10 @@ const Header = ({
     <div className="header">
       <div className="header__left">
         {isSearch ? (
-          <Search placeholder="회사명이나 구역명으로 검색해보세요." />
+          <Search
+            placeholder="회사명이나 구역명으로 검색해보세요."
+            handleClick={() => {}}
+          />
         ) : (
           ''
         )}

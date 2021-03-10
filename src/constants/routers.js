@@ -1,6 +1,7 @@
 const ROUTERS = {
   ROOT: '/',
   DASHBOARD_AREA: '/dashboard-area',
+  DASHBOARD_COMPANY: '/dashboard-company',
   LOGIN: '/login',
   DEVICE: '/device',
   STORES: '/stores',
