@@ -9,8 +9,11 @@ import StatusCompany from 'modules/statusCompany/components';
 import { API } from '../apis';
 
 // components
-const MainPage = lazy(() => import('modules/main/components'));
+const MainPage = lazy(() => import('modules/main/components/Dashboard'));
 const DeviceManagement = lazy(() => import('modules/device/components'));
+const DeviceDetail = lazy(() =>
+  import('modules/device/components/DeviceDetail')
+);
 const SingIn = lazy(() => import('modules/accounts/components'));
 
 const Router = () => {
@@ -29,11 +32,8 @@ const Router = () => {
             path={ROUTERS.STATUS_COMPANY}
             component={StatusCompany}
           />
-          <Route
-            exact
-            path={ROUTERS.DeviceManagement}
-            component={DeviceManagement}
-          />
+          <Route exact path={ROUTERS.DEVICE} component={DeviceManagement} />
+          <Route exact path={ROUTERS.DEVICE_DETAIL} component={DeviceDetail} />
         </Switch>
       </Suspense>
     </BrowserRouter>

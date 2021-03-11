@@ -14,7 +14,7 @@ export const DASHBOARD = {
         {
           id: 1,
           name: '통합 대시보드',
-          to: '#',
+          to: ROUTERS.ROOT,
         },
         {
           id: 2,

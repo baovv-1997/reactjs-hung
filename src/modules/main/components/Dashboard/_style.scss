@@ -1,0 +1,93 @@
+.main-page {
+  // height: calc(100vh - #{pxToRem(68)});
+  width: pxToRem(1710);
+  height: pxToRem(1012);
+  background-image: url('../../../../assets/images/bg_dashboard.png');
+  background-size: cover;
+  object-fit: contain;
+
+  position: relative;
+}
+.current-electric {
+  // margin: pxToRem(18) pxToRem(20);
+  margin: pxToRem(78) pxToRem(20) pxToRem(18);
+  width: pxToRem(330);
+  height: calc(100vh - #{pxToRem(68) - #{pxToRem(18)}});
+  overflow: scroll;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: pxToRem(10);
+  }
+
+  .icon-title {
+    width: pxToRem(12);
+    height: pxToRem(14);
+    object-fit: contain;
+  }
+
+  .title {
+    font-size: pxToRem(20);
+    font-weight: $black;
+    line-height: pxToRem(29);
+    letter-spacing: pxToRem(-0.6);
+    color: $bg-button;
+    margin: 0 pxToRem(10);
+  }
+
+  .line {
+    width: pxToRem(260);
+    border: 1px solid $bg-button;
+    background-color: $bg-button;
+  }
+}
+
+.main-card {
+  background-color: $white;
+  box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $black-opacity-10;
+  border-radius: pxToRem(15);
+  margin-bottom: pxToRem(10);
+
+  &__header {
+    padding: pxToRem(10) pxToRem(20);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $color-light10;
+  }
+
+  &__body {
+    padding: pxToRem(20) pxToRem(25);
+  }
+
+  &__title {
+    color: $bg-button;
+    line-height: pxToRem(25);
+    letter-spacing: pxToRem(-0.51);
+    font-size: pxToRem(17);
+    font-weight: bold;
+  }
+
+  &__unit {
+    color: $color-gray;
+    font-family: $Roboto-Font;
+    line-height: pxToRem(19);
+    letter-spacing: pxToRem(-0.42);
+    font-size: pxToRem(14);
+  }
+}

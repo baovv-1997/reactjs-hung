@@ -1,0 +1,53 @@
+.vitual-data {
+  &__body {
+    padding: pxToRem(15) pxToRem(20);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $black-active;
+  }
+
+  &__group-name {
+    margin-right: pxToRem(13);
+  }
+
+  &__name {
+    line-height: pxToRem(22);
+    letter-spacing: pxToRem(-0.45);
+    font-size: pxToRem(15);
+    font-weight: $medium;
+  }
+
+  &__unit {
+    font-size: pxToRem(10);
+    line-height: pxToRem(15);
+    letter-spacing: pxToRem(-0.3);
+  }
+
+  &__param {
+    width: pxToRem(70);
+    height: pxToRem(70);
+    box-shadow: 0 pxToRem(3) pxToRem(6) 0 rgba(254, 86, 75, 0.24);
+    border: solid pxToRem(2) $bg-button-primary;
+    background-color: $white;
+    border-radius: 50%;
+
+    color: $bg-button-primary;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.location {
+  position: absolute;
+  width: 23px;
+  height: 29px;
+}
