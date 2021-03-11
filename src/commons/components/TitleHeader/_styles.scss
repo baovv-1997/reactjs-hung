@@ -19,6 +19,18 @@
       letter-spacing: pxToRem(-0.6);
       text-align: left;
       color: $bg-button;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-left: pxToRem(10);
+        font-size: pxToRem(14);
+        font-weight: normal;
+        line-height: 1.43;
+        letter-spacing: pxToRem(-0.42);
+        text-align: left;
+        color: $color-gray;
+      }
     }
   }
 }

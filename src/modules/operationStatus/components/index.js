@@ -3,16 +3,23 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
+
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
-import { headStatusCompany } from 'constants/headerTable';
+import {
+  listMockupType,
+  listMockupDataCompany,
+  tableOperationStatusByAreaCompany,
+} from 'mockData/listCompany';
+// import { headOperationStatusByAreaCompany } from 'constants/headerTable';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import { useHistory } from 'react-router-dom';
+import ROUTERS from 'constants/routers';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
+  const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
@@ -35,8 +42,12 @@ const OperationStatusPage = () => {
   const [itemSelect, setItemSelect] = useState({});
   const [itemSelectMocKup, setItemSelectMocKup] = useState({});
   const [paginationType, setPaginationType] = useState(defaultOption);
+  const [paginationTypeBottom, setPaginationTypeBottom] = useState(
+    defaultOption
+  );
   const [activePage, setActivePage] = useState(1);
-
+  const [activePageBottom, setActivePageBottom] = useState(1);
+  const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [checkBox, setCheckBox] = useState(defaultCheckBox);
 
   const [paramsSearch, setParamsSearch] = useState({
@@ -74,6 +85,15 @@ const OperationStatusPage = () => {
     });
   };
 
+  const handleCheckboxSort = (optionCheck) => {
+    console.log(optionCheck, 'optionCheck');
+    setIsShowModalSorting(false);
+  };
+
+  const handleShowModalSorting = () => {
+    setIsShowModalSorting(!isShowModalSorting);
+  };
+
   const handleClickSelectMocKup = (item) => {
     console.log(item);
     setItemSelectMocKup(item);
@@ -90,10 +110,15 @@ const OperationStatusPage = () => {
     setPaginationType(option);
   };
 
+  const handleChangePaginationBottom = (option) => {
+    setPaginationTypeBottom(option);
+  };
+
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
     setPaginationType(defaultOption);
+    setPaginationTypeBottom(defaultOption);
     setCheckBox(defaultCheckBox);
   };
 
@@ -101,12 +126,26 @@ const OperationStatusPage = () => {
     console.log('download Raw');
   };
 
+  const handleDownloadRawBottom = () => {
+    console.log('download Raw');
+  };
+
   const handleDownloadTrend = () => {
     console.log('download Trend');
   };
 
+  //  click vào table bên dưới đến trang chi tiết
+  const handleClickDetail = (item) => {
+    console.log(item, 'ssssssssssssssssss');
+    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
+  };
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+  };
+
+  const handlePageChangeBottom = (number) => {
+    setActivePageBottom(number);
   };
 
   const renderListCompany =
@@ -162,7 +201,6 @@ const OperationStatusPage = () => {
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    headStatusCompany={headStatusCompany}
                     listMockupDataCompany={listMockupDataCompany}
                     handleToggleCheckbox={handleToggleCheckbox}
                     checkBox={checkBox}
@@ -171,66 +209,24 @@ const OperationStatusPage = () => {
                     handleDownloadRaw={handleDownloadRaw}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    handlePageChange={handlePageChange}
+                    totalPage={totalPage}
+                    perPage={perPage}
+                    activePage={activePage}
+                    tableOperationStatusByAreaCompany={
+                      tableOperationStatusByAreaCompany
+                    }
+                    handleCheckboxSort={handleCheckboxSort}
+                    handleShowModalSorting={handleShowModalSorting}
+                    isShowModalSorting={isShowModalSorting}
+                    activePageBottom={activePageBottom}
+                    handlePageChangeBottom={handlePageChangeBottom}
+                    paginationTypeBottom={paginationTypeBottom}
+                    handleChangePaginationBottom={handleChangePaginationBottom}
+                    handleDownloadRawBottom={handleDownloadRawBottom}
+                    handleClickDetail={handleClickDetail}
                   />
                 </Tab>
-                {/* <Tab
-                  eventKey="bulk2"
-                  title={
-                    <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                  />
-                </Tab> */}
-                {/* <Tab
-                  eventKey="bulk3"
-                  title={
-                    <div className="tab-name">
-                      에스케이솔라 <span>인버터 ID</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                  />
-                </Tab> */}
-
-                <div className="opacity d-block pagination">
-                  {totalPage > perPage && (
-                    <div className="wrapper-device__pagination">
-                      <Pagination
-                        activePage={activePage}
-                        itemsCountPerPage={perPage}
-                        totalItemsCount={totalPage}
-                        pageRangeDisplayed={5}
-                        onChange={handlePageChange}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
-                </div>
               </Tabs>
             </div>
           </div>

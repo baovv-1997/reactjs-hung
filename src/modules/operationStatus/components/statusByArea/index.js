@@ -34,6 +34,8 @@ const StatusByAreaCompany = () => {
   const [itemSelectMocKup, setItemSelectMocKup] = useState({});
   const [itemParkingLot, setItemParkingLot] = useState({});
   const [activePage, setActivePage] = useState(1);
+
+  const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paginationType, setPaginationType] = useState(defaultOption);
 
   const [paramsSearch, setParamsSearch] = useState({
@@ -83,6 +85,15 @@ const StatusByAreaCompany = () => {
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+  };
+
+  const handleCheckboxSort = (optionCheck) => {
+    console.log(optionCheck, 'optionCheck');
+    setIsShowModalSorting(false);
+  };
+
+  const handleShowModalSorting = () => {
+    setIsShowModalSorting(!isShowModalSorting);
   };
 
   const renderListCompany =
@@ -158,9 +169,10 @@ const StatusByAreaCompany = () => {
               tableHeads={headOperationStatusByAreaCompany}
               tableBody={tableOperationStatusByAreaCompany}
               // isShowId
-              handleCheckboxSort={() => {}}
+              handleCheckboxSort={handleCheckboxSort}
+              handleShowModalSorting={handleShowModalSorting}
               showModalSort={{
-                isShow: true,
+                isShow: isShowModalSorting,
                 keyItem: 5,
               }}
             />
