@@ -13,6 +13,7 @@ import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
 } from 'constants/headerTable';
+import ROUTERS from 'constants/routers';
 
 type Props = {
   listMockupDataCompany: any,
@@ -40,6 +41,9 @@ type Props = {
   handleChangePaginationBottom: Function,
   handleDownloadRawBottom: Function,
   handleClickDetail: Function,
+  history: {
+    push: Function,
+  },
 };
 
 const ItemContentTab = ({
@@ -66,6 +70,7 @@ const ItemContentTab = ({
   handleChangePaginationBottom,
   handleDownloadRawBottom,
   handleClickDetail,
+  history,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const dataLengthChart = [
@@ -197,6 +202,7 @@ const ItemContentTab = ({
           listItem={listPaginationType}
           onChange={(option) => handleChangePagination(option)}
           option={paginationType || null}
+          noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
           <Button onClick={() => handleDownloadTrend()} customClass="mr-2">
@@ -235,6 +241,7 @@ const ItemContentTab = ({
           listItem={listPaginationType}
           onChange={(option) => handleChangePaginationBottom(option)}
           option={paginationTypeBottom || null}
+          noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
           <Button onClick={() => handleDownloadRawBottom()}>
@@ -255,7 +262,13 @@ const ItemContentTab = ({
         onClickRow={handleClickDetail}
       />
       <div className="group-btn-register text-right">
-        <Button onClick={() => {}}>등록</Button>
+        <Button
+          onClick={() =>
+            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
+          }
+        >
+          등록
+        </Button>
       </div>
       <div className="opacity d-block pagination mt-4">
         {totalPage > perPage && (

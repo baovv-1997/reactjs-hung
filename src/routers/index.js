@@ -22,6 +22,14 @@ const operationStatusByCompanyDetail = lazy(() =>
   import('modules/operationStatus/components/detail')
 );
 
+const operationStatusByCompanyRegister = lazy(() =>
+  import('modules/operationStatus/components/register')
+);
+
+const operationStatusByCompanyEdit = lazy(() =>
+  import('modules/operationStatus/components/edit')
+);
+
 // components
 const MainPage = lazy(() => import('modules/main/components/Dashboard'));
 const DeviceManagement = lazy(() => import('modules/device/components'));
@@ -76,14 +84,25 @@ const Router = () => {
           />
           <Route
             exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER}
+            component={operationStatusByCompanyRegister}
+          />
+          <Route
+            exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY_DETAIL}
             component={operationStatusByCompanyDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_EDIT}
+            component={operationStatusByCompanyEdit}
           />
           <Route
             exact
             path={ROUTERS.OPERATION_STATUS_BY_AREA}
             component={operationStatusByArea}
           />
+
           {/* <Route
             exact
             path={ROUTERS.DeviceManagement}
