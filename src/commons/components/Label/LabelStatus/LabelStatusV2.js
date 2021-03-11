@@ -8,6 +8,7 @@ type Props = {
   title: string,
   keyStatus: number,
   angle?: string,
+  color: string,
 };
 
 export const LabelStatusV2 = ({

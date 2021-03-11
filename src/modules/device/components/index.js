@@ -1,10 +1,11 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Radio from 'commons/components/Radio';
 import { useSelector, useDispatch } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import IMAGES from 'themes/images';
+import ROUTERS from 'constants/routers';
 import { DeviceManagementOptionSeach } from 'constants/optionCheckbox';
 import Select from 'commons/components/Select';
 import Input from 'commons/components/Input';
@@ -14,7 +15,12 @@ import { DEVICE_HEAD_TABLE } from 'constants/tableHeadData';
 import MainLayout from '../../../layout/MainLayout';
 import { getListCompany, getListDevice, getListPosition } from '../redux';
 
-const DeviceManagement = () => {
+type Props = {
+  history: {
+    push: Function,
+  },
+};
+const DeviceManagement = ({ history }: Props) => {
   const dispatch = useDispatch();
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
   const deviceList = useSelector((state) => state?.device?.deviceList);
@@ -111,6 +117,13 @@ const DeviceManagement = () => {
       })
     );
   };
+
+  // Handle click to table row
+  const handleClickTableRow = (item) => {
+    console.log('item', item);
+    history.push(`${ROUTERS.DEVICE}/${item.id}`);
+  };
+
   return (
     <MainLayout isProcessing={isLoading}>
       <div className="wrapper-device">
@@ -159,7 +172,11 @@ const DeviceManagement = () => {
           </div>
         </div>
         <div className="wrapper-device__table">
-          <Table tableHeads={DEVICE_HEAD_TABLE} tableBody={deviceList} />
+          <Table
+            tableHeads={DEVICE_HEAD_TABLE}
+            tableBody={deviceList}
+            onClickRow={handleClickTableRow}
+          />
           {deviceList && deviceList.length > perPage && (
             <div className="wrapper-device__pagination">
               <Pagination
@@ -179,4 +196,4 @@ const DeviceManagement = () => {
   );
 };
 
-export default DeviceManagement;
+export default memo<Props>(DeviceManagement);

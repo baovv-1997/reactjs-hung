@@ -12,6 +12,7 @@ export const ROUTES = {
   API_GET_LIST_COMPANY: `/company`,
   API_GET_LIST_POSITION: `/position`,
   API_GET_LIST_DEVICE: `/device`,
+  UPDATE_DEVICE: (id) => `device/${id}`,
   GET_POS: '/position',
 };
 

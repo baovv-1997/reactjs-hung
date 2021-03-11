@@ -62,6 +62,7 @@ const mainSlice = createSlice({
         position: item?.position?.pos_name,
         moduleName: item?.ds_name,
         dsManager: item?.ds_manager,
+        id: item?.id,
       }));
       state.isLoading = false;
       state.deviceList = listDeviceFormat;
@@ -72,13 +73,24 @@ const mainSlice = createSlice({
       state.isLoading = false;
     },
     getDeivceDetail: (state) => {
-      state.isLoading = false;
+      state.isLoading = true;
     },
     getDeivceDetailSuccess: (state, action) => {
       state.isLoading = false;
       state.deviceDetail = action.data;
     },
     getDeivceDetailFailed: (state) => {
+      state.isLoading = false;
+    },
+
+    updateDevice: (state) => {
+      state.isLoading = true;
+    },
+
+    updateDeviceSuccess: (state) => {
+      state.isLoading = false;
+    },
+    updateDeviceFailed: (state) => {
       state.isLoading = false;
     },
   },
@@ -99,6 +111,9 @@ export const {
   getDeivceDetail,
   getDeivceDetailSuccess,
   getDeivceDetailFailed,
+  updateDevice,
+  updateDeviceSuccess,
+  updateDeviceFailed,
 } = actions;
 
 export default reducer;

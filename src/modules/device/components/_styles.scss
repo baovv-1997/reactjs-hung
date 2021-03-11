@@ -208,5 +208,37 @@
         border-bottom: pxToRem(0.5) solid $color-light10;
       }
     }
+
+    &__btn-group {
+      display: flex;
+      justify-content: center;
+      margin-top: pxToRem(30);
+
+      .btn-modify {
+        height: pxToRem(37);
+        width: pxToRem(150);
+      }
+
+      .btn-cancel {
+        height: pxToRem(37);
+        width: pxToRem(150);
+        margin-left: pxToRem(20);
+        background-color: $btn-shadow;
+      }
+    }
+  }
+}
+
+.group-button {
+  justify-content: center !important;
+  .btn-custom {
+    width: pxToRem(200);
+    height: pxToRem(60);
+    min-width: 0 !important;
+  }
+
+  .btn-custom:last-child {
+    margin-left: pxToRem(10);
+    background-color: $btn-shadow;
   }
 }

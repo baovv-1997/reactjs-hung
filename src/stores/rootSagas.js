@@ -10,6 +10,7 @@ import getCompanySaga from 'modules/device/sagas/getCompanySaga';
 import getDeviceListSaga from 'modules/device/sagas/getDeviceListSaga';
 import getListPositionSaga from 'modules/device/sagas/getListPositionSaga';
 import getDeivceDetailSaga from 'modules/device/sagas/getDeivceDetailSaga';
+import updateDeviceSaga from 'modules/device/sagas/updateDeviceSaga';
 
 import getListStatusCompanySaga from 'modules/statusCompany/sagas/getListCompanySaga';
 
@@ -25,5 +26,6 @@ export default function* RootSagas() {
     getDeviceListSaga(),
     getListPositionSaga(),
     getDeivceDetailSaga(),
+    updateDeviceSaga(),
   ]);
 }

@@ -18,7 +18,7 @@ const Menu = ({ location }: Props) => {
     setListSub(item.sub);
     setMenuClicking(item);
     if (item.name === menuClicking.name && active) {
-      setMenuClicking([]);
+      setMenuClicking({});
     }
   };
 
@@ -34,6 +34,7 @@ const Menu = ({ location }: Props) => {
           handleClickItem={handleClickItem}
           menuClicking={menuClicking}
           isActive={isActive}
+          location={location}
         />
       );
     });
