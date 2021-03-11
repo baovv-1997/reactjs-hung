@@ -1,5 +1,6 @@
 // @flow
 import React, { memo, useState } from 'react';
+import { mockDataArea } from 'mockData/mainData';
 import images from 'themes/images';
 import Search from '../Search';
 import SelectDropdown from '../Select';
@@ -10,19 +11,12 @@ type Props = {
   eventCount?: number,
 };
 
-const listItem = [
-  { id: 1, value: 'naver.com', label: 'naver.com' },
-  { id: 2, value: 'hanmail.net', label: 'hanmail.net' },
-  { id: 3, value: 'nate.com', label: 'nate.com' },
-  { id: 4, value: 'gmail.com', label: 'gmail.com' },
-];
-
 const Header = ({
   isSearch = false,
   isSelect = false,
   eventCount = 0,
 }: Props) => {
-  const [option, seOption] = useState(listItem[0]);
+  const [option, seOption] = useState(mockDataArea[0]);
   return (
     <div className="header">
       <div className="header__left">
@@ -37,7 +31,7 @@ const Header = ({
         {isSelect ? (
           <SelectDropdown
             placeholder="List Selects"
-            listItem={listItem}
+            listItem={mockDataArea}
             onChange={(ops) => {
               seOption(ops);
             }}
@@ -45,6 +39,7 @@ const Header = ({
             disabled={false}
             isSearchable={false}
             blurInputOnSelect={false}
+            customClass="header__select"
           />
         ) : (
           ''

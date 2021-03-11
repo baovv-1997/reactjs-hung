@@ -17,7 +17,7 @@
         color: $bg-button;
         margin-left: pxToRem(10);
       }
-      
+
       &__des {
         margin-left: pxToRem(10);
         font-size: pxToRem(14);
@@ -26,7 +26,6 @@
         text-align: left;
         color: $gray-shadow;
       }
-
     }
     &__search {
       margin-left: pxToRem(10);
@@ -52,8 +51,8 @@
           margin-right: pxToRem(30);
         }
       }
-    
-      .customer-select  {
+
+      .customer-select {
         max-width: pxToRem(140);
       }
       &__input {
@@ -78,8 +77,6 @@
           width: pxToRem(939);
           height: pxToRem(39);
           padding-left: pxToRem(55);
-        
-          
         }
         .wrapper-input-search::placeholder {
           font-size: pxToRem(15);
@@ -89,16 +86,18 @@
           color: $color-input-search;
           font-stretch: normal;
         }
-  
-        ::-webkit-input-placeholder { /* Edge */
+
+        ::-webkit-input-placeholder {
+          /* Edge */
           font-size: pxToRem(15);
           line-height: 1.47;
           letter-spacing: -0.45px;
           text-align: left;
           color: $color-input-search;
         }
-        
-        :-ms-input-placeholder { /* Internet Explorer */
+
+        :-ms-input-placeholder {
+          /* Internet Explorer */
           font-size: pxToRem(15);
           line-height: 1.47;
           letter-spacing: -0.45px;
@@ -131,17 +130,16 @@
   &__pagination {
     display: flex;
     justify-content: center;
-    margin-top: pxToRem(87);
+    margin-top: pxToRem(30);
   }
 
   .device-detail {
-
     &__title {
       display: flex;
       align-items: center;
       margin-left: pxToRem(10);
       p {
-        font-family: $Noto-Sans-Font; 
+        font-family: $Noto-Sans-Font;
         font-size: pxToRem(18);
         font-weight: 900;
         line-height: 1.5;
@@ -170,7 +168,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-         
+
           input {
             border: none;
             padding: 0;
