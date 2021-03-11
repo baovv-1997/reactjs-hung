@@ -1,0 +1,9 @@
+.dashboard-area {
+  width: pxToRem(1710);
+  height: pxToRem(1012);
+  background-image: url('../../../../../assets/images/bg_dashboard_area.png');
+  background-size: cover;
+  object-fit: contain;
+
+  position: relative;
+}

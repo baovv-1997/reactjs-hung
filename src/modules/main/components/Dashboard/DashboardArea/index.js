@@ -1,18 +1,18 @@
-import React from 'react';
 import MainLayout from 'layout/MainLayout';
 import { mockDataMain, mockLocationArea } from 'mockData/mainData';
-
+import React from 'react';
 import IMAGES from 'themes/images';
-import InfoReality from '../InfoReality';
-import TotalPower from '../TotalPower';
-import VitualData from '../VitualData';
-import WeeklyElectric from '../WeeklyElectric';
+import InfoReality from '../../InfoReality';
+import TotalPower from '../../TotalPower';
+import VitualData from '../../VitualData';
+import WeeklyElectric from '../../WeeklyElectric';
 
-const MainPage = () => {
+const DashboardArea = () => {
   const { totalPower, infoReality, vitualData } = mockDataMain;
+
   return (
-    <MainLayout isSearch>
-      <div className="main-page">
+    <MainLayout isSelect>
+      <div className="dashboard-area">
         {/* thong tin  */}
 
         <div className="current-electric">
@@ -27,7 +27,7 @@ const MainPage = () => {
           <VitualData data={vitualData} />
         </div>
 
-        {mockLocationArea.map((item) => (
+        {/* {mockLocationArea.map((item) => (
           <img
             src={IMAGES.icon_location}
             alt=""
@@ -38,10 +38,10 @@ const MainPage = () => {
             }}
             key={item.id}
           />
-        ))}
+        ))} */}
       </div>
     </MainLayout>
   );
 };
 
-export default MainPage;
+export default DashboardArea;

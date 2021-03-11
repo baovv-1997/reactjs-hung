@@ -1,6 +1,7 @@
 // @flow
 import CARD from 'constants/card';
 import React, { memo } from 'react';
+import IMAGES from 'themes/images';
 
 import CardItem from './CardItem';
 
@@ -13,6 +14,7 @@ type Props = {
   titleClick: Function,
   customClass?: string,
   isCardCompany?: boolean,
+  isEvent?: boolean,
 };
 
 export const Card = ({
@@ -24,131 +26,134 @@ export const Card = ({
   titleClick,
   customClass = '',
   isCardCompany = false,
+  isEvent = false,
 }: Props) => {
   // loop listItem and return to card
-  const cardItem = listItem.map((item) => {
-    switch (item.title) {
-      case 'date':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.date}
-            customClass="progress-color1"
-            specifications={item.specifications}
-            progress={item.progress}
-          />
-        );
+  const cardItem =
+    listItem &&
+    listItem.map((item) => {
+      switch (item.title) {
+        case 'date':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.date}
+              customClass="progress-color1"
+              specifications={item.specifications}
+              progress={item.progress}
+            />
+          );
 
-      case 'month':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.month}
-            customClass="progress-color2"
-            specifications={item.specifications}
-            progress={item.progress}
-          />
-        );
+        case 'month':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.month}
+              customClass="progress-color2"
+              specifications={item.specifications}
+              progress={item.progress}
+            />
+          );
 
-      case 'year':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.year}
-            customClass="progress-color3"
-            specifications={item.specifications}
-            progress={item.progress}
-          />
-        );
+        case 'year':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.year}
+              customClass="progress-color3"
+              specifications={item.specifications}
+              progress={item.progress}
+            />
+          );
 
-      case 'power':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.power}
-            customClass="progress-color4"
-            specifications={item.specifications}
-            progress={item.progress}
-          />
-        );
+        case 'power':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.power}
+              customClass="progress-color4"
+              specifications={item.specifications}
+              progress={item.progress}
+            />
+          );
 
-      case 'power-day':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.powerDay}
-            customClass="progress-color1"
-            specifications={`${item.specifications}kHw`}
-            progress={item.progress}
-          />
-        );
+        case 'power-day':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.powerDay}
+              customClass="progress-color1"
+              specifications={`${item.specifications}kHw`}
+              progress={item.progress}
+            />
+          );
 
-      case 'max-power-day':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.maxPowerDay}
-            customClass="progress-color2"
-            specifications={`${item.specifications}kHw`}
-            progress={item.progress}
-          />
-        );
+        case 'max-power-day':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.maxPowerDay}
+              customClass="progress-color2"
+              specifications={`${item.specifications}kHw`}
+              progress={item.progress}
+            />
+          );
 
-      case 'rate-power-day':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.ratePowerDay}
-            customClass="progress-color3"
-            specifications={`${item.specifications}%`}
-            progress={item.progress}
-          />
-        );
+        case 'rate-power-day':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.ratePowerDay}
+              customClass="progress-color3"
+              specifications={`${item.specifications}%`}
+              progress={item.progress}
+            />
+          );
 
-      case 'current-month':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.currentMonth}
-            customClass="progress-color4"
-            specifications={`${item.specifications}kHw`}
-            progress={item.progress}
-          />
-        );
+        case 'current-month':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.currentMonth}
+              customClass="progress-color4"
+              specifications={`${item.specifications}kHw`}
+              progress={item.progress}
+            />
+          );
 
-      case 'current-year':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.currentYear}
-            customClass="progress-color5"
-            specifications={`${item.specifications}MWh`}
-            progress={item.progress}
-          />
-        );
+        case 'current-year':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.currentYear}
+              customClass="progress-color5"
+              specifications={`${item.specifications}MWh`}
+              progress={item.progress}
+            />
+          );
 
-      case 'amount-power':
-        return (
-          <CardItem
-            key={item.title}
-            name={CARD.amountPower}
-            customClass="progress-color6"
-            specifications={`${item.specifications}MW`}
-            progress={item.progress}
-          />
-        );
+        case 'amount-power':
+          return (
+            <CardItem
+              key={item.title}
+              name={CARD.amountPower}
+              customClass="progress-color6"
+              specifications={`${item.specifications}MW`}
+              progress={item.progress}
+            />
+          );
 
-      default:
-        return (
-          <CardItem
-            key={item.title}
-            customClass=""
-            specifications={item.specifications}
-            progress={item.progress}
-          />
-        );
-    }
-  });
+        default:
+          return (
+            <CardItem
+              key={item.title}
+              customClass=""
+              specifications={item.specifications}
+              progress={item.progress}
+            />
+          );
+      }
+    });
 
   return (
     <div className="card">
@@ -162,10 +167,21 @@ export const Card = ({
         </div>
       )}
       <div className={`card__header ${customClass}`}>
-        <p className="card__title" onClick={titleClick} role="presentation">
+        <p
+          className={`card__title ${isEvent ? 'card__event' : ''}`}
+          onClick={titleClick}
+          role="presentation"
+        >
           {title}
         </p>
         <p className="card__unit">kWh</p>
+        {isEvent && (
+          <img
+            src={IMAGES.icon_event_card}
+            alt=""
+            className="card__logo-event"
+          />
+        )}
       </div>
       <div
         className={
@@ -202,6 +218,7 @@ Card.defaultProps = {
   isLogoTop: false,
   customClass: '',
   isCardCompany: false,
+  isEvent: false,
 };
 
 export default memo<Props>(Card);
