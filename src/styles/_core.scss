@@ -11,3 +11,23 @@
 .pt-7{
   padding-top: pxToVW(50);
 }
+
+.pagination {
+  .page-item {
+    margin-left: pxToRem(5);
+    margin-right: pxToRem(5);
+    border-radius: pxToRem(3);
+    font-size: pxToRem(12);
+    &.active {
+      .page-link {
+        background-color: $bg-button;
+        border-color: $bg-button;
+        color: $white;
+      }
+    }
+
+    .page-link {
+      color: $bg-button;
+    }
+  }
+}

@@ -21,16 +21,26 @@ type Props = {
   }>,
   handleClickItem: Function,
   isActive: boolean,
+  location: {
+    pathname: string,
+  },
 };
 
-const MenuItem = ({ item, listSub, handleClickItem, isActive }: Props) => {
+const MenuItem = ({
+  item,
+  listSub,
+  handleClickItem,
+  isActive,
+  location,
+}: Props) => {
   const { to, name, sub } = item;
   const [nestSubClicking, setNestSubClicking] = useState({});
   const [listNestSub, setListNestSub] = useState([]);
+  const [activeSub, setActiveSub] = useState(false);
 
   const handleClickItemSub = (e, itemSub, active) => {
     e.stopPropagation();
-
+    setActiveSub(active);
     setNestSubClicking(itemSub);
     setListNestSub(itemSub.sub);
     if (itemSub.name === nestSubClicking.name && active) {
@@ -42,7 +52,9 @@ const MenuItem = ({ item, listSub, handleClickItem, isActive }: Props) => {
     listSub &&
     listSub.length > 0 &&
     listSub.map((itemSub) => {
-      const isActiveNestSub = nestSubClicking.name === itemSub.name;
+      const isActiveNestSub =
+        nestSubClicking.name === itemSub.name ||
+        location.pathname.includes(item.to);
       return (
         <Submenu
           key={itemSub.id}
@@ -51,6 +63,7 @@ const MenuItem = ({ item, listSub, handleClickItem, isActive }: Props) => {
           handleClickItemSub={handleClickItemSub}
           listNestSub={listNestSub}
           isActiveNestSub={isActiveNestSub}
+          location={location}
         />
       );
     });
@@ -72,7 +85,9 @@ const MenuItem = ({ item, listSub, handleClickItem, isActive }: Props) => {
         <p className="item__link__label">{name}</p>
         {sub && <FontAwesomeIcon icon={faChevronRight} />}
       </Link>
-      <ul className={`menu__listsub ${isActive ? 'open' : ''}`}>{renderSub}</ul>
+      <ul className={`menu__listsub ${isActive || activeSub ? 'open' : ''}`}>
+        {renderSub}
+      </ul>
     </li>
   );
 };

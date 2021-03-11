@@ -6,6 +6,11 @@ import signUpSaga from 'modules/accounts/sagas/signUpSaga';
 import getListCompanySaga from 'modules/accounts/sagas/getListCompanySaga';
 import getListAreaSaga from 'modules/accounts/sagas/getListAreaSaga';
 import getListInverterSaga from 'modules/accounts/sagas/getListInverterSaga';
+import getCompanySaga from 'modules/device/sagas/getCompanySaga';
+import getDeviceListSaga from 'modules/device/sagas/getDeviceListSaga';
+import getListPositionSaga from 'modules/device/sagas/getListPositionSaga';
+import getDeivceDetailSaga from 'modules/device/sagas/getDeivceDetailSaga';
+import updateDeviceSaga from 'modules/device/sagas/updateDeviceSaga';
 
 import getListStatusCompanySaga from 'modules/statusCompany/sagas/getListCompanySaga';
 
@@ -17,5 +22,10 @@ export default function* RootSagas() {
     getListAreaSaga(),
     getListInverterSaga(),
     getListStatusCompanySaga(),
+    getCompanySaga(),
+    getDeviceListSaga(),
+    getListPositionSaga(),
+    getDeivceDetailSaga(),
+    updateDeviceSaga(),
   ]);
 }

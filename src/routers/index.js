@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -19,8 +21,13 @@ const operationStatusByArea = lazy(() =>
 const operationStatusByCompanyDetail = lazy(() =>
   import('modules/operationStatus/components/detail')
 );
+
+// components
 const MainPage = lazy(() => import('modules/main/components/Dashboard'));
-// const DeviceManagement = lazy(() => import('modules/device/components'));
+const DeviceManagement = lazy(() => import('modules/device/components'));
+const DeviceDetail = lazy(() =>
+  import('modules/device/components/DeviceDetail')
+);
 const SingIn = lazy(() => import('modules/accounts/components'));
 
 const Router = () => {
@@ -39,6 +46,8 @@ const Router = () => {
             path={ROUTERS.STATUS_COMPANY}
             component={StatusCompany}
           />
+          <Route exact path={ROUTERS.DEVICE} component={DeviceManagement} />
+          <Route exact path={ROUTERS.DEVICE_DETAIL} component={DeviceDetail} />
           <Route
             exact
             path={ROUTERS.STATUS_COMPANY_BY_AREA}

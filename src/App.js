@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import './App.scss';
 import { Provider } from 'react-redux';
+import Loading from 'commons/components/Loading';
 import Router from 'routers';
 import createStore from './stores/createStore';
-import Loading from 'commons/components/Loading';
 
 function App() {
   const { store, persistor } = createStore();

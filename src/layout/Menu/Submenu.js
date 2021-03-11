@@ -18,6 +18,9 @@ type Props = {
   }>,
   isActiveNestSub: boolean,
   handleClickItemSub: Function,
+  location: {
+    pathname: string,
+  },
 };
 
 const Submenu = ({
@@ -25,6 +28,7 @@ const Submenu = ({
   listNestSub,
   isActiveNestSub,
   handleClickItemSub,
+  location,
 }: Props) => {
   const [nestSubClicking, setNestSubClicking] = useState({});
 
@@ -36,7 +40,9 @@ const Submenu = ({
     listNestSub &&
     listNestSub.length > 0 &&
     listNestSub.map((item) => {
-      const activeNestItem = item.name === nestSubClicking.name;
+      const activeNestItem =
+        item.name === nestSubClicking.name ||
+        location.pathname.includes(item.to);
       return (
         <li
           className="item"
@@ -47,7 +53,7 @@ const Submenu = ({
           key={item.id}
         >
           <Link
-            to={item?.to || '#'}
+            to={item?.to}
             className={`item__link item-link-nest-sub ${
               activeNestItem ? 'active-link' : ''
             }`}
