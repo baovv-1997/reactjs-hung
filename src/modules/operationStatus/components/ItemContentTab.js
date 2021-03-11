@@ -1,6 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import Pagination from 'react-js-pagination';
 import LabelStatusV2 from 'commons/components/Label/LabelStatus/LabelStatusV2';
 import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
@@ -8,9 +9,12 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
+import {
+  headStatusCompany,
+  headOperationStatusByAreaCompany,
+} from 'constants/headerTable';
 
 type Props = {
-  headStatusCompany: Array<{ id: number, name: string }>,
   listMockupDataCompany: any,
   dataContent: Object,
   dataBoxContent: Object,
@@ -20,10 +24,25 @@ type Props = {
   handleChangePagination: Function,
   handleDownloadTrend: Function,
   handleDownloadRaw: Function,
+  handlePageChange: Function,
+  totalPage: number,
+  perPage: number,
+  activePage: number,
+  tableOperationStatusByAreaCompany: Array<{
+    id: number,
+  }>,
+  handleCheckboxSort: Function,
+  handleShowModalSorting: Function,
+  isShowModalSorting: boolean,
+  activePageBottom: number,
+  handlePageChangeBottom: Function,
+  paginationTypeBottom: Object,
+  handleChangePaginationBottom: Function,
+  handleDownloadRawBottom: Function,
+  handleClickDetail: Function,
 };
 
 const ItemContentTab = ({
-  headStatusCompany,
   listMockupDataCompany,
   dataContent,
   dataBoxContent,
@@ -33,6 +52,20 @@ const ItemContentTab = ({
   handleChangePagination,
   handleDownloadTrend,
   handleDownloadRaw,
+  handlePageChange,
+  totalPage,
+  perPage,
+  activePage,
+  tableOperationStatusByAreaCompany,
+  handleCheckboxSort,
+  handleShowModalSorting,
+  isShowModalSorting,
+  activePageBottom,
+  handlePageChangeBottom,
+  paginationTypeBottom,
+  handleChangePaginationBottom,
+  handleDownloadRawBottom,
+  handleClickDetail,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const dataLengthChart = [
@@ -172,11 +205,73 @@ const ItemContentTab = ({
           <Button onClick={() => handleDownloadRaw()}>Raw Date 다운</Button>
         </div>
       </div>
+      <div className="mb-5">
+        <Table
+          tableHeads={headStatusCompany}
+          tableBody={listMockupDataCompany}
+          // isShowId
+        />
+        <div className="opacity d-block pagination">
+          {totalPage > perPage && (
+            <div className="wrapper-device__pagination">
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={handlePageChange}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/*  Table Bottom */}
+      <div className="group-option-table d-flex  justify-content-between mb-3">
+        <SelectDropdown
+          placeholder="구분"
+          listItem={listPaginationType}
+          onChange={(option) => handleChangePaginationBottom(option)}
+          option={paginationTypeBottom || null}
+        />
+        <div className="group-btn-download">
+          <Button onClick={() => handleDownloadRawBottom()}>
+            Raw Date 다운
+          </Button>
+        </div>
+      </div>
       <Table
-        tableHeads={headStatusCompany}
-        tableBody={listMockupDataCompany}
+        tableHeads={headOperationStatusByAreaCompany}
+        tableBody={tableOperationStatusByAreaCompany}
         // isShowId
+        handleCheckboxSort={handleCheckboxSort}
+        handleShowModalSorting={handleShowModalSorting}
+        showModalSort={{
+          isShow: isShowModalSorting,
+          keyItem: 5,
+        }}
+        onClickRow={handleClickDetail}
       />
+      <div className="group-btn-register text-right">
+        <Button onClick={() => {}}>등록</Button>
+      </div>
+      <div className="opacity d-block pagination mt-4">
+        {totalPage > perPage && (
+          <div className="wrapper-device__pagination">
+            <Pagination
+              activePage={activePageBottom}
+              itemsCountPerPage={perPage}
+              totalItemsCount={totalPage}
+              pageRangeDisplayed={5}
+              onChange={handlePageChangeBottom}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
