@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean,
   labelRadio: string,
   isChecked: boolean,
-  id: string,
+  id?: string,
 };
 
 export const Radio = ({
@@ -16,7 +16,7 @@ export const Radio = ({
   name = '',
   isChecked,
   onChange,
-  id,
+  id = '',
   disabled = false,
 }: Props) => {
   return (
@@ -26,7 +26,7 @@ export const Radio = ({
           type="radio"
           checked={`${isChecked ? 'checked' : ''}`}
           name={name}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           id={id}
           disabled={disabled}
         />
@@ -40,6 +40,7 @@ export const Radio = ({
 Radio.defaultProps = {
   name: '',
   disabled: false,
+  id: '',
 };
 
 export default memo<Props>(Radio);

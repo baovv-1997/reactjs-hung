@@ -1,44 +1,65 @@
-import React, { useState } from 'react';
-import { DASHBOARD } from 'constants/listMenu';
+// @flow
+// libs
+import React, { useState, memo } from 'react';
+import { withRouter } from 'react-router-dom';
+import { DASHBOARD, SETUP } from 'constants/listMenu';
 import MenuItem from './MenuItem';
 
-const Menu = () => {
+type Props = {
+  location: {
+    pathname: string,
+  },
+};
+
+const Menu = ({ location }: Props) => {
   const [listSub, setListSub] = useState([]);
   const [menuClicking, setMenuClicking] = useState({});
   const handleClickItem = (item, active) => {
     setListSub(item.sub);
     setMenuClicking(item);
     if (item.name === menuClicking.name && active) {
-      setMenuClicking([]);
+      setMenuClicking({});
     }
   };
 
-  const renderMenuList = DASHBOARD.items.map((item) => {
-    const isActive = menuClicking.name === item.name;
-    return (
-      <MenuItem
-        key={item.id}
-        item={item}
-        listSub={listSub}
-        handleClickItem={handleClickItem}
-        menuClicking={menuClicking}
-        isActive={isActive}
-      />
-    );
-  });
+  const renderMenuList = (listMenu) => {
+    return listMenu.items.map((item) => {
+      const isActive =
+        menuClicking.name === item.name || location.pathname.includes(item.to);
+      return (
+        <MenuItem
+          key={item.id}
+          item={item}
+          listSub={listSub}
+          handleClickItem={handleClickItem}
+          menuClicking={menuClicking}
+          isActive={isActive}
+          location={location}
+        />
+      );
+    });
+  };
 
   return (
     <div className="menu">
+      <h1 className="menu__head">실증단지</h1>
       <div className="menu__wraper-head">
-        <h1 className="menu__head">실증단지</h1>
         <p className="menu__info">
           <img src={DASHBOARD?.icon} alt="menu" />
           <span>{DASHBOARD?.label}</span>
         </p>
       </div>
-      <ul className="menu__list">{renderMenuList}</ul>
+      <ul className="menu__list">{renderMenuList(DASHBOARD)}</ul>
+
+      <div className="menu__wraper-head">
+        <p className="menu__info">
+          <img src={SETUP?.icon} alt="menu" />
+          <span>{SETUP?.label}</span>
+        </p>
+      </div>
+      <ul className="menu__list">{renderMenuList(SETUP)}</ul>
     </div>
   );
 };
 
-export default Menu;
+export default withRouter(memo<Props>(Menu));

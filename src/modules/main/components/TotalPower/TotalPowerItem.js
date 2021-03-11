@@ -2,13 +2,18 @@
 import React, { memo } from 'react';
 
 type Props = {
-  icon: any,
+  icon?: any,
   name?: string,
   value?: number,
-  customClass: string,
+  customClass?: string,
 };
 
-const TotalPowerItem = ({ icon, name = '', value = 0, customClass }: Props) => {
+const TotalPowerItem = ({
+  icon = '',
+  name = '',
+  value = 0,
+  customClass = '',
+}: Props) => {
   return (
     <div className={`total-power__item ${customClass}`}>
       <div className="total-power__content-header">
@@ -23,6 +28,8 @@ const TotalPowerItem = ({ icon, name = '', value = 0, customClass }: Props) => {
 TotalPowerItem.defaultProps = {
   name: '',
   value: 0,
+  customClass: '',
+  icon: '',
 };
 
 export default memo<Props>(TotalPowerItem);
