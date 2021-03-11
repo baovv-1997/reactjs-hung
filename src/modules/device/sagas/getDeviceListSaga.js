@@ -10,7 +10,7 @@ function* getListDevice(action) {
     );
 
     if (response.ok) {
-      const { data } = response.data;
+      const { data } = response;
 
       // In case: request success
       yield put({

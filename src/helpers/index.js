@@ -39,3 +39,24 @@ export const formatValue = (value: any) => {
   }
   return r;
 };
+
+export const renderLabelType = (type) => {
+  let label = '';
+  switch (parseInt(type, 10)) {
+    case 0:
+      label = '실증단지';
+      break;
+    case 1:
+      label = 'RTU(목업)';
+      break;
+    case 2:
+      label = '테스트(실증단지)';
+      break;
+    case 3:
+      label = '테스트(목업)';
+      break;
+    default:
+      break;
+  }
+  return label;
+};

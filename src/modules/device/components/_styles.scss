@@ -56,39 +56,55 @@
       .customer-select  {
         max-width: pxToRem(140);
       }
-      .wrapper-input-search {
-        border-radius: pxToRem(3);
-        border: solid 1px $color-light10;
-        margin-left: pxToRem(50);
-        width: pxToRem(939);
-        height: pxToRem(37);
-      
-        img {
-          left: pxToRem(20);
-        }
-      }
-      .wrapper-input-search::placeholder {
-        font-size: pxToRem(15);
-        line-height: 1.47;
-        letter-spacing: -0.45px;
-        text-align: left;
-        color: $color-input-search;
-      }
+      &__input {
+        position: relative;
 
-      ::-webkit-input-placeholder { /* Edge */
-        font-size: pxToRem(15);
-        line-height: 1.47;
-        letter-spacing: -0.45px;
-        text-align: left;
-        color: $color-input-search;
-      }
-      
-      :-ms-input-placeholder { /* Internet Explorer */
-        font-size: pxToRem(15);
-        line-height: 1.47;
-        letter-spacing: -0.45px;
-        text-align: left;
-        color: $color-input-search;
+        .search__icon {
+          position: absolute;
+          left: pxToRem(70);
+          top: 55%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          width: pxToRem(20);
+          height: pxToRem(20);
+          img {
+            left: pxToRem(60);
+          }
+        }
+        .wrapper-input-search {
+          border-radius: pxToRem(3);
+          border: solid 1px $color-light10;
+          margin-left: pxToRem(50);
+          width: pxToRem(939);
+          height: pxToRem(39);
+          padding-left: pxToRem(55);
+        
+          
+        }
+        .wrapper-input-search::placeholder {
+          font-size: pxToRem(15);
+          line-height: 1.47;
+          letter-spacing: -0.45px;
+          text-align: left;
+          color: $color-input-search;
+          font-stretch: normal;
+        }
+  
+        ::-webkit-input-placeholder { /* Edge */
+          font-size: pxToRem(15);
+          line-height: 1.47;
+          letter-spacing: -0.45px;
+          text-align: left;
+          color: $color-input-search;
+        }
+        
+        :-ms-input-placeholder { /* Internet Explorer */
+          font-size: pxToRem(15);
+          line-height: 1.47;
+          letter-spacing: -0.45px;
+          text-align: left;
+          color: $color-input-search;
+        }
       }
 
       .custom-btn {
@@ -109,5 +125,88 @@
 
   &__table {
     margin-top: pxToRem(30);
+    min-height: 70vh;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: pxToRem(87);
+  }
+
+  .device-detail {
+
+    &__title {
+      display: flex;
+      align-items: center;
+      margin-left: pxToRem(10);
+      p {
+        font-family: $Noto-Sans-Font; 
+        font-size: pxToRem(18);
+        font-weight: 900;
+        line-height: 1.5;
+        letter-spacing: -0.54px;
+        text-align: left;
+        color: $bg-button;
+        margin-left: pxToRem(10);
+      }
+
+      img {
+        font-size: pxToRem(12);
+        height: 10px;
+      }
+    }
+
+    &__form {
+      display: flex;
+
+      .col-item {
+        padding: 0;
+
+        .cell {
+          border: solid pxToRem(0.25) $color-light10;
+          width: 100%;
+          height: pxToRem(38) !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+         
+          input {
+            border: none;
+            padding: 0;
+            height: pxToRem(36);
+            width: 100%;
+            padding-left: pxToRem(20);
+          }
+
+          input:disabled {
+            background-color: $input-disable;
+          }
+        }
+
+        .cell:first-child {
+          border-left: solid pxToRem(0.25) $color-light10;
+          width: 100%;
+          height: pxToRem(38) !important;
+        }
+      }
+
+      .col-item:first-child {
+        border-left: pxToRem(0.5) solid $color-light10;
+      }
+
+      .col-item:nth-child(odd) {
+        background-color: #f3f5f8;
+      }
+
+      .col-item:last-child {
+        border-right: pxToRem(0.5) solid $color-light10;
+      }
+
+      .col-item {
+        border-top: pxToRem(0.5) solid $color-light10;
+        border-bottom: pxToRem(0.5) solid $color-light10;
+      }
+    }
   }
 }

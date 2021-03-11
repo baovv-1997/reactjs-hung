@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { renderLabelType } from 'helpers/';
 // import moment from 'moment';
 
 const mainSlice = createSlice({
@@ -8,6 +9,9 @@ const mainSlice = createSlice({
     companyOptions: [],
     deviceList: [],
     posOptionList: [],
+    perPage: 0,
+    totalPage: 0,
+    deviceDetail: {},
   },
   reducers: {
     getListCompany: (state) => {
@@ -45,20 +49,37 @@ const mainSlice = createSlice({
     },
 
     getListDeviceSuccess: (state, action) => {
-      const listDeviceFormat = action.data.map((item) => ({
-        id: item.id,
+      const listDeviceFormat = action?.data?.data?.map((item, index) => ({
+        rowId:
+          `${
+            action.data.total -
+            (action?.data?.current_page - 1) * action?.data?.total -
+            index
+          }` || '',
         dateSetup: item.ds_install_date,
         companyName: item?.company?.com_name,
-        dsType: item?.ds_type_label,
+        dsType: renderLabelType(item?.ds_type),
         position: item?.position?.pos_name,
         moduleName: item?.ds_name,
         dsManager: item?.ds_manager,
       }));
-      state.isLoading = true;
+      state.isLoading = false;
       state.deviceList = listDeviceFormat;
+      state.perPage = action?.data?.per_page;
+      state.totalPage = action?.data?.total;
     },
     getListDeviceFailed: (state) => {
-      state.isLoading = true;
+      state.isLoading = false;
+    },
+    getDeivceDetail: (state) => {
+      state.isLoading = false;
+    },
+    getDeivceDetailSuccess: (state, action) => {
+      state.isLoading = false;
+      state.deviceDetail = action.data;
+    },
+    getDeivceDetailFailed: (state) => {
+      state.isLoading = false;
     },
   },
 });
@@ -75,6 +96,9 @@ export const {
   getListPosition,
   getListPositionSuccess,
   getListPositionFailed,
+  getDeivceDetail,
+  getDeivceDetailSuccess,
+  getDeivceDetailFailed,
 } = actions;
 
 export default reducer;

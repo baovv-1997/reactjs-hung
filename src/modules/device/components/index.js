@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Radio from 'commons/components/Radio';
 import { useSelector, useDispatch } from 'react-redux';
+import Pagination from 'react-js-pagination';
 import IMAGES from 'themes/images';
 import { DeviceManagementOptionSeach } from 'constants/optionCheckbox';
 import Select from 'commons/components/Select';
@@ -17,9 +18,13 @@ const DeviceManagement = () => {
   const dispatch = useDispatch();
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
   const deviceList = useSelector((state) => state?.device?.deviceList);
+  const isLoading = useSelector((state) => state?.device?.isLoading);
+  const totalPage = useSelector((state) => state?.device?.totalPage);
+  const perPage = useSelector((state) => state?.device?.perPage);
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const [currentOption, setCurrentOption] = useState('all');
-
+  const [valueSearch, setValueSearch] = useState('');
+  const [activePage, setActivePage] = useState(1);
   const [selectOption, setSelectOption] = useState(null);
 
   useEffect(() => {
@@ -31,6 +36,7 @@ const DeviceManagement = () => {
     dispatch(
       getListDevice({
         [currentOption]: selectOption?.value,
+        page: 1,
       })
     );
   }, [selectOption]);
@@ -38,6 +44,12 @@ const DeviceManagement = () => {
   // handle when slect change
   const onChangeSelect = (option) => {
     setSelectOption(option);
+  };
+
+  // handle input change
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setValueSearch(value);
   };
 
   // handle when radio change
@@ -58,8 +70,49 @@ const DeviceManagement = () => {
     />
   ));
 
+  // handle submit search
+  const handleSubmitSearch = () => {
+    dispatch(
+      getListDevice({
+        [currentOption]: selectOption?.value,
+        keyword: valueSearch,
+        page: 1,
+      })
+    );
+  };
+
+  const renderListOptions = () => {
+    let listOptions = [];
+    switch (currentOption) {
+      case 'all':
+        listOptions = [...companyOptions, ...posOptionList];
+        break;
+      case 'com_id':
+        listOptions = companyOptions;
+        break;
+      case 'pos_id':
+        listOptions = posOptionList;
+        break;
+      default:
+        break;
+    }
+
+    return listOptions;
+  };
+
+  const handlePageChange = (page) => {
+    console.log(page);
+    setActivePage(page);
+    dispatch(
+      getListDevice({
+        [currentOption]: selectOption?.value,
+        keyword: valueSearch,
+        page: activePage + 1,
+      })
+    );
+  };
   return (
-    <MainLayout>
+    <MainLayout isProcessing={isLoading}>
       <div className="wrapper-device">
         <div className="wrapper-device__head-menu">
           <div className="wrapper-device__head-menu__title">
@@ -79,23 +132,47 @@ const DeviceManagement = () => {
             </div>
             <div lassName="wrapper-device__head-menu__search__select">
               <Select
-                listItem={
-                  currentOption === 'com_id' ? companyOptions : posOptionList
-                }
+                listItem={renderListOptions()}
                 onChange={(option) => onChangeSelect(option)}
                 option={selectOption}
                 placeholder="업체 선택"
               />
             </div>
-            <Input
-              placeholder="업체명, 구분, 설치위치로 검색해보세요."
-              customClass="wrapper-input-search"
-            />
-            <Button customClass="custom-btn">검색</Button>
+            <div className="wrapper-device__head-menu__search__input">
+              <Input
+                placeholder="업체명, 구분, 설치위치로 검색해보세요."
+                customClass="wrapper-input-search"
+                onChange={handleInputChange}
+                value={valueSearch}
+              />
+              <img
+                src={IMAGES.icon_search}
+                alt="Icon Search"
+                className="search__icon"
+                // onClick={() => handleClick(searchValue)}
+                role="presentation"
+              />
+            </div>
+            <Button customClass="custom-btn" onClick={handleSubmitSearch}>
+              검색
+            </Button>
           </div>
         </div>
         <div className="wrapper-device__table">
           <Table tableHeads={DEVICE_HEAD_TABLE} tableBody={deviceList} />
+          {deviceList && deviceList.length > perPage && (
+            <div className="wrapper-device__pagination">
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={handlePageChange}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
         </div>
       </div>
     </MainLayout>

@@ -25,7 +25,7 @@ const Menu = ({ location }: Props) => {
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
       const isActive =
-        menuClicking.name === item.name || location.pathname === item.to;
+        menuClicking.name === item.name || location.pathname.includes(item.to);
       return (
         <MenuItem
           key={item.id}
