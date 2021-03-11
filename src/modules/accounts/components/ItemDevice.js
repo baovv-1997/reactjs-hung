@@ -51,6 +51,7 @@ export const ItemDevice = ({
             }
             option={optionDevice?.type || null}
             disabled={idx !== 0}
+            noOptionsMessage={() => '옵션 없음'}
           />
           <img src={images.icon_next} alt="" />
         </div>
@@ -62,6 +63,7 @@ export const ItemDevice = ({
               handleChangeOptionCompany(option, 'company', optionDevice?.idx)
             }
             option={optionDevice?.company || null}
+            noOptionsMessage={() => '옵션 없음'}
           />
           <img src={images.icon_next} alt="" />
         </div>
@@ -77,6 +79,7 @@ export const ItemDevice = ({
             onChange={(option) =>
               handleChangeOptionCompany(option, 'area', optionDevice?.idx)
             }
+            noOptionsMessage={() => '옵션 없음'}
             option={
               optionDevice?.type?.value ? null : optionDevice?.area || null
             }
@@ -91,6 +94,7 @@ export const ItemDevice = ({
               handleChangeOptionCompany(option, 'inverter', optionDevice?.idx)
             }
             option={optionDevice?.inverter || null}
+            noOptionsMessage={() => '옵션 없음'}
           />
         </div>
       </div>

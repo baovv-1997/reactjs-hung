@@ -122,6 +122,7 @@ const ItemContentTab = ({
           listItem={listPaginationType}
           onChange={(option) => handleChangePagination(option)}
           option={paginationType || null}
+          noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
           <Button onClick={() => handleDownloadTrend()} customClass="mr-2">
