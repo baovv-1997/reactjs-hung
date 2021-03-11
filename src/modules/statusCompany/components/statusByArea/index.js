@@ -164,7 +164,7 @@ const StatusByAreaCompany = () => {
                     dataContent={{}}
                   />
                 </Tab>
-                <Tab
+                {/* <Tab
                   eventKey="bulk2"
                   title={
                     <div className="tab-name">
@@ -186,8 +186,8 @@ const StatusByAreaCompany = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-                </Tab>
-                <Tab
+                </Tab> */}
+                {/* <Tab
                   eventKey="bulk3"
                   title={
                     <div className="tab-name">
@@ -209,7 +209,7 @@ const StatusByAreaCompany = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-                </Tab>
+                </Tab> */}
 
                 <div className="opacity d-block pagination">
                   {totalPage > perPage && (
