@@ -12,6 +12,8 @@ type Props = {
   isShowId?: boolean,
   rowActive?: Function,
   onClickTableColumn?: Function,
+  showModalSort?: any,
+  handleCheckboxSort?: Function,
 };
 
 const TableData = ({
@@ -22,6 +24,8 @@ const TableData = ({
   isShowId = false,
   rowActive = {},
   onClickTableColumn = () => {},
+  showModalSort = '',
+  handleCheckboxSort = () => {},
 }: Props) => {
   const renderBodyTable =
     tableBody &&
@@ -52,7 +56,11 @@ const TableData = ({
   return (
     <Table striped bordered hover responsive>
       <thead>
-        <TableHead listItems={tableHeads} />
+        <TableHead
+          listItems={tableHeads}
+          showModalSort={showModalSort}
+          handleCheckboxSort={handleCheckboxSort}
+        />
       </thead>
       <tbody>{renderBody()}</tbody>
     </Table>
@@ -65,5 +73,7 @@ TableData.defaultProps = {
   handleClickBtnDetail: () => {},
   isShowId: false,
   onClickTableColumn: () => {},
+  showModalSort: '',
+  handleCheckboxSort: () => {},
 };
 export default memo<Props>(TableData);

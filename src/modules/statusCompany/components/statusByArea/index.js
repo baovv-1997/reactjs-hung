@@ -7,13 +7,12 @@ import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
-
+import { listMockupDataCompany } from 'mockData/listCompany';
 import { headStatusCompany } from 'constants/headerTable';
-import * as StatusCompanyAction from '../redux';
-import ItemContentTab from './ItemContentTab';
+import * as StatusCompanyAction from '../../redux';
+import ItemContentTab from '../ItemContentTab';
 
-const StatusCompanyPage = () => {
+const StatusByAreaCompany = () => {
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
@@ -32,7 +31,6 @@ const StatusCompanyPage = () => {
     insolation: false,
   };
   const [itemSelect, setItemSelect] = useState({});
-  const [itemSelectMocKup, setItemSelectMocKup] = useState({});
   const [paginationType, setPaginationType] = useState(defaultOption);
   const [activePage, setActivePage] = useState(1);
   const [checkBox, setCheckBox] = useState(defaultCheckBox);
@@ -89,11 +87,6 @@ const StatusCompanyPage = () => {
     });
   };
 
-  const handleClickSelectMocKup = (item) => {
-    console.log(item);
-    setItemSelectMocKup(item);
-  };
-
   const handleToggleCheckbox = (check, name) => {
     setCheckBox({
       ...checkBox,
@@ -111,7 +104,9 @@ const StatusCompanyPage = () => {
     setPaginationType(defaultOption);
     setCheckBox(defaultCheckBox);
   };
-
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
   const handleDownloadRaw = () => {
     console.log('download Raw');
   };
@@ -119,9 +114,7 @@ const StatusCompanyPage = () => {
   const handleDownloadTrend = () => {
     console.log('download Trend');
   };
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
+
   const renderListCompany =
     listStatusCompanySelect &&
     listStatusCompanySelect.map((item) => (
@@ -136,20 +129,6 @@ const StatusCompanyPage = () => {
       </li>
     ));
 
-  const renderListMocKup =
-    listMockupType &&
-    listMockupType.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleClickSelectMocKup(item)}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${itemSelectMocKup?.id === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
@@ -158,9 +137,6 @@ const StatusCompanyPage = () => {
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
             <ul className="list-item-select">{renderListCompany}</ul>
-
-            <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-            <ul className="list-item-select">{renderListMocKup}</ul>
           </div>
           <div className="content-body-left">
             <div>
@@ -171,11 +147,7 @@ const StatusCompanyPage = () => {
               >
                 <Tab
                   eventKey="bulk"
-                  title={
-                    <div className="tab-name">
-                      아반시스 코리아 <span>전체</span>
-                    </div>
-                  }
+                  title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
                     powerData={powerData}
@@ -196,7 +168,7 @@ const StatusCompanyPage = () => {
                   eventKey="bulk2"
                   title={
                     <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
+                      코에스 <span>인버터 ID</span>
                     </div>
                   }
                 >
@@ -214,12 +186,12 @@ const StatusCompanyPage = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-                </Tab>
-                <Tab
+                </Tab> */}
+                {/* <Tab
                   eventKey="bulk3"
                   title={
                     <div className="tab-name">
-                      인버터 ID <span>본관 동측</span>
+                      에스케이솔라 <span>인버터 ID</span>
                     </div>
                   }
                 >
@@ -237,8 +209,8 @@ const StatusCompanyPage = () => {
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                   />
-
                 </Tab> */}
+
                 <div className="opacity d-block pagination">
                   {totalPage > perPage && (
                     <div className="wrapper-device__pagination">
@@ -263,4 +235,4 @@ const StatusCompanyPage = () => {
   );
 };
 
-export default StatusCompanyPage;
+export default StatusByAreaCompany;

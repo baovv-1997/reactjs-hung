@@ -51,6 +51,10 @@
     padding: pxToRem(20) pxToRem(30);
     &--company {
       padding: pxToRem(20);
+
+      .card__item__name {
+        width: pxToRem(100);
+      }
     }
   }
 
@@ -61,7 +65,6 @@
     margin-bottom: pxToRem(7);
     &__name {
       color: $text-card;
-      width: pxToRem(100);
       font-size: pxToRem(15);
       line-height: pxToRem(22);
       font-weight: $medium;

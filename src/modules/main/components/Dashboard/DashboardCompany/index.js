@@ -1,20 +1,70 @@
 import { Card } from 'commons/components/Card';
 import TitleHeader from 'commons/components/TitleHeader';
 import MainLayout from 'layout/MainLayout';
-import React from 'react';
+import comapyInverter from 'mockData/dashboardComany';
+import React, { useState } from 'react';
+import Pagination from 'react-js-pagination';
 
 const DashboardCompany = () => {
-  const cardCompanyData = {
-    title: '벤치 벽면',
-    listItem: [
-      { title: 'power-day', specifications: 100, progress: 5 },
-      { title: 'max-power-day', specifications: 500, progress: 30 },
-      { title: 'rate-power-day', specifications: 20, progress: 10 },
-      { title: 'current-month', specifications: 1621, progress: 35 },
-      { title: 'current-year', specifications: 1611, progress: 40 },
-      { title: 'amount-power', specifications: 4.1, progress: 45 },
-    ],
+  const [activePage, setActivePage] = useState(1);
+  const perPage = 6;
+  const totalPage = 100;
+
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
   };
+
+  const renderInverter = comapyInverter.length ? (
+    comapyInverter.map((item) => {
+      const { id, nameComany, listInverter } = item;
+      let hasEvent = false;
+      listInverter.forEach((item1) => {
+        if (item1?.isEvent) hasEvent = true;
+      });
+      return (
+        <div
+          className={`company-item item-${listInverter.length} ${
+            hasEvent ? 'company-hasevent' : ''
+          }`}
+          key={id}
+        >
+          <div
+            className={`company-name ${
+              hasEvent ? 'company-hasevent-title' : ''
+            }`}
+          >
+            {nameComany}
+          </div>
+
+          <div className="list-card-item ">
+            {listInverter &&
+              listInverter.map((inverterItem) => {
+                const {
+                  id: idInverter,
+                  area,
+                  listItem,
+                  isEvent,
+                } = inverterItem;
+
+                return (
+                  <Card
+                    key={idInverter}
+                    customClass="header-company"
+                    isCardCompany
+                    listItem={listItem}
+                    title={area}
+                    isEvent={isEvent}
+                  />
+                );
+              })}
+          </div>
+        </div>
+      );
+    })
+  ) : (
+    <div>No data</div>
+  );
+
   return (
     <MainLayout>
       <div className="content-wrap">
@@ -23,168 +73,22 @@ const DashboardCompany = () => {
           subTitle="실증단지 내 설치된 업체들의 발전 데이터를 확인하실 수 있습니다."
         />
 
-        <div className="list-company">
-          {/* <div className="company-item item-1 company-hasevent">
-            <div className="company-name company-hasevent-title">
-              LG하우시스
-            </div>
+        <div className="list-company">{renderInverter}</div>
 
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-                isEvent
+        <div className="opacity d-block pagination">
+          {totalPage > perPage && (
+            <div className="wrapper-device__pagination">
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={9}
+                onChange={handlePageChange}
+                itemClass="page-item"
+                linkClass="page-link"
               />
             </div>
-          </div>
-
-          <div className="company-item item-3">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-2">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div> */}
-          <div className="company-item item-1">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-1">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-2 company-hasevent">
-            <div className="company-name company-hasevent-title">
-              LG하우시스
-            </div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-                isEvent
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-1">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-1">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-1">
-            <div className="company-name">LG하우시스</div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-              />
-            </div>
-          </div>
-
-          <div className="company-item item-1 company-hasevent">
-            <div className="company-name company-hasevent-title">
-              LG하우시스
-            </div>
-
-            <div className="list-card-item ">
-              <Card
-                customClass="header-company"
-                isCardCompany
-                listItem={cardCompanyData.listItem}
-                title={cardCompanyData.title}
-                isEvent
-              />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </MainLayout>

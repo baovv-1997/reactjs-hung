@@ -1,8 +1,9 @@
 .list-company {
   display: grid;
   width: 100%;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: pxToRem(20);
+  margin-bottom: pxToRem(20);
 
   .item-1 {
     grid-column-end: span 1;

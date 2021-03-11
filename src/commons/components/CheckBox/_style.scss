@@ -19,6 +19,12 @@
       letter-spacing: pxToRem(-0.54);
       text-align: left;
       color: $bg-button;
+
+      i {
+        font-size: pxToRem(12);
+        margin-left: pxToRem(2);
+        font-style: normal;
+      }
     }
 
     &::before {

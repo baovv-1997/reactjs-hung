@@ -1,6 +1,6 @@
 body,
 html {
-  // min-width: pxToRem(1700);
+  min-width: pxToRem(1900);
 
   * {
     outline: none;
@@ -119,4 +119,40 @@ button {
 .selection_bubble_root,
 .selection_img_search {
   display: none;
+}
+
+.pagination {
+  opacity: 1 !important;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: pxToRem(10);
+
+  .page-item {
+    margin-left: pxToRem(5);
+    margin-right: pxToRem(5);
+    border-radius: pxToRem(3);
+    font-size: pxToRem(12);
+
+    &.active {
+      .page-link {
+        background-color: $bg-button;
+        border-color: $bg-button;
+        color: $white;
+      }
+    }
+
+    .page-link {
+      color: $bg-button;
+      border-radius: pxToRem(3);
+      outline: none;
+
+      &:focus,
+      &.active {
+        box-shadow: none;
+      }
+    }
+  }
 }

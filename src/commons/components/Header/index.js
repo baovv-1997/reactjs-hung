@@ -52,7 +52,11 @@ const Header = ({
             alt="Icon Event"
             className="header__icon"
           />
-          <span className="header__notification">{eventCount}</span>
+          {eventCount > 0 ? (
+            <span className="header__notification">eventCount</span>
+          ) : (
+            ''
+          )}
         </div>
 
         <div className="header__label-event">

@@ -19,6 +19,7 @@ table {
     font-weight: bold;
     line-height: 1.18;
     letter-spacing: pxToRem(-0.51);
+    position: relative;
   }
 
   tbody {
@@ -96,4 +97,46 @@ table {
     position: absolute;
     right: pxToRem(0);
   }
+}
+
+.modal-sorting {
+  min-width: pxToRem(180);
+  height: pxToRem(188);
+  padding: pxToRem(15) pxToRem(15) pxToRem(15);
+  box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 rgba(0, 0, 0, 0.46);
+  background-color: $white;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 100%;
+
+  .list-checkbox {
+    padding: 0 pxToRem(40);
+    text-align: left;
+  }
+
+  .checkbox-header {
+    padding: 0 pxToRem(40);
+    font-size: pxToRem(17);
+    font-weight: bold;
+    line-height: 1.47;
+    letter-spacing: pxToRem(-0.51);
+    text-align: left;
+    color: $bg-button;
+    margin-bottom: pxToRem(5);
+  }
+
+  .button {
+    width: 100%;
+    margin-top: pxToRem(20);
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-188 {
+  width: pxToRem(188);
 }
