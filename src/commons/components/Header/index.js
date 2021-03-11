@@ -11,10 +11,10 @@ type Props = {
 };
 
 const listItem = [
-  { value: 'naver.com', label: 'naver.com' },
-  { value: 'hanmail.net', label: 'hanmail.net' },
-  { value: 'nate.com', label: 'nate.com' },
-  { value: 'gmail.com', label: 'gmail.com' },
+  { id: 1, value: 'naver.com', label: 'naver.com' },
+  { id: 2, value: 'hanmail.net', label: 'hanmail.net' },
+  { id: 3, value: 'nate.com', label: 'nate.com' },
+  { id: 4, value: 'gmail.com', label: 'gmail.com' },
 ];
 
 const Header = ({
@@ -27,7 +27,10 @@ const Header = ({
     <div className="header">
       <div className="header__left">
         {isSearch ? (
-          <Search placeholder="회사명이나 구역명으로 검색해보세요." />
+          <Search
+            placeholder="회사명이나 구역명으로 검색해보세요."
+            handleClick={() => {}}
+          />
         ) : (
           ''
         )}
@@ -54,7 +57,11 @@ const Header = ({
             alt="Icon Event"
             className="header__icon"
           />
-          <span className="header__notification">{eventCount}</span>
+          {eventCount > 0 ? (
+            <span className="header__notification">eventCount</span>
+          ) : (
+            ''
+          )}
         </div>
 
         <div className="header__label-event">

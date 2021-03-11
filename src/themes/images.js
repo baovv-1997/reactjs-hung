@@ -22,6 +22,10 @@ const IMAGES = {
   icon_title_header: require('assets/images/title_icon.png'),
   icon_arrow: require('assets/images/icon_arrow.png'),
   iconSubtitle: require('assets/images/icon_subtitle.png'),
+  angle1: require('assets/images/angle1.svg'),
+  angle2: require('assets/images/angle2.svg'),
+  angle3: require('assets/images/angle3.svg'),
+  angle4: require('assets/images/angle4.svg'),
 };
 
 export default IMAGES;

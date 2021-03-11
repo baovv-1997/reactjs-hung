@@ -1,14 +1,14 @@
 .button {
   border: 0 solid;
   background-color: $bg-button;
-  font-size: pxToRem(24);
+  font-size: pxToRem(15);
   color: $white;
   padding: pxToRem(4) pxToRem(15);
   margin: 0;
-  height: pxToRem(60);
-  font-weight: $bold;
+  height: pxToRem(38);
+  font-weight: normal;
   min-width: pxToRem(100);
-  border-radius: pxToRem(10);
+  border-radius: pxToRem(3);
   line-height: 1.5;
 
   &.bg-primary {

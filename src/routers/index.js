@@ -5,8 +5,19 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
-import StatusCompany from 'modules/statusCompany/components';
 import { API } from '../apis';
+
+// components
+const StatusCompany = lazy(() => import('modules/statusCompany/components'));
+const StatusCompanyByArea = lazy(() =>
+  import('modules/statusCompany/components/statusByArea')
+);
+const operationStatusByCompany = lazy(() =>
+  import('modules/operationStatus/components')
+);
+const operationStatusByArea = lazy(() =>
+  import('modules/operationStatus/components/statusByArea')
+);
 
 // components
 const MainPage = lazy(() => import('modules/main/components/Dashboard'));
@@ -34,6 +45,26 @@ const Router = () => {
           />
           <Route exact path={ROUTERS.DEVICE} component={DeviceManagement} />
           <Route exact path={ROUTERS.DEVICE_DETAIL} component={DeviceDetail} />
+          <Route
+            exact
+            path={ROUTERS.STATUS_COMPANY_BY_AREA}
+            component={StatusCompanyByArea}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY}
+            component={operationStatusByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_AREA}
+            component={operationStatusByArea}
+          />
+          {/* <Route
+            exact
+            path={ROUTERS.DeviceManagement}
+            component={DeviceManagement}
+          /> */}
         </Switch>
       </Suspense>
     </BrowserRouter>

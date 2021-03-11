@@ -9,6 +9,8 @@ type Props = {
   customClass?: string,
   handleToggleCheckbox: Function,
   isChecked?: boolean,
+  onKeyPress?: Function,
+  subLabel?: string,
 };
 
 export const CheckBox = ({
@@ -19,23 +21,33 @@ export const CheckBox = ({
   customClass = '',
   handleToggleCheckbox,
   isChecked = false,
+  onKeyPress = () => {},
+  subLabel = '',
 }: Props) => {
   return (
-    <>
-      <input
-        className={`checkbox ${customClass}`}
-        type="checkbox"
-        id={id}
-        name={name}
-        value={label}
-        checked={isChecked}
-        disabled={disabled}
-        onChange={handleToggleCheckbox}
-      />
-      <label htmlFor={label} label={label}>
-        {label}
+    <div
+      className={`${customClass} checkbox ${
+        isChecked ? 'checkbox--checked' : ''
+      }`}
+    >
+      <label className="checkbox__label" htmlFor={id}>
+        <input
+          className="checkbox__input"
+          type="checkbox"
+          id={id}
+          name={name}
+          value={label}
+          checked={isChecked}
+          disabled={disabled}
+          onKeyPress={onKeyPress}
+          onChange={handleToggleCheckbox}
+        />
+        <span>
+          {label}
+          <i>{subLabel}</i>
+        </span>
       </label>
-    </>
+    </div>
   );
 };
 
@@ -46,6 +58,8 @@ CheckBox.defaultProps = {
   disabled: false,
   customClass: '',
   isChecked: false,
+  onKeyPress: () => {},
+  subLabel: '',
 };
 
 export default memo<Props>(CheckBox);
