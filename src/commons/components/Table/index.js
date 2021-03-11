@@ -14,6 +14,7 @@ type Props = {
   onClickTableColumn?: Function,
   showModalSort?: any,
   handleCheckboxSort?: Function,
+  handleShowModalSorting?: Function,
 };
 
 const TableData = ({
@@ -26,6 +27,7 @@ const TableData = ({
   onClickTableColumn = () => {},
   showModalSort = '',
   handleCheckboxSort = () => {},
+  handleShowModalSorting = () => {},
 }: Props) => {
   const renderBodyTable =
     tableBody &&
@@ -60,6 +62,7 @@ const TableData = ({
           listItems={tableHeads}
           showModalSort={showModalSort}
           handleCheckboxSort={handleCheckboxSort}
+          handleShowModalSorting={handleShowModalSorting}
         />
       </thead>
       <tbody>{renderBody()}</tbody>
@@ -75,5 +78,6 @@ TableData.defaultProps = {
   onClickTableColumn: () => {},
   showModalSort: '',
   handleCheckboxSort: () => {},
+  handleShowModalSorting: () => {},
 };
 export default memo<Props>(TableData);

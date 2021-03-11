@@ -18,6 +18,9 @@ const operationStatusByCompany = lazy(() =>
 const operationStatusByArea = lazy(() =>
   import('modules/operationStatus/components/statusByArea')
 );
+const operationStatusByCompanyDetail = lazy(() =>
+  import('modules/operationStatus/components/detail')
+);
 
 // components
 const MainPage = lazy(() => import('modules/main/components/Dashboard'));
@@ -70,6 +73,11 @@ const Router = () => {
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY}
             component={operationStatusByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_DETAIL}
+            component={operationStatusByCompanyDetail}
           />
           <Route
             exact

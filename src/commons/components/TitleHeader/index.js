@@ -8,7 +8,7 @@ type Props = {
   onClick?: Function,
   className?: string,
   id?: string,
-  subTitle: string,
+  descSub?: string,
 };
 
 export const TitleHeader = ({
@@ -16,7 +16,7 @@ export const TitleHeader = ({
   onClick = () => {},
   className = '',
   id,
-  subTitle = '',
+  descSub = '',
 }: Props) => {
   return (
     <div id={id} className={`wrap-title ${className}`}>
@@ -30,7 +30,7 @@ export const TitleHeader = ({
         <img src={images.icon_title_header} alt="" />
         <div className="wrap-title__header__name">
           {title}
-          <span>{subTitle}</span>
+          <span>{descSub}</span>
         </div>
       </div>
     </div>
@@ -41,6 +41,7 @@ TitleHeader.defaultProps = {
   className: '',
   onClick: () => {},
   id: '',
+  descSub: '',
 };
 
 export default memo<Props>(TitleHeader);
