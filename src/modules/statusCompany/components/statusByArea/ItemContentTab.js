@@ -9,7 +9,6 @@ import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import { headStatusCompany } from 'constants/headerTable';
-import LineSeriesChart from './chart';
 
 type Props = {
   listMockupDataCompany: any,
@@ -105,9 +104,7 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">
-          <LineSeriesChart />
-        </div>
+        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
 
       <TitleSubHeader title="발전 현황" />
