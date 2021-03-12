@@ -77,12 +77,12 @@ export const DASHBOARD = {
             {
               id: 1,
               name: '업체별 통계',
-              to: '#',
+              to: ROUTERS.STATISTICS_DEVELOP,
             },
             {
               id: 2,
               name: '구역별 통계',
-              to: '#',
+              to: ROUTERS.STATISTICS_DEVELOP_AREA,
             },
           ],
         },

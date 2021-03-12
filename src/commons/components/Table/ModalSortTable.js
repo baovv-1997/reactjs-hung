@@ -9,7 +9,9 @@ type Props = {
 
 const ModalSortTable = ({ handleCheckboxSort }: Props) => {
   const defaultCheckBox = {
-    power: false,
+    power1: false,
+    power2: false,
+    power3: false,
     temperature: false,
     insolation: false,
   };
@@ -26,30 +28,30 @@ const ModalSortTable = ({ handleCheckboxSort }: Props) => {
       <div className="checkbox-header">이벤트명 필터</div>
       <div className="list-checkbox">
         <CheckBox
-          name="power"
-          isChecked={checkBox?.power}
+          name="power1"
+          isChecked={checkBox?.power1}
           label="발전량"
-          id="power"
+          id="power1"
           handleToggleCheckbox={() =>
-            handleToggleCheckbox(checkBox?.power, 'power')
+            handleToggleCheckbox(checkBox?.power1, 'power1')
           }
         />
         <CheckBox
-          name="temperature"
-          id="temperature"
-          isChecked={checkBox?.temperature}
+          name="power2"
+          isChecked={checkBox?.power2}
           label="모듈온도"
+          id="power2"
           handleToggleCheckbox={() =>
-            handleToggleCheckbox(checkBox?.temperature, 'temperature')
+            handleToggleCheckbox(checkBox?.power2, 'power2')
           }
         />
         <CheckBox
-          name="insolation"
-          id="insolation"
-          isChecked={checkBox?.insolation}
+          name="power3"
+          isChecked={checkBox?.power3}
           label="수평 일사량"
+          id="power3"
           handleToggleCheckbox={() =>
-            handleToggleCheckbox(checkBox?.insolation, 'insolation')
+            handleToggleCheckbox(checkBox?.power3, 'power3')
           }
         />
       </div>

@@ -7,7 +7,11 @@ import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
+import {
+  listMockupType,
+  listMockupDataCompany,
+  listParkingLot,
+} from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import ItemContentTab from './ItemContentTab';
 
@@ -24,25 +28,21 @@ const OperationStatusPage = () => {
     value: 6,
     label: '6 개씩 보기',
   };
-  const defaultCheckBox = {
+
+  const defaultSearch = {
+    page: 1,
+    company: null,
+    mockupType: null,
+    parkingLot: null,
     PVVoltage: false,
     PVCurrent: false,
     outputVoltage: false,
     outputCurrent: false,
     print: false,
+    pagination: defaultOption,
   };
-  const [itemSelect, setItemSelect] = useState({});
-  const [itemSelectMocKup, setItemSelectMocKup] = useState({});
-  const [paginationType, setPaginationType] = useState(defaultOption);
-  const [activePage, setActivePage] = useState(1);
-  const [checkBox, setCheckBox] = useState(defaultCheckBox);
 
-  const [paramsSearch, setParamsSearch] = useState({
-    sort_by: '',
-    sort_dir: '',
-    page: '',
-    keyword: '',
-  });
+  const [paramsSearch, setParamsSearch] = useState(defaultSearch);
 
   const dataBoxContent = {
     angleOfIncidence: '15',
@@ -62,49 +62,81 @@ const OperationStatusPage = () => {
   }, [getDataListStatusCompany]);
 
   // console.log(type, 'type', isProcessing);
-  const handleClickSelectCompany = (item) => {
-    setItemSelect(item);
-    setParamsSearch({
-      sort_by: '',
-      sort_dir: '',
-      page: '',
-      keyword: '',
-    });
-  };
-
-  const handleClickSelectMocKup = (item) => {
-    console.log(item);
-    setItemSelectMocKup(item);
-  };
-
-  const handleToggleCheckbox = (check, name) => {
-    setCheckBox({
-      ...checkBox,
-      [name]: !check,
-    });
-  };
-
-  const handleChangePagination = (option) => {
-    setPaginationType(option);
+  const handleChangeSearch = (item, name) => {
+    switch (name) {
+      case 'statusCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          company: item.id,
+        });
+        break;
+      case 'mockupType':
+        setParamsSearch({
+          ...paramsSearch,
+          mockupType: item.id,
+        });
+        break;
+      case 'parkingLot':
+        setParamsSearch({
+          ...paramsSearch,
+          parkingLot: item.id,
+        });
+        break;
+      case 'PVCurrent':
+        setParamsSearch({
+          ...paramsSearch,
+          PVCurrent: !item,
+        });
+        break;
+      case 'outputCurrent':
+        setParamsSearch({
+          ...paramsSearch,
+          outputCurrent: !item,
+        });
+        break;
+      case 'print':
+        setParamsSearch({
+          ...paramsSearch,
+          print: !item,
+        });
+        break;
+      case 'PVVoltage':
+        setParamsSearch({
+          ...paramsSearch,
+          PVVoltage: !item,
+        });
+        break;
+      case 'outputVoltage':
+        setParamsSearch({
+          ...paramsSearch,
+          outputVoltage: !item,
+        });
+        break;
+      case 'pagination':
+        setParamsSearch({
+          ...paramsSearch,
+          pagination: item,
+        });
+        break;
+      case 'page':
+        setParamsSearch({
+          ...paramsSearch,
+          page: item,
+        });
+        break;
+      default:
+        break;
+    }
   };
 
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setPaginationType(defaultOption);
-    setCheckBox(defaultCheckBox);
+    setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadRaw = () => {
-    console.log('download Raw');
-  };
-
-  const handleDownloadTrend = () => {
-    console.log('download Trend');
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
+  const handleDownloadTrend = (name) => {
+    console.log('download Trend', name);
   };
 
   const renderListCompany =
@@ -112,10 +144,10 @@ const OperationStatusPage = () => {
     listStatusCompanySelect.map((item) => (
       <li
         key={item.id}
-        onClick={() => handleClickSelectCompany(item)}
+        onClick={() => handleChangeSearch(item, 'statusCompany')}
         onKeyPress={() => {}}
         role="menuitem"
-        className={`${itemSelect?.id === item.id ? 'active' : ''}`}
+        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
       >
         {item.label}
       </li>
@@ -126,10 +158,24 @@ const OperationStatusPage = () => {
     listMockupType.map((item) => (
       <li
         key={item.id}
-        onClick={() => handleClickSelectMocKup(item)}
+        onClick={() => handleChangeSearch(item, 'mockupType')}
         onKeyPress={() => {}}
         role="menuitem"
-        className={`${itemSelectMocKup?.id === item.id ? 'active' : ''}`}
+        className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
+
+  const renderListParkingLot =
+    listParkingLot &&
+    listParkingLot.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleChangeSearch(item, 'parkingLot')}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
       >
         {item.label}
       </li>
@@ -146,32 +192,61 @@ const OperationStatusPage = () => {
 
             <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
             <ul className="list-item-select">{renderListMocKup}</ul>
+            <TitleSubHeader title="주차장" className="mt-5" />
+            <ul className="list-item-select">{renderListParkingLot}</ul>
           </div>
-          <div className="content-body-left">
+          <div className="content-body-left w-100">
             <div>
               <Tabs
-                defaultActiveKey="bulk"
+                defaultActiveKey="all"
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
                 <Tab
-                  eventKey="bulk"
+                  eventKey="all"
                   title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
-                    dataBoxContent={dataBoxContent}
                     listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
-                    handlePageChange={handlePageChange}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    activePage={activePage}
+                    dataBoxContent={dataBoxContent}
+                    handleDownloadTrend={handleDownloadTrend}
+                    handleChangeSearch={handleChangeSearch}
+                    paramsSearch={paramsSearch}
+                  />
+                </Tab>
+                <Tab
+                  eventKey="coes"
+                  title={
+                    <div className="tab-name">
+                      코에스 <span>인버터 ID</span>
+                    </div>
+                  }
+                >
+                  <ItemContentTab
+                    listMockupDataCompany={listMockupDataCompany}
+                    dataContent={{}}
+                    dataBoxContent={dataBoxContent}
+                    handleDownloadTrend={handleDownloadTrend}
+                    handleChangeSearch={handleChangeSearch}
+                    paramsSearch={paramsSearch}
+                  />
+                </Tab>
+                <Tab
+                  eventKey="SK-Solar"
+                  title={
+                    <div className="tab-name">
+                      에스케이솔라<span>인버터 ID</span>
+                    </div>
+                  }
+                >
+                  <ItemContentTab
+                    listMockupDataCompany={listMockupDataCompany}
+                    dataContent={{}}
+                    dataBoxContent={dataBoxContent}
+                    handleDownloadTrend={handleDownloadTrend}
+                    handleChangeSearch={handleChangeSearch}
+                    paramsSearch={paramsSearch}
                   />
                 </Tab>
 
@@ -179,11 +254,11 @@ const OperationStatusPage = () => {
                   {totalPage > perPage && (
                     <div className="wrapper-device__pagination">
                       <Pagination
-                        activePage={activePage}
+                        activePage={paramsSearch?.page}
                         itemsCountPerPage={perPage}
                         totalItemsCount={totalPage}
                         pageRangeDisplayed={5}
-                        onChange={handlePageChange}
+                        onChange={(e) => handleChangeSearch(e, 'page')}
                         itemClass="page-item"
                         linkClass="page-link"
                       />

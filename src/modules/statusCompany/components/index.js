@@ -7,7 +7,11 @@ import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupType, listMockupDataCompany } from 'mockData/listCompany';
+import {
+  listMockupType,
+  listMockupDataCompany,
+  listParkingLot,
+} from 'mockData/listCompany';
 
 import { headStatusCompany } from 'constants/headerTable';
 import * as StatusCompanyAction from '../redux';
@@ -33,6 +37,7 @@ const StatusCompanyPage = () => {
   };
   const [itemSelect, setItemSelect] = useState({});
   const [itemSelectMocKup, setItemSelectMocKup] = useState({});
+  const [itemParkingLot, setParkingLot] = useState({});
   const [paginationType, setPaginationType] = useState(defaultOption);
   const [activePage, setActivePage] = useState(1);
   const [checkBox, setCheckBox] = useState(defaultCheckBox);
@@ -94,6 +99,10 @@ const StatusCompanyPage = () => {
     setItemSelectMocKup(item);
   };
 
+  const handleClickSelectParkingLot = (item) => {
+    setParkingLot(item);
+  };
+
   const handleToggleCheckbox = (check, name) => {
     setCheckBox({
       ...checkBox,
@@ -119,9 +128,11 @@ const StatusCompanyPage = () => {
   const handleDownloadTrend = () => {
     console.log('download Trend');
   };
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
+
   const renderListCompany =
     listStatusCompanySelect &&
     listStatusCompanySelect.map((item) => (
@@ -150,6 +161,20 @@ const StatusCompanyPage = () => {
       </li>
     ));
 
+  const renderListParkingLot =
+    listParkingLot &&
+    listParkingLot.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleClickSelectParkingLot(item)}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${itemParkingLot?.id === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
+
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
@@ -161,6 +186,9 @@ const StatusCompanyPage = () => {
 
             <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
             <ul className="list-item-select">{renderListMocKup}</ul>
+
+            <TitleSubHeader title="주차장" className="mt-5" />
+            <ul className="list-item-select">{renderListParkingLot}</ul>
           </div>
           <div className="content-body-left">
             <div>

@@ -1,6 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+
 import LabelStatusV2 from 'commons/components/Label/LabelStatus/LabelStatusV2';
 import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
@@ -14,18 +15,24 @@ type Props = {
   listMockupDataCompany: any,
   dataContent: Object,
   dataBoxContent: Object,
+  handleToggleCheckbox: Function,
+  checkBox: Object,
+  paginationType: Object,
+  handleChangePagination: Function,
   handleDownloadTrend: Function,
-  handleChangeSearch: Function,
-  paramsSearch: Object,
+  handleDownloadRaw: Function,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
   dataContent,
   dataBoxContent,
+  handleToggleCheckbox,
+  checkBox,
+  paginationType,
+  handleChangePagination,
   handleDownloadTrend,
-  handleChangeSearch,
-  paramsSearch,
+  handleDownloadRaw,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const dataLengthChart = [
@@ -94,58 +101,52 @@ const ItemContentTab = ({
             <div className="list-checkbox">
               <CheckBox
                 name="PVVoltage"
-                isChecked={paramsSearch?.PVVoltage}
+                isChecked={checkBox?.PVVoltage}
                 label="PV전압"
                 subLabel="v1"
                 id="PVVoltage"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.PVVoltage, 'PVVoltage')
+                  handleToggleCheckbox(checkBox?.PVVoltage, 'PVVoltage')
                 }
               />
               <CheckBox
                 name="PVCurrent"
                 id="PVCurrent"
                 subLabel="l1"
-                isChecked={paramsSearch?.PVCurrent}
+                isChecked={checkBox?.PVCurrent}
                 label="PV전류"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.PVCurrent, 'PVCurrent')
+                  handleToggleCheckbox(checkBox?.PVCurrent, 'PVCurrent')
                 }
               />
               <CheckBox
                 name="outputVoltage"
                 id="outputVoltage"
                 subLabel="v2"
-                isChecked={paramsSearch?.outputVoltage}
+                isChecked={checkBox?.outputVoltage}
                 label="출력전압"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(
-                    paramsSearch?.outputVoltage,
-                    'outputVoltage'
-                  )
+                  handleToggleCheckbox(checkBox?.outputVoltage, 'outputVoltage')
                 }
               />
               <CheckBox
                 name="outputCurrent"
                 id="outputCurrent"
                 subLabel="l2"
-                isChecked={paramsSearch?.outputCurrent}
+                isChecked={checkBox?.outputCurrent}
                 label="출력전류"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(
-                    paramsSearch?.outputCurrent,
-                    'outputCurrent'
-                  )
+                  handleToggleCheckbox(checkBox?.outputCurrent, 'outputCurrent')
                 }
               />
               <CheckBox
                 name="print"
                 id="print"
                 subLabel="p"
-                isChecked={paramsSearch?.print}
+                isChecked={checkBox?.print}
                 label="수평 일사량"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.print, 'print')
+                  handleToggleCheckbox(checkBox?.print, 'print')
                 }
               />
             </div>
@@ -161,20 +162,15 @@ const ItemContentTab = ({
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}
-          onChange={(option) => handleChangeSearch(option, 'pagination')}
-          option={paramsSearch?.pagination || null}
+          onChange={(option) => handleChangePagination(option)}
+          option={paginationType || null}
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button
-            onClick={() => handleDownloadTrend('trend')}
-            customClass="mr-2"
-          >
+          <Button onClick={() => handleDownloadTrend()} customClass="mr-2">
             Trend 이미지 다운
           </Button>
-          <Button onClick={() => handleDownloadTrend('raw')}>
-            Raw Date 다운
-          </Button>
+          <Button onClick={() => handleDownloadRaw()}>Raw Date 다운</Button>
         </div>
       </div>
       <div className="mb-5">
