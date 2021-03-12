@@ -177,7 +177,7 @@ const ItemContentTab = ({
           </Button>
         </div>
       </div>
-      <div className="mb-5">
+      <div>
         <Table
           tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
