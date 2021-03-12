@@ -201,68 +201,68 @@
       }
     }
   }
+}
 
-  .group-select {
+.group-select {
+  display: flex;
+  align-items: center;
+  width: calc(100% - #{pxToRem(80)});
+
+  .group-item {
     display: flex;
     align-items: center;
-    width: calc(100% - #{pxToRem(80)});
 
-    .group-item {
-      display: flex;
-      align-items: center;
-
-      img {
-        margin: 0 pxToRem(10);
-      }
-    }
-
-    .customer-select {
-      .css-26l3qy-menu .css-4ljt47-MenuList * {
-        padding: 0.3125rem 0.5rem !important;
-      }
-
-      .css-g1d714-ValueContainer,
-      .css-1fhf3k1-control {
-        min-height: pxToRem(32);
-        max-height: pxToRem(32);
-        overflow: visible !important;
-        font-size: pxToRem(14) !important;
-      }
-
-      .css-yk16xz-control {
-        min-height: pxToRem(32);
-        max-height: pxToRem(32);
-      }
-
-      .css-1pahdxg-control {
-        min-height: pxToRem(32);
-        max-height: pxToRem(32);
-
-        .css-g1d714-ValueContainer,
-        .css-1uccc91-singleValue {
-          min-height: pxToRem(32);
-          max-height: pxToRem(32);
-        }
-      }
+    img {
+      margin: 0 pxToRem(10);
     }
   }
 
-  .item-role {
-    display: flex;
-    align-items: center;
-
-    .button {
-      width: pxToRem(60);
-      height: pxToRem(32);
-      padding: pxToRem(5) pxToRem(15);
-      border-radius: pxToRem(3);
-      background-color: $bg-button;
-      min-width: pxToRem(60);
-      margin-left: pxToRem(10);
-      font-size: pxToRem(15);
-      font-weight: normal;
-      line-height: 1.28;
-      letter-spacing: pxToRem(-0.6);
+  .customer-select {
+    .css-26l3qy-menu .css-4ljt47-MenuList * {
+      padding: 0.3125rem 0.5rem !important;
     }
+
+    .css-g1d714-ValueContainer,
+    .css-1fhf3k1-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+      overflow: visible !important;
+      font-size: pxToRem(14) !important;
+    }
+
+    .css-yk16xz-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+    }
+
+    .css-1pahdxg-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+
+      .css-g1d714-ValueContainer,
+      .css-1uccc91-singleValue {
+        min-height: pxToRem(32);
+        max-height: pxToRem(32);
+      }
+    }
+  }
+}
+
+.item-role {
+  display: flex;
+  align-items: center;
+
+  .button {
+    width: pxToRem(60);
+    height: pxToRem(32);
+    padding: pxToRem(5) pxToRem(15);
+    border-radius: pxToRem(3);
+    background-color: $bg-button;
+    min-width: pxToRem(60);
+    margin-left: pxToRem(10);
+    font-size: pxToRem(15);
+    font-weight: normal;
+    line-height: 1.28;
+    letter-spacing: pxToRem(-0.6);
   }
 }

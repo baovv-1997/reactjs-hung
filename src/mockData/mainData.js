@@ -1,4 +1,4 @@
-export const mockLocationArea = [
+const mockLocationArea = [
   {
     id: '0',
     area: '별관 난간, 별관 지붕',
@@ -169,4 +169,87 @@ const mockDataMain = {
   ],
 };
 
-export default mockDataMain;
+const mockDataArea = [
+  {
+    id: 15,
+    label: 'All',
+    value: 'All',
+  },
+  {
+    id: 0,
+    label: '별관 난간, 별관 지붕',
+    value: '별관 난간, 별관 지붕',
+  },
+  {
+    id: 1,
+    label: '발전동 서측',
+    value: '발전동 서측',
+  },
+  {
+    id: 2,
+    label: '목업',
+    value: '목업',
+  },
+  {
+    id: 3,
+    label: '본관 남측',
+    value: '본관 남측',
+  },
+  {
+    id: 4,
+    label: '본관 동측',
+    value: '본관 동측',
+  },
+  {
+    id: 5,
+    label: '본관 옥탑',
+    value: '본관 옥탑',
+  },
+  {
+    id: 6,
+    label: '주차장',
+    value: '주차장',
+  },
+  {
+    id: 7,
+    label: '자전거 캐노피',
+    value: '자전거 캐노피',
+  },
+  {
+    id: 8,
+    label: '벤치 벽면',
+    value: '벤치 벽면',
+  },
+  {
+    id: 9,
+    label: '경비실 입면',
+    value: '경비실 입면',
+  },
+  {
+    id: 10,
+    label: '정문 입구',
+    value: '정문 입구',
+  },
+  {
+    id: 11,
+    label: '정문 입구 보도',
+    value: '정문 입구 보도',
+  },
+  {
+    id: 12,
+    label: '정문 입구 도로',
+    value: '정문 입구 도로',
+  },
+  {
+    id: 13,
+    label: '방음벽',
+    value: '방음벽',
+  },
+  {
+    id: 14,
+    label: '외부울타리',
+    value: '외부울타리',
+  },
+];
+
+export { mockDataMain, mockLocationArea, mockDataArea };

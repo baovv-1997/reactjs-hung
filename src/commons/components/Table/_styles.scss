@@ -20,6 +20,13 @@ table {
     line-height: 1.18;
     letter-spacing: pxToRem(-0.51);
     position: relative;
+
+    img {
+      width: pxToRem(15);
+      margin-left: pxToRem(3);
+      position: relative;
+      top: pxToRem(2);
+    }
   }
 
   tbody {

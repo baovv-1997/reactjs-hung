@@ -18,6 +18,17 @@ const operationStatusByCompany = lazy(() =>
 const operationStatusByArea = lazy(() =>
   import('modules/operationStatus/components/statusByArea')
 );
+const operationStatusByCompanyDetail = lazy(() =>
+  import('modules/operationStatus/components/detail')
+);
+
+const operationStatusByCompanyRegister = lazy(() =>
+  import('modules/operationStatus/components/register')
+);
+
+const operationStatusByCompanyEdit = lazy(() =>
+  import('modules/operationStatus/components/edit')
+);
 
 const RegisterDevice = lazy(() =>
   import('modules/device/components/RegisterDevice')
@@ -30,6 +41,12 @@ const DeviceDetail = lazy(() =>
   import('modules/device/components/DeviceDetail')
 );
 const SingIn = lazy(() => import('modules/accounts/components'));
+const DashboardArea = lazy(() =>
+  import('modules/main/components/Dashboard/DashboardArea')
+);
+const DashboardCompany = lazy(() =>
+  import('modules/main/components/Dashboard/DashboardCompany')
+);
 
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
@@ -43,6 +60,16 @@ const Router = () => {
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
           <Route exact path={ROUTERS.ROOT} component={MainPage} />
+          <Route
+            exact
+            path={ROUTERS.DASHBOARD_AREA}
+            component={DashboardArea}
+          />
+          <Route
+            exact
+            path={ROUTERS.DASHBOARD_COMPANY}
+            component={DashboardCompany}
+          />
           <Route
             exact
             path={ROUTERS.STATUS_COMPANY}
@@ -64,6 +91,21 @@ const Router = () => {
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY}
             component={operationStatusByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER}
+            component={operationStatusByCompanyRegister}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_DETAIL}
+            component={operationStatusByCompanyDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_EDIT}
+            component={operationStatusByCompanyEdit}
           />
           <Route
             exact

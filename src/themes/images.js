@@ -19,14 +19,18 @@ const IMAGES = {
   icon_year: require('assets/images/icon_main/icon_year.png'),
   icon_plus: require('assets/images/icon_main/icon_plus.png'),
   icon_location: require('assets/images/icon_main/icon_location.png'),
+  icon_location_on: require('assets/images/icon_main/icon_location_on.png'),
   icon_title_header: require('assets/images/title_icon.png'),
   icon_arrow: require('assets/images/icon_arrow.png'),
+  icon_event_card: require('assets/images/icon_event_card.png'),
   iconSubtitle: require('assets/images/icon_subtitle.png'),
   angle1: require('assets/images/angle1.svg'),
   angle2: require('assets/images/angle2.svg'),
   angle3: require('assets/images/angle3.svg'),
   angle4: require('assets/images/angle4.svg'),
   iconCalendar: require('assets/images/icon_calander.png'),
+  ico_event2: require('assets/images/ico-event2.svg'),
+  arrow_right: require('assets/images/arrow_right.svg'),
 };
 
 export default IMAGES;

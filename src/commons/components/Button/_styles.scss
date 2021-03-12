@@ -15,6 +15,10 @@
     background-color: $bg-button-primary;
   }
 
+  &.btn-red {
+    background-color: $color-label-event
+  }
+
   &:focus {
     outline: none;
   }

@@ -2,3 +2,79 @@
   padding: pxToRem(20) pxToRem(20) pxToRem(70) pxToRem(20);
   border: solid pxToRem(1) $color-light-b8;
 }
+
+.table-form {
+  margin-bottom: pxToRem(20);
+
+  .item-row {
+    border: solid pxToRem(1) $color-light10;
+    padding: 0;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    border-top: 0;
+    background-color: $bg-light10;
+
+    &:first-child {
+      border-top: solid pxToRem(1) $color-light10;
+    }
+
+    .colum-left {
+      width: pxToRem(220);
+      min-height: pxToRem(40);
+      padding: pxToRem(15);
+      text-align: center;
+      background-color: $bg-light10;
+      height: 100%;
+      font-size: pxToRem(17);
+      font-weight: bold;
+      line-height: 1.47;
+      letter-spacing: pxToRem(-0.51);
+      color: $bg-button;
+    }
+
+    .colum-right {
+      background-color: $white;
+      border-left: solid pxToRem(1) $color-light10;
+      width: calc(100% - #{pxToRem(220)});
+      padding: pxToRem(15);
+      font-size: pxToRem(15);
+      font-weight: normal;
+      line-height: 1.47;
+      letter-spacing: (-0.45);
+      text-align: left;
+      color: $black-active;
+
+      .position-top-1 {
+        position: relative;
+        top: pxToRem(2);
+      }
+
+      .customer-select {
+        width: pxToRem(140);
+      }
+    }
+  }
+}
+
+.mh-300 {
+  min-height: pxToRem(300);
+}
+
+.min-h-100 {
+  min-height: 100%;
+}
+
+.group-btn-bottom {
+  margin-bottom: pxToRem(30);
+  text-align: center;
+
+  .button {
+    width: pxToRem(150);
+    margin: 0 pxToRem(10);
+
+    &:last-child {
+      background-color: $color-light-69;
+    }
+  }
+}
