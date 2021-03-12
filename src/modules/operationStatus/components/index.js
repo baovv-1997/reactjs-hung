@@ -225,6 +225,7 @@ const OperationStatusPage = () => {
                     handleChangePaginationBottom={handleChangePaginationBottom}
                     handleDownloadRawBottom={handleDownloadRawBottom}
                     handleClickDetail={handleClickDetail}
+                    history={history}
                   />
                 </Tab>
               </Tabs>

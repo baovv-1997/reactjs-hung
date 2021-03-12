@@ -13,6 +13,7 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     border-top: 0;
+    background-color: $bg-light10;
 
     &:first-child {
       border-top: solid pxToRem(1) $color-light10;
@@ -23,7 +24,6 @@
       min-height: pxToRem(40);
       padding: pxToRem(15);
       text-align: center;
-      border-right: solid pxToRem(1) $color-light10;
       background-color: $bg-light10;
       height: 100%;
       font-size: pxToRem(17);
@@ -34,6 +34,9 @@
     }
 
     .colum-right {
+      background-color: $white;
+      border-left: solid pxToRem(1) $color-light10;
+      width: calc(100% - #{pxToRem(220)});
       padding: pxToRem(15);
       font-size: pxToRem(15);
       font-weight: normal;
@@ -46,12 +49,20 @@
         position: relative;
         top: pxToRem(2);
       }
+
+      .customer-select {
+        width: pxToRem(140);
+      }
     }
   }
 }
 
-.h-300 {
-  height: pxToRem(300);
+.mh-300 {
+  min-height: pxToRem(300);
+}
+
+.min-h-100 {
+  min-height: 100%;
 }
 
 .group-btn-bottom {
