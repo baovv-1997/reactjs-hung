@@ -161,6 +161,50 @@ export const DeivceDetailHeadRight = [
   },
 ];
 
+export const DeivceRegisterHead = [
+  {
+    id: 1,
+    name: '구분',
+  },
+  {
+    id: 2,
+    name: '설치위치',
+  },
+  {
+    id: 3,
+    name: '담당자',
+  },
+  {
+    id: 4,
+    name: '모듈 출력',
+  },
+  {
+    id: 5,
+    name: '입사각',
+  },
+
+  {
+    id: 6,
+    name: '업체명',
+  },
+  {
+    id: 7,
+    name: '모듈명',
+  },
+  {
+    id: 8,
+    name: '담당자 전화번호',
+  },
+  {
+    id: 9,
+    name: '모듈 색상',
+  },
+  {
+    id: 10,
+    name: '방위각',
+  },
+];
+
 export default {
   headStatusCompany,
   headOperationStatusByAreaCompany,

@@ -28,6 +28,7 @@ const IMAGES = {
   angle2: require('assets/images/angle2.svg'),
   angle3: require('assets/images/angle3.svg'),
   angle4: require('assets/images/angle4.svg'),
+  iconCalendar: require('assets/images/icon_calander.png'),
   ico_event2: require('assets/images/ico-event2.svg'),
   arrow_right: require('assets/images/arrow_right.svg'),
   icon_day_large: require('assets/images/icon_day_large.svg'),

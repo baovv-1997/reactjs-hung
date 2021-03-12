@@ -110,7 +110,7 @@ const FormDetail = ({ data, history }: Props) => {
           <div className="cell">
             <input disabled value={renderLabelType(data?.ds_type)} />
           </div>
-          {data?.ds_type !== 0 && (
+          {parseInt(data?.ds_type, 10) !== 0 && (
             <div className="cell">
               <input disabled value={data?.position?.pos_name} />
             </div>
@@ -147,9 +147,11 @@ const FormDetail = ({ data, history }: Props) => {
           <div className="cell">
             <input value={data?.company?.com_name} disabled />
           </div>
-          <div className="cell">
-            <input value={data?.ds_name} disabled />
-          </div>
+          {parseInt(data?.ds_type, 10) !== 0 && (
+            <div className="cell">
+              <input value={data?.ds_name} disabled />
+            </div>
+          )}
           <div className="cell">
             <input
               value={phoneManager}

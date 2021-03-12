@@ -62,12 +62,12 @@ const DeviceManagement = ({ history }: Props) => {
   const onChangeOption = (e) => {
     const { name } = e.target;
     setCurrentOption(name);
-    setSelectOption(null);
   };
 
   // render list radio
   const renderRadioList = DeviceManagementOptionSeach.map((item) => (
     <Radio
+      id={item.key}
       name={item.key}
       label={item.label}
       onChange={onChangeOption}
@@ -107,7 +107,6 @@ const DeviceManagement = ({ history }: Props) => {
   };
 
   const handlePageChange = (page) => {
-    console.log(page);
     setActivePage(page);
     dispatch(
       getListDevice({
@@ -120,7 +119,6 @@ const DeviceManagement = ({ history }: Props) => {
 
   // Handle click to table row
   const handleClickTableRow = (item) => {
-    console.log('item', item);
     history.push(`${ROUTERS.DEVICE}/${item.id}`);
   };
 
@@ -176,7 +174,18 @@ const DeviceManagement = ({ history }: Props) => {
             tableHeads={DEVICE_HEAD_TABLE}
             tableBody={deviceList}
             onClickRow={handleClickTableRow}
+            isShowId
           />
+          <div className="d-flex justify-content-end">
+            <Button
+              customClass="custom-btn"
+              onClick={() => {
+                history.push(ROUTERS.REGISTER_DEVICE);
+              }}
+            >
+              검색
+            </Button>
+          </div>
           {deviceList && deviceList.length > perPage && (
             <div className="wrapper-device__pagination">
               <Pagination

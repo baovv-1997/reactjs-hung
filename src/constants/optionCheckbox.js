@@ -16,3 +16,16 @@ export const DeviceManagementOptionSeach = [
     label: '설치위치',
   },
 ];
+
+export const registerDeviceOptions = [
+  {
+    name: 'mockup',
+    key: '1',
+    label: '목업',
+  },
+  {
+    name: 'solar-monitoring',
+    key: '0',
+    label: '실증단지',
+  },
+];
