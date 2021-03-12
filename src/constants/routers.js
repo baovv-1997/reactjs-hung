@@ -4,6 +4,7 @@ const ROUTERS = {
   DEVICE: '/devices',
   STORES: '/stores',
   STORES_DETAIL: '/stores/:id',
+  REGISTER_DEVICE: '/devices/register',
   DEVICE_DETAIL: '/devices/:id',
   STATUS_COMPANY: `/status/company-development`,
   STATUS_COMPANY_BY_AREA: `/status/company-by-area`,

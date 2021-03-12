@@ -12,10 +12,13 @@ const mainSlice = createSlice({
     perPage: 0,
     totalPage: 0,
     deviceDetail: {},
+    dataAddNew: [],
+    errorsAddDevice: {},
   },
   reducers: {
-    getListCompany: (state) => {
+    getListCompany: (state, action) => {
       state.isLoading = true;
+      state.type = action.type;
     },
     getListCompanySuccess: (state, action) => {
       const companyOptionList = action?.data?.map((item) => ({
@@ -24,21 +27,24 @@ const mainSlice = createSlice({
       }));
       state.isLoading = false;
       state.companyOptions = companyOptionList;
+      state.type = action.type;
     },
-    getListCompanyFailed: (state) => {
+    getListCompanyFailed: (state, action) => {
       state.isLoading = false;
+      state.type = action.type;
     },
 
-    getListPosition: (state) => {
+    getListPosition: (state, action) => {
       state.isLoading = true;
+      state.type = action.type;
     },
     getListPositionSuccess: (state, action) => {
-      const posOptionList = action?.data?.map((item) => ({
+      const posOptionListFormat = action?.data?.map((item) => ({
         value: item.id,
         label: item.pos_name,
       }));
       state.isLoading = false;
-      state.posOptionList = posOptionList;
+      state.posOptionList = posOptionListFormat;
     },
     getListPositionFailed: (state) => {
       state.isLoading = false;
@@ -61,37 +67,60 @@ const mainSlice = createSlice({
         dsType: renderLabelType(item?.ds_type),
         position: item?.position?.pos_name,
         moduleName: item?.ds_name,
-        dsManager: item?.ds_manager,
+        dsManager: `${item?.ds_manager} / ${item?.ds_manager_phone}`,
         id: item?.id,
       }));
       state.isLoading = false;
       state.deviceList = listDeviceFormat;
       state.perPage = action?.data?.per_page;
       state.totalPage = action?.data?.total;
+      state.type = action.type;
     },
-    getListDeviceFailed: (state) => {
+    getListDeviceFailed: (state, action) => {
       state.isLoading = false;
+      state.type = action.type;
     },
-    getDeivceDetail: (state) => {
+    getDeivceDetail: (state, action) => {
       state.isLoading = true;
+      state.type = action.type;
     },
     getDeivceDetailSuccess: (state, action) => {
       state.isLoading = false;
       state.deviceDetail = action.data;
+      state.type = action.type;
     },
-    getDeivceDetailFailed: (state) => {
+    getDeivceDetailFailed: (state, action) => {
       state.isLoading = false;
+      state.type = action.type;
     },
 
-    updateDevice: (state) => {
+    updateDevice: (state, action) => {
       state.isLoading = true;
+      state.type = action.type;
     },
 
-    updateDeviceSuccess: (state) => {
+    updateDeviceSuccess: (state, action) => {
       state.isLoading = false;
+      state.type = action.type;
     },
-    updateDeviceFailed: (state) => {
+    updateDeviceFailed: (state, action) => {
       state.isLoading = false;
+      state.type = action.type;
+    },
+
+    addDevice: (state, action) => {
+      state.isLoading = true;
+      state.type = action.type;
+    },
+    addDeviceSuccess: (state, action) => {
+      state.isLoading = true;
+      state.dataAddNew = action?.data?.data;
+      state.type = action.type;
+    },
+    addDeviceFailed: (state, action) => {
+      state.isLoading = true;
+      state.type = action.type;
+      state.errorsAddDevice = action.errors;
     },
   },
 });
@@ -114,6 +143,9 @@ export const {
   updateDevice,
   updateDeviceSuccess,
   updateDeviceFailed,
+  addDevice,
+  addDeviceSuccess,
+  addDeviceFailed,
 } = actions;
 
 export default reducer;

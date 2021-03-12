@@ -19,6 +19,10 @@ const operationStatusByArea = lazy(() =>
   import('modules/operationStatus/components/statusByArea')
 );
 
+const RegisterDevice = lazy(() =>
+  import('modules/device/components/RegisterDevice')
+);
+
 // components
 const MainPage = lazy(() => import('modules/main/components/Dashboard'));
 const DeviceManagement = lazy(() => import('modules/device/components'));
@@ -32,6 +36,7 @@ const Router = () => {
   if (token) {
     API.setHeader('Authorization', `Bearer ${token}`);
   }
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
@@ -42,6 +47,11 @@ const Router = () => {
             exact
             path={ROUTERS.STATUS_COMPANY}
             component={StatusCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.REGISTER_DEVICE}
+            component={RegisterDevice}
           />
           <Route exact path={ROUTERS.DEVICE} component={DeviceManagement} />
           <Route exact path={ROUTERS.DEVICE_DETAIL} component={DeviceDetail} />
@@ -60,6 +70,7 @@ const Router = () => {
             path={ROUTERS.OPERATION_STATUS_BY_AREA}
             component={operationStatusByArea}
           />
+
           {/* <Route
             exact
             path={ROUTERS.DeviceManagement}
