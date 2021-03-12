@@ -173,7 +173,7 @@ const ItemContentTab = ({
           <Button onClick={() => handleDownloadRaw()}>Raw Date 다운</Button>
         </div>
       </div>
-      <div className="mb-5">
+      <div>
         <Table
           tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}

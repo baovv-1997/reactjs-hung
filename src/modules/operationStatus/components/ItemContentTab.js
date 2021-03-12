@@ -187,7 +187,7 @@ const ItemContentTab = ({
           </Button>
         </div>
       </div>
-      <div className="mb-5">
+      <div>
         <Table
           tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
@@ -195,7 +195,7 @@ const ItemContentTab = ({
         />
         <div className="opacity d-block pagination">
           {totalPage > perPage && (
-            <div className="wrapper-device__pagination">
+            <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page1}
                 itemsCountPerPage={perPage}
@@ -248,7 +248,7 @@ const ItemContentTab = ({
       </div>
       <div className="opacity d-block pagination mt-4">
         {totalPage > perPage && (
-          <div className="wrapper-device__pagination">
+          <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}
               itemsCountPerPage={perPage}

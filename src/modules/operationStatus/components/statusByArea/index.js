@@ -252,7 +252,7 @@ const OperationStatusPage = () => {
 
                 <div className="opacity d-block pagination">
                   {totalPage > perPage && (
-                    <div className="wrapper-device__pagination">
+                    <div className="wrapper-device__pagination mt-0">
                       <Pagination
                         activePage={paramsSearch?.page}
                         itemsCountPerPage={perPage}
