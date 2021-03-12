@@ -2,7 +2,7 @@
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
-import LabelStatusV2 from 'commons/components/Label/LabelStatus/LabelStatusV2';
+import LabelStatusV3 from 'commons/components/Label/LabelStatus/LabelStatusV3';
 import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
@@ -67,33 +67,96 @@ const ItemContentTab = ({
   return (
     <div className="content-wrap-tab">
       <div className="box-group">
-        <LabelStatusV2
-          nameStatus={dataBoxContent?.angleOfIncidence}
-          angle="˚"
-          title="입사각"
+        <LabelStatusV3
+          nameStatus={dataBoxContent?.day}
+          unit="kWh"
+          title="금일 발전량"
           keyStatus={1}
-          color="#97c95e"
-        />
-        <LabelStatusV2
-          nameStatus={dataBoxContent?.azimuth}
-          angle="˚"
-          title="방위각"
-          keyStatus={2}
-          color="#ab47bc"
-        />
-        <LabelStatusV2
-          nameStatus={dataBoxContent?.moduleOutput}
-          unit="W"
-          title="모듈 출력"
-          keyStatus={3}
           color="#3b74e7"
         />
-        <LabelStatusV2
-          nameStatus={dataBoxContent?.moduleColor}
-          title="모듈 색상"
-          keyStatus={4}
-          color="#f55662"
+        <LabelStatusV3
+          nameStatus={dataBoxContent?.month}
+          unit="kWh"
+          title="금월 발전량"
+          keyStatus={2}
+          color="#fe5e6a"
         />
+        <LabelStatusV3
+          nameStatus={dataBoxContent?.year}
+          unit="MWh"
+          title="금년 발전량"
+          keyStatus={3}
+          color="#ffb00d"
+        />
+        <LabelStatusV3
+          nameStatus={dataBoxContent?.plus}
+          title="누적 발전량"
+          keyStatus={4}
+          color="#6d5ebd"
+          unit="MV"
+        />
+      </div>
+
+      <div className="group-search">
+        <div className="table-form">
+          <div className="item-row d-flex">
+            <div className="colum-left">단위 선택</div>
+            <div className="colum-right">
+              <div className="group-button-unit-selection">
+                <Button
+                  onClick={() => handleChangeSearch('all', 'classification')}
+                  customClass={`${
+                    paramsSearch?.classification === 'all' ? 'active' : ''
+                  }`}
+                >
+                  분별
+                </Button>
+                <Button
+                  onClick={() => handleChangeSearch('hourly', 'classification')}
+                  customClass={`${
+                    paramsSearch?.classification === 'hourly' ? 'active' : ''
+                  }`}
+                >
+                  시간별
+                </Button>
+                <Button
+                  onClick={() => handleChangeSearch('glance', 'classification')}
+                  customClass={`${
+                    paramsSearch?.classification === 'glance' ? 'active' : ''
+                  }`}
+                >
+                  일별
+                </Button>
+                <Button
+                  onClick={() => handleChangeSearch('byYear', 'classification')}
+                  customClass={`${
+                    paramsSearch?.classification === 'byYear' ? 'active' : ''
+                  }`}
+                >
+                  연별
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="item-row d-flex">
+            <div className="colum-left">비교 분석</div>
+            <div className="colum-right">
+              <span>아반시스코리아</span>
+              {/* <img
+                src={images.arrow_right}
+                alt=""
+                className="mx-2 position-top-1"
+              /> */}
+              <span>본관남측</span>
+              {/* <img
+                src={images.arrow_right}
+                alt=""
+                className="mx-2 position-top-1"
+              /> */}
+              <span>DSP-3320K-OR</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="group-char">
@@ -102,59 +165,30 @@ const ItemContentTab = ({
             <div className="checkbox-header">차트 비교</div>
             <div className="list-checkbox">
               <CheckBox
-                name="PVVoltage"
-                isChecked={paramsSearch?.PVVoltage}
-                label="PV전압"
-                subLabel="v1"
-                id="PVVoltage"
+                name="generation"
+                isChecked={paramsSearch?.generation}
+                label="발전량"
+                id="generation"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.PVVoltage, 'PVVoltage')
+                  handleChangeSearch(paramsSearch?.generation, 'generation')
                 }
               />
               <CheckBox
-                name="PVCurrent"
-                id="PVCurrent"
-                subLabel="l1"
-                isChecked={paramsSearch?.PVCurrent}
-                label="PV전류"
+                name="temperature"
+                id="temperature"
+                isChecked={paramsSearch?.temperature}
+                label="모듈온도"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.PVCurrent, 'PVCurrent')
+                  handleChangeSearch(paramsSearch?.temperature, 'temperature')
                 }
               />
               <CheckBox
-                name="outputVoltage"
-                id="outputVoltage"
-                subLabel="v2"
-                isChecked={paramsSearch?.outputVoltage}
-                label="출력전압"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(
-                    paramsSearch?.outputVoltage,
-                    'outputVoltage'
-                  )
-                }
-              />
-              <CheckBox
-                name="outputCurrent"
-                id="outputCurrent"
-                subLabel="l2"
-                isChecked={paramsSearch?.outputCurrent}
-                label="출력전류"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(
-                    paramsSearch?.outputCurrent,
-                    'outputCurrent'
-                  )
-                }
-              />
-              <CheckBox
-                name="print"
-                id="print"
-                subLabel="p"
-                isChecked={paramsSearch?.print}
+                name="insolation"
+                id="insolation"
+                isChecked={paramsSearch?.insolation}
                 label="수평 일사량"
                 handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.print, 'print')
+                  handleChangeSearch(paramsSearch?.insolation, 'insolation')
                 }
               />
             </div>
@@ -165,7 +199,6 @@ const ItemContentTab = ({
         </div>
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
-
       <TitleSubHeader title="발전 현황" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
         <SelectDropdown

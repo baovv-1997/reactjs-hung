@@ -31,6 +31,10 @@ const IMAGES = {
   iconCalendar: require('assets/images/icon_calander.png'),
   ico_event2: require('assets/images/ico-event2.svg'),
   arrow_right: require('assets/images/arrow_right.svg'),
+  icon_day_large: require('assets/images/icon_day_large.svg'),
+  icon_month_large: require('assets/images/icon_month_large.svg'),
+  icon_year_large: require('assets/images/icon_year_large.svg'),
+  icon_plus_large: require('assets/images/icon_plus_large.svg'),
 };
 
 export default IMAGES;

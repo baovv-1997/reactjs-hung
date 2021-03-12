@@ -35,16 +35,22 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
+    sort_by: '',
+    sort_dir: '',
     page: 1,
+    keyword: '',
+    classification: 'all',
+    startDate: '',
+    endDate: '',
+    inverter: '',
+    vendor: '',
     company: null,
     mockupType: null,
     parkingLot: null,
     page2: 1,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    insolation: false,
+    temperature: false,
+    generation: false,
     pagination1: defaultOption,
     pagination2: defaultOption,
   };
@@ -89,34 +95,28 @@ const OperationStatusPage = () => {
           parkingLot: item.id,
         });
         break;
-      case 'PVCurrent':
+      case 'generation':
         setParamsSearch({
           ...paramsSearch,
-          PVCurrent: !item,
+          generation: !item,
         });
         break;
-      case 'outputCurrent':
+      case 'temperature':
         setParamsSearch({
           ...paramsSearch,
-          outputCurrent: !item,
+          temperature: !item,
         });
         break;
-      case 'print':
+      case 'insolation':
         setParamsSearch({
           ...paramsSearch,
-          print: !item,
+          insolation: !item,
         });
         break;
-      case 'PVVoltage':
+      case 'classification':
         setParamsSearch({
           ...paramsSearch,
-          PVVoltage: !item,
-        });
-        break;
-      case 'outputVoltage':
-        setParamsSearch({
-          ...paramsSearch,
-          outputVoltage: !item,
+          classification: item,
         });
         break;
       case 'pagination1':
@@ -234,7 +234,11 @@ const OperationStatusPage = () => {
               >
                 <Tab
                   eventKey="all"
-                  title={<div className="tab-name">전체</div>}
+                  title={
+                    <div className="tab-name">
+                      아반시스 코리아 <span>전체</span>
+                    </div>
+                  }
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
@@ -256,7 +260,7 @@ const OperationStatusPage = () => {
                   eventKey="coes"
                   title={
                     <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
+                      인버터 ID <span>본관 남측</span>
                     </div>
                   }
                 >
@@ -280,7 +284,7 @@ const OperationStatusPage = () => {
                   eventKey="SK-Solar"
                   title={
                     <div className="tab-name">
-                      에스케이솔라 <span>인버터 ID</span>
+                      인버터 ID <span>본관 동측</span>
                     </div>
                   }
                 >

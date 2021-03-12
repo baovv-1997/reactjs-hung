@@ -30,6 +30,13 @@ const operationStatusByCompanyEdit = lazy(() =>
   import('modules/operationStatus/components/edit')
 );
 
+const statisticsDevelopByCompany = lazy(() =>
+  import('modules/statisticsDevelop/components/statisticsByCompany')
+);
+
+const statisticsDevelopByArea = lazy(() =>
+  import('modules/statisticsDevelop/components/statisticsByArea')
+);
 const RegisterDevice = lazy(() =>
   import('modules/device/components/RegisterDevice')
 );
@@ -113,6 +120,16 @@ const Router = () => {
             component={operationStatusByArea}
           />
 
+          <Route
+            exact
+            path={ROUTERS.STATISTICS_DEVELOP}
+            component={statisticsDevelopByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.STATISTICS_DEVELOP_AREA}
+            component={statisticsDevelopByArea}
+          />
           {/* <Route
             exact
             path={ROUTERS.DeviceManagement}

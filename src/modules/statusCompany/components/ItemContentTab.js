@@ -8,38 +8,31 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
+import { headStatusCompany } from 'constants/headerTable';
 import LineSeriesChart from './chart';
 
 type Props = {
-  headStatusCompany: Array<{ id: number, name: string }>,
   listMockupDataCompany: any,
   dataContent: Object,
   powerData: Object,
+  handleDownloadTrend: Function,
+  handleChangeSearch: Function,
+  paramsSearch: Object,
   temperatureData: Object,
   insolationData: Object,
-  handleToggleCheckbox: Function,
-  checkBox: Object,
-  paginationType: Object,
-  handleChangePagination: Function,
-  handleDownloadTrend: Function,
-  handleDownloadRaw: Function,
 };
 
 const ItemContentTab = ({
-  headStatusCompany,
   listMockupDataCompany,
-  dataContent,
   powerData,
+  dataContent,
+  handleDownloadTrend,
+  handleChangeSearch,
   temperatureData,
   insolationData,
-  handleToggleCheckbox,
-  checkBox,
-  paginationType,
-  handleChangePagination,
-  handleDownloadTrend,
-  handleDownloadRaw,
+  paramsSearch,
 }: Props) => {
-  console.log('dataContent', dataContent);
+  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -57,6 +50,7 @@ const ItemContentTab = ({
       color: '#fe8224',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <div className="box-group">
@@ -80,29 +74,29 @@ const ItemContentTab = ({
             <div className="list-checkbox">
               <CheckBox
                 name="power"
-                isChecked={checkBox?.power}
+                isChecked={paramsSearch?.power}
                 label="발전량"
                 id="power"
                 handleToggleCheckbox={() =>
-                  handleToggleCheckbox(checkBox?.power, 'power')
+                  handleChangeSearch(paramsSearch?.power, 'power')
                 }
               />
               <CheckBox
                 name="temperature"
                 id="temperature"
-                isChecked={checkBox?.temperature}
+                isChecked={paramsSearch?.temperature}
                 label="모듈온도"
                 handleToggleCheckbox={() =>
-                  handleToggleCheckbox(checkBox?.temperature, 'temperature')
+                  handleChangeSearch(paramsSearch?.temperature, 'temperature')
                 }
               />
               <CheckBox
                 name="insolation"
                 id="insolation"
-                isChecked={checkBox?.insolation}
+                isChecked={paramsSearch?.insolation}
                 label="수평 일사량"
                 handleToggleCheckbox={() =>
-                  handleToggleCheckbox(checkBox?.insolation, 'insolation')
+                  handleChangeSearch(paramsSearch?.insolation, 'insolation')
                 }
               />
             </div>
@@ -115,27 +109,35 @@ const ItemContentTab = ({
           <LineSeriesChart />
         </div>
       </div>
+
       <TitleSubHeader title="발전 현황" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}
-          onChange={(option) => handleChangePagination(option)}
-          option={paginationType || null}
+          onChange={(option) => handleChangeSearch(option, 'pagination')}
+          option={paramsSearch?.pagination || null}
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend()} customClass="mr-2">
+          <Button
+            onClick={() => handleDownloadTrend('trend')}
+            customClass="mr-2"
+          >
             Trend 이미지 다운
           </Button>
-          <Button onClick={() => handleDownloadRaw()}>Raw Date 다운</Button>
+          <Button onClick={() => handleDownloadTrend('raw')}>
+            Raw Date 다운
+          </Button>
         </div>
       </div>
-      <Table
-        tableHeads={headStatusCompany}
-        tableBody={listMockupDataCompany}
-        // isShowId
-      />
+      <div className="mb-5">
+        <Table
+          tableHeads={headStatusCompany}
+          tableBody={listMockupDataCompany}
+          // isShowId
+        />
+      </div>
     </div>
   );
 };

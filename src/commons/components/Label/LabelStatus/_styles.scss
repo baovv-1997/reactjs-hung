@@ -75,6 +75,23 @@
   justify-content: center;
   align-items: center;
 
+  &.style3 {
+    .wrap-icon {
+      width: pxToRem(140);
+      height: pxToRem(140);
+      padding: pxToRem(30);
+      position: relative;
+      left: -1px;
+    }
+
+    .label-status__body {
+      width: calc(100% - #{pxToRem(140)});
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   &:last-child {
     margin-right: 0;
   }
