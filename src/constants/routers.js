@@ -14,6 +14,8 @@ const ROUTERS = {
   OPERATION_STATUS_BY_COMPANY_DETAIL: `/operation/status-by-company/:id`,
   OPERATION_STATUS_BY_COMPANY_REGISTER: `/operation/status-by-company/register`,
   OPERATION_STATUS_BY_COMPANY_UPDATE: `/operation/status-by-company/update/:id`,
+  TEST_DASHBOARD: `/test/dashboard`,
+  SOLAR_DASHBOARD: `/solar/dashboard`,
 };
 
 export default ROUTERS;

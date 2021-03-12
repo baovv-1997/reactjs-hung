@@ -129,37 +129,79 @@ export const MOCKUP = {
         {
           id: 1,
           name: '대시보드',
-          to: '#',
+          to: ROUTERS.TEST_DASHBOARD,
+        },
+        {
+          id: 2,
+          name: '현황',
+          sub: [
+            {
+              id: 1,
+              name: '발전 현황',
+              to: '#',
+            },
+            {
+              id: 2,
+              name: '운영 현황',
+              to: '#',
+            },
+          ],
+        },
+        {
+          id: 3,
+          name: '통계',
+          sub: [
+            {
+              id: 1,
+              name: '발전 통계',
+              to: '#',
+            },
+            {
+              id: 2,
+              name: '운영 통계',
+              to: '#',
+            },
+          ],
         },
       ],
     },
     {
       id: 2,
-      name: '현황',
+      name: '테스트(실증단지)',
       sub: [
         {
           id: 1,
-          name: '발전 현황',
-          to: '#',
+          name: '대시보드',
+          to: ROUTERS.SOLAR_DASHBOARD,
         },
         {
           id: 2,
-          name: '운영 현황',
-          to: '#',
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: '통계',
-      sub: [
-        {
-          id: 1,
-          name: '테스트(실증단지)',
+          name: '현황',
           sub: [
             {
               id: 1,
-              name: '대시보드',
+              name: '발전 현황',
+              to: '#',
+            },
+            {
+              id: 2,
+              name: '운영 현황',
+              to: '#',
+            },
+          ],
+        },
+        {
+          id: 3,
+          name: '통계',
+          sub: [
+            {
+              id: 1,
+              name: '발전 통계',
+              to: '#',
+            },
+            {
+              id: 2,
+              name: '운영 통계',
               to: '#',
             },
           ],
