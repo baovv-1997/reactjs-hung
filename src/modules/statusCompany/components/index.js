@@ -8,7 +8,7 @@ import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import {
-  listMockupDataCompany,
+  listMockupDataStatusByCompany,
   listParkingLot,
   listMockupType,
 } from 'mockData/listCompany';
@@ -36,7 +36,7 @@ const StatusByAreaCompany = () => {
     mockupType: null,
     parkingLot: null,
     power: false,
-    temperature: false,
+    performance: false,
     insolation: false,
     pagination: defaultOption,
   };
@@ -51,8 +51,8 @@ const StatusByAreaCompany = () => {
     ],
   };
 
-  const temperatureData = {
-    type: 'temperature',
+  const performanceData = {
+    type: 'performance',
     data: [
       { title: '현재 모듈 온도', value: '30.8' },
       { title: '최고 모듈 온도', value: '35.2' },
@@ -105,10 +105,10 @@ const StatusByAreaCompany = () => {
           power: !item,
         });
         break;
-      case 'temperature':
+      case 'performance':
         setParamsSearch({
           ...paramsSearch,
-          temperature: !item,
+          performance: !item,
         });
         break;
       case 'insolation':
@@ -193,15 +193,17 @@ const StatusByAreaCompany = () => {
         <div className="content-body page-company">
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
+            <ul className="list-item-select overflowY">{renderListCompany}</ul>
 
             <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-            <ul className="list-item-select">{renderListMocKup}</ul>
+            <ul className="list-item-select overflowY">{renderListMocKup}</ul>
             <TitleSubHeader title="주차장" className="mt-5" />
-            <ul className="list-item-select">{renderListParkingLot}</ul>
+            <ul className="list-item-select overflowY">
+              {renderListParkingLot}
+            </ul>
           </div>
           <div className="content-body-left">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="bulk"
                 className="list-order tab-list"
@@ -211,17 +213,17 @@ const StatusByAreaCompany = () => {
                   eventKey="bulk"
                   title={
                     <div className="tab-name">
-                      아반시스 코리아 <span>전체</span>
+                      아반시스코리아 <span>전체</span>
                     </div>
                   }
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
                     dataContent={{}}
                     handleDownloadTrend={handleDownloadTrend}
                     handleChangeSearch={handleChangeSearch}
-                    temperatureData={temperatureData}
+                    performanceData={performanceData}
                     insolationData={insolationData}
                     paramsSearch={paramsSearch}
                   />

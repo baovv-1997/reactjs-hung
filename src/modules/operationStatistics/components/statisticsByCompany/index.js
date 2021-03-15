@@ -3,22 +3,23 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
+
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import {
   listMockupType,
   listMockupDataCompany,
+  tableOperationStatusByAreaCompany,
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
-// import ROUTERS from 'constants/routers';
+import ROUTERS from 'constants/routers';
 
 const OperationStatusPage = () => {
-  // const history = useHistory();
+  const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
@@ -34,7 +35,7 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
-    page: 1,
+    page1: 1,
     classification: 'all',
     startDate: new Date() || null,
     endDate: new Date() || null,
@@ -43,12 +44,15 @@ const OperationStatusPage = () => {
     company: null,
     mockupType: null,
     parkingLot: null,
+    page2: 1,
     insolation: false,
     temperature: false,
     generation: false,
-    pagination: defaultOption,
+    pagination1: defaultOption,
+    pagination2: defaultOption,
   };
 
+  const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
     day: '300',
@@ -62,14 +66,16 @@ const OperationStatusPage = () => {
   const getDataListStatusCompany = useCallback(() => {
     dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
   }, [
-    paramsSearch?.page,
+    paramsSearch?.page1,
+    paramsSearch?.page2,
     paramsSearch?.classification,
     paramsSearch?.company,
     paramsSearch?.mockupType,
     paramsSearch?.parkingLot,
     paramsSearch?.insolation,
     paramsSearch?.generation,
-    paramsSearch?.pagination,
+    paramsSearch?.pagination1,
+    paramsSearch?.pagination2,
     dispatch,
   ]);
 
@@ -123,13 +129,18 @@ const OperationStatusPage = () => {
           classification: item,
         });
         break;
-      case 'pagination':
+      case 'pagination1':
         setParamsSearch({
           ...paramsSearch,
-          pagination: item,
+          pagination1: item,
         });
         break;
-
+      case 'pagination2':
+        setParamsSearch({
+          ...paramsSearch,
+          pagination2: item,
+        });
+        break;
       case 'inverter':
         setParamsSearch({
           ...paramsSearch,
@@ -142,10 +153,16 @@ const OperationStatusPage = () => {
           vendor: item,
         });
         break;
-      case 'page':
+      case 'page1':
         setParamsSearch({
           ...paramsSearch,
-          page: item,
+          page1: item,
+        });
+        break;
+      case 'page2':
+        setParamsSearch({
+          ...paramsSearch,
+          page2: item,
         });
         break;
       case 'startDate':
@@ -160,12 +177,25 @@ const OperationStatusPage = () => {
           endDate: item,
         });
         break;
+      case 'modal':
+        setIsShowModalSorting(!isShowModalSorting);
+        break;
+      case 'checkBox':
+        console.log(item, 'optionCheck', name);
+        setIsShowModalSorting(false);
+        break;
+
       case 'submitSearch':
         dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
         break;
       default:
         break;
     }
+  };
+
+  //  click vào table bên dưới đến trang chi tiết
+  const handleClickDetail = (item) => {
+    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
   };
 
   const onSelect = (eventKey) => {
@@ -223,7 +253,7 @@ const OperationStatusPage = () => {
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+        <TitleHeader title="실증단지 운영 통계" />
         <div className="content-body page-company">
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
@@ -255,7 +285,14 @@ const OperationStatusPage = () => {
                     listMockupDataCompany={listMockupDataCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    totalPage={totalPage}
+                    perPage={perPage}
+                    tableOperationStatusByAreaCompany={
+                      tableOperationStatusByAreaCompany
+                    }
+                    isShowModalSorting={isShowModalSorting}
                     paramsSearch={paramsSearch}
+                    handleClickDetail={handleClickDetail}
                     handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
@@ -272,7 +309,14 @@ const OperationStatusPage = () => {
                     listMockupDataCompany={listMockupDataCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    totalPage={totalPage}
+                    perPage={perPage}
+                    tableOperationStatusByAreaCompany={
+                      tableOperationStatusByAreaCompany
+                    }
+                    isShowModalSorting={isShowModalSorting}
                     paramsSearch={paramsSearch}
+                    handleClickDetail={handleClickDetail}
                     handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
@@ -289,25 +333,17 @@ const OperationStatusPage = () => {
                     listMockupDataCompany={listMockupDataCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    totalPage={totalPage}
+                    perPage={perPage}
+                    tableOperationStatusByAreaCompany={
+                      tableOperationStatusByAreaCompany
+                    }
+                    isShowModalSorting={isShowModalSorting}
                     paramsSearch={paramsSearch}
+                    handleClickDetail={handleClickDetail}
                     handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
-                <div className="opacity d-block pagination mt-0">
-                  {totalPage > perPage && (
-                    <div className="wrapper-device__pagination mt-0">
-                      <Pagination
-                        activePage={paramsSearch?.page}
-                        itemsCountPerPage={perPage}
-                        totalItemsCount={totalPage}
-                        pageRangeDisplayed={5}
-                        onChange={(e) => handleChangeSearch(e, 'page')}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
-                </div>
               </Tabs>
             </div>
           </div>

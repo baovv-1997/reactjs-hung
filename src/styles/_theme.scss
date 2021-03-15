@@ -156,3 +156,95 @@ button {
     }
   }
 }
+
+.title-label {
+  font-size: pxToRem(15);
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  margin-right: pxToRem(10);
+  letter-spacing: pxToRem(-0.38);
+  text-align: left;
+  color: $black-active;
+}
+
+.date-group {
+  span {
+    margin: 0 pxToRem(10);
+    font-size: pxToRem(15);
+    line-height: pxToRem(30);
+  }
+
+  button {
+    margin-left: pxToRem(10);
+  }
+
+  .customer-select {
+    .css-26l3qy-menu .css-4ljt47-MenuList * {
+      padding: 0.3125rem 0.5rem !important;
+    }
+
+    .css-g1d714-ValueContainer,
+    .css-1fhf3k1-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+      overflow: visible !important;
+      font-size: pxToRem(14) !important;
+    }
+
+    .css-yk16xz-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+    }
+
+    .css-1pahdxg-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+
+      .css-g1d714-ValueContainer,
+      .css-1uccc91-singleValue {
+        min-height: pxToRem(32);
+        max-height: pxToRem(32);
+      }
+    }
+  }
+}
+
+.mr-10 {
+  margin-right: pxToRem(10);
+}
+
+button.h-32 {
+  height: pxToRem(32);
+  width: pxToRem(60);
+  min-width: pxToRem(60);
+}
+
+.input-date {
+  position: relative;
+
+  img {
+    position: absolute;
+    right: pxToRem(15);
+    width: pxToRem(14);
+    height: pxToRem(14);
+    top: pxToRem(9);
+  }
+
+  .react-datepicker-wrapper {
+    input {
+      border: solid 1px $color-border-card;
+      border-radius: pxToRem(3);
+      font-family: $Roboto-Font;
+      font-size: pxToRem(15);
+      line-height: 2.33;
+      letter-spacing: -0.38px;
+      text-align: left;
+      color: $black;
+      height: pxToRem(32);
+      width: pxToRem(140);
+      padding-left: pxToRem(14);
+    }
+  }
+}

@@ -16,8 +16,10 @@ const ROUTERS = {
   OPERATION_STATUS_BY_COMPANY_REGISTER: `/operation/status-by-company/register`,
   OPERATION_STATUS_BY_COMPANY_EDIT: `/operation/status-by-company/edit/:id`,
 
-  STATISTICS_DEVELOP: `/statistics/develop-by-company`,
-  STATISTICS_DEVELOP_AREA: `/statistics/develop-by-area`,
+  STATISTICS_DEVELOP: `/statistics/develop/develop-by-company`,
+  STATISTICS_DEVELOP_AREA: `/statistics/develop/develop-by-area`,
+  OPERATION_STATISTICS_COMPANY: `/statistics/operation/operation-by-company`,
+  OPERATION_STATISTICS_AREA: `/statistics/operation/operation-by-area`,
 };
 
 export default ROUTERS;

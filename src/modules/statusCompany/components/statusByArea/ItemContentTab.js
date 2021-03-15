@@ -8,7 +8,7 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
-import { headStatusCompany } from 'constants/headerTable';
+import { headStatusByCompany } from 'constants/headerTable';
 
 type Props = {
   listMockupDataCompany: any,
@@ -17,7 +17,7 @@ type Props = {
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
-  temperatureData: Object,
+  performanceData: Object,
   insolationData: Object,
 };
 
@@ -27,7 +27,7 @@ const ItemContentTab = ({
   dataContent,
   handleDownloadTrend,
   handleChangeSearch,
-  temperatureData,
+  performanceData,
   insolationData,
   paramsSearch,
 }: Props) => {
@@ -40,12 +40,12 @@ const ItemContentTab = ({
     },
     {
       id: 2,
-      name: '모듈온도 ℃',
+      name: '일사량 ℃',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '수평 일사량 kWh/㎡·10초',
+      name: '성능비 kWh/㎡·10초',
       color: '#fe8224',
     },
   ];
@@ -55,8 +55,8 @@ const ItemContentTab = ({
       <div className="box-group">
         <LabelStatus type={powerData?.type} data={powerData?.data} isPower />
         <LabelStatus
-          type={temperatureData?.type}
-          data={temperatureData?.data}
+          type={performanceData?.type}
+          data={performanceData?.data}
           isTemperature
         />
         <LabelStatus
@@ -81,21 +81,21 @@ const ItemContentTab = ({
                 }
               />
               <CheckBox
-                name="temperature"
-                id="temperature"
-                isChecked={paramsSearch?.temperature}
-                label="모듈온도"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.temperature, 'temperature')
-                }
-              />
-              <CheckBox
                 name="insolation"
                 id="insolation"
                 isChecked={paramsSearch?.insolation}
-                label="수평 일사량"
+                label="일사량"
                 handleToggleCheckbox={() =>
                   handleChangeSearch(paramsSearch?.insolation, 'insolation')
+                }
+              />
+              <CheckBox
+                name="performance"
+                id="performance"
+                isChecked={paramsSearch?.performance}
+                label="성능비"
+                handleToggleCheckbox={() =>
+                  handleChangeSearch(paramsSearch?.performance, 'performance')
                 }
               />
             </div>
@@ -130,7 +130,7 @@ const ItemContentTab = ({
       </div>
       <div>
         <Table
-          tableHeads={headStatusCompany}
+          tableHeads={headStatusByCompany}
           tableBody={listMockupDataCompany}
           // isShowId
         />
