@@ -2,53 +2,57 @@
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
-import DatePicker from 'react-datepicker';
-import IMAGES from 'themes/images';
 import LabelStatusV3 from 'commons/components/Label/LabelStatus/LabelStatusV3';
 import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
+import FilterSearch from '../FilterSearch';
 import { listPaginationType } from 'constants/listKey';
-import ROUTERS from 'constants/routers';
 import {
-  headStatusCompany,
-  headOperationStatusByAreaCompany,
+  headStatisticsCompany,
+  headStatisticsOfModuleCompany,
 } from 'constants/headerTable';
-import { useHistory } from 'react-router-dom';
 
 type Props = {
-  listMockupDataCompany: any,
+  dataTableStatisticsCompany: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableStatisticsOfModuleCompany: Array<{
     id: number,
   }>,
-  isShowModalSorting: boolean,
-  handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  listStatusCompanySelect: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
+  listInverter: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  dataTableStatisticsCompany,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
   perPage,
-  tableOperationStatusByAreaCompany,
-  isShowModalSorting,
-  handleClickDetail,
+  dataTableStatisticsOfModuleCompany,
   handleChangeSearch,
   paramsSearch,
+  listStatusCompanySelect,
+  listInverter,
 }: Props) => {
   console.log(dataContent, 'dataContent');
-  const history = useHistory();
   const dataLengthChart = [
     {
       id: 1,
@@ -91,104 +95,12 @@ const ItemContentTab = ({
           color="#ffb00d"
         />
       </div>
-
-      <div className="group-search">
-        <div className="table-form">
-          <div className="item-row d-flex">
-            <div className="colum-left">단위 선택</div>
-            <div className="colum-right">
-              <div className="group-button-unit-selection">
-                <Button
-                  onClick={() => handleChangeSearch('all', 'classification')}
-                  customClass={`${
-                    paramsSearch?.classification === 'all' ? 'active' : ''
-                  }`}
-                >
-                  분별
-                </Button>
-                <Button
-                  onClick={() => handleChangeSearch('hourly', 'classification')}
-                  customClass={`${
-                    paramsSearch?.classification === 'hourly' ? 'active' : ''
-                  }`}
-                >
-                  시간별
-                </Button>
-                <Button
-                  onClick={() => handleChangeSearch('glance', 'classification')}
-                  customClass={`${
-                    paramsSearch?.classification === 'glance' ? 'active' : ''
-                  }`}
-                >
-                  일별
-                </Button>
-                <Button
-                  onClick={() => handleChangeSearch('byYear', 'classification')}
-                  customClass={`${
-                    paramsSearch?.classification === 'byYear' ? 'active' : ''
-                  }`}
-                >
-                  연별
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="item-row d-flex">
-            <div className="colum-left">비교 분석</div>
-            <div className="colum-right">
-              <div className="d-flex justify-content-start date-group align-items-center">
-                <div className="group-select-search d-flex justify-content-start align-items-center">
-                  <div className="title-label">업체 선택</div>
-                  <SelectDropdown
-                    placeholder="업체 선택"
-                    listItem={listPaginationType}
-                    onChange={(option) => handleChangeSearch(option, 'vendor')}
-                    option={paramsSearch?.vendor || null}
-                    noOptionsMessage={() => '옵션 없음'}
-                  />
-                </div>
-                <img src={IMAGES.arrow_right} alt="" className="mx-2" />
-                <div className="group-select-search d-flex justify-content-start align-items-center mr-10">
-                  <div className="title-label">인버터 선택</div>
-                  <SelectDropdown
-                    placeholder="선택되지 않음"
-                    listItem={listPaginationType}
-                    onChange={(option) =>
-                      handleChangeSearch(option, 'inverter')
-                    }
-                    option={paramsSearch?.inverter || null}
-                    noOptionsMessage={() => '옵션 없음'}
-                  />
-                </div>
-                <div className="title-label">검색기간</div>
-                <div className="input-date">
-                  <DatePicker
-                    selected={paramsSearch?.startDate}
-                    onChange={(date) => handleChangeSearch(date, 'startDate')}
-                    dateFormat="yyyy-MM-dd"
-                  />
-                  <img src={IMAGES.iconCalendar} alt="icon-calendar" />
-                </div>
-                <span>~</span>
-                <div className="input-date">
-                  <DatePicker
-                    selected={paramsSearch?.endDate}
-                    onChange={(date) => handleChangeSearch(date, 'endDate')}
-                    dateFormat="yyyy-MM-dd"
-                  />
-                  <img src={IMAGES.iconCalendar} alt="icon-calendar" />
-                </div>
-                <Button
-                  onClick={() => handleChangeSearch('', 'submitSearch')}
-                  customClass="h-32"
-                >
-                  검색
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <FilterSearch
+        listStatusCompanySelect={listStatusCompanySelect}
+        listInverter={listInverter}
+        handleChangeSearch={handleChangeSearch}
+        paramsSearch={paramsSearch}
+      />
 
       <div className="group-char">
         <div className="group-char-left">
@@ -230,7 +142,7 @@ const ItemContentTab = ({
         </div>
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
-      <TitleSubHeader title="발전 현황" />
+      <TitleSubHeader title="발전 통계" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
         <SelectDropdown
           placeholder="구분"
@@ -253,8 +165,8 @@ const ItemContentTab = ({
       </div>
       <div>
         <Table
-          tableHeads={headStatusCompany}
-          tableBody={listMockupDataCompany}
+          tableHeads={headStatisticsCompany}
+          tableBody={dataTableStatisticsCompany}
           // isShowId
         />
         <div className="opacity d-block pagination mt-0">
@@ -291,26 +203,10 @@ const ItemContentTab = ({
         </div>
       </div>
       <Table
-        tableHeads={headOperationStatusByAreaCompany}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableHeads={headStatisticsOfModuleCompany}
+        tableBody={dataTableStatisticsOfModuleCompany}
         // isShowId
-        handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
-        handleShowModalSorting={() => handleChangeSearch('', 'modal')}
-        showModalSort={{
-          isShow: isShowModalSorting,
-          keyItem: 5,
-        }}
-        onClickRow={handleClickDetail}
       />
-      <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
-          }
-        >
-          등록
-        </Button>
-      </div>
       <div className="opacity d-block pagination mt-0">
         {totalPage > perPage && (
           <div className="wrapper-device__pagination mt-0">
