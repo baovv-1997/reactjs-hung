@@ -1,0 +1,25 @@
+.search__dashboard {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: pxToRem(15);
+  width: 100%;
+}
+
+.search__dashboard-input {
+  width: calc(100% - 110px);
+  margin-right: pxToRem(10);
+  .search__input {
+    border-radius: pxToRem(3);
+    border: solid pxToRem(1) $color-border-card;
+
+    font-size: pxToRem(15);
+    line-height: 1.47;
+    letter-spacing: pxToRem(-0.45);
+    font-weight: normal;
+  }
+
+  .auto-suggest {
+    border: solid pxToRem(1) $color-border-card;
+  }
+}

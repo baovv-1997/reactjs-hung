@@ -14,6 +14,9 @@ const ROUTERS = {
   OPERATION_STATUS_BY_AREA: `/operation/status-by-area`,
   OPERATION_STATUS_BY_COMPANY_DETAIL: `/operation/status-by-company/:id`,
   OPERATION_STATUS_BY_COMPANY_REGISTER: `/operation/status-by-company/register`,
+  OPERATION_STATUS_BY_COMPANY_UPDATE: `/operation/status-by-company/update/:id`,
+  TEST_DASHBOARD: `/test/dashboard`,
+  SOLAR_DASHBOARD: `/solar/dashboard`,
   OPERATION_STATUS_BY_COMPANY_EDIT: `/operation/status-by-company/edit/:id`,
 
   STATISTICS_DEVELOP: `/statistics/develop/develop-by-company`,

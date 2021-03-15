@@ -66,9 +66,9 @@ storiesOf('Card', module).add('cardCompany', () => {
       title={title}
       listItem={listItem}
       titleClick={action('on-title-click')}
-      customClass="header-company"
+      customClass="card-company"
       isCardCompany
-      isEvent
+      // isEvent
     />
   );
 });
