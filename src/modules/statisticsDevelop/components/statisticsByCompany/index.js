@@ -3,23 +3,23 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import {
   listMockupType,
-  listMockupDataCompany,
-  tableOperationStatusByAreaCompany,
+  dataTableStatisticsCompany,
+  dataTableStatisticsOfModuleCompany,
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
-import { useHistory } from 'react-router-dom';
+import * as SignInAction from 'modules/accounts/redux';
+// import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
-import ROUTERS from 'constants/routers';
+// import ROUTERS from 'constants/routers';
 
 const OperationStatusPage = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
@@ -27,6 +27,7 @@ const OperationStatusPage = () => {
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
+  const { listInverter } = useSelector((state) => state?.account);
 
   const defaultOption = {
     id: 1,
@@ -36,10 +37,10 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page1: 1,
-    classification: 'all',
+    classification: 'minute',
     startDate: new Date() || null,
     endDate: new Date() || null,
-    vendor: null,
+    vendorCompany: null,
     inverter: null,
     company: null,
     mockupType: null,
@@ -52,7 +53,6 @@ const OperationStatusPage = () => {
     pagination2: defaultOption,
   };
 
-  const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
     day: '300',
@@ -60,14 +60,17 @@ const OperationStatusPage = () => {
     year: '300',
   };
 
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
+
   const dispatch = useDispatch();
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+    console.log('Call api on page');
   }, [
     paramsSearch?.page1,
     paramsSearch?.page2,
-    paramsSearch?.classification,
     paramsSearch?.company,
     paramsSearch?.mockupType,
     paramsSearch?.parkingLot,
@@ -78,7 +81,6 @@ const OperationStatusPage = () => {
     dispatch,
   ]);
 
-  console.log(paramsSearch?.page, 'paramsSearch?.page');
   useEffect(() => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
@@ -146,11 +148,19 @@ const OperationStatusPage = () => {
           inverter: item,
         });
         break;
-      case 'vendor':
+      case 'vendorCompany':
         setParamsSearch({
           ...paramsSearch,
-          vendor: item,
+          vendorCompany: item,
+          inverter: null,
         });
+
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: item?.value,
+          })
+        );
         break;
       case 'page1':
         setParamsSearch({
@@ -176,25 +186,12 @@ const OperationStatusPage = () => {
           endDate: item,
         });
         break;
-      case 'modal':
-        setIsShowModalSorting(!isShowModalSorting);
-        break;
-      case 'checkBox':
-        console.log(item, 'optionCheck', name);
-        setIsShowModalSorting(false);
-        break;
-
       case 'submitSearch':
-        dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+        // call api update list table
         break;
       default:
         break;
     }
-  };
-
-  //  click vào table bên dưới đến trang chi tiết
-  const handleClickDetail = (item) => {
-    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
   };
 
   const onSelect = (eventKey) => {
@@ -281,17 +278,17 @@ const OperationStatusPage = () => {
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
+                    dataTableStatisticsOfModuleCompany={
+                      dataTableStatisticsOfModuleCompany
                     }
-                    isShowModalSorting={isShowModalSorting}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
                     handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
@@ -305,17 +302,17 @@ const OperationStatusPage = () => {
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
+                    dataTableStatisticsOfModuleCompany={
+                      dataTableStatisticsOfModuleCompany
                     }
-                    isShowModalSorting={isShowModalSorting}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
                     handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
@@ -329,17 +326,17 @@ const OperationStatusPage = () => {
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
+                    dataTableStatisticsOfModuleCompany={
+                      dataTableStatisticsOfModuleCompany
                     }
-                    isShowModalSorting={isShowModalSorting}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
                     handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>

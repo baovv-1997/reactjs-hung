@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupDataStatusByCompany } from 'mockData/listCompany';
-// import { headStatusCompany } from 'constants/headerTable';
+import {
+  listMockupDataStatusByCompany,
+  listParkingLot,
+  listMockupType,
+} from 'mockData/listCompany';
 import * as StatusCompanyAction from '../../redux';
 import ItemContentTab from './ItemContentTab';
+import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 
 const StatusByAreaCompany = () => {
   const perPage = 6;
@@ -60,11 +63,13 @@ const StatusByAreaCompany = () => {
       { title: '경사 일사량', value: '46' },
     ],
   };
-
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
   }, [paramsSearch, dispatch]);
 
   useEffect(() => {
@@ -126,29 +131,18 @@ const StatusByAreaCompany = () => {
     console.log('download Trend', name);
   };
 
-  const renderListCompany =
-    listStatusCompanySelect &&
-    listStatusCompanySelect.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'statusCompany')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
-          <div className="content-select-sidebar">
-            <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
-          </div>
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listStatusCompanySelect}
+            listMockupType={listMockupType}
+          />
           <div className="content-body-left">
             <div className="h-100">
               <Tabs

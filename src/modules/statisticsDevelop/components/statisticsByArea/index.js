@@ -3,16 +3,17 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import Pagination from 'react-js-pagination';
 import {
   listMockupType,
-  listMockupDataCompany,
+  dataTableStatisticsCompany,
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import * as SignInAction from 'modules/accounts/redux';
 // import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
 // import ROUTERS from 'constants/routers';
@@ -26,6 +27,7 @@ const OperationStatusPage = () => {
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
+  const { listInverter } = useSelector((state) => state?.account);
 
   const defaultOption = {
     id: 1,
@@ -35,16 +37,16 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    classification: 'all',
+    classification: 'minute',
     startDate: new Date() || null,
     endDate: new Date() || null,
-    vendor: null,
+    vendorCompany: null,
     inverter: null,
     company: null,
     mockupType: null,
     parkingLot: null,
     insolation: false,
-    temperature: false,
+    performance: false,
     generation: false,
     pagination: defaultOption,
   };
@@ -54,16 +56,18 @@ const OperationStatusPage = () => {
     day: '300',
     month: '9,000',
     year: '300',
-    plus: '10.8',
   };
+
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
 
   const dispatch = useDispatch();
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+    console.log('Call api on page');
   }, [
     paramsSearch?.page,
-    paramsSearch?.classification,
     paramsSearch?.company,
     paramsSearch?.mockupType,
     paramsSearch?.parkingLot,
@@ -73,7 +77,6 @@ const OperationStatusPage = () => {
     dispatch,
   ]);
 
-  console.log(paramsSearch?.page, 'paramsSearch?.page');
   useEffect(() => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
@@ -105,10 +108,10 @@ const OperationStatusPage = () => {
           generation: !item,
         });
         break;
-      case 'temperature':
+      case 'performance':
         setParamsSearch({
           ...paramsSearch,
-          temperature: !item,
+          performance: !item,
         });
         break;
       case 'insolation':
@@ -136,11 +139,19 @@ const OperationStatusPage = () => {
           inverter: item,
         });
         break;
-      case 'vendor':
+      case 'vendorCompany':
         setParamsSearch({
           ...paramsSearch,
-          vendor: item,
+          vendorCompany: item,
+          inverter: null,
         });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: item?.value,
+          })
+        );
+
         break;
       case 'page':
         setParamsSearch({
@@ -161,7 +172,7 @@ const OperationStatusPage = () => {
         });
         break;
       case 'submitSearch':
-        dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+        // call api update list table
         break;
       default:
         break;
@@ -223,7 +234,7 @@ const OperationStatusPage = () => {
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+        <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
@@ -236,7 +247,7 @@ const OperationStatusPage = () => {
             </ul>
           </div>
           <div className="content-body-left w-100">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="all"
                 className="list-order tab-list"
@@ -244,17 +255,15 @@ const OperationStatusPage = () => {
               >
                 <Tab
                   eventKey="all"
-                  title={
-                    <div className="tab-name">
-                      아반시스 코리아 <span>전체</span>
-                    </div>
-                  }
+                  title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
                     handleChangeSearch={handleChangeSearch}
                   />
@@ -263,15 +272,17 @@ const OperationStatusPage = () => {
                   eventKey="coes"
                   title={
                     <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
+                      코에스<span>인버터 ID</span>
                     </div>
                   }
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
                     handleChangeSearch={handleChangeSearch}
                   />
@@ -280,15 +291,17 @@ const OperationStatusPage = () => {
                   eventKey="SK-Solar"
                   title={
                     <div className="tab-name">
-                      인버터 ID <span>본관 동측</span>
+                      에스케이솔라<span>인버터 ID </span>
                     </div>
                   }
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
                     handleChangeSearch={handleChangeSearch}
                   />
