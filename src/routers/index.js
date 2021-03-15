@@ -63,6 +63,8 @@ const DashboardArea = lazy(() =>
 const DashboardCompany = lazy(() =>
   import('modules/main/components/Dashboard/DashboardCompany')
 );
+const TestDashboard = lazy(() => import('modules/testDashboard/components'));
+const SolarDashboard = lazy(() => import('modules/solarDashboard/components'));
 
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
@@ -128,7 +130,16 @@ const Router = () => {
             path={ROUTERS.OPERATION_STATUS_BY_AREA}
             component={operationStatusByArea}
           />
-
+          <Route
+            exact
+            path={ROUTERS.TEST_DASHBOARD}
+            component={TestDashboard}
+          />
+          <Route
+            exact
+            path={ROUTERS.SOLAR_DASHBOARD}
+            component={SolarDashboard}
+          />
           <Route
             exact
             path={ROUTERS.STATISTICS_DEVELOP}

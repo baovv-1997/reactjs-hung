@@ -1,5 +1,5 @@
 import MainLayout from 'layout/MainLayout';
-import { mockDataMain } from 'mockData/mainData';
+import { mockDataMain, mockLocationArea } from 'mockData/mainData';
 import React from 'react';
 import IMAGES from 'themes/images';
 import InfoReality from '../../InfoReality';

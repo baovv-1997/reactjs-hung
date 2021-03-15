@@ -5,18 +5,24 @@ import AutoSuggest from './AutoSuggest';
 
 type Props = {
   placeholder?: string,
-  handleClick: Function,
+  handleIconClick?: Function,
   customClass?: string,
+  value?: string,
+  onChange?: Function,
+  setSearchTerm?: Function,
 };
 
-const Search = ({ placeholder, handleClick, customClass = '' }: Props) => {
+const Search = ({
+  placeholder,
+  handleIconClick = () => {},
+  customClass = '',
+  value = '',
+  onChange = () => {},
+  setSearchTerm = () => {},
+}: Props) => {
   const [display, setDisplay] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-  const wrapperRef = useRef(null);
 
-  const handleInputChange = (e) => {
-    setSearchValue(e.target.value);
-  };
+  const wrapperRef = useRef(null);
 
   const handleClickOutside = (event) => {
     const { current: wrap } = wrapperRef;
@@ -32,8 +38,8 @@ const Search = ({ placeholder, handleClick, customClass = '' }: Props) => {
     };
   });
 
-  const updateSearchInput = (value) => {
-    setSearchValue(value);
+  const updateSearchInput = (searchValue) => {
+    setSearchTerm(searchValue);
     setDisplay(false);
   };
 
@@ -43,20 +49,18 @@ const Search = ({ placeholder, handleClick, customClass = '' }: Props) => {
         className="search__input"
         onClick={() => setDisplay(true)}
         placeholder={placeholder}
-        value={searchValue}
-        onChange={(e) => handleInputChange(e)}
+        value={value}
+        onChange={(e) => onChange(e)}
       />
 
       <img
         src={images.icon_search}
         alt="Icon Search"
         className="search__icon"
-        onClick={() => handleClick(searchValue)}
+        onClick={() => handleIconClick(value)}
         role="presentation"
       />
-      {display && (
-        <AutoSuggest search={searchValue} onClick={updateSearchInput} />
-      )}
+      {display && <AutoSuggest search={value} onClick={updateSearchInput} />}
     </div>
   );
 };
@@ -64,6 +68,10 @@ const Search = ({ placeholder, handleClick, customClass = '' }: Props) => {
 Search.defaultProps = {
   placeholder: '',
   customClass: '',
+  value: '',
+  onChange: () => {},
+  setSearchTerm: () => {},
+  handleIconClick: () => {},
 };
 
 export default memo<Props>(Search);

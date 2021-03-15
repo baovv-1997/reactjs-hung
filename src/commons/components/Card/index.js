@@ -1,5 +1,4 @@
 // @flow
-import CARD from 'constants/card';
 import React, { memo } from 'react';
 import IMAGES from 'themes/images';
 
@@ -8,155 +7,36 @@ import CardItem from './CardItem';
 type Props = {
   isLogoTop?: boolean,
   title?: string,
-  listItem?: any,
   listCompany?: any,
   logoClick: Function,
   titleClick: Function,
   customClass?: string,
   isCardCompany?: boolean,
   isEvent?: boolean,
+  amountElectricDay?: number,
+  amountElectricMonth?: number,
+  electricRealtime?: number,
+  ratePower?: number,
+  cumulativeElectric?: number,
 };
 
 export const Card = ({
   isLogoTop = false,
   title = '',
-  listItem = [],
   listCompany = [],
   logoClick,
   titleClick,
   customClass = '',
   isCardCompany = false,
   isEvent = false,
+  amountElectricDay = 0,
+  amountElectricMonth = 0,
+  electricRealtime = 0,
+  ratePower = 0,
+  cumulativeElectric = 0,
 }: Props) => {
-  // loop listItem and return to card
-  const cardItem =
-    listItem &&
-    listItem.map((item) => {
-      switch (item.title) {
-        case 'date':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.date}
-              customClass="progress-color1"
-              specifications={item.specifications}
-              progress={item.progress}
-            />
-          );
-
-        case 'month':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.month}
-              customClass="progress-color2"
-              specifications={item.specifications}
-              progress={item.progress}
-            />
-          );
-
-        case 'year':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.year}
-              customClass="progress-color3"
-              specifications={item.specifications}
-              progress={item.progress}
-            />
-          );
-
-        case 'power':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.power}
-              customClass="progress-color4"
-              specifications={item.specifications}
-              progress={item.progress}
-            />
-          );
-
-        case 'power-day':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.powerDay}
-              customClass="progress-color1"
-              specifications={`${item.specifications}kHw`}
-              progress={item.progress}
-            />
-          );
-
-        case 'max-power-day':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.maxPowerDay}
-              customClass="progress-color2"
-              specifications={`${item.specifications}kHw`}
-              progress={item.progress}
-            />
-          );
-
-        case 'rate-power-day':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.ratePowerDay}
-              customClass="progress-color3"
-              specifications={`${item.specifications}%`}
-              progress={item.progress}
-            />
-          );
-
-        case 'current-month':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.currentMonth}
-              customClass="progress-color4"
-              specifications={`${item.specifications}kHw`}
-              progress={item.progress}
-            />
-          );
-
-        case 'current-year':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.currentYear}
-              customClass="progress-color5"
-              specifications={`${item.specifications}MWh`}
-              progress={item.progress}
-            />
-          );
-
-        case 'amount-power':
-          return (
-            <CardItem
-              key={item.title}
-              name={CARD.amountPower}
-              customClass="progress-color6"
-              specifications={`${item.specifications}MW`}
-              progress={item.progress}
-            />
-          );
-
-        default:
-          return (
-            <CardItem
-              key={item.title}
-              customClass=""
-              specifications={item.specifications}
-              progress={item.progress}
-            />
-          );
-      }
-    });
-
   return (
-    <div className="card">
+    <div className={`card ${customClass}`}>
       {isLogoTop && (
         <div className="card__company card__company--top">
           <img
@@ -166,7 +46,7 @@ export const Card = ({
           />
         </div>
       )}
-      <div className={`card__header ${customClass}`}>
+      <div className="card__header">
         <p
           className={`card__title ${isEvent ? 'card__event' : ''}`}
           onClick={titleClick}
@@ -174,7 +54,6 @@ export const Card = ({
         >
           {title}
         </p>
-        <p className="card__unit">kWh</p>
         {isEvent && (
           <img
             src={IMAGES.icon_event_card}
@@ -189,7 +68,25 @@ export const Card = ({
         }
       >
         {/* list item in card */}
-        <div className="card__list">{cardItem}</div>
+        <div className="card__list">
+          <CardItem
+            name="실시간 발전량"
+            specifications={electricRealtime}
+            unit="kWh"
+          />
+          <CardItem name="성능비" specifications={ratePower} unit="%" />
+          <CardItem name="금일" specifications={amountElectricDay} unit="kWh" />
+          <CardItem
+            name="금월"
+            specifications={amountElectricMonth}
+            unit="mWh"
+          />
+          <CardItem
+            name="누적발전량"
+            specifications={cumulativeElectric}
+            unit="MW"
+          />
+        </div>
 
         {!isLogoTop && (
           <div className="card__company">
@@ -213,12 +110,16 @@ export const Card = ({
 
 Card.defaultProps = {
   title: '',
-  listItem: [],
   listCompany: [],
   isLogoTop: false,
   customClass: '',
   isCardCompany: false,
   isEvent: false,
+  amountElectricDay: 0,
+  amountElectricMonth: 0,
+  electricRealtime: 0,
+  ratePower: 0,
+  cumulativeElectric: 0,
 };
 
 export default memo<Props>(Card);
