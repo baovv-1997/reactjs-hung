@@ -1,16 +1,13 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
-
-import LabelStatusV3 from 'commons/components/Label/LabelStatus/LabelStatusV3';
-import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
-import FilterSearch from '../FilterSearch';
-import { listPaginationType } from 'constants/listKey';
 import { headStatisticsCompany } from 'constants/headerTable';
+import FilterSearch from '../FilterSearch';
+import BoxGroup from '../BoxGroup';
+import GroupCompareChart from '../GroupCompareChart';
+import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   dataTableStatisticsCompany: any,
@@ -61,29 +58,7 @@ const ItemContentTab = ({
   ];
   return (
     <div className="content-wrap-tab">
-      <div className="box-group">
-        <LabelStatusV3
-          nameStatus={dataBoxContent?.day}
-          unit="kWh"
-          title="금일 발전량"
-          keyStatus={1}
-          color="#3b74e7"
-        />
-        <LabelStatusV3
-          nameStatus={dataBoxContent?.month}
-          unit="kWh"
-          title="금월 발전량"
-          keyStatus={2}
-          color="#fe5e6a"
-        />
-        <LabelStatusV3
-          nameStatus={dataBoxContent?.year}
-          unit="MWh"
-          title="금년 발전량"
-          keyStatus={3}
-          color="#ffb00d"
-        />
-      </div>
+      <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
@@ -93,38 +68,10 @@ const ItemContentTab = ({
 
       <div className="group-char">
         <div className="group-char-left">
-          <div className="group-char-checkbox">
-            <div className="checkbox-header">차트 비교</div>
-            <div className="list-checkbox">
-              <CheckBox
-                name="generation"
-                isChecked={paramsSearch?.generation}
-                label="발전량"
-                id="generation"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.generation, 'generation')
-                }
-              />
-              <CheckBox
-                name="insolation"
-                id="insolation"
-                isChecked={paramsSearch?.insolation}
-                label="일사량"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.insolation, 'insolation')
-                }
-              />
-              <CheckBox
-                name="performance"
-                id="performance"
-                isChecked={paramsSearch?.performance}
-                label="성능비"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.performance, 'performance')
-                }
-              />
-            </div>
-          </div>
+          <GroupCompareChart
+            paramsSearch={paramsSearch}
+            handleChangeSearch={handleChangeSearch}
+          />
           <div className="group-length-chart">
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
@@ -132,26 +79,11 @@ const ItemContentTab = ({
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
       <TitleSubHeader title="발전 통계" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
-        <SelectDropdown
-          placeholder="구분"
-          listItem={listPaginationType}
-          onChange={(option) => handleChangeSearch(option, 'pagination')}
-          option={paramsSearch?.pagination || null}
-          noOptionsMessage={() => '옵션 없음'}
-        />
-        <div className="group-btn-download">
-          <Button
-            onClick={() => handleDownloadTrend('trend')}
-            customClass="mr-2"
-          >
-            Trend 이미지 다운
-          </Button>
-          <Button onClick={() => handleDownloadTrend('raw')}>
-            Raw Date 다운
-          </Button>
-        </div>
-      </div>
+      <GroupActionDownload
+        paramsSearch={paramsSearch}
+        handleChangeSearch={handleChangeSearch}
+        handleDownloadTrend={handleDownloadTrend}
+      />
       <div>
         <Table
           tableHeads={headStatisticsCompany}

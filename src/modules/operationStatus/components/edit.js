@@ -61,9 +61,9 @@ const StatusByAreaCompanyRegister = () => {
 
     const dataValidate = {
       content,
-      company: company?.lable,
-      area: area?.label,
-      inverter: inverter?.label,
+      company: company && company.lable,
+      area: area && area.label,
+      inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
     if (Object.keys(validation).length > 0) {
