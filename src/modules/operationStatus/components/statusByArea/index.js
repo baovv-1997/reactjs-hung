@@ -188,15 +188,17 @@ const OperationStatusPage = () => {
         <div className="content-body page-company">
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
+            <ul className="list-item-select overflowY">{renderListCompany}</ul>
 
             <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-            <ul className="list-item-select">{renderListMocKup}</ul>
+            <ul className="list-item-select overflowY">{renderListMocKup}</ul>
             <TitleSubHeader title="주차장" className="mt-5" />
-            <ul className="list-item-select">{renderListParkingLot}</ul>
+            <ul className="list-item-select overflowY">
+              {renderListParkingLot}
+            </ul>
           </div>
           <div className="content-body-left w-100">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="all"
                 className="list-order tab-list"
@@ -250,7 +252,7 @@ const OperationStatusPage = () => {
                   />
                 </Tab>
 
-                <div className="opacity d-block pagination">
+                <div className="opacity d-block pagination mt-0">
                   {totalPage > perPage && (
                     <div className="wrapper-device__pagination mt-0">
                       <Pagination

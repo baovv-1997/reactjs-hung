@@ -35,21 +35,18 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
-    sort_by: '',
-    sort_dir: '',
-    page: 1,
-    keyword: '',
+    page1: 1,
     classification: 'all',
-    startDate: '',
-    endDate: '',
-    inverter: '',
-    vendor: '',
+    startDate: new Date() || null,
+    endDate: new Date() || null,
+    vendor: null,
+    inverter: null,
     company: null,
     mockupType: null,
     parkingLot: null,
     page2: 1,
     insolation: false,
-    temperature: false,
+    performance: false,
     generation: false,
     pagination1: defaultOption,
     pagination2: defaultOption,
@@ -61,15 +58,27 @@ const OperationStatusPage = () => {
     day: '300',
     month: '9,000',
     year: '300',
-    plus: '10.8',
   };
 
   const dispatch = useDispatch();
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
     dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-  }, [paramsSearch, dispatch]);
+  }, [
+    paramsSearch?.page1,
+    paramsSearch?.page2,
+    paramsSearch?.classification,
+    paramsSearch?.company,
+    paramsSearch?.mockupType,
+    paramsSearch?.parkingLot,
+    paramsSearch?.insolation,
+    paramsSearch?.generation,
+    paramsSearch?.pagination1,
+    paramsSearch?.pagination2,
+    dispatch,
+  ]);
 
+  console.log(paramsSearch?.page, 'paramsSearch?.page');
   useEffect(() => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
@@ -101,10 +110,10 @@ const OperationStatusPage = () => {
           generation: !item,
         });
         break;
-      case 'temperature':
+      case 'performance':
         setParamsSearch({
           ...paramsSearch,
-          temperature: !item,
+          performance: !item,
         });
         break;
       case 'insolation':
@@ -131,6 +140,18 @@ const OperationStatusPage = () => {
           pagination2: item,
         });
         break;
+      case 'inverter':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter: item,
+        });
+        break;
+      case 'vendor':
+        setParamsSearch({
+          ...paramsSearch,
+          vendor: item,
+        });
+        break;
       case 'page1':
         setParamsSearch({
           ...paramsSearch,
@@ -143,12 +164,28 @@ const OperationStatusPage = () => {
           page2: item,
         });
         break;
+      case 'startDate':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: item,
+        });
+        break;
+      case 'endDate':
+        setParamsSearch({
+          ...paramsSearch,
+          endDate: item,
+        });
+        break;
       case 'modal':
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
         console.log(item, 'optionCheck', name);
         setIsShowModalSorting(false);
+        break;
+
+      case 'submitSearch':
+        dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
         break;
       default:
         break;
@@ -215,18 +252,20 @@ const OperationStatusPage = () => {
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+        <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">
           <div className="content-select-sidebar">
             <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
+            <ul className="list-item-select overflowY">{renderListCompany}</ul>
             <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-            <ul className="list-item-select">{renderListMocKup}</ul>
+            <ul className="list-item-select overflowY">{renderListMocKup}</ul>
             <TitleSubHeader title="주차장" className="mt-5" />
-            <ul className="list-item-select">{renderListParkingLot}</ul>
+            <ul className="list-item-select overflowY">
+              {renderListParkingLot}
+            </ul>
           </div>
           <div className="content-body-left w-100">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="all"
                 className="list-order tab-list"
