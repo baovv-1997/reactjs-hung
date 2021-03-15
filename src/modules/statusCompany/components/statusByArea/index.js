@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupDataCompany } from 'mockData/listCompany';
-import { headStatusCompany } from 'constants/headerTable';
+import {
+  listMockupDataStatusByCompany,
+  listParkingLot,
+  listMockupType,
+} from 'mockData/listCompany';
 import * as StatusCompanyAction from '../../redux';
-import ItemContentTab from '../ItemContentTab';
+import ItemContentTab from './ItemContentTab';
+import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 
 const StatusByAreaCompany = () => {
   const perPage = 6;
@@ -25,22 +28,17 @@ const StatusByAreaCompany = () => {
     value: 6,
     label: '6 개씩 보기',
   };
-  const defaultCheckBox = {
-    power: false,
-    temperature: false,
-    insolation: false,
-  };
-  const [itemSelect, setItemSelect] = useState({});
-  const [paginationType, setPaginationType] = useState(defaultOption);
-  const [activePage, setActivePage] = useState(1);
-  const [checkBox, setCheckBox] = useState(defaultCheckBox);
 
-  const [paramsSearch, setParamsSearch] = useState({
-    sort_by: '',
-    sort_dir: '',
-    page: '',
-    keyword: '',
-  });
+  const defaultSearch = {
+    page: 1,
+    company: null,
+    power: false,
+    performance: false,
+    insolation: false,
+    pagination: defaultOption,
+  };
+
+  const [paramsSearch, setParamsSearch] = useState(defaultSearch);
 
   const powerData = {
     type: 'power',
@@ -50,7 +48,7 @@ const StatusByAreaCompany = () => {
     ],
   };
 
-  const temperatureData = {
+  const performanceData = {
     type: 'temperature',
     data: [
       { title: '현재 모듈 온도', value: '30.8' },
@@ -65,11 +63,13 @@ const StatusByAreaCompany = () => {
       { title: '경사 일사량', value: '46' },
     ],
   };
-
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
   }, [paramsSearch, dispatch]);
 
   useEffect(() => {
@@ -77,69 +77,74 @@ const StatusByAreaCompany = () => {
   }, [getDataListStatusCompany]);
 
   // console.log(type, 'type', isProcessing);
-  const handleClickSelectCompany = (item) => {
-    setItemSelect(item);
-    setParamsSearch({
-      sort_by: '',
-      sort_dir: '',
-      page: '',
-      keyword: '',
-    });
-  };
+  const handleChangeSearch = (item, name) => {
+    switch (name) {
+      case 'statusCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          company: item.id,
+        });
+        break;
 
-  const handleToggleCheckbox = (check, name) => {
-    setCheckBox({
-      ...checkBox,
-      [name]: !check,
-    });
-  };
-
-  const handleChangePagination = (option) => {
-    setPaginationType(option);
+      case 'power':
+        setParamsSearch({
+          ...paramsSearch,
+          power: !item,
+        });
+        break;
+      case 'performance':
+        setParamsSearch({
+          ...paramsSearch,
+          performance: !item,
+        });
+        break;
+      case 'insolation':
+        setParamsSearch({
+          ...paramsSearch,
+          insolation: !item,
+        });
+        break;
+      case 'pagination':
+        setParamsSearch({
+          ...paramsSearch,
+          pagination: item,
+        });
+        break;
+      case 'page':
+        setParamsSearch({
+          ...paramsSearch,
+          page: item,
+        });
+        break;
+      default:
+        break;
+    }
   };
 
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setPaginationType(defaultOption);
-    setCheckBox(defaultCheckBox);
-  };
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
-  const handleDownloadRaw = () => {
-    console.log('download Raw');
+    setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadTrend = () => {
-    console.log('download Trend');
+  const handleDownloadTrend = (name) => {
+    console.log('download Trend', name);
   };
-
-  const renderListCompany =
-    listStatusCompanySelect &&
-    listStatusCompanySelect.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleClickSelectCompany(item)}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${itemSelect?.id === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
 
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
-          <div className="content-select-sidebar">
-            <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
-          </div>
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listStatusCompanySelect}
+            listMockupType={listMockupType}
+          />
           <div className="content-body-left">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="bulk"
                 className="list-order tab-list"
@@ -150,22 +155,19 @@ const StatusByAreaCompany = () => {
                   title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    handleDownloadTrend={handleDownloadTrend}
+                    handleChangeSearch={handleChangeSearch}
+                    performanceData={performanceData}
+                    insolationData={insolationData}
+                    paramsSearch={paramsSearch}
                   />
                 </Tab>
-                {/* <Tab
-                  eventKey="bulk2"
+
+                <Tab
+                  eventKey="bulk1"
                   title={
                     <div className="tab-name">
                       코에스 <span>인버터 ID</span>
@@ -173,53 +175,46 @@ const StatusByAreaCompany = () => {
                   }
                 >
                   <ItemContentTab
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    handleDownloadTrend={handleDownloadTrend}
+                    handleChangeSearch={handleChangeSearch}
+                    performanceData={performanceData}
+                    insolationData={insolationData}
+                    paramsSearch={paramsSearch}
                   />
-                </Tab> */}
-                {/* <Tab
-                  eventKey="bulk3"
+                </Tab>
+
+                <Tab
+                  eventKey="bulk2"
                   title={
                     <div className="tab-name">
-                      에스케이솔라 <span>인버터 ID</span>
+                      에스케이솔라<span>인버터 ID</span>
                     </div>
                   }
                 >
                   <ItemContentTab
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
-                    temperatureData={temperatureData}
-                    insolationData={insolationData}
-                    headStatusCompany={headStatusCompany}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
-                    handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
+                    handleDownloadTrend={handleDownloadTrend}
+                    handleChangeSearch={handleChangeSearch}
+                    performanceData={performanceData}
+                    insolationData={insolationData}
+                    paramsSearch={paramsSearch}
                   />
-                </Tab> */}
+                </Tab>
 
                 <div className="opacity d-block pagination">
                   {totalPage > perPage && (
-                    <div className="wrapper-device__pagination">
+                    <div className="wrapper-device__pagination mt-0">
                       <Pagination
-                        activePage={activePage}
+                        activePage={paramsSearch?.page}
                         itemsCountPerPage={perPage}
                         totalItemsCount={totalPage}
                         pageRangeDisplayed={5}
-                        onChange={handlePageChange}
+                        onChange={(e) => handleChangeSearch(e, 'page')}
                         itemClass="page-item"
                         linkClass="page-link"
                       />

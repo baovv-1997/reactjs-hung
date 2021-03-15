@@ -36,7 +36,7 @@ const TestDashboard = () => {
   // get list device of company
   useEffect(() => {
     dispatch(getListDeviceTestDashboard());
-  }, []);
+  }, [dispatch]);
 
   const renderInverter =
     listDevice.length &&

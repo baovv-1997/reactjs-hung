@@ -6,6 +6,7 @@ import deviceReducer from 'modules/device/redux';
 import operationStatusSlide from 'modules/operationStatus/redux';
 import testDashboardSlice from 'modules/testDashboard/redux';
 import solarDashboardSlice from 'modules/solarDashboard/redux';
+import statisticsDevelopSlide from 'modules/statisticsDevelop/redux';
 
 const appReducer = combineReducers({
   account: accountSlice,
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   operationStatus: operationStatusSlide,
   testDashboard: testDashboardSlice,
   solarDashboard: solarDashboardSlice,
+  statisticsDevelop: statisticsDevelopSlide,
 });
 
 export default appReducer;

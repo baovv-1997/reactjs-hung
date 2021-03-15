@@ -37,7 +37,7 @@
       background-color: $white;
       border-left: solid pxToRem(1) $color-light10;
       width: calc(100% - #{pxToRem(220)});
-      padding: pxToRem(15);
+      padding: pxToRem(10) pxToRem(15);
       font-size: pxToRem(15);
       font-weight: normal;
       line-height: 1.47;

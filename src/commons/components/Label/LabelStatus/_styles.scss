@@ -67,13 +67,31 @@
 }
 
 .label-status-v2 {
-  min-width: pxToRem(340);
+  min-width: pxToRem(330);
   height: pxToRem(140);
   margin-right: pxToRem(10);
   padding: pxToRem(20);
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+
+  &.style3 {
+    .wrap-icon {
+      width: pxToRem(140);
+      height: pxToRem(140);
+      padding: pxToRem(30);
+      position: relative;
+      left: -1px;
+    }
+
+    .label-status__body {
+      width: calc(100% - #{pxToRem(140)});
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
   &:last-child {
     margin-right: 0;

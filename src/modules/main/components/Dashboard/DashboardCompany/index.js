@@ -77,7 +77,7 @@ const DashboardCompany = () => {
                 return (
                   <Card
                     key={idInverter}
-                    customClass="header-company"
+                    customClass="card-company"
                     isCardCompany
                     listItem={listItem}
                     title={area}

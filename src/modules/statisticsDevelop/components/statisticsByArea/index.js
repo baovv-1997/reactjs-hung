@@ -3,19 +3,23 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
+import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import Pagination from 'react-js-pagination';
 import {
   listMockupType,
-  listMockupDataCompany,
+  dataTableStatisticsCompany,
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import * as SignInAction from 'modules/accounts/redux';
+// import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
-import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+// import ROUTERS from 'constants/routers';
 
 const OperationStatusPage = () => {
+  // const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
@@ -23,6 +27,8 @@ const OperationStatusPage = () => {
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
+  const { listInverter } = useSelector((state) => state?.account);
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -31,31 +37,45 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
+    classification: 'minute',
+    startDate: new Date() || null,
+    endDate: new Date() || null,
+    vendorCompany: null,
+    inverter: null,
     company: null,
     mockupType: null,
     parkingLot: null,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    insolation: false,
+    performance: false,
+    generation: false,
     pagination: defaultOption,
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
-
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    day: '300',
+    month: '9,000',
+    year: '300',
   };
+
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
 
   const dispatch = useDispatch();
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-  }, [paramsSearch, dispatch]);
+    console.log('Call api on page');
+  }, [
+    paramsSearch?.page,
+    paramsSearch?.company,
+    paramsSearch?.mockupType,
+    paramsSearch?.parkingLot,
+    paramsSearch?.insolation,
+    paramsSearch?.generation,
+    paramsSearch?.pagination,
+    dispatch,
+  ]);
 
   useEffect(() => {
     getDataListStatusCompany();
@@ -82,34 +102,28 @@ const OperationStatusPage = () => {
           parkingLot: item.id,
         });
         break;
-      case 'PVCurrent':
+      case 'generation':
         setParamsSearch({
           ...paramsSearch,
-          PVCurrent: !item,
+          generation: !item,
         });
         break;
-      case 'outputCurrent':
+      case 'performance':
         setParamsSearch({
           ...paramsSearch,
-          outputCurrent: !item,
+          performance: !item,
         });
         break;
-      case 'print':
+      case 'insolation':
         setParamsSearch({
           ...paramsSearch,
-          print: !item,
+          insolation: !item,
         });
         break;
-      case 'PVVoltage':
+      case 'classification':
         setParamsSearch({
           ...paramsSearch,
-          PVVoltage: !item,
-        });
-        break;
-      case 'outputVoltage':
-        setParamsSearch({
-          ...paramsSearch,
-          outputVoltage: !item,
+          classification: item,
         });
         break;
       case 'pagination':
@@ -118,11 +132,47 @@ const OperationStatusPage = () => {
           pagination: item,
         });
         break;
+
+      case 'inverter':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter: item,
+        });
+        break;
+      case 'vendorCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          vendorCompany: item,
+          inverter: null,
+        });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: item?.value,
+          })
+        );
+
+        break;
       case 'page':
         setParamsSearch({
           ...paramsSearch,
           page: item,
         });
+        break;
+      case 'startDate':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: item,
+        });
+        break;
+      case 'endDate':
+        setParamsSearch({
+          ...paramsSearch,
+          endDate: item,
+        });
+        break;
+      case 'submitSearch':
+        // call api update list table
         break;
       default:
         break;
@@ -136,21 +186,66 @@ const OperationStatusPage = () => {
   };
 
   const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
+    console.log(name, 'download Trend');
   };
+
+  const renderListCompany =
+    listStatusCompanySelect &&
+    listStatusCompanySelect.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleChangeSearch(item, 'statusCompany')}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
+
+  const renderListMocKup =
+    listMockupType &&
+    listMockupType.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleChangeSearch(item, 'mockupType')}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
+
+  const renderListParkingLot =
+    listParkingLot &&
+    listParkingLot.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => handleChangeSearch(item, 'parkingLot')}
+        onKeyPress={() => {}}
+        role="menuitem"
+        className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
+      >
+        {item.label}
+      </li>
+    ));
 
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+        <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
-            listParkingLot={listParkingLot}
-            paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
-            listMockupType={listMockupType}
-          />
+          <div className="content-select-sidebar">
+            <TitleSubHeader title="실증단지" />
+            <ul className="list-item-select overflowY">{renderListCompany}</ul>
+            <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
+            <ul className="list-item-select overflowY">{renderListMocKup}</ul>
+            <TitleSubHeader title="주차장" className="mt-5" />
+            <ul className="list-item-select overflowY">
+              {renderListParkingLot}
+            </ul>
+          </div>
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
@@ -163,49 +258,54 @@ const OperationStatusPage = () => {
                   title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
-                    dataContent={{}}
                     dataBoxContent={dataBoxContent}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
+                    dataContent={{}}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
+                    handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
                 <Tab
                   eventKey="coes"
                   title={
                     <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
+                      코에스<span>인버터 ID</span>
                     </div>
                   }
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
-                    dataContent={{}}
                     dataBoxContent={dataBoxContent}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
+                    dataContent={{}}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
+                    handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
                 <Tab
                   eventKey="SK-Solar"
                   title={
                     <div className="tab-name">
-                      에스케이솔라<span>인버터 ID</span>
+                      에스케이솔라<span>인버터 ID </span>
                     </div>
                   }
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
-                    dataContent={{}}
                     dataBoxContent={dataBoxContent}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
+                    dataContent={{}}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
                     paramsSearch={paramsSearch}
+                    handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
-
                 <div className="opacity d-block pagination mt-0">
                   {totalPage > perPage && (
                     <div className="wrapper-device__pagination mt-0">

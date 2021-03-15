@@ -3,7 +3,8 @@ import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { headStatusCompany } from 'constants/headerTable';
+import { headStatusByCompany } from 'constants/headerTable';
+// import LineSeriesChart from '../chart';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -11,54 +12,49 @@ import GroupActionDownload from '../GroupActionDownload';
 type Props = {
   listMockupDataCompany: any,
   dataContent: Object,
-  dataBoxContent: Object,
+  powerData: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  performanceData: Object,
+  insolationData: Object,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
+  powerData,
   dataContent,
-  dataBoxContent,
   handleDownloadTrend,
   handleChangeSearch,
+  performanceData,
+  insolationData,
   paramsSearch,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
-      name: 'PV전압',
+      name: '발전량 kWh',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: 'PV전류',
+      name: '일사량 ℃',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '출력전류',
+      name: '성능비 kWh/㎡·10초',
       color: '#fe8224',
     },
-    {
-      id: 4,
-      name: '출력',
-      color: '#ffcc00',
-    },
-    {
-      id: 5,
-      name: '출력전압',
-      color: '#102a82',
-    },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
-        dataBoxContent={dataBoxContent}
-        paramsSearch={paramsSearch}
-        handleChangeSearch={handleChangeSearch}
+        powerData={powerData}
+        performanceData={performanceData}
+        insolationData={insolationData}
       />
 
       <div className="group-char">
@@ -71,9 +67,10 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
-      <TitleSubHeader title="실시간 계측 현황" />
+
+      <TitleSubHeader title="발전 현황" />
       <GroupActionDownload
         handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
@@ -81,7 +78,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          tableHeads={headStatusCompany}
+          tableHeads={headStatusByCompany}
           tableBody={listMockupDataCompany}
           // isShowId
         />

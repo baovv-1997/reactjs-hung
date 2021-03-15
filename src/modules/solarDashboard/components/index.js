@@ -36,7 +36,7 @@ const SolarDashboard = () => {
   // get list device of company
   useEffect(() => {
     dispatch(getListDeviceTestSolarDashboard());
-  }, []);
+  }, [dispatch]);
 
   // const renderInverter = comapyInverter.length ? (
   //   comapyInverter.map((item) => {

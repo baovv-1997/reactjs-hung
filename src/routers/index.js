@@ -30,6 +30,22 @@ const operationStatusByCompanyEdit = lazy(() =>
   import('modules/operationStatus/components/edit')
 );
 
+const statisticsDevelopByCompany = lazy(() =>
+  import('modules/statisticsDevelop/components/statisticsByCompany')
+);
+
+const statisticsDevelopByArea = lazy(() =>
+  import('modules/statisticsDevelop/components/statisticsByArea')
+);
+
+const statisticsOperationByCompany = lazy(() =>
+  import('modules/operationStatistics/components/statisticsByCompany')
+);
+
+const statisticsOperationByArea = lazy(() =>
+  import('modules/operationStatistics/components/statisticsByArea')
+);
+
 const RegisterDevice = lazy(() =>
   import('modules/device/components/RegisterDevice')
 );
@@ -123,6 +139,27 @@ const Router = () => {
             exact
             path={ROUTERS.SOLAR_DASHBOARD}
             component={SolarDashboard}
+          />
+          <Route
+            exact
+            path={ROUTERS.STATISTICS_DEVELOP}
+            component={statisticsDevelopByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.STATISTICS_DEVELOP_AREA}
+            component={statisticsDevelopByArea}
+          />
+
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATISTICS_COMPANY}
+            component={statisticsOperationByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATISTICS_AREA}
+            component={statisticsOperationByArea}
           />
           {/* <Route
             exact
