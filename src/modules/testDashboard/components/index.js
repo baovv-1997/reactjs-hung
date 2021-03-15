@@ -3,15 +3,22 @@ import { Card } from 'commons/components/Card';
 import Search from 'commons/components/Search';
 import { TitleHeader } from 'commons/components/TitleHeader';
 import MainLayout from 'layout/MainLayout';
-import comapyInverter from 'mockData/dashboardComany';
-import React, { useState } from 'react';
+// import comapyInverter from 'mockData/dashboardComany';
+import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
+import { useSelector, useDispatch } from 'react-redux';
+import { getListDeviceTestDashboard } from '../redux';
 
 const TestDashboard = () => {
+  const dispatch = useDispatch();
+
+  const { isLoading, listDevice, total } = useSelector(
+    (state) => state?.testDashboard
+  );
+
   const [searchTerm, setSearchTerm] = useState('');
   const [activePage, setActivePage] = useState(1);
-  const perPage = 6;
-  const totalPage = 100;
+  const perPage = 8;
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -26,59 +33,42 @@ const TestDashboard = () => {
     setSearchTerm(value);
   };
 
-  const renderInverter = comapyInverter.length ? (
-    comapyInverter.map((item) => {
-      const { id, nameComany, listInverter } = item;
-      let hasEvent = false;
-      listInverter.forEach((item1) => {
-        if (item1?.isEvent) hasEvent = true;
-      });
+  // get list device of company
+  useEffect(() => {
+    dispatch(getListDeviceTestDashboard());
+  }, []);
+
+  const renderInverter =
+    listDevice.length &&
+    listDevice.map((item) => {
+      const {
+        id,
+        name,
+        amountElectricDay,
+        amountElectricMonth,
+        electricRealtime,
+        ratePower,
+        cumulativeElectric,
+        event,
+      } = item;
+      const isEvent = Boolean(event);
       return (
-        <div
-          className={`company-item item-${listInverter.length} ${
-            hasEvent ? 'company-hasevent' : ''
-          }`}
+        <Card
           key={id}
-        >
-          <div
-            className={`company-name ${
-              hasEvent ? 'company-hasevent-title' : ''
-            }`}
-          >
-            {nameComany}
-          </div>
-
-          <div className="list-card-item ">
-            {listInverter &&
-              listInverter.map((inverterItem) => {
-                const {
-                  id: idInverter,
-                  area,
-                  listItem,
-                  isEvent,
-                } = inverterItem;
-
-                return (
-                  <Card
-                    key={idInverter}
-                    customClass="header-company"
-                    isCardCompany
-                    listItem={listItem}
-                    title={area}
-                    isEvent={isEvent}
-                  />
-                );
-              })}
-          </div>
-        </div>
+          customClass="card-company"
+          isCardCompany
+          title={name}
+          isEvent={isEvent}
+          amountElectricDay={amountElectricDay}
+          amountElectricMonth={amountElectricMonth}
+          electricRealtime={electricRealtime}
+          ratePower={ratePower}
+          cumulativeElectric={cumulativeElectric}
+        />
       );
-    })
-  ) : (
-    <div>No data</div>
-  );
-
+    });
   return (
-    <MainLayout>
+    <MainLayout isProcessing={isLoading}>
       <div className="content-wrap">
         <TitleHeader
           title="설치 업체"
@@ -99,12 +89,12 @@ const TestDashboard = () => {
         <div className="list-company">{renderInverter}</div>
 
         <div className="opacity d-block pagination">
-          {totalPage > perPage && (
+          {total > perPage && (
             <div className="wrapper-device__pagination">
               <Pagination
                 activePage={activePage}
                 itemsCountPerPage={perPage}
-                totalItemsCount={totalPage}
+                totalItemsCount={total}
                 pageRangeDisplayed={9}
                 onChange={handlePageChange}
                 itemClass="page-item"
