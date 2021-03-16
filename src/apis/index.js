@@ -15,6 +15,7 @@ export const ROUTES = {
   UPDATE_DEVICE: (id) => `device/${id}`,
   GET_POS: '/position',
   ACCOUNTS: '/account',
+  UPDATE_ACCOUNT: (id) => `account/${id}`,
 };
 
 export const API = create({

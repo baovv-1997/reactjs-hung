@@ -19,7 +19,6 @@ const StatusByAreaCompanyDetail = () => {
   });
 
   const handleDelete = () => {
-    console.log('DELETE');
     history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
   };
 

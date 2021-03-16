@@ -49,7 +49,6 @@ const StatusByAreaCompanyRegister = () => {
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const handleSubmit = () => {
-    console.log('REGISTER');
     let validation = {};
     const rules = {
       content: ['required'],
@@ -87,9 +86,6 @@ const StatusByAreaCompanyRegister = () => {
     });
   };
 
-  console.log(error, 'error');
-
-  console.log(typeEvent, 'typeEvent');
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">

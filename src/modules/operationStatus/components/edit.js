@@ -50,7 +50,6 @@ const StatusByAreaCompanyRegister = () => {
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const handleSubmit = () => {
-    console.log('REGISTER');
     let validation = {};
     const rules = {
       content: ['required'],
@@ -78,7 +77,6 @@ const StatusByAreaCompanyRegister = () => {
   };
 
   const handleChange = (value, name) => {
-    console.log(value, name);
     setDataSubmit({
       ...dataSubmit,
       [name]: value,

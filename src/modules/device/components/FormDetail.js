@@ -45,10 +45,9 @@ const FormDetail = ({ data, history }: Props) => {
   const [azimuthAngle, setAzimuthAngle] = useState(data?.ds_azimuth_angle);
   const [isCancel, setIsCancel] = useState(false);
 
-  console.log('history', history);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+
     switch (name) {
       case 'managerName':
         setNameManager(value);
