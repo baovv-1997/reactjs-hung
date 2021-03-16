@@ -7,6 +7,7 @@ import Header from 'commons/components/Header';
 
 import SidebarMenu from '../Menu';
 
+
 type Props = {
   children: React.AbstractComponent<{}>,
   isSearch?: boolean,
