@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import images from 'themes/images';
 import ModalPopup from 'commons/components/Modal';
 import Radio from 'commons/components/Radio';
 import Button from 'commons/components/Button';
@@ -18,9 +17,7 @@ import ROUTERS from 'constants/routers';
 const StatusByAreaCompanyRegister = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isProcessing, listCompany, listArea, listInverter } = useSelector(
-    (state) => state?.account
-  );
+  const { isProcessing, listCompany } = useSelector((state) => state?.account);
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -30,38 +27,29 @@ const StatusByAreaCompanyRegister = () => {
     typeEvent: 'event',
     content: '',
     company: null,
-    area: null,
-    inverter: null,
   });
   const [error, setError] = useState({
     content: '',
     company: '',
-    area: '',
-    inverter: '',
   });
 
   useEffect(() => {
     dispatch(SignInAction.getListCompany());
-    dispatch(SignInAction.getListArea());
     // eslint-disable-next-line
   }, []);
 
-  const { typeEvent, content, company, area, inverter } = dataSubmit;
+  const { typeEvent, content, company } = dataSubmit;
   const handleSubmit = () => {
     console.log('REGISTER');
     let validation = {};
     const rules = {
       content: ['required'],
       company: ['required'],
-      area: ['required'],
-      inverter: ['required'],
     };
 
     const dataValidate = {
       content,
       company: company && company.label,
-      area: area && area.label,
-      inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
     if (Object.keys(validation).length > 0) {
@@ -73,7 +61,7 @@ const StatusByAreaCompanyRegister = () => {
       return;
     }
     // Call api register event
-    history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+    history.push(ROUTERS.TEST_MOCKUP_OPERATION);
   };
 
   const handleChange = (value, name) => {
@@ -86,40 +74,6 @@ const StatusByAreaCompanyRegister = () => {
         setDataSubmit({
           ...dataSubmit,
           company: value,
-          inverter: '',
-        });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: value?.value,
-          })
-        );
-        break;
-      case 'area':
-        setDataSubmit({
-          ...dataSubmit,
-          area: value,
-          inverter: '',
-        });
-        setError({
-          ...error,
-          area: '',
-        });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: company?.value,
-            pos_id: value?.value,
-          })
-        );
-        break;
-      case 'inverter':
-        setDataSubmit({
-          ...dataSubmit,
-          inverter: value,
-        });
-        setError({
-          ...error,
           inverter: '',
         });
         break;
@@ -180,28 +134,6 @@ const StatusByAreaCompanyRegister = () => {
                       noOptionsMessage={() => '옵션 없음'}
                       errorMsg={error?.company}
                     />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={listArea}
-                      onChange={(option) => handleChange(option, 'area')}
-                      option={area || null}
-                      noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.area}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={listInverter}
-                      onChange={(option) => handleChange(option, 'inverter')}
-                      option={inverter || null}
-                      noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.inverter}
-                    />
                   </div>
                 </div>
               </div>
@@ -236,9 +168,7 @@ const StatusByAreaCompanyRegister = () => {
           >
             수정 완료
           </Button>
-          <Button
-            onClick={() => history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)}
-          >
+          <Button onClick={() => history.push(ROUTERS.TEST_MOCKUP_OPERATION)}>
             취소
           </Button>
         </div>
