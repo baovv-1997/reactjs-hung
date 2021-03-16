@@ -66,6 +66,14 @@ const DashboardCompany = lazy(() =>
 const TestDashboard = lazy(() => import('modules/testDashboard/components'));
 const SolarDashboard = lazy(() => import('modules/solarDashboard/components'));
 
+const testMockupStatus = lazy(() =>
+  import('modules/testMockupStatus/components')
+);
+
+const testMockupOperationStatus = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/index')
+);
+
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -161,11 +169,16 @@ const Router = () => {
             path={ROUTERS.OPERATION_STATISTICS_AREA}
             component={statisticsOperationByArea}
           />
-          {/* <Route
+          <Route
             exact
-            path={ROUTERS.DeviceManagement}
-            component={DeviceManagement}
-          /> */}
+            path={ROUTERS.TEST_MOCKUP_STATUS}
+            component={testMockupStatus}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION}
+            component={testMockupOperationStatus}
+          />
         </Switch>
       </Suspense>
     </BrowserRouter>

@@ -10,12 +10,12 @@ type Props = {
     value: any,
     label: string,
   }>,
-  listMockupType: Array<{
+  listMockupType?: Array<{
     id: number,
     value: any,
     label: string,
   }>,
-  listParkingLot: Array<{
+  listParkingLot?: Array<{
     id: number,
     value: any,
     label: string,
@@ -26,8 +26,8 @@ type Props = {
 export const GroupSelect = ({
   paramsSearch,
   listStatusCompanySelect,
-  listMockupType,
-  listParkingLot,
+  listMockupType = [],
+  listParkingLot = [],
   handleChangeSearch,
 }: Props) => {
   const renderListCompany =
@@ -73,14 +73,31 @@ export const GroupSelect = ({
     ));
   return (
     <div className="content-select-sidebar">
-      <TitleSubHeader title="실증단지" />
-      <ul className="list-item-select overflowY">{renderListCompany}</ul>
-      <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-      <ul className="list-item-select overflowY">{renderListMocKup}</ul>
-      <TitleSubHeader title="주차장" className="mt-5" />
-      <ul className="list-item-select overflowY">{renderListParkingLot}</ul>
+      {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
+        <>
+          <TitleSubHeader title="실증단지" />
+          <ul className="list-item-select overflowY">{renderListCompany}</ul>
+        </>
+      )}
+      {listMockupType && listMockupType.length > 0 && (
+        <>
+          <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
+          <ul className="list-item-select overflowY">{renderListMocKup}</ul>
+        </>
+      )}
+      {listParkingLot && listParkingLot.length > 0 && (
+        <>
+          <TitleSubHeader title="주차장" className="mt-5" />
+          <ul className="list-item-select overflowY">{renderListParkingLot}</ul>
+        </>
+      )}
     </div>
   );
+};
+
+GroupSelect.defaultProps = {
+  listMockupType: [],
+  listParkingLot: [],
 };
 
 export default memo<Props>(GroupSelect);

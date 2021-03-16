@@ -23,6 +23,9 @@ const ROUTERS = {
   STATISTICS_DEVELOP_AREA: `/statistics/develop/develop-by-area`,
   OPERATION_STATISTICS_COMPANY: `/statistics/operation/operation-by-company`,
   OPERATION_STATISTICS_AREA: `/statistics/operation/operation-by-area`,
+
+  TEST_MOCKUP_STATUS: `/test/mockup/status-of-development`,
+  TEST_MOCKUP_OPERATION: `/test/mockup/operation-status`,
 };
 
 export default ROUTERS;

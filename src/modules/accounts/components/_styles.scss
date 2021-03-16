@@ -84,6 +84,12 @@
 
         button {
           width: 100%;
+          height: pxToRem(60);
+          padding: pxToRem(12);
+          border-radius: pxToRem(10);
+          font-size: pxToRem(24);
+          font-weight: 500;
+          line-height: 1.5;
         }
       }
 
