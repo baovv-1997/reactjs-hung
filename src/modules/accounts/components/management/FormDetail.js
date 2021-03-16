@@ -159,10 +159,10 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     setDevices(deviceFormat);
   }, [accountDetail]);
 
-  const errorsMessage = Object.values(errors).map((item) => {
+  const errorsMessage = Object.values(errors).map((item, index) => {
     return (
-      <ul className="error-list">
-        <li>{item[0]}</li>
+      <ul className="error-list" key={index}>
+        <li>{item && item[0]}</li>
       </ul>
     );
   });

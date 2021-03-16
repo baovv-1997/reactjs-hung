@@ -26,7 +26,7 @@ type Props = {
   handleRemove: Function,
   handleAddListDevice: Function,
   idx: any,
-  isAccountPage: boolean,
+  isAccountPage?: boolean,
 };
 
 export const ItemDevice = ({
@@ -39,7 +39,7 @@ export const ItemDevice = ({
   handleAddListDevice,
   idx,
   listType,
-  isAccountPage,
+  isAccountPage = false,
 }: Props) => {
   return (
     <div className="item-role mt-2">
@@ -111,6 +111,10 @@ export const ItemDevice = ({
       )}
     </div>
   );
+};
+
+ItemDevice.defaultProps = {
+  isAccountPage: false,
 };
 
 export default memo<Props>(ItemDevice);
