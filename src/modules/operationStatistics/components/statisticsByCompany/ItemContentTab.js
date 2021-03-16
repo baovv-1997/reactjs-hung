@@ -2,29 +2,34 @@
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
-import LabelStatusV3 from 'commons/components/Label/LabelStatus/LabelStatusV3';
-import CheckBox from 'commons/components/CheckBox';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
-import FilterSearch from '../FilterSearch';
 import { listPaginationType } from 'constants/listKey';
+import ROUTERS from 'constants/routers';
 import {
-  headStatisticsCompany,
-  headStatisticsOfModuleCompany,
+  headStatusCompany,
+  headOperationStatusByAreaCompany,
 } from 'constants/headerTable';
+import { useHistory } from 'react-router-dom';
+import BoxGroup from '../BoxGroup';
+import GroupCompareChart from '../GroupCompareChart';
+import GroupActionDownload from '../GroupActionDownload';
+import { FilterSearch } from '../FilterSearch';
 
 type Props = {
-  dataTableStatisticsCompany: any,
+  listMockupDataCompany: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
-  dataTableStatisticsOfModuleCompany: Array<{
+  tableOperationStatusByAreaCompany: Array<{
     id: number,
   }>,
+  isShowModalSorting: boolean,
+  handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -40,61 +45,56 @@ type Props = {
 };
 
 const ItemContentTab = ({
-  dataTableStatisticsCompany,
+  listMockupDataCompany,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
   perPage,
-  dataTableStatisticsOfModuleCompany,
+  tableOperationStatusByAreaCompany,
+  isShowModalSorting,
+  handleClickDetail,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
 }: Props) => {
   console.log(dataContent, 'dataContent');
+  const history = useHistory();
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량 kWh',
+      name: 'PV전압',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: '일사량 ℃',
+      name: 'PV전류',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '성능비 kWh/㎡·10초',
+      name: '출력전류',
       color: '#fe8224',
+    },
+    {
+      id: 4,
+      name: '출력',
+      color: '#ffcc00',
+    },
+    {
+      id: 5,
+      name: '출력전압',
+      color: '#102a82',
     },
   ];
   return (
     <div className="content-wrap-tab">
-      <div className="box-group">
-        <LabelStatusV3
-          nameStatus={dataBoxContent?.day}
-          unit="kWh"
-          title="금일 발전량"
-          keyStatus={1}
-          color="#3b74e7"
-        />
-        <LabelStatusV3
-          nameStatus={dataBoxContent?.month}
-          unit="kWh"
-          title="금월 발전량"
-          keyStatus={2}
-          color="#fe5e6a"
-        />
-        <LabelStatusV3
-          nameStatus={dataBoxContent?.year}
-          unit="MWh"
-          title="금년 발전량"
-          keyStatus={3}
-          color="#ffb00d"
-        />
-      </div>
+      <BoxGroup
+        dataBoxContent={dataBoxContent}
+        paramsSearch={paramsSearch}
+        handleChangeSearch={handleChangeSearch}
+      />
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
@@ -104,72 +104,30 @@ const ItemContentTab = ({
 
       <div className="group-char">
         <div className="group-char-left">
-          <div className="group-char-checkbox">
-            <div className="checkbox-header">차트 비교</div>
-            <div className="list-checkbox">
-              <CheckBox
-                name="generation"
-                isChecked={paramsSearch?.generation}
-                label="발전량"
-                id="generation"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.generation, 'generation')
-                }
-              />
-              <CheckBox
-                name="insolation"
-                id="insolation"
-                isChecked={paramsSearch?.insolation}
-                label="일사량"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.insolation, 'insolation')
-                }
-              />
-              <CheckBox
-                name="performance"
-                id="performance"
-                isChecked={paramsSearch?.performance}
-                label="성능비"
-                handleToggleCheckbox={() =>
-                  handleChangeSearch(paramsSearch?.performance, 'performance')
-                }
-              />
-            </div>
-          </div>
+          <GroupCompareChart
+            paramsSearch={paramsSearch}
+            handleChangeSearch={handleChangeSearch}
+          />
           <div className="group-length-chart">
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
+
       <TitleSubHeader title="실시간 계측정보 통계" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
-        <SelectDropdown
-          placeholder="구분"
-          listItem={listPaginationType}
-          onChange={(option) => handleChangeSearch(option, 'pagination1')}
-          option={paramsSearch?.pagination1 || null}
-          noOptionsMessage={() => '옵션 없음'}
-        />
-        <div className="group-btn-download">
-          <Button
-            onClick={() => handleDownloadTrend('trend')}
-            customClass="mr-2"
-          >
-            Trend 이미지 다운
-          </Button>
-          <Button onClick={() => handleDownloadTrend('raw')}>
-            Raw Date 다운
-          </Button>
-        </div>
-      </div>
+      <GroupActionDownload
+        handleDownloadTrend={handleDownloadTrend}
+        paramsSearch={paramsSearch}
+        handleChangeSearch={handleChangeSearch}
+      />
       <div>
         <Table
-          tableHeads={headStatisticsCompany}
-          tableBody={dataTableStatisticsCompany}
+          tableHeads={headStatusCompany}
+          tableBody={listMockupDataCompany}
           // isShowId
         />
-        <div className="opacity d-block pagination mt-0">
+        <div className="opacity d-block pagination mt-0 mb-3">
           {totalPage > perPage && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
@@ -187,7 +145,7 @@ const ItemContentTab = ({
       </div>
 
       {/*  Table Bottom */}
-      <TitleSubHeader title="이벤트 통계" />
+      <TitleSubHeader title="이벤트 현황" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
         <SelectDropdown
           placeholder="구분"
@@ -203,10 +161,26 @@ const ItemContentTab = ({
         </div>
       </div>
       <Table
-        tableHeads={headStatisticsOfModuleCompany}
-        tableBody={dataTableStatisticsOfModuleCompany}
+        tableHeads={headOperationStatusByAreaCompany}
+        tableBody={tableOperationStatusByAreaCompany}
         // isShowId
+        handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
+        handleShowModalSorting={() => handleChangeSearch('', 'modal')}
+        showModalSort={{
+          isShow: isShowModalSorting,
+          keyItem: 5,
+        }}
+        onClickRow={handleClickDetail}
       />
+      <div className="group-btn-register text-right">
+        <Button
+          onClick={() =>
+            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
+          }
+        >
+          등록
+        </Button>
+      </div>
       <div className="opacity d-block pagination mt-0">
         {totalPage > perPage && (
           <div className="wrapper-device__pagination mt-0">
