@@ -76,7 +76,6 @@ const StatusByAreaCompany = () => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
 
-  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':

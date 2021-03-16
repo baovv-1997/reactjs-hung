@@ -12,6 +12,8 @@ import getListPositionSaga from 'modules/device/sagas/getListPositionSaga';
 import getDeivceDetailSaga from 'modules/device/sagas/getDeivceDetailSaga';
 import updateDeviceSaga from 'modules/device/sagas/updateDeviceSaga';
 import addDeviceSaga from 'modules/device/sagas/addDeviceSaga';
+import getAccountListSaga from 'modules/accounts/sagas/getAccountListSaga';
+import updateAccountSaga from 'modules/accounts/sagas/updateAccountSaga';
 
 import getListStatusCompanySaga from 'modules/statusCompany/sagas/getListCompanySaga';
 import getListDeviceTestDashboardSaga from 'modules/testDashboard/saga/getListDeviceSaga';
@@ -31,6 +33,8 @@ export default function* RootSagas() {
     getDeivceDetailSaga(),
     updateDeviceSaga(),
     addDeviceSaga(),
+    getAccountListSaga(),
+    updateAccountSaga(),
     getListDeviceTestDashboardSaga(),
     getListDeviceTestSolarDashboardSaga(),
   ]);

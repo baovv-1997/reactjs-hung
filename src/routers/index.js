@@ -66,6 +66,14 @@ const DashboardCompany = lazy(() =>
 const TestDashboard = lazy(() => import('modules/testDashboard/components'));
 const SolarDashboard = lazy(() => import('modules/solarDashboard/components'));
 
+const accountManagement = lazy(() =>
+  import('modules/accounts/components/management')
+);
+
+const accountDetail = lazy(() =>
+  import('modules/accounts/components/management/AccountDetail')
+);
+
 const testMockupStatus = lazy(() =>
   import('modules/testMockupStatus/components')
 );
@@ -178,6 +186,15 @@ const Router = () => {
 
           <Route
             exact
+            path={ROUTERS.ACCOUNT_MANAGEMENT_DETAIL}
+            component={accountDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.ACCOUNT_MANAGEMENT}
+            component={accountManagement}
+          />
+          <Route
             path={ROUTERS.OPERATION_STATISTICS_COMPANY}
             component={statisticsOperationByCompany}
           />

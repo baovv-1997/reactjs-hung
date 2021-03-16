@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 const initialState = {
   userInfo: {},
@@ -11,6 +12,9 @@ const initialState = {
   listCompany: [],
   listArea: [],
   listInverter: [],
+  accountList: [],
+  accountDetail: {},
+  errors: {},
 };
 
 const accountSlice = createSlice({
@@ -122,6 +126,51 @@ const accountSlice = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+    getAccountList: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getAccountListSuccess: (state, action) => {
+      if (!action.isDetail) {
+        state.accountList = action?.data?.data.map((item) => ({
+          no: item.id,
+          dateCreate: moment(item?.created_at).format('YYYY-MM-DD'),
+          roleName: item?.roles[0]?.display_name,
+          username: item?.username,
+          email: item?.email,
+          name: item?.name,
+          phone: item?.phone,
+        }));
+      } else {
+        state.accountDetail = action?.data;
+      }
+      state.type = action.type;
+      state.isProcessing = false;
+      state.perPage = action?.data?.per_page;
+      state.totalPage = action?.data?.total;
+      state.type = action.type;
+    },
+    getAccountListFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    updateAccount: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    updateAccountSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    updateAccountFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.errors = action.errors;
+    },
+    resetAccountType: (state) => {
+      state.type = '';
+    },
   },
 });
 
@@ -143,6 +192,13 @@ export const {
   getListInverter,
   getListInverterSuccess,
   getListInverterFailed,
+  getAccountList,
+  getAccountListFailed,
+  getAccountListSuccess,
+  updateAccount,
+  updateAccountFailed,
+  updateAccountSuccess,
+  resetAccountType,
 } = actions;
 
 export default reducer;

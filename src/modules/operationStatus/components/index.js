@@ -14,9 +14,9 @@ import {
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
-import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
@@ -77,7 +77,6 @@ const OperationStatusPage = () => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
 
-  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':

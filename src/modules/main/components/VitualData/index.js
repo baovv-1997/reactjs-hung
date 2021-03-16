@@ -6,7 +6,6 @@ type Props = {
 };
 
 const VitualData = ({ data }: Props) => {
-  console.log(data, 'data');
   return (
     <div className="vitual-data main-card">
       <div className="vitual-data__header main-card__header">

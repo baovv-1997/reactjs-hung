@@ -48,7 +48,6 @@ const StatusByAreaCompanyEdit = () => {
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const handleSubmit = () => {
-    console.log('REGISTER');
     let validation = {};
     const rules = {
       content: ['required'],

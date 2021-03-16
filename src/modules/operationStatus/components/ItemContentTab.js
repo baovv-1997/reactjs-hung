@@ -50,7 +50,7 @@ const ItemContentTab = ({
   handleChangeSearch,
   paramsSearch,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
+  console.log(dataContent);
   const history = useHistory();
   const dataLengthChart = [
     {

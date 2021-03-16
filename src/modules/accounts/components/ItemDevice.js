@@ -26,6 +26,7 @@ type Props = {
   handleRemove: Function,
   handleAddListDevice: Function,
   idx: any,
+  isAccountPage: boolean,
 };
 
 export const ItemDevice = ({
@@ -38,22 +39,27 @@ export const ItemDevice = ({
   handleAddListDevice,
   idx,
   listType,
+  isAccountPage,
 }: Props) => {
   return (
     <div className="item-role mt-2">
       <div className="group-select">
         <div className="group-item">
-          <SelectDropdown
-            placeholder="구분"
-            listItem={listType}
-            onChange={(option) =>
-              handleChangeOptionCompany(option, 'type', optionDevice?.idx)
-            }
-            option={optionDevice?.type || null}
-            disabled={idx !== 0}
-            noOptionsMessage={() => '옵션 없음'}
-          />
-          <img src={images.icon_next} alt="" />
+          {!isAccountPage && (
+            <>
+              <SelectDropdown
+                placeholder="구분"
+                listItem={listType}
+                onChange={(option) =>
+                  handleChangeOptionCompany(option, 'type', optionDevice?.idx)
+                }
+                option={optionDevice?.type || null}
+                disabled={idx !== 0}
+                noOptionsMessage={() => '옵션 없음'}
+              />
+              <img src={images.icon_next} alt="" />
+            </>
+          )}
         </div>
         <div className="group-item">
           <SelectDropdown
