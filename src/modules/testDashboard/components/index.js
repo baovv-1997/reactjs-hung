@@ -7,10 +7,13 @@ import MainLayout from 'layout/MainLayout';
 import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
 import { useSelector, useDispatch } from 'react-redux';
+// import { useHistory } from 'react-router-dom';
+// import ROUTERS from 'constants/routers';
 import { getListDeviceTestDashboard } from '../redux';
 
 const TestDashboard = () => {
   const dispatch = useDispatch();
+  // const history = useHistory();
 
   const { isLoading, listDevice, total } = useSelector(
     (state) => state?.testDashboard
@@ -20,14 +23,17 @@ const TestDashboard = () => {
   const [activePage, setActivePage] = useState(1);
   const perPage = 8;
 
+  // pagination page
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
 
+  // when submit search button
   const handleSubmitSearch = () => {
     console.log(searchTerm);
   };
 
+  // when input search change set value
   const handleSearchChange = (e) => {
     const { value } = e.target;
     setSearchTerm(value);
@@ -35,11 +41,16 @@ const TestDashboard = () => {
 
   // get list device of company
   useEffect(() => {
-    dispatch(getListDeviceTestDashboard());
-  }, [dispatch]);
+    dispatch(
+      getListDeviceTestDashboard({
+        type: 'test_mockup',
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderInverter =
-    listDevice.length &&
+    listDevice &&
     listDevice.map((item) => {
       const {
         id,
@@ -64,6 +75,9 @@ const TestDashboard = () => {
           electricRealtime={electricRealtime}
           ratePower={ratePower}
           cumulativeElectric={cumulativeElectric}
+          titleClick={() => {
+            console.log(id);
+          }}
         />
       );
     });

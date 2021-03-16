@@ -20,9 +20,16 @@ const Header = ({
 }: Props) => {
   const [option, setOption] = useState(mockDataArea[0]);
   const [isShow, setIsShow] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
+
+  // when input search change set value
+  const handleSearchChange = (e) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+  };
 
   // handle click outside event
   useClickOutside(
@@ -41,7 +48,9 @@ const Header = ({
         {isSearch ? (
           <Search
             placeholder="회사명이나 구역명으로 검색해보세요."
-            handleClick={() => {}}
+            value={searchTerm}
+            onChange={handleSearchChange}
+            setSearchTerm={setSearchTerm}
           />
         ) : (
           ''

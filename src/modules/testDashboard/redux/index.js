@@ -8,7 +8,6 @@ const testDashBoardSlice = createSlice({
     type: '',
     listDevice: [],
     total: 0,
-    per_page: 0,
     current_page: 0,
   },
   reducers: {
@@ -33,7 +32,6 @@ const testDashBoardSlice = createSlice({
       state.listDevice = listDevice || [];
       state.type = action.type;
       state.total = data?.total;
-      state.per_page = data?.per_page;
       state.current_page = data?.current_page;
       state.isLoading = false;
     },

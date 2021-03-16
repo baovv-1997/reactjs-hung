@@ -20,14 +20,17 @@ const SolarDashboard = () => {
   const [activePage, setActivePage] = useState(1);
   const perPage = 8;
 
+  // pagination page
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
 
+  // when submit search button
   const handleSubmitSearch = () => {
     console.log(searchTerm);
   };
 
+  // when input search change set value
   const handleSearchChange = (e) => {
     const { value } = e.target;
     setSearchTerm(value);
@@ -35,8 +38,13 @@ const SolarDashboard = () => {
 
   // get list device of company
   useEffect(() => {
-    dispatch(getListDeviceTestSolarDashboard());
-  }, [dispatch]);
+    dispatch(
+      getListDeviceTestSolarDashboard({
+        type: 'test_mockup',
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // const renderInverter = comapyInverter.length ? (
   //   comapyInverter.map((item) => {
@@ -116,6 +124,9 @@ const SolarDashboard = () => {
           electricRealtime={electricRealtime}
           ratePower={ratePower}
           cumulativeElectric={cumulativeElectric}
+          titleClick={() => {
+            console.log(id);
+          }}
         />
       );
     });

@@ -67,7 +67,7 @@ export const spliceCompanyInverter = (comapyInverter) => {
   comapyInverter.map((item, index) => {
     const { id, nameComany, listInverter } = item;
 
-    if (listInverter.length === 4 && countIndex === 1) {
+    if (listInverter.length === 4 && countIndex === 2) {
       const newListInverter = listInverter.splice(3);
       comapyInverter.splice(index + 1, 0, {
         id,
@@ -76,7 +76,7 @@ export const spliceCompanyInverter = (comapyInverter) => {
       });
     }
 
-    if (listInverter.length === 4 && countIndex === 2) {
+    if (listInverter.length === 4 && countIndex === 3) {
       const newListInverter = listInverter.splice(2);
       comapyInverter.splice(index + 1, 0, {
         id,
@@ -85,7 +85,7 @@ export const spliceCompanyInverter = (comapyInverter) => {
       });
     }
 
-    if (listInverter.length === 4 && countIndex === 3) {
+    if (listInverter.length === 4 && countIndex === 4) {
       const newListInverter = listInverter.splice(1);
       comapyInverter.splice(index + 1, 0, {
         id,
@@ -94,7 +94,7 @@ export const spliceCompanyInverter = (comapyInverter) => {
       });
     }
 
-    if (listInverter.length === 3 && countIndex === 2) {
+    if (listInverter.length === 3 && countIndex === 3) {
       const newListInverter = listInverter.splice(2);
       console.log(newListInverter, 'newListInverter');
       comapyInverter.splice(index + 1, 0, {
@@ -104,7 +104,7 @@ export const spliceCompanyInverter = (comapyInverter) => {
       });
     }
 
-    if (listInverter.length === 3 && countIndex === 3) {
+    if (listInverter.length === 3 && countIndex === 4) {
       const newListInverter = listInverter.splice(1);
       comapyInverter.splice(index + 1, 0, {
         id,
@@ -113,7 +113,7 @@ export const spliceCompanyInverter = (comapyInverter) => {
       });
     }
 
-    if (listInverter.length === 2 && countIndex === 3) {
+    if (listInverter.length === 2 && countIndex === 4) {
       const newListInverter = listInverter.splice(1);
       comapyInverter.splice(index + 1, 0, {
         id,

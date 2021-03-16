@@ -50,7 +50,7 @@ const Search = ({
         onClick={() => setDisplay(true)}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e)}
+        onChange={onChange}
       />
 
       <img

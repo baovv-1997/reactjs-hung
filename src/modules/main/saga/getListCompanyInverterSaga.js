@@ -1,41 +1,40 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { ROUTES, API } from '../../../apis';
-import * as TestSolarDashboardAction from '../redux';
+import * as DashboardAction from '../redux';
 
-function* getListDeviceTestSolarDashboard(action) {
+function* getListCompanyInverters(action) {
   try {
     const response = yield call(() =>
       API.get(ROUTES.GET_LIST_CARD_MEASURE, action.payload)
     );
-
     if (response.ok) {
       const { data } = response;
       // In case: get card measure success
       console.log(data);
       yield put({
-        type: TestSolarDashboardAction.getListDeviceTestSolarDashboardSuccess,
+        type: DashboardAction.getListCompanyInvertersSuccess,
         data,
       });
     } else {
       // In case: get card measure failed
       yield put({
-        type: TestSolarDashboardAction.getListDeviceTestSolarDashboardFailed,
+        type: DashboardAction.getListCompanyInvertersFailed,
       });
     }
   } catch (error) {
     // in case: server error
     yield put({
-      type: TestSolarDashboardAction.getListDeviceTestSolarDashboardFailed,
+      type: DashboardAction.getListCompanyInvertersFailed,
       error,
     });
   }
 }
 
-function* getListDeviceTestSolarDashboardSaga() {
+function* getListCompanyInverterSaga() {
   yield takeLatest(
-    TestSolarDashboardAction.getListDeviceTestSolarDashboard,
-    getListDeviceTestSolarDashboard
+    DashboardAction.getListCompanyInverters,
+    getListCompanyInverters
   );
 }
 
-export default getListDeviceTestSolarDashboardSaga;
+export default getListCompanyInverterSaga;
