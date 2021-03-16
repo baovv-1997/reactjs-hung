@@ -72,7 +72,7 @@ const DeviceMaintain = ({
             setCompanySelected(option);
           }}
         />
-        <img src={images.icon_next} alt="" />
+        <img src={images.icon_next} alt="" className="mx-2" />
       </div>
       <div className="group-item d-flex">
         <SelectDropdown
@@ -86,7 +86,7 @@ const DeviceMaintain = ({
             handleChange(option, 'position', itemDevice.id);
           }}
         />
-        <img src={images.icon_next} alt="" />
+        <img src={images.icon_next} alt="" className="mx-2" />
       </div>
       <div className="group-item d-flex">
         <SelectDropdown
