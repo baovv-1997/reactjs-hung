@@ -129,7 +129,7 @@ const StatusByAreaCompany = () => {
   };
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
-    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
+    history.push(`${ROUTERS.TEST_MOCKUP_OPERATION}/${item.id}`);
   };
   return (
     <MainLayout isProcessing={isProcessing}>

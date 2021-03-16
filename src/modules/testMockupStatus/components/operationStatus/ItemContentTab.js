@@ -141,7 +141,7 @@ const ItemContentTab = ({
       <div className="group-btn-register text-right">
         <Button
           onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
+            history.push(ROUTERS.TEST_MOCKUP_OPERATION_STATUS_REGISTER)
           }
         >
           등록
