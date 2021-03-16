@@ -14,6 +14,8 @@ export const ROUTES = {
   API_GET_LIST_DEVICE: `/device`,
   UPDATE_DEVICE: (id) => `device/${id}`,
   GET_POS: '/position',
+  ACCOUNTS: '/account',
+  UPDATE_ACCOUNT: (id) => `account/${id}`,
   GET_LIST_CARD_MEASURE: `/data/cards`,
 };
 

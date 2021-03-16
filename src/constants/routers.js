@@ -19,10 +19,19 @@ const ROUTERS = {
   SOLAR_DASHBOARD: `/solar/dashboard`,
   OPERATION_STATUS_BY_COMPANY_EDIT: `/operation/status-by-company/edit/:id`,
 
+  ACCOUNT_MANAGEMENT: '/accounts',
+  ACCOUNT_MANAGEMENT_DETAIL: '/accounts/:id',
   STATISTICS_DEVELOP: `/statistics/develop/develop-by-company`,
   STATISTICS_DEVELOP_AREA: `/statistics/develop/develop-by-area`,
   OPERATION_STATISTICS_COMPANY: `/statistics/operation/operation-by-company`,
   OPERATION_STATISTICS_AREA: `/statistics/operation/operation-by-area`,
+
+  TEST_MOCKUP_STATUS: `/test/mockup/status-of-development`,
+  TEST_MOCKUP_OPERATION: `/test/mockup/operation-status`,
+
+  TEST_MOCKUP_OPERATION_STATUS_DETAIL: `/test/mockup/operation-status/:id`,
+  TEST_MOCKUP_OPERATION_STATUS_REGISTER: `/test/mockup/operation-status/register`,
+  TEST_MOCKUP_OPERATION_STATUS_EDIT: `/test/mockup/operation-status/edit/:id`,
 };
 
 export default ROUTERS;

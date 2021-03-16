@@ -50,7 +50,6 @@ const SelectDropdown = ({
       </components.DropdownIndicator>
     );
   };
-  // console.log(listItem, 'listItem');
   return (
     <div
       className={`customer-select ${customClass.length > 0 ? customClass : ''}`}

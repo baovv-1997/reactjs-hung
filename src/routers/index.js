@@ -66,6 +66,31 @@ const DashboardCompany = lazy(() =>
 const TestDashboard = lazy(() => import('modules/testDashboard/components'));
 const SolarDashboard = lazy(() => import('modules/solarDashboard/components'));
 
+const accountManagement = lazy(() =>
+  import('modules/accounts/components/management')
+);
+
+const accountDetail = lazy(() =>
+  import('modules/accounts/components/management/AccountDetail')
+);
+
+const testMockupStatus = lazy(() =>
+  import('modules/testMockupStatus/components')
+);
+
+const testMockupOperationStatus = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/index')
+);
+
+const testMockupOperationStatusDetail = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/detail')
+);
+const testMockupOperationStatusRegister = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/register')
+);
+const testMockupOperationStatusEdit = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/edit')
+);
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -153,6 +178,15 @@ const Router = () => {
 
           <Route
             exact
+            path={ROUTERS.ACCOUNT_MANAGEMENT_DETAIL}
+            component={accountDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.ACCOUNT_MANAGEMENT}
+            component={accountManagement}
+          />
+          <Route
             path={ROUTERS.OPERATION_STATISTICS_COMPANY}
             component={statisticsOperationByCompany}
           />
@@ -161,11 +195,31 @@ const Router = () => {
             path={ROUTERS.OPERATION_STATISTICS_AREA}
             component={statisticsOperationByArea}
           />
-          {/* <Route
+          <Route
             exact
-            path={ROUTERS.DeviceManagement}
-            component={DeviceManagement}
-          /> */}
+            path={ROUTERS.TEST_MOCKUP_STATUS}
+            component={testMockupStatus}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION}
+            component={testMockupOperationStatus}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_REGISTER}
+            component={testMockupOperationStatusRegister}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_DETAIL}
+            component={testMockupOperationStatusDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_EDIT}
+            component={testMockupOperationStatusEdit}
+          />
         </Switch>
       </Suspense>
     </BrowserRouter>

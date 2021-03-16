@@ -6,7 +6,6 @@ import * as signUpAction from '../redux';
 
 // worker Saga: will be fired on SIGN_UP actions
 function* signUp(action) {
-  console.log(action.payload, 'action.payload');
   try {
     const response = yield call(() =>
       API.post(ROUTES.SIGN_UP, JSON.stringify(action.payload))

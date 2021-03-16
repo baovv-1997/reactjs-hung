@@ -112,7 +112,7 @@ export const SETUP = {
   label: '기기 관리',
   icon: IMAGES.setup,
   items: [
-    { id: 1, name: '계정 관리', to: '#' },
+    { id: 1, name: '계정 관리', to: '/accounts' },
     { id: 1, name: '기기 관리', to: '/devices' },
   ],
 };
@@ -138,12 +138,12 @@ export const MOCKUP = {
             {
               id: 1,
               name: '발전 현황',
-              to: '#',
+              to: ROUTERS.TEST_MOCKUP_STATUS,
             },
             {
               id: 2,
               name: '운영 현황',
-              to: '#',
+              to: ROUTERS.TEST_MOCKUP_OPERATION,
             },
           ],
         },

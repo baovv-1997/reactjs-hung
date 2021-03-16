@@ -30,7 +30,6 @@ const ItemContentTab = ({
   insolationData,
   paramsSearch,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,

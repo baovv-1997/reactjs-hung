@@ -45,10 +45,9 @@ const FormDetail = ({ data, history }: Props) => {
   const [azimuthAngle, setAzimuthAngle] = useState(data?.ds_azimuth_angle);
   const [isCancel, setIsCancel] = useState(false);
 
-  console.log('history', history);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+
     switch (name) {
       case 'managerName':
         setNameManager(value);
@@ -97,7 +96,7 @@ const FormDetail = ({ data, history }: Props) => {
     <div>
       <div className="device-detail__form">
         <div className="col-item col-2">
-          {DeivceDetailHead.slice(0, 6).map((item) => (
+          {DeivceDetailHead.slice(0, 5).map((item) => (
             <div className="cell" key={item.id}>
               {item.name}
             </div>
@@ -171,7 +170,7 @@ const FormDetail = ({ data, history }: Props) => {
           </div>
         </div>
       </div>
-      <div className="device-detail__btn-group">
+      <div className="account-detail__btn-group">
         <Button customClass="btn-modify" onClick={handleUpdateDevice}>
           수정
         </Button>

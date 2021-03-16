@@ -12,11 +12,10 @@ import Radio from 'commons/components/Radio';
 import Button from 'commons/components/Button';
 import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
-
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 
-const StatusByAreaCompanyRegister = () => {
+const StatusByAreaCompanyEdit = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { isProcessing, listCompany, listArea, listInverter } = useSelector(
@@ -24,12 +23,12 @@ const StatusByAreaCompanyRegister = () => {
   );
   const [modalConform, setModalConform] = useState({
     isShow: false,
-    content: '내용을 수정하시겠습니까?',
+    content: '현황을 등록하시겠습니까?',
   });
 
   const [dataSubmit, setDataSubmit] = useState({
     typeEvent: 'event',
-    content: '내용을 수정하시겠습니까',
+    content: '월 정기 설비 진행',
     company: null,
     area: null,
     inverter: null,
@@ -44,13 +43,11 @@ const StatusByAreaCompanyRegister = () => {
   useEffect(() => {
     dispatch(SignInAction.getListCompany());
     dispatch(SignInAction.getListArea());
-
     // eslint-disable-next-line
   }, []);
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const handleSubmit = () => {
-    console.log('REGISTER');
     let validation = {};
     const rules = {
       content: ['required'],
@@ -61,7 +58,7 @@ const StatusByAreaCompanyRegister = () => {
 
     const dataValidate = {
       content,
-      company: company && company.lable,
+      company: company && company.label,
       area: area && area.label,
       inverter: inverter && inverter.label,
     };
@@ -74,15 +71,68 @@ const StatusByAreaCompanyRegister = () => {
       });
       return;
     }
+    // Call api register event
     history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
   };
 
   const handleChange = (value, name) => {
-    console.log(value, name);
-    setDataSubmit({
-      ...dataSubmit,
-      [name]: value,
-    });
+    switch (name) {
+      case 'company':
+        setError({
+          ...error,
+          company: '',
+        });
+        setDataSubmit({
+          ...dataSubmit,
+          company: value,
+          inverter: '',
+        });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: value?.value,
+          })
+        );
+        break;
+      case 'area':
+        setDataSubmit({
+          ...dataSubmit,
+          area: value,
+          inverter: '',
+        });
+        setError({
+          ...error,
+          area: '',
+        });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: company?.value,
+            pos_id: value?.value,
+          })
+        );
+        break;
+      case 'inverter':
+        setDataSubmit({
+          ...dataSubmit,
+          inverter: value,
+        });
+        setError({
+          ...error,
+          inverter: '',
+        });
+        break;
+      default:
+        setDataSubmit({
+          ...dataSubmit,
+          [name]: value,
+        });
+        setError({
+          ...error,
+          [name]: '',
+        });
+        break;
+    }
   };
 
   return (
@@ -223,4 +273,4 @@ const StatusByAreaCompanyRegister = () => {
   );
 };
 
-export default StatusByAreaCompanyRegister;
+export default StatusByAreaCompanyEdit;

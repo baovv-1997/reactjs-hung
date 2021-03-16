@@ -5,7 +5,6 @@ import { ROUTES, API } from 'apis';
 
 // worker Saga: will be fired on SEND_INVITE actions
 function* addDevice(action) {
-  console.log(action.payload);
   const {
     azimuthAngle,
     color,
@@ -38,7 +37,7 @@ function* addDevice(action) {
         })
       )
     );
-    console.log(response);
+
     if (response.ok) {
       const { data } = response;
 
