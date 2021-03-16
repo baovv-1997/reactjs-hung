@@ -25,6 +25,7 @@ const ItemContentTab = ({
   handleChangeSearch,
   paramsSearch,
 }: Props) => {
+  console.log(dataContent);
   const dataLengthChart = [
     {
       id: 1,
