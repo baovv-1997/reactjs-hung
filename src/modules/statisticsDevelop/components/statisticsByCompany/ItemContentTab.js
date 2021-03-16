@@ -23,6 +23,8 @@ type Props = {
   handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
+  totalPage2: number,
+  perPage2: number,
   dataTableStatisticsOfModuleCompany: Array<{
     id: number,
   }>,
@@ -47,6 +49,8 @@ const ItemContentTab = ({
   handleDownloadTrend,
   totalPage,
   perPage,
+  totalPage2,
+  perPage2,
   dataTableStatisticsOfModuleCompany,
   handleChangeSearch,
   paramsSearch,
@@ -109,11 +113,11 @@ const ItemContentTab = ({
           {totalPage > perPage && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
-                activePage={paramsSearch?.page1}
+                activePage={paramsSearch?.page}
                 itemsCountPerPage={perPage}
                 totalItemsCount={totalPage}
                 pageRangeDisplayed={5}
-                onChange={(e) => handleChangeSearch(e, 'page1')}
+                onChange={(e) => handleChangeSearch(e, 'page')}
                 itemClass="page-item"
                 linkClass="page-link"
               />
@@ -148,8 +152,8 @@ const ItemContentTab = ({
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}
-              itemsCountPerPage={perPage}
-              totalItemsCount={totalPage}
+              itemsCountPerPage={perPage2}
+              totalItemsCount={totalPage2}
               pageRangeDisplayed={5}
               onChange={(e) => handleChangeSearch(e, 'page2')}
               itemClass="page-item"

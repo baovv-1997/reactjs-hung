@@ -1,0 +1,19 @@
+.group-button-unit-selection {
+  button {
+    width: pxToRem(120);
+    height: pxToRem(32);
+    font-size: pxToRem(15);
+    font-weight: normal;
+    background-color: $color-light-69;
+    letter-spacing: pxToRem(-0.38);
+    margin-right: pxToRem(10);
+
+    &.active {
+      background-color: $bg-button;
+    }
+  }
+}
+
+.h-32 {
+  height: pxToRem(32) !important;
+}

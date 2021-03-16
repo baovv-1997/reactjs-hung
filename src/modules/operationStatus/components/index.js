@@ -15,14 +15,16 @@ import {
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import { useHistory } from 'react-router-dom';
-import ItemContentTab from './ItemContentTab';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
+  const perPage2 = 6;
+  const totalPage2 = 100;
   const [menuTab, setMenuTab] = useState('bulk');
   console.log(menuTab, 'menuTab');
   const { isProcessing, listStatusCompanySelect } = useSelector(
@@ -60,10 +62,16 @@ const OperationStatusPage = () => {
   };
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
+
   // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-  }, [paramsSearch, dispatch]);
+  const getDataListStatusCompany = useCallback(() => {}, [
+    paramsSearch,
+    dispatch,
+  ]);
 
   useEffect(() => {
     getDataListStatusCompany();
@@ -132,10 +140,10 @@ const OperationStatusPage = () => {
           pagination2: item,
         });
         break;
-      case 'page1':
+      case 'page':
         setParamsSearch({
           ...paramsSearch,
-          page1: item,
+          page: item,
         });
         break;
       case 'page2':
@@ -205,6 +213,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     tableOperationStatusByAreaCompany={
                       tableOperationStatusByAreaCompany
                     }
@@ -229,6 +239,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     tableOperationStatusByAreaCompany={
                       tableOperationStatusByAreaCompany
                     }
@@ -253,6 +265,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     tableOperationStatusByAreaCompany={
                       tableOperationStatusByAreaCompany
                     }

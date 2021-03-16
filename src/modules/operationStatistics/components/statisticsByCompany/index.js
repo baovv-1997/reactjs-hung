@@ -24,6 +24,8 @@ const OperationStatusPage = () => {
   const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
+  const perPage2 = 6;
+  const totalPage2 = 100;
   const [menuTab, setMenuTab] = useState('bulk');
   console.log(menuTab, 'menuTab');
   const { isProcessing, listStatusCompanySelect } = useSelector(
@@ -142,10 +144,10 @@ const OperationStatusPage = () => {
           pagination2: item,
         });
         break;
-      case 'page1':
+      case 'page':
         setParamsSearch({
           ...paramsSearch,
-          page1: item,
+          page: item,
         });
         break;
       case 'page2':
@@ -253,6 +255,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     tableOperationStatusByAreaCompany={
                       tableOperationStatusByAreaCompany
                     }
@@ -279,6 +283,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     listInverter={listInverter}
                     tableOperationStatusByAreaCompany={
                       tableOperationStatusByAreaCompany
@@ -305,6 +311,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     listInverter={listInverter}
                     tableOperationStatusByAreaCompany={
                       tableOperationStatusByAreaCompany

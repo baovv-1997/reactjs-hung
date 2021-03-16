@@ -9,14 +9,14 @@ import {
   headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 } from 'constants/headerTable';
-import LineSeriesChart from '../chart';
-import BoxGroup from './BoxGroup';
-import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from './GroupActionDownload';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
+import LineSeriesChart from '../chart';
+import BoxGroup from './BoxGroup';
+import GroupCompareChart from './GroupCompareChart';
+import GroupActionDownload from './GroupActionDownload';
 
 type Props = {
   listMockupDataCompany: any,
@@ -25,6 +25,10 @@ type Props = {
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  totalPage: number,
+  perPage: number,
+  totalPage2: number,
+  perPage2: number,
   tableOperationStatusByAreaCompany: Array<{
     id: number,
   }>,
@@ -41,6 +45,8 @@ const ItemContentTab = ({
   paramsSearch,
   totalPage,
   perPage,
+  totalPage2,
+  perPage2,
   tableOperationStatusByAreaCompany,
   isShowModalSorting,
   handleClickDetail,
@@ -152,8 +158,8 @@ const ItemContentTab = ({
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}
-              itemsCountPerPage={perPage}
-              totalItemsCount={totalPage}
+              itemsCountPerPage={perPage2}
+              totalItemsCount={totalPage2}
               pageRangeDisplayed={5}
               onChange={(e) => handleChangeSearch(e, 'page2')}
               itemClass="page-item"

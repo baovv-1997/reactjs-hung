@@ -7,19 +7,17 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
-import ROUTERS from 'constants/routers';
 import {
-  headStatusCompany,
-  headOperationStatusByAreaCompany,
+  headTestMockupStatistics,
+  headTestMockupStatisticsOfModule,
 } from 'constants/headerTable';
-import { useHistory } from 'react-router-dom';
-import BoxGroup from '../BoxGroup';
-import GroupCompareChart from '../GroupCompareChart';
+import FilterSearch from '../FilterSearch';
+import BoxGroup from './BoxGroup';
+import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { FilterSearch } from '../FilterSearch';
 
 type Props = {
-  listMockupDataCompany: any,
+  dataTableStatisticsCompany: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
@@ -27,11 +25,9 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableStatisticsOfModuleCompany: Array<{
     id: number,
   }>,
-  isShowModalSorting: boolean,
-  handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -47,7 +43,7 @@ type Props = {
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  dataTableStatisticsCompany,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
@@ -55,50 +51,33 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
-  isShowModalSorting,
-  handleClickDetail,
+  dataTableStatisticsOfModuleCompany,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
 }: Props) => {
   console.log(dataContent, 'dataContent');
-  const history = useHistory();
   const dataLengthChart = [
     {
       id: 1,
-      name: 'PV전압',
+      name: '발전량(KWh)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: 'PV전류',
+      name: '일사량 ℃',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '출력전류',
+      name: '성능비 kWh/㎡·10초',
       color: '#fe8224',
-    },
-    {
-      id: 4,
-      name: '출력',
-      color: '#ffcc00',
-    },
-    {
-      id: 5,
-      name: '출력전압',
-      color: '#102a82',
     },
   ];
   return (
     <div className="content-wrap-tab">
-      <BoxGroup
-        dataBoxContent={dataBoxContent}
-        paramsSearch={paramsSearch}
-        handleChangeSearch={handleChangeSearch}
-      />
+      <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
@@ -118,20 +97,19 @@ const ItemContentTab = ({
         </div>
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
-
-      <TitleSubHeader title="실시간 계측정보 통계" />
+      <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        handleDownloadTrend={handleDownloadTrend}
       />
       <div>
         <Table
-          tableHeads={headStatusCompany}
-          tableBody={listMockupDataCompany}
+          tableHeads={headTestMockupStatistics}
+          tableBody={dataTableStatisticsCompany}
           // isShowId
         />
-        <div className="opacity d-block pagination mt-0 mb-3">
+        <div className="opacity d-block pagination mt-0">
           {totalPage > perPage && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
@@ -149,7 +127,7 @@ const ItemContentTab = ({
       </div>
 
       {/*  Table Bottom */}
-      <TitleSubHeader title="이벤트 현황" />
+      <TitleSubHeader title="모듈,외기 온도 / 일사량 통계" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
         <SelectDropdown
           placeholder="구분"
@@ -165,26 +143,10 @@ const ItemContentTab = ({
         </div>
       </div>
       <Table
-        tableHeads={headOperationStatusByAreaCompany}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableHeads={headTestMockupStatisticsOfModule}
+        tableBody={dataTableStatisticsOfModuleCompany}
         // isShowId
-        handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
-        handleShowModalSorting={() => handleChangeSearch('', 'modal')}
-        showModalSort={{
-          isShow: isShowModalSorting,
-          keyItem: 5,
-        }}
-        onClickRow={handleClickDetail}
       />
-      <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
-          }
-        >
-          등록
-        </Button>
-      </div>
       <div className="opacity d-block pagination mt-0">
         {totalPage > perPage && (
           <div className="wrapper-device__pagination mt-0">

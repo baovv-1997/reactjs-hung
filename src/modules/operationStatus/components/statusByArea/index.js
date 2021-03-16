@@ -12,8 +12,8 @@ import {
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
-import ItemContentTab from './ItemContentTab';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const perPage = 6;
@@ -52,9 +52,12 @@ const OperationStatusPage = () => {
   };
 
   const dispatch = useDispatch();
-  // call api get list all video
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
+  // call api get list all
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+    // call api get list all
   }, [paramsSearch, dispatch]);
 
   useEffect(() => {

@@ -154,12 +154,12 @@ export const MOCKUP = {
             {
               id: 1,
               name: '발전 통계',
-              to: '#',
+              to: ROUTERS.TEST_MOCKUP_STATISTICS_DEVELOP,
             },
             {
               id: 2,
               name: '운영 통계',
-              to: '#',
+              to: ROUTERS.TEST_MOCKUP_STATISTICS_OPERATION,
             },
           ],
         },
