@@ -32,6 +32,9 @@ const ROUTERS = {
   TEST_MOCKUP_OPERATION_STATUS_DETAIL: `/test/mockup/operation-status/:id`,
   TEST_MOCKUP_OPERATION_STATUS_REGISTER: `/test/mockup/operation-status/register`,
   TEST_MOCKUP_OPERATION_STATUS_EDIT: `/test/mockup/operation-status/edit/:id`,
+
+  TEST_MOCKUP_STATISTICS_DEVELOP: `/test/mockup/statistics/development-statistics`,
+  TEST_MOCKUP_STATISTICS_OPERATION: `/test/mockup/statistics/operation-statistics`,
 };
 
 export default ROUTERS;

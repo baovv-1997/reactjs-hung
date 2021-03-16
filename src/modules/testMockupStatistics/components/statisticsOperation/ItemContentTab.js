@@ -1,21 +1,20 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
-import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
-import ROUTERS from 'constants/routers';
 import {
-  headStatusCompany,
+  headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 } from 'constants/headerTable';
-import { useHistory } from 'react-router-dom';
-import BoxGroup from '../BoxGroup';
-import GroupCompareChart from '../GroupCompareChart';
-import GroupActionDownload from '../GroupActionDownload';
+// import LineSeriesChart from '../chart';
+import Pagination from 'react-js-pagination';
+import { Button } from 'commons/components/Button';
+import BoxGroup from './BoxGroup';
+import GroupCompareChart from './GroupCompareChart';
+import GroupActionDownload from './GroupActionDownload';
 import { FilterSearch } from '../FilterSearch';
 
 type Props = {
@@ -23,6 +22,8 @@ type Props = {
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
+  handleChangeSearch: Function,
+  paramsSearch: Object,
   totalPage: number,
   perPage: number,
   totalPage2: number,
@@ -32,8 +33,6 @@ type Props = {
   }>,
   isShowModalSorting: boolean,
   handleClickDetail: Function,
-  handleChangeSearch: Function,
-  paramsSearch: Object,
   listStatusCompanySelect: Array<{
     id: number,
     value: any,
@@ -48,9 +47,11 @@ type Props = {
 
 const ItemContentTab = ({
   listMockupDataCompany,
-  dataContent,
   dataBoxContent,
+  dataContent,
   handleDownloadTrend,
+  handleChangeSearch,
+  paramsSearch,
   totalPage,
   perPage,
   totalPage2,
@@ -58,54 +59,37 @@ const ItemContentTab = ({
   tableOperationStatusByAreaCompany,
   isShowModalSorting,
   handleClickDetail,
-  handleChangeSearch,
-  paramsSearch,
   listStatusCompanySelect,
   listInverter,
 }: Props) => {
   console.log(dataContent, 'dataContent');
-  const history = useHistory();
   const dataLengthChart = [
     {
       id: 1,
-      name: 'PV전압',
+      name: 'AC전압(V)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: 'PV전류',
+      name: 'AC전류(A)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '출력전류',
+      name: 'AC전력(kW)',
       color: '#fe8224',
     },
-    {
-      id: 4,
-      name: '출력',
-      color: '#ffcc00',
-    },
-    {
-      id: 5,
-      name: '출력전압',
-      color: '#102a82',
-    },
   ];
+
   return (
     <div className="content-wrap-tab">
-      <BoxGroup
-        dataBoxContent={dataBoxContent}
-        paramsSearch={paramsSearch}
-        handleChangeSearch={handleChangeSearch}
-      />
+      <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
       />
-
       <div className="group-char">
         <div className="group-char-left">
           <GroupCompareChart
@@ -116,22 +100,21 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
-
-      <TitleSubHeader title="실시간 계측정보 통계" />
+      <TitleSubHeader title="실시간 계측 통계" />
       <GroupActionDownload
         handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
-      <div>
+      <div className="mb-4">
         <Table
-          tableHeads={headStatusCompany}
+          tableHeads={headTestMockupOperationStatus}
           tableBody={listMockupDataCompany}
           // isShowId
         />
-        <div className="opacity d-block pagination mt-0 mb-3">
+        <div className="opacity d-block pagination">
           {totalPage > perPage && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
@@ -147,9 +130,7 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-
-      {/*  Table Bottom */}
-      <TitleSubHeader title="이벤트 현황" />
+      <TitleSubHeader title="이벤트 통계" />
       <div className="group-option-table d-flex  justify-content-between mb-3">
         <SelectDropdown
           placeholder="구분"
@@ -164,6 +145,7 @@ const ItemContentTab = ({
           </Button>
         </div>
       </div>
+
       <Table
         tableHeads={headOperationStatusByAreaCompany}
         tableBody={tableOperationStatusByAreaCompany}
@@ -176,15 +158,6 @@ const ItemContentTab = ({
         }}
         onClickRow={handleClickDetail}
       />
-      <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
-          }
-        >
-          등록
-        </Button>
-      </div>
       <div className="opacity d-block pagination mt-0">
         {totalPage > perPage && (
           <div className="wrapper-device__pagination mt-0">

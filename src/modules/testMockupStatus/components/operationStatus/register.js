@@ -53,7 +53,11 @@ const StatusByAreaCompanyRegister = () => {
     };
     validation = Validator(dataValidate, rules);
     if (Object.keys(validation).length > 0) {
-      setError(validation);
+      setError({
+        ...error,
+        content: validation && validation.content,
+        company: validation && validation.company,
+      });
       setModalConform({
         ...modalConform,
         isShow: false,
@@ -104,14 +108,24 @@ const StatusByAreaCompanyRegister = () => {
             <div className="colum-right">
               <div className="group-radio">
                 <Radio
-                  onChange={() => handleChange('event', 'typeEvent')}
+                  onChange={() =>
+                    setDataSubmit({
+                      ...dataSubmit,
+                      typeEvent: 'event',
+                    })
+                  }
                   isChecked={typeEvent === 'event'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
                 />
                 <Radio
-                  onChange={() => handleChange('history', 'typeEvent')}
+                  onChange={() =>
+                    setDataSubmit({
+                      ...dataSubmit,
+                      typeEvent: 'history',
+                    })
+                  }
                   isChecked={typeEvent === 'history'}
                   labelRadio="보수 이력"
                   name="typeEvent"

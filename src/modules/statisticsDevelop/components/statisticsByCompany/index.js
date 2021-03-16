@@ -20,6 +20,8 @@ const OperationStatusPage = () => {
   // const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
+  const perPage2 = 6;
+  const totalPage2 = 100;
   const [menuTab, setMenuTab] = useState('bulk');
   console.log(menuTab, 'menuTab');
   const { isProcessing, listStatusCompanySelect } = useSelector(
@@ -34,7 +36,7 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
-    page1: 1,
+    page: 1,
     classification: 'minute',
     startDate: new Date() || null,
     endDate: new Date() || null,
@@ -67,7 +69,7 @@ const OperationStatusPage = () => {
   const getDataListStatusCompany = useCallback(() => {
     console.log('Call api on page');
   }, [
-    paramsSearch?.page1,
+    paramsSearch?.page,
     paramsSearch?.page2,
     paramsSearch?.company,
     paramsSearch?.mockupType,
@@ -160,10 +162,10 @@ const OperationStatusPage = () => {
           })
         );
         break;
-      case 'page1':
+      case 'page':
         setParamsSearch({
           ...paramsSearch,
-          page1: item,
+          page: item,
         });
         break;
       case 'page2':
@@ -236,6 +238,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     dataTableStatisticsOfModuleCompany={
                       dataTableStatisticsOfModuleCompany
                     }
@@ -260,6 +264,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     dataTableStatisticsOfModuleCompany={
                       dataTableStatisticsOfModuleCompany
                     }
@@ -284,6 +290,8 @@ const OperationStatusPage = () => {
                     dataContent={{}}
                     totalPage={totalPage}
                     perPage={perPage}
+                    totalPage2={totalPage2}
+                    perPage2={perPage2}
                     dataTableStatisticsOfModuleCompany={
                       dataTableStatisticsOfModuleCompany
                     }

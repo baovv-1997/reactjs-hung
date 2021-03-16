@@ -9,7 +9,6 @@ type Props = {
   errorMsg?: any,
   label?: string,
   disabled?: boolean,
-  inputMode?: string,
   type?: string,
   onBlur?: Function,
   onBlurWrapper?: Function,
@@ -132,7 +131,6 @@ InputPhone.defaultProps = {
   onChange: () => {},
   onKeyPress: () => {},
   onPaste: () => {},
-  inputMode: '',
   maxLength: '',
   variant: 'outline',
   customClassName: '',
@@ -145,7 +143,6 @@ InputPhone.defaultProps = {
   pattern: '',
   autocomplete: '',
   autoFocus: false,
-  isShowIcon: false,
 };
 
 export default memo<Props>(InputPhone);

@@ -1,8 +1,9 @@
 // @flow
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { mockDataArea } from 'mockData/mainData';
 import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
+import { useSelector } from 'react-redux';
 import Search from '../Search';
 import SelectDropdown from '../Select';
 import ModalEvent from './ModalEvent';
@@ -18,12 +19,30 @@ const Header = ({
   isSelect = false,
   eventCount = 0,
 }: Props) => {
-  const [option, setOption] = useState(mockDataArea[0]);
+  const {listPositions, listCompany} = useSelector(state => state?.main);
+  const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
+
+  // set option dropdown value when listposition != [];
+  useEffect(() => {
+    setOptionDropdown(listPositions[0]);
+  }, [listPositions])
+
+  // Handle Icon search Click
+  const handleIconClick = () => {
+    console.log(searchTerm);
+  }
+
+  // Handle event press key enter search
+  const handleKeyDownSearch = (e) => {
+    if (e.key === 'Enter') {
+      console.log(searchTerm);
+    }
+  }
 
   // when input search change set value
   const handleSearchChange = (e) => {
@@ -51,6 +70,9 @@ const Header = ({
             value={searchTerm}
             onChange={handleSearchChange}
             setSearchTerm={setSearchTerm}
+            options={[...listPositions,...listCompany]}
+            handleIconClick={handleIconClick}
+            handleKeyDown={handleKeyDownSearch}
           />
         ) : (
           ''
@@ -58,11 +80,11 @@ const Header = ({
         {isSelect ? (
           <SelectDropdown
             placeholder="List Selects"
-            listItem={mockDataArea}
+            listItem={listPositions}
             onChange={(ops) => {
-              setOption(ops);
+              setOptionDropdown(ops);
             }}
-            option={option}
+            option={optionDropdown}
             disabled={false}
             isSearchable={false}
             blurInputOnSelect={false}

@@ -91,6 +91,14 @@ const testMockupOperationStatusRegister = lazy(() =>
 const testMockupOperationStatusEdit = lazy(() =>
   import('modules/testMockupStatus/components/operationStatus/edit')
 );
+
+const testMockupOperationStatics = lazy(() =>
+  import('modules/testMockupStatistics/components/statisticsOperation')
+);
+const testMockupOperationStaticsDevelopment = lazy(() =>
+  import('modules/testMockupStatistics/components/statisticsDevelopment')
+);
+
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -219,6 +227,17 @@ const Router = () => {
             exact
             path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_EDIT}
             component={testMockupOperationStatusEdit}
+          />
+
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_STATISTICS_OPERATION}
+            component={testMockupOperationStatics}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_STATISTICS_DEVELOP}
+            component={testMockupOperationStaticsDevelopment}
           />
         </Switch>
       </Suspense>

@@ -9,6 +9,7 @@ import {
   tableOperationStatusByAreaCompany,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import * as SignInAction from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
@@ -23,6 +24,8 @@ const StatusByAreaCompany = () => {
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
+  const { listInverter } = useSelector((state) => state?.account);
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -31,6 +34,11 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
+    classification: 'minute',
+    startDate: new Date() || null,
+    endDate: new Date() || null,
+    vendorCompany: null,
+    inverter: null,
     company: null,
     ACVoltage: false,
     ACCurrent: false,
@@ -48,17 +56,27 @@ const StatusByAreaCompany = () => {
     moduleOutput: '378',
     moduleColor: '보라',
   };
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(StatusCompanyAction.getListStatusCompany());
   }, []);
 
   // call api get list all video
+  // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-    // call api get list
-  }, [paramsSearch, dispatch]);
+    console.log('Call api on page');
+  }, [
+    paramsSearch?.page,
+    paramsSearch?.page2,
+    paramsSearch?.company,
+    paramsSearch?.ACCurrent,
+    paramsSearch?.ACVoltage,
+    paramsSearch?.ACPower,
+    paramsSearch?.pagination,
+    paramsSearch?.pagination2,
+    dispatch,
+  ]);
 
   useEffect(() => {
     getDataListStatusCompany();
@@ -121,6 +139,47 @@ const StatusByAreaCompany = () => {
         console.log(item, 'optionCheck', name);
         setIsShowModalSorting(false);
         break;
+      case 'classification':
+        setParamsSearch({
+          ...paramsSearch,
+          classification: item,
+        });
+        break;
+      case 'inverter':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter: item,
+        });
+        break;
+      case 'vendorCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          vendorCompany: item,
+          inverter: null,
+        });
+
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: item?.value,
+          })
+        );
+        break;
+      case 'startDate':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: item,
+        });
+        break;
+      case 'endDate':
+        setParamsSearch({
+          ...paramsSearch,
+          endDate: item,
+        });
+        break;
+      case 'submitSearch':
+        // call api update list table
+        break;
       default:
         break;
     }
@@ -136,7 +195,7 @@ const StatusByAreaCompany = () => {
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="테스트(목업) 운영 현황" />
+        <TitleHeader title="테스트(목업) 운영 통계" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -161,6 +220,8 @@ const StatusByAreaCompany = () => {
                 perPage={perPage}
                 totalPage2={totalPage2}
                 perPage2={perPage2}
+                listInverter={listInverter}
+                listStatusCompanySelect={listStatusCompanySelect}
               />
             </div>
           </div>

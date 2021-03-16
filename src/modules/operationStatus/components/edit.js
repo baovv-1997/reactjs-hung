@@ -90,7 +90,7 @@ const StatusByAreaCompanyEdit = () => {
         dispatch(
           SignInAction.getListInverter({
             per_page: 0,
-            com_id: value?.value,
+            com_id: value && value.value,
           })
         );
         break;
@@ -107,8 +107,8 @@ const StatusByAreaCompanyEdit = () => {
         dispatch(
           SignInAction.getListInverter({
             per_page: 0,
-            com_id: company?.value,
-            pos_id: value?.value,
+            com_id: company && company.value,
+            pos_id: value && value.value,
           })
         );
         break;
@@ -149,14 +149,24 @@ const StatusByAreaCompanyEdit = () => {
             <div className="colum-right">
               <div className="group-radio">
                 <Radio
-                  onChange={() => handleChange('event', 'typeEvent')}
+                  onChange={() =>
+                    setDataSubmit({
+                      ...dataSubmit,
+                      typeEvent: 'event',
+                    })
+                  }
                   isChecked={typeEvent === 'event'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
                 />
                 <Radio
-                  onChange={() => handleChange('history', 'typeEvent')}
+                  onChange={() =>
+                    setDataSubmit({
+                      ...dataSubmit,
+                      typeEvent: 'history',
+                    })
+                  }
                   isChecked={typeEvent === 'history'}
                   labelRadio="보수 이력"
                   name="typeEvent"

@@ -6,6 +6,8 @@ const mainSlice = createSlice({
   initialState: {
     isLoading: false,
     listCompanyInverters: [],
+    listPositions: [],
+    listCompany: [],
     type: '',
     page: 0,
     total: 0,
@@ -44,9 +46,48 @@ const mainSlice = createSlice({
       state.listCompanyInverters = listCompanyInverters || [];
       state.total = data?.total;
       state.perPage = data?.per_page;
+      state.type = action.type;
       state.isLoading = false;
     },
     getListCompanyInvertersFailed: (state, action) => {
+      state.isLoading = false;
+      state.type = action.type;
+    },
+    getListPosition: (state, action) => {
+      state.isLoading = true;
+      state.type = action.type;
+    },
+    getListPositionSuccess: (state, action) => {
+      const {data} = action;
+      state.type = action.type;
+      const listPositions = data?.data.map(item => ({
+        id: item.id,
+        value: item.id,
+        label: item.pos_name,
+      }))
+      state.listPositions = listPositions;
+      state.isLoading = false;
+    },
+    getListPositionFailed: (state, action) => {
+      state.isLoading = false;
+      state.type = action.type;
+    },
+    getListCompany: (state, action) => {
+      state.isLoading = true;
+      state.type = action.type;
+    },
+    getListCompanySuccess: (state, action) => {
+      const {data} = action;
+      state.type = action.type;
+      const listCompany = data?.data.map(item => ({
+        id: item.id,
+        value: item.id,
+        label: item.com_name,
+      }))
+      state.listCompany = listCompany;
+      state.isLoading = false;
+    },
+    getListCompanyFailed: (state, action) => {
       state.isLoading = false;
       state.type = action.type;
     },
@@ -60,6 +101,12 @@ export const {
   getListCompanyInverters,
   getListCompanyInvertersSuccess,
   getListCompanyInvertersFailed,
+  getListPosition,
+  getListPositionSuccess,
+  getListPositionFailed,
+  getListCompany,
+  getListCompanySuccess,
+  getListCompanyFailed
 } = actions;
 
 export default reducer;

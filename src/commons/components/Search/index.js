@@ -10,6 +10,8 @@ type Props = {
   value?: string,
   onChange?: Function,
   setSearchTerm?: Function,
+  options?: Array<{id: number, name: string}>,
+  handleKeyDown: Function,
 };
 
 const Search = ({
@@ -19,6 +21,8 @@ const Search = ({
   value = '',
   onChange = () => {},
   setSearchTerm = () => {},
+  options = [],
+  handleKeyDown
 }: Props) => {
   const [display, setDisplay] = useState(false);
 
@@ -51,16 +55,17 @@ const Search = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onKeyPress={(e) => handleKeyDown(e)}
       />
 
       <img
         src={images.icon_search}
         alt="Icon Search"
         className="search__icon"
-        onClick={() => handleIconClick(value)}
+        onClick={handleIconClick}
         role="presentation"
       />
-      {display && <AutoSuggest search={value} onClick={updateSearchInput} />}
+      {display && <AutoSuggest search={value} onClick={updateSearchInput} options={options} />}
     </div>
   );
 };
@@ -72,6 +77,7 @@ Search.defaultProps = {
   onChange: () => {},
   setSearchTerm: () => {},
   handleIconClick: () => {},
+  options:[],
 };
 
 export default memo<Props>(Search);

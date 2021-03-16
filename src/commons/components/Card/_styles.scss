@@ -111,10 +111,14 @@
 
 .card-company {
   width: pxToRem(270) !important;
+  cursor: pointer;
   .card__header {
     background-color: $white;
     color: $bg-button;
     padding: pxToRem(10) pxToRem(20);
     border-bottom: pxToRem(1) solid $color-border-card;
+  }
+  .card__company {
+    margin: 0;
   }
 }

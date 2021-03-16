@@ -10,6 +10,7 @@ type Props = {
   listCompany?: any,
   logoClick: Function,
   titleClick: Function,
+  onClick: Function,
   customClass?: string,
   isCardCompany?: boolean,
   isEvent?: boolean,
@@ -18,6 +19,7 @@ type Props = {
   electricRealtime?: number,
   ratePower?: number,
   cumulativeElectric?: number,
+
 };
 
 export const Card = ({
@@ -26,6 +28,7 @@ export const Card = ({
   listCompany = [],
   logoClick,
   titleClick,
+  onClick,
   customClass = '',
   isCardCompany = false,
   isEvent = false,
@@ -36,7 +39,7 @@ export const Card = ({
   cumulativeElectric = 0,
 }: Props) => {
   return (
-    <div className={`card ${customClass}`}>
+    <div className={`card ${customClass}`} onClick={onClick} role="presentation">
       {isLogoTop && (
         <div className="card__company card__company--top">
           <img
@@ -46,7 +49,7 @@ export const Card = ({
           />
         </div>
       )}
-      <div className="card__header">
+      <div className={`card__header ${isEvent ? 'header-event' : ''}`}>
         <p
           className={`card__title ${isEvent ? 'card__event' : ''}`}
           onClick={titleClick}
