@@ -205,6 +205,41 @@ export const DeivceRegisterHead = [
   },
 ];
 
+export const AccountDetailHead = [
+  {
+    id: 1,
+    name: '권한',
+  },
+  {
+    id: 2,
+    name: '이메일',
+  },
+  {
+    id: 3,
+    name: '아이디',
+  },
+  {
+    id: 4,
+    name: '담당자',
+  },
+  {
+    id: 5,
+    name: '전화번호',
+  },
+  {
+    id: 6,
+    name: '비밀번호',
+  },
+  {
+    id: 7,
+    name: '설치일',
+  },
+  {
+    id: 8,
+    name: '관리 기기',
+  },
+];
+
 export default {
   headStatusCompany,
   headOperationStatusByAreaCompany,

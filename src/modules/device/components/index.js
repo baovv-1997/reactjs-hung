@@ -112,7 +112,7 @@ const DeviceManagement = ({ history }: Props) => {
       getListDevice({
         [currentOption]: selectOption?.value,
         keyword: valueSearch,
-        page: activePage + 1,
+        page,
       })
     );
   };

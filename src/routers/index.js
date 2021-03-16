@@ -55,6 +55,14 @@ const DashboardCompany = lazy(() =>
   import('modules/main/components/Dashboard/DashboardCompany')
 );
 
+const accountManagement = lazy(() =>
+  import('modules/accounts/components/management')
+);
+
+const accountDetail = lazy(() =>
+  import('modules/accounts/components/management/AccountDetail')
+);
+
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -130,11 +138,17 @@ const Router = () => {
             path={ROUTERS.STATISTICS_DEVELOP_AREA}
             component={statisticsDevelopByArea}
           />
-          {/* <Route
+
+          <Route
             exact
-            path={ROUTERS.DeviceManagement}
-            component={DeviceManagement}
-          /> */}
+            path={ROUTERS.ACCOUNT_MANAGEMENT_DETAIL}
+            component={accountDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.ACCOUNT_MANAGEMENT}
+            component={accountManagement}
+          />
         </Switch>
       </Suspense>
     </BrowserRouter>

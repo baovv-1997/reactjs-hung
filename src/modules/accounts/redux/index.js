@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 const initialState = {
   userInfo: {},
@@ -11,6 +12,7 @@ const initialState = {
   listCompany: [],
   listArea: [],
   listInverter: [],
+  accountList: [],
 };
 
 const accountSlice = createSlice({
@@ -122,6 +124,31 @@ const accountSlice = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+    getAccountList: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getAccountListSuccess: (state, action) => {
+      const formatAccountList = action?.data?.data.map((item) => ({
+        no: item.id,
+        dateCreate: moment(item?.created_at).format('YYYY-MM-DD'),
+        roleName: item?.roles[0]?.display_name,
+        username: item?.username,
+        email: item?.email,
+        name: item?.name,
+        phone: item?.phone,
+      }));
+      state.type = action.type;
+      state.isProcessing = true;
+      state.accountList = formatAccountList;
+      state.perPage = action?.data?.per_page;
+      state.totalPage = action?.data?.total;
+      state.type = action.type;
+    },
+    getAccountListFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
   },
 });
 
@@ -143,6 +170,9 @@ export const {
   getListInverter,
   getListInverterSuccess,
   getListInverterFailed,
+  getAccountList,
+  getAccountListFailed,
+  getAccountListSuccess,
 } = actions;
 
 export default reducer;

@@ -18,6 +18,8 @@ const ROUTERS = {
 
   STATISTICS_DEVELOP: `/statistics/develop-by-company`,
   STATISTICS_DEVELOP_AREA: `/statistics/develop-by-area`,
+  ACCOUNT_MANAGEMENT: '/accounts',
+  ACCOUNT_MANAGEMENT_DETAIL: '/accounts/:id',
 };
 
 export default ROUTERS;
