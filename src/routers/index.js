@@ -37,6 +37,15 @@ const statisticsDevelopByCompany = lazy(() =>
 const statisticsDevelopByArea = lazy(() =>
   import('modules/statisticsDevelop/components/statisticsByArea')
 );
+
+const statisticsOperationByCompany = lazy(() =>
+  import('modules/operationStatistics/components/statisticsByCompany')
+);
+
+const statisticsOperationByArea = lazy(() =>
+  import('modules/operationStatistics/components/statisticsByArea')
+);
+
 const RegisterDevice = lazy(() =>
   import('modules/device/components/RegisterDevice')
 );
@@ -54,6 +63,8 @@ const DashboardArea = lazy(() =>
 const DashboardCompany = lazy(() =>
   import('modules/main/components/Dashboard/DashboardCompany')
 );
+const TestDashboard = lazy(() => import('modules/testDashboard/components'));
+const SolarDashboard = lazy(() => import('modules/solarDashboard/components'));
 
 const accountManagement = lazy(() =>
   import('modules/accounts/components/management')
@@ -63,6 +74,23 @@ const accountDetail = lazy(() =>
   import('modules/accounts/components/management/AccountDetail')
 );
 
+const testMockupStatus = lazy(() =>
+  import('modules/testMockupStatus/components')
+);
+
+const testMockupOperationStatus = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/index')
+);
+
+const testMockupOperationStatusDetail = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/detail')
+);
+const testMockupOperationStatusRegister = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/register')
+);
+const testMockupOperationStatusEdit = lazy(() =>
+  import('modules/testMockupStatus/components/operationStatus/edit')
+);
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -127,7 +155,16 @@ const Router = () => {
             path={ROUTERS.OPERATION_STATUS_BY_AREA}
             component={operationStatusByArea}
           />
-
+          <Route
+            exact
+            path={ROUTERS.TEST_DASHBOARD}
+            component={TestDashboard}
+          />
+          <Route
+            exact
+            path={ROUTERS.SOLAR_DASHBOARD}
+            component={SolarDashboard}
+          />
           <Route
             exact
             path={ROUTERS.STATISTICS_DEVELOP}
@@ -148,6 +185,40 @@ const Router = () => {
             exact
             path={ROUTERS.ACCOUNT_MANAGEMENT}
             component={accountManagement}
+          />
+          <Route
+            path={ROUTERS.OPERATION_STATISTICS_COMPANY}
+            component={statisticsOperationByCompany}
+          />
+          <Route
+            exact
+            path={ROUTERS.OPERATION_STATISTICS_AREA}
+            component={statisticsOperationByArea}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_STATUS}
+            component={testMockupStatus}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION}
+            component={testMockupOperationStatus}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_REGISTER}
+            component={testMockupOperationStatusRegister}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_DETAIL}
+            component={testMockupOperationStatusDetail}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_EDIT}
+            component={testMockupOperationStatusEdit}
           />
         </Switch>
       </Suspense>

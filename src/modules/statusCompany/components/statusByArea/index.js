@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { listMockupDataCompany } from 'mockData/listCompany';
-// import { headStatusCompany } from 'constants/headerTable';
+import {
+  listMockupDataStatusByCompany,
+  listParkingLot,
+  listMockupType,
+} from 'mockData/listCompany';
 import * as StatusCompanyAction from '../../redux';
 import ItemContentTab from './ItemContentTab';
+import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 
 const StatusByAreaCompany = () => {
   const perPage = 6;
@@ -30,7 +33,7 @@ const StatusByAreaCompany = () => {
     page: 1,
     company: null,
     power: false,
-    temperature: false,
+    performance: false,
     insolation: false,
     pagination: defaultOption,
   };
@@ -45,7 +48,7 @@ const StatusByAreaCompany = () => {
     ],
   };
 
-  const temperatureData = {
+  const performanceData = {
     type: 'temperature',
     data: [
       { title: '현재 모듈 온도', value: '30.8' },
@@ -60,11 +63,13 @@ const StatusByAreaCompany = () => {
       { title: '경사 일사량', value: '46' },
     ],
   };
-
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
+    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
   }, [paramsSearch, dispatch]);
 
   useEffect(() => {
@@ -86,10 +91,10 @@ const StatusByAreaCompany = () => {
           power: !item,
         });
         break;
-      case 'temperature':
+      case 'performance':
         setParamsSearch({
           ...paramsSearch,
-          temperature: !item,
+          performance: !item,
         });
         break;
       case 'insolation':
@@ -125,31 +130,20 @@ const StatusByAreaCompany = () => {
     console.log('download Trend', name);
   };
 
-  const renderListCompany =
-    listStatusCompanySelect &&
-    listStatusCompanySelect.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'statusCompany')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
-          <div className="content-select-sidebar">
-            <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
-          </div>
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listStatusCompanySelect}
+            listMockupType={listMockupType}
+          />
           <div className="content-body-left">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="bulk"
                 className="list-order tab-list"
@@ -160,12 +154,12 @@ const StatusByAreaCompany = () => {
                   title={<div className="tab-name">전체</div>}
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
                     dataContent={{}}
                     handleDownloadTrend={handleDownloadTrend}
                     handleChangeSearch={handleChangeSearch}
-                    temperatureData={temperatureData}
+                    performanceData={performanceData}
                     insolationData={insolationData}
                     paramsSearch={paramsSearch}
                   />
@@ -180,12 +174,12 @@ const StatusByAreaCompany = () => {
                   }
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
                     dataContent={{}}
                     handleDownloadTrend={handleDownloadTrend}
                     handleChangeSearch={handleChangeSearch}
-                    temperatureData={temperatureData}
+                    performanceData={performanceData}
                     insolationData={insolationData}
                     paramsSearch={paramsSearch}
                   />
@@ -200,12 +194,12 @@ const StatusByAreaCompany = () => {
                   }
                 >
                   <ItemContentTab
-                    listMockupDataCompany={listMockupDataCompany}
+                    listMockupDataCompany={listMockupDataStatusByCompany}
                     powerData={powerData}
                     dataContent={{}}
                     handleDownloadTrend={handleDownloadTrend}
                     handleChangeSearch={handleChangeSearch}
-                    temperatureData={temperatureData}
+                    performanceData={performanceData}
                     insolationData={insolationData}
                     paramsSearch={paramsSearch}
                   />

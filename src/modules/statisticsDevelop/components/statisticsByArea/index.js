@@ -3,16 +3,17 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import Pagination from 'react-js-pagination';
 import {
   listMockupType,
-  listMockupDataCompany,
+  dataTableStatisticsCompany,
   listParkingLot,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import * as SignInAction from 'modules/accounts/redux';
+import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
@@ -23,157 +24,183 @@ const OperationStatusPage = () => {
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
+  const { listInverter } = useSelector((state) => state?.account);
+
   const defaultOption = {
     id: 1,
     value: 6,
     label: '6 개씩 보기',
   };
-  const defaultCheckBox = {
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+
+  const defaultSearch = {
+    page: 1,
+    classification: 'minute',
+    startDate: new Date() || null,
+    endDate: new Date() || null,
+    vendorCompany: null,
+    inverter: null,
+    company: null,
+    mockupType: null,
+    parkingLot: null,
+    insolation: false,
+    performance: false,
+    generation: false,
+    pagination: defaultOption,
   };
-  const [itemSelect, setItemSelect] = useState({});
-  const [itemSelectMocKup, setItemSelectMocKup] = useState({});
-  const [itemParkingLot, setParkingLot] = useState({});
-  const [paginationType, setPaginationType] = useState(defaultOption);
-  const [activePage, setActivePage] = useState(1);
-  const [checkBox, setCheckBox] = useState(defaultCheckBox);
 
-  const [paramsSearch, setParamsSearch] = useState({
-    sort_by: '',
-    sort_dir: '',
-    page: '',
-    keyword: '',
-  });
-
+  const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    day: '300',
+    month: '9,000',
+    year: '300',
   };
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(StatusCompanyAction.getListStatusCompany());
+  }, []);
+
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-  }, [paramsSearch, dispatch]);
+    console.log('Call api on page');
+  }, [
+    paramsSearch?.page,
+    paramsSearch?.company,
+    paramsSearch?.mockupType,
+    paramsSearch?.parkingLot,
+    paramsSearch?.insolation,
+    paramsSearch?.generation,
+    paramsSearch?.pagination,
+    dispatch,
+  ]);
 
   useEffect(() => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
 
   // console.log(type, 'type', isProcessing);
-  const handleClickSelectCompany = (item) => {
-    setItemSelect(item);
-    setParamsSearch({
-      sort_by: '',
-      sort_dir: '',
-      page: '',
-      keyword: '',
-    });
-  };
+  const handleChangeSearch = (item, name) => {
+    switch (name) {
+      case 'statusCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          company: item.id,
+        });
+        break;
+      case 'mockupType':
+        setParamsSearch({
+          ...paramsSearch,
+          mockupType: item.id,
+        });
+        break;
+      case 'parkingLot':
+        setParamsSearch({
+          ...paramsSearch,
+          parkingLot: item.id,
+        });
+        break;
+      case 'generation':
+        setParamsSearch({
+          ...paramsSearch,
+          generation: !item,
+        });
+        break;
+      case 'performance':
+        setParamsSearch({
+          ...paramsSearch,
+          performance: !item,
+        });
+        break;
+      case 'insolation':
+        setParamsSearch({
+          ...paramsSearch,
+          insolation: !item,
+        });
+        break;
+      case 'classification':
+        setParamsSearch({
+          ...paramsSearch,
+          classification: item,
+        });
+        break;
+      case 'pagination':
+        setParamsSearch({
+          ...paramsSearch,
+          pagination: item,
+        });
+        break;
 
-  const handleClickSelectMocKup = (item) => {
-    console.log(item);
-    setItemSelectMocKup(item);
-  };
+      case 'inverter':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter: item,
+        });
+        break;
+      case 'vendorCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          vendorCompany: item,
+          inverter: null,
+        });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: item?.value,
+          })
+        );
 
-  const handleClickSelectParkingLot = (item) => {
-    setParkingLot(item);
-  };
-
-  const handleToggleCheckbox = (check, name) => {
-    setCheckBox({
-      ...checkBox,
-      [name]: !check,
-    });
-  };
-
-  const handleChangePagination = (option) => {
-    setPaginationType(option);
+        break;
+      case 'page':
+        setParamsSearch({
+          ...paramsSearch,
+          page: item,
+        });
+        break;
+      case 'startDate':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: item,
+        });
+        break;
+      case 'endDate':
+        setParamsSearch({
+          ...paramsSearch,
+          endDate: item,
+        });
+        break;
+      case 'submitSearch':
+        // call api update list table
+        break;
+      default:
+        break;
+    }
   };
 
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setPaginationType(defaultOption);
-    setCheckBox(defaultCheckBox);
+    setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadRaw = () => {
-    console.log('download Raw');
+  const handleDownloadTrend = (name) => {
+    console.log(name, 'download Trend');
   };
-
-  const handleDownloadTrend = () => {
-    console.log('download Trend');
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
-
-  const renderListCompany =
-    listStatusCompanySelect &&
-    listStatusCompanySelect.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleClickSelectCompany(item)}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${itemSelect?.id === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
-  const renderListMocKup =
-    listMockupType &&
-    listMockupType.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleClickSelectMocKup(item)}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${itemSelectMocKup?.id === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
-  const renderListParkingLot =
-    listParkingLot &&
-    listParkingLot.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleClickSelectParkingLot(item)}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${itemParkingLot?.id === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
 
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+        <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">
-          <div className="content-select-sidebar">
-            <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
-
-            <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-            <ul className="list-item-select">{renderListMocKup}</ul>
-            <TitleSubHeader title="주차장" className="mt-5" />
-            <ul className="list-item-select">{renderListParkingLot}</ul>
-          </div>
-          <div className="content-body-left">
-            <div>
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listStatusCompanySelect}
+            listMockupType={listMockupType}
+          />
+          <div className="content-body-left w-100">
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="all"
                 className="list-order tab-list"
@@ -185,78 +212,62 @@ const OperationStatusPage = () => {
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
-                    handlePageChange={handlePageChange}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    activePage={activePage}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
+                    paramsSearch={paramsSearch}
+                    handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
                 <Tab
                   eventKey="coes"
                   title={
                     <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
+                      코에스<span>인버터 ID</span>
                     </div>
                   }
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
-                    handlePageChange={handlePageChange}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    activePage={activePage}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
+                    paramsSearch={paramsSearch}
+                    handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
                 <Tab
                   eventKey="SK-Solar"
                   title={
                     <div className="tab-name">
-                      에스케이솔라<span>인버터 ID</span>
+                      에스케이솔라<span>인버터 ID </span>
                     </div>
                   }
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleToggleCheckbox={handleToggleCheckbox}
-                    checkBox={checkBox}
-                    handleChangePagination={handleChangePagination}
-                    paginationType={paginationType}
-                    handleDownloadRaw={handleDownloadRaw}
+                    dataTableStatisticsCompany={dataTableStatisticsCompany}
                     handleDownloadTrend={handleDownloadTrend}
                     dataContent={{}}
-                    handlePageChange={handlePageChange}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    activePage={activePage}
+                    listInverter={listInverter}
+                    listStatusCompanySelect={listStatusCompanySelect}
+                    paramsSearch={paramsSearch}
+                    handleChangeSearch={handleChangeSearch}
                   />
                 </Tab>
-
-                <div className="opacity d-block pagination">
+                <div className="opacity d-block pagination mt-0">
                   {totalPage > perPage && (
-                    <div className="wrapper-device__pagination">
+                    <div className="wrapper-device__pagination mt-0">
                       <Pagination
-                        activePage={activePage}
+                        activePage={paramsSearch?.page}
                         itemsCountPerPage={perPage}
                         totalItemsCount={totalPage}
                         pageRangeDisplayed={5}
-                        onChange={handlePageChange}
+                        onChange={(e) => handleChangeSearch(e, 'page')}
                         itemClass="page-item"
                         linkClass="page-link"
                       />

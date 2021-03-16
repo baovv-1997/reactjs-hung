@@ -1,9 +1,11 @@
 // @flow
-import React, { memo, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import { mockDataArea } from 'mockData/mainData';
 import images from 'themes/images';
+import useClickOutside from 'customHooks/useClickOutSide';
 import Search from '../Search';
 import SelectDropdown from '../Select';
+import ModalEvent from './ModalEvent';
 
 type Props = {
   isSearch?: boolean,
@@ -16,7 +18,23 @@ const Header = ({
   isSelect = false,
   eventCount = 0,
 }: Props) => {
-  const [option, seOption] = useState(mockDataArea[0]);
+  const [option, setOption] = useState(mockDataArea[0]);
+  const [isShow, setIsShow] = useState(false);
+
+  const wrapperRef = useRef(null);
+  const iconRef = useRef(null);
+
+  // handle click outside event
+  useClickOutside(
+    wrapperRef,
+    () => {
+      if (isShow) {
+        setIsShow(false);
+      }
+    },
+    { iconRef }
+  );
+
   return (
     <div className="header">
       <div className="header__left">
@@ -33,7 +51,7 @@ const Header = ({
             placeholder="List Selects"
             listItem={mockDataArea}
             onChange={(ops) => {
-              seOption(ops);
+              setOption(ops);
             }}
             option={option}
             disabled={false}
@@ -51,6 +69,9 @@ const Header = ({
             src={images.icon_event}
             alt="Icon Event"
             className="header__icon"
+            onClick={() => setIsShow(!isShow)}
+            role="presentation"
+            ref={iconRef}
           />
           {eventCount > 0 ? (
             <span className="header__notification">eventCount</span>
@@ -61,6 +82,10 @@ const Header = ({
 
         <div className="header__label-event">
           <span className="header__label-content">이벤트발생</span>
+
+          {/* Modal event */}
+
+          <ModalEvent isShow={isShow} wrapperRef={wrapperRef} />
         </div>
       </div>
     </div>

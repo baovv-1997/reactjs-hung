@@ -1,5 +1,5 @@
 .card {
-  width: fit-content;
+  width: pxToRem(300);
   background-color: $white;
   border-radius: pxToRem(15);
   box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $box-shadow-card;
@@ -59,8 +59,8 @@
   }
 
   &__item {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: pxToRem(7);
     &__name {
@@ -78,35 +78,16 @@
       letter-spacing: pxToRem(-0.6);
       text-align: right;
       color: $color-number-card;
-    }
-  }
-
-  &__progress {
-    width: pxToRem(100);
-    height: pxToRem(12);
-    background-color: $progress-default;
-    margin: 0 pxToRem(10);
-    &-bar {
-      height: 100%;
+      margin-right: pxToRem(5);
     }
 
-    .progress-color1 {
-      background-color: $color-progress1;
-    }
-    .progress-color2 {
-      background-color: $color-progress2;
-    }
-    .progress-color3 {
-      background-color: $color-progress3;
-    }
-    .progress-color4 {
-      background-color: $color-progress4;
-    }
-    .progress-color5 {
-      background-color: $color-progress5;
-    }
-    .progress-color6 {
-      background-color: $color-progress6;
+    &__unit {
+      font-family: $Roboto-Font;
+      font-size: pxToRem(15);
+      font-weight: bold;
+      line-height: 1.2;
+      letter-spacing: pxToRem(-0.45);
+      color: $black-light;
     }
   }
 
@@ -125,5 +106,15 @@
     &--top {
       margin: pxToRem(9) 0;
     }
+  }
+}
+
+.card-company {
+  width: pxToRem(350) !important;
+  .card__header {
+    background-color: $white;
+    color: $bg-button;
+    padding: pxToRem(10) pxToRem(20);
+    border-bottom: pxToRem(1) solid $color-border-card;
   }
 }

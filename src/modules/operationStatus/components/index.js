@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+
 import {
   listMockupType,
   listMockupDataCompany,
@@ -15,6 +15,7 @@ import {
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import ROUTERS from 'constants/routers';
+import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
 
@@ -45,17 +46,17 @@ const OperationStatusPage = () => {
     outputVoltage: false,
     outputCurrent: false,
     print: false,
-    pagination1: defaultOption,
+    pagination: defaultOption,
     pagination2: defaultOption,
   };
 
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    day: '300',
-    month: '9,000',
-    year: '300',
-    plus: '10.8',
+    angleOfIncidence: '15',
+    azimuth: '남동10',
+    moduleOutput: '378',
+    moduleColor: '보라',
   };
 
   const dispatch = useDispatch();
@@ -118,10 +119,10 @@ const OperationStatusPage = () => {
           outputVoltage: !item,
         });
         break;
-      case 'pagination1':
+      case 'pagination':
         setParamsSearch({
           ...paramsSearch,
-          pagination1: item,
+          pagination: item,
         });
         break;
       case 'pagination2':
@@ -169,63 +170,20 @@ const OperationStatusPage = () => {
     console.log(name, 'download Trend');
   };
 
-  const renderListCompany =
-    listStatusCompanySelect &&
-    listStatusCompanySelect.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'statusCompany')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
-  const renderListMocKup =
-    listMockupType &&
-    listMockupType.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'mockupType')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
-  const renderListParkingLot =
-    listParkingLot &&
-    listParkingLot.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'parkingLot')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
-
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+        <TitleHeader title="실증단지 운영 현황" />
         <div className="content-body page-company">
-          <div className="content-select-sidebar">
-            <TitleSubHeader title="실증단지" />
-            <ul className="list-item-select">{renderListCompany}</ul>
-            <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-            <ul className="list-item-select">{renderListMocKup}</ul>
-            <TitleSubHeader title="주차장" className="mt-5" />
-            <ul className="list-item-select">{renderListParkingLot}</ul>
-          </div>
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listStatusCompanySelect}
+            listMockupType={listMockupType}
+          />
           <div className="content-body-left w-100">
-            <div>
+            <div className="h-100">
               <Tabs
                 defaultActiveKey="all"
                 className="list-order tab-list"
@@ -233,7 +191,11 @@ const OperationStatusPage = () => {
               >
                 <Tab
                   eventKey="all"
-                  title={<div className="tab-name">전체</div>}
+                  title={
+                    <div className="tab-name">
+                      아반시스코리아<span>전체</span>
+                    </div>
+                  }
                 >
                   <ItemContentTab
                     dataBoxContent={dataBoxContent}
@@ -255,7 +217,7 @@ const OperationStatusPage = () => {
                   eventKey="coes"
                   title={
                     <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
+                      인버터 ID <span>본관 남측</span>
                     </div>
                   }
                 >
@@ -279,7 +241,7 @@ const OperationStatusPage = () => {
                   eventKey="SK-Solar"
                   title={
                     <div className="tab-name">
-                      에스케이솔라 <span>인버터 ID</span>
+                      인버터 ID<span>본관 동측</span>
                     </div>
                   }
                 >

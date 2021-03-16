@@ -38,7 +38,11 @@ const AccountDetail = ({ match, history }: Props) => {
         />
         <TitleSubHeader title="계정 정보" />
 
-        <FormDetail history={history} accountDetail={accountDetail} />
+        <FormDetail
+          history={history}
+          accountDetail={accountDetail}
+          deviceList={accountDetail && accountDetail.devices}
+        />
       </div>
     </MainLayout>
   );

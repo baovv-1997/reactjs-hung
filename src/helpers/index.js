@@ -60,3 +60,72 @@ export const renderLabelType = (type) => {
   }
   return label;
 };
+
+export const spliceCompanyInverter = (comapyInverter) => {
+  let countIndex = 0;
+
+  comapyInverter.map((item, index) => {
+    const { id, nameComany, listInverter } = item;
+
+    if (listInverter.length === 4 && countIndex === 1) {
+      const newListInverter = listInverter.splice(3);
+      comapyInverter.splice(index + 1, 0, {
+        id,
+        nameComany,
+        listInverter: newListInverter,
+      });
+    }
+
+    if (listInverter.length === 4 && countIndex === 2) {
+      const newListInverter = listInverter.splice(2);
+      comapyInverter.splice(index + 1, 0, {
+        id,
+        nameComany,
+        listInverter: newListInverter,
+      });
+    }
+
+    if (listInverter.length === 4 && countIndex === 3) {
+      const newListInverter = listInverter.splice(1);
+      comapyInverter.splice(index + 1, 0, {
+        id,
+        nameComany,
+        listInverter: newListInverter,
+      });
+    }
+
+    if (listInverter.length === 3 && countIndex === 2) {
+      const newListInverter = listInverter.splice(2);
+      console.log(newListInverter, 'newListInverter');
+      comapyInverter.splice(index + 1, 0, {
+        id,
+        nameComany,
+        listInverter: newListInverter,
+      });
+    }
+
+    if (listInverter.length === 3 && countIndex === 3) {
+      const newListInverter = listInverter.splice(1);
+      comapyInverter.splice(index + 1, 0, {
+        id,
+        nameComany,
+        listInverter: newListInverter,
+      });
+    }
+
+    if (listInverter.length === 2 && countIndex === 3) {
+      const newListInverter = listInverter.splice(1);
+      comapyInverter.splice(index + 1, 0, {
+        id,
+        nameComany,
+        listInverter: newListInverter,
+      });
+    }
+    countIndex += listInverter.length;
+    return comapyInverter;
+  });
+};
+
+export const formatNumber = (num) => {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+};

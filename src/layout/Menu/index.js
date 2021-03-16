@@ -2,7 +2,7 @@
 // libs
 import React, { useState, memo } from 'react';
 import { withRouter } from 'react-router-dom';
-import { DASHBOARD, SETUP } from 'constants/listMenu';
+import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
 import MenuItem from './MenuItem';
 
 type Props = {
@@ -50,6 +50,14 @@ const Menu = ({ location }: Props) => {
         </p>
       </div>
       <ul className="menu__list">{renderMenuList(DASHBOARD)}</ul>
+
+      <div className="menu__wraper-head">
+        <p className="menu__info">
+          <img src={MOCKUP?.icon} alt="menu" />
+          <span>{MOCKUP?.label}</span>
+        </p>
+      </div>
+      <ul className="menu__list">{renderMenuList(MOCKUP)}</ul>
 
       <div className="menu__wraper-head">
         <p className="menu__info">

@@ -43,7 +43,6 @@ const StatusByAreaCompanyRegister = () => {
   useEffect(() => {
     dispatch(SignInAction.getListCompany());
     dispatch(SignInAction.getListArea());
-
     // eslint-disable-next-line
   }, []);
 
@@ -65,25 +64,75 @@ const StatusByAreaCompanyRegister = () => {
     };
     validation = Validator(dataValidate, rules);
     if (Object.keys(validation).length > 0) {
-      setError({
-        ...error,
-        validation,
-      });
+      setError(validation);
       setModalConform({
         ...modalConform,
         isShow: false,
       });
       return;
     }
+    // Call api register event
     history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
   };
 
   const handleChange = (value, name) => {
-    console.log(value, name);
-    setDataSubmit({
-      ...dataSubmit,
-      [name]: value,
-    });
+    switch (name) {
+      case 'company':
+        setError({
+          ...error,
+          company: '',
+        });
+        setDataSubmit({
+          ...dataSubmit,
+          company: value,
+          inverter: '',
+        });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: value?.value,
+          })
+        );
+        break;
+      case 'area':
+        setDataSubmit({
+          ...dataSubmit,
+          area: value,
+          inverter: '',
+        });
+        setError({
+          ...error,
+          area: '',
+        });
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: company?.value,
+            pos_id: value?.value,
+          })
+        );
+        break;
+      case 'inverter':
+        setDataSubmit({
+          ...dataSubmit,
+          inverter: value,
+        });
+        setError({
+          ...error,
+          inverter: '',
+        });
+        break;
+      default:
+        setDataSubmit({
+          ...dataSubmit,
+          [name]: value,
+        });
+        setError({
+          ...error,
+          [name]: '',
+        });
+        break;
+    }
   };
 
   return (

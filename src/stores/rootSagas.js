@@ -16,6 +16,8 @@ import getAccountListSaga from 'modules/accounts/sagas/getAccountListSaga';
 import updateAccountSaga from 'modules/accounts/sagas/updateAccountSaga';
 
 import getListStatusCompanySaga from 'modules/statusCompany/sagas/getListCompanySaga';
+import getListDeviceTestDashboardSaga from 'modules/testDashboard/saga/getListDeviceSaga';
+import getListDeviceTestSolarDashboardSaga from 'modules/solarDashboard/saga/getListDeviceSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -33,5 +35,7 @@ export default function* RootSagas() {
     addDeviceSaga(),
     getAccountListSaga(),
     updateAccountSaga(),
+    getListDeviceTestDashboardSaga(),
+    getListDeviceTestSolarDashboardSaga(),
   ]);
 }

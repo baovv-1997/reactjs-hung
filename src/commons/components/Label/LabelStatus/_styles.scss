@@ -67,13 +67,14 @@
 }
 
 .label-status-v2 {
-  min-width: pxToRem(340);
+  min-width: pxToRem(330);
   height: pxToRem(140);
   margin-right: pxToRem(10);
   padding: pxToRem(20);
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 
   &.style3 {
     .wrap-icon {

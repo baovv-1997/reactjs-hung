@@ -38,27 +38,8 @@ const FormDetail = ({ accountDetail, history }: Props) => {
   const [isUpdateFailed, setIsUpdateFailed] = useState(false);
   const [isCancel, setIsCancel] = useState(false);
 
-  const deviceFormat =
-    accountDetail &&
-    accountDetail.devices &&
-    accountDetail.devices.map((item) => ({
-      company: {
-        value: item?.company?.id,
-        label: item?.company?.com_name,
-      },
+  const [devices, setDevices] = useState([]);
 
-      inverter: {
-        value: item?.id,
-        label: item?.ds_name,
-      },
-      position: {
-        value: item?.position?.id,
-        label: item?.position?.pos_name,
-      },
-      id: item.id,
-    }));
-
-  const [devices, setDevices] = useState(deviceFormat);
   const [inputValue, setInputValue] = useState({
     name: accountDetail?.name,
     phone: accountDetail?.phone,
@@ -70,7 +51,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     const { name } = e.target;
     setCurrentOption(name);
   };
-
+  console.log('devices', devices);
   // handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -156,6 +137,26 @@ const FormDetail = ({ accountDetail, history }: Props) => {
 
   useEffect(() => {
     setInputValue({ ...inputValue, name: accountDetail?.name });
+    const deviceFormat =
+      accountDetail &&
+      accountDetail.devices &&
+      accountDetail.devices.map((item) => ({
+        company: {
+          value: item?.company?.id,
+          label: item?.company?.com_name,
+        },
+
+        inverter: {
+          value: item?.id,
+          label: item?.ds_name,
+        },
+        position: {
+          value: item?.position?.id,
+          label: item?.position?.pos_name,
+        },
+        id: item.id,
+      }));
+    setDevices(deviceFormat);
   }, [accountDetail]);
 
   const errorsMessage = Object.values(errors).map((item) => {
@@ -165,6 +166,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
       </ul>
     );
   });
+
   useEffect(() => {
     switch (type) {
       case 'accounts/updateAccountFailed':

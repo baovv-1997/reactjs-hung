@@ -1,38 +1,31 @@
 // @flow
 import React from 'react';
+import { formatNumber } from 'helpers';
 
 type Props = {
   name?: string,
-  customClass?: string,
   specifications?: string,
-  progress?: number,
+  unit?: string,
 };
 
-const CardItem = ({
-  name = '',
-  customClass = '',
-  specifications = '',
-  progress = null,
-}: Props) => {
+const CardItem = ({ name = '', specifications = '', unit = '' }: Props) => {
   return (
     <div className="card__item">
       <p className="card__item__name">{name}</p>
-      <div className="card__progress">
-        <div
-          className={`card__progress-bar ${customClass}`}
-          style={{ width: `${progress}%` }}
-        />
+      <div className="card__item__group-specifications">
+        <span className="card__item__number">
+          {formatNumber(specifications)}
+        </span>
+        <span className="card__item__unit">{unit}</span>
       </div>
-      <span className="card__item__number">{specifications}</span>
     </div>
   );
 };
 
 CardItem.defaultProps = {
   name: '',
-  customClass: '',
   specifications: '',
-  progress: null,
+  unit: '',
 };
 
 export default CardItem;
