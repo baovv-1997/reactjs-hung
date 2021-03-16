@@ -138,12 +138,12 @@ export const MOCKUP = {
             {
               id: 1,
               name: '발전 현황',
-              to: '#',
+              to: ROUTERS.TEST_MOCKUP_STATUS,
             },
             {
               id: 2,
               name: '운영 현황',
-              to: '#',
+              to: ROUTERS.TEST_MOCKUP_OPERATION,
             },
           ],
         },
