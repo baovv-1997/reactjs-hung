@@ -115,13 +115,15 @@ const FormRegister = ({ history }: Props) => {
     }
   }, [type]);
 
-  const errorsMessage = Object.values(errorsAddDevice).map((item, index) => {
-    return (
-      <ul className="error-list" key={index}>
-        <li>{item && item[0]}</li>
-      </ul>
-    );
-  });
+  const errorsMessage =
+    errorsAddDevice &&
+    Object.values(errorsAddDevice).map((item, index) => {
+      return (
+        <ul className="error-list" key={index}>
+          <li>{item && item[0]}</li>
+        </ul>
+      );
+    });
   return (
     <div>
       <div className="register__form col-span">

@@ -1,13 +1,17 @@
 .wrapper-device {
-  background-color: white;
-  // margin-top: pxToRem(97);
-  // margin-bottom: pxToRem(20);
+  margin: pxToRem(85) pxToRem(20) pxToRem(20);
+  padding: pxToRem(20);
+  min-height: 85vh;
+  // min-width: pxToRem(1670);
+  background-color: $white;
   border-radius: pxToRem(15);
-  padding: 0 pxToRem(20);
+
+  @include customerSelect(37);
 
   &__head-menu {
     &__title {
       font-family: $Noto-Sans-Font;
+
       &__text {
         font-size: pxToRem(20);
         font-weight: 900;
@@ -27,11 +31,14 @@
         color: $gray-shadow;
       }
     }
+
     &__search {
-      margin-left: pxToRem(10);
       display: flex;
       align-items: center;
       margin-top: pxToRem(25);
+      margin: pxToRem(20) 0 pxToRem(20) 0;
+      justify-content: space-between;
+
       &__options {
         display: flex;
 
@@ -43,6 +50,7 @@
           color: $bg-button;
           font-weight: bold;
         }
+
         .search-option-character {
           color: $bg-button;
           opacity: 0.3;
@@ -55,6 +63,7 @@
       .customer-select {
         max-width: pxToRem(140);
       }
+
       &__input {
         position: relative;
 
@@ -66,10 +75,12 @@
           cursor: pointer;
           width: pxToRem(20);
           height: pxToRem(20);
+
           img {
             left: pxToRem(60);
           }
         }
+
         .wrapper-input-search {
           border-radius: pxToRem(3);
           border: solid 1px $color-light10;
@@ -78,6 +89,7 @@
           height: pxToRem(39);
           padding-left: pxToRem(55);
         }
+
         .wrapper-input-search::placeholder {
           font-size: pxToRem(15);
           line-height: 1.47;
@@ -123,7 +135,7 @@
   }
 
   &__table {
-    margin-top: pxToRem(30);
+    margin-top: pxToRem(20);
     min-height: 70vh;
   }
 
@@ -134,10 +146,13 @@
   }
 
   .device-detail {
+    @include customerSelect(32);
+
     &__title {
       display: flex;
       align-items: center;
       margin-left: pxToRem(10);
+
       p {
         font-family: $Noto-Sans-Font;
         font-size: pxToRem(18);
@@ -157,8 +172,9 @@
 
     .col-span {
       .col-item {
-        border-top: solid pxToRem(2) $color-light10;
+        border-top: solid pxToRem(1) $color-light10;
         border-bottom: none;
+
         .cell {
           border-top: none;
           border-bottom: none;
@@ -181,8 +197,25 @@
         }
       }
     }
+
+    .col-item.col-2 {
+      .cell {
+        background-color: $bg-light10;
+        font-size: pxToRem(17);
+        font-weight: bold;
+        line-height: 1.47;
+        letter-spacing: pxToRem(-0.51);
+        text-align: center;
+        color: $bg-button;
+        text-align: center;
+        justify-content: center;
+        border-left: 0;
+      }
+    }
+
     &__form {
       display: flex;
+
       .col-item {
         padding: 0;
 
@@ -197,7 +230,7 @@
           input {
             border: none;
             padding: 0;
-            height: pxToRem(36);
+            height: pxToRem(32);
             width: 100%;
             padding-left: pxToRem(20);
           }
@@ -208,14 +241,14 @@
         }
 
         .cell:first-child {
-          border-left: solid pxToRem(0.25) $color-light10;
+          // border-left: solid pxToRem(0.25) $color-light10;
           width: 100%;
           height: pxToRem(50) !important;
         }
       }
 
       .col-item:first-child {
-        border-left: pxToRem(0.5) solid $color-light10;
+        // border-left: pxToRem(0.5) solid $color-light10;
         height: pxToRem(50) !important;
       }
 
@@ -255,6 +288,7 @@
 
 .group-button {
   justify-content: center !important;
+
   .btn-custom {
     width: pxToRem(200);
     height: pxToRem(60);
@@ -270,12 +304,39 @@
 .register {
   &__form {
     display: flex;
+
+    &.col-span {
+      .col-item {
+        &.col-10 {
+          border-right: 0 !important;
+        }
+
+        .cell {
+          border-top: 0 !important;
+          border-left: 0 !important;
+        }
+      }
+    }
+
     .col-item {
       padding: 0;
+      border-top-width: 0.5px;
+
+      &.col-4 {
+        &:last-child {
+          border-right: 0 !important;
+        }
+      }
+
+      .col-10 {
+        border-right: 0;
+      }
+
       img {
         position: absolute;
         left: pxToRem(165);
       }
+
       .cell {
         border: solid pxToRem(0.25) $color-light10;
         width: 100%;
@@ -283,20 +344,28 @@
         display: flex;
         align-items: center;
         padding-left: pxToRem(20);
+        border-top: 0;
+        border-left: 0;
+
+        &:last-child {
+          border-bottom: 0;
+        }
 
         .customer-select {
           height: pxToRem(30);
           display: flex;
           align-items: center;
           width: pxToRem(180);
+
           .css-2b097c-container {
             width: pxToRem(180);
           }
         }
+
         input {
           border: solid 1px #e3e3e3;
           padding: 0;
-          height: pxToRem(36);
+          height: pxToRem(32);
           width: pxToRem(180);
           padding-left: pxToRem(20);
           border-radius: pxToRem(3);
@@ -308,7 +377,7 @@
       }
 
       .cell:first-child {
-        border-left: solid pxToRem(0.25) $color-light10;
+        // border-left: solid pxToRem(0.25) $color-light10;
         width: 100%;
         height: pxToRem(50) !important;
       }
@@ -355,6 +424,7 @@
   text-align: left;
   font-size: pxToRem(18);
   color: $color-label-event;
+
   li {
     list-style: disc;
   }
