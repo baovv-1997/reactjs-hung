@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
+import { formatValue } from 'helpers';
 
 const initialState = {
   userInfo: {},
@@ -139,7 +140,7 @@ const accountSlice = createSlice({
           username: item?.username,
           email: item?.email,
           name: item?.name,
-          phone: item?.phone,
+          phone: item?.phone && formatValue(item?.phone),
         }));
       } else {
         state.accountDetail = action?.data;

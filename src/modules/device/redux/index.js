@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { renderLabelType } from 'helpers/';
+import { renderLabelType, formatValue } from 'helpers/';
 // import moment from 'moment';
 
 const mainSlice = createSlice({
@@ -67,7 +67,9 @@ const mainSlice = createSlice({
         dsType: renderLabelType(item?.ds_type),
         position: item?.position?.pos_name,
         moduleName: item?.ds_name,
-        dsManager: `${item?.ds_manager} / ${item?.ds_manager_phone}`,
+        dsManager: `${item?.ds_manager} / ${formatValue(
+          item?.ds_manager_phone
+        )}`,
         id: item?.id,
       }));
       state.isLoading = false;

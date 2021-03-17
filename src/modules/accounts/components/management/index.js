@@ -23,17 +23,12 @@ type Props = {
 const AccountManagement = ({ history }: Props) => {
   const dispatch = useDispatch();
   const accountList = useSelector((state) => state?.account?.accountList);
-  const isProcessing = useSelector((state) => state?.device?.isProcessing);
+  const isProcessing = useSelector((state) => state?.account?.isProcessing);
   const totalPage = useSelector((state) => state?.account?.totalPage);
   const perPage = useSelector((state) => state?.account?.perPage);
   const [currentOption, setCurrentOption] = useState('all');
   const [valueSearch, setValueSearch] = useState('');
   const [activePage, setActivePage] = useState(1);
-
-  // useEffect(() => {
-  //   dispatch(getListCompany());
-  //   dispatch(getListPosition());
-  // }, []);
 
   // handle input change
   const handleInputChange = (e) => {
@@ -83,7 +78,11 @@ const AccountManagement = ({ history }: Props) => {
       })
     );
   };
-
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmitSearch();
+    }
+  };
   const handlePageChange = (page) => {
     setActivePage(page);
     dispatch(
@@ -119,6 +118,7 @@ const AccountManagement = ({ history }: Props) => {
                 customClass="wrapper-input-search"
                 onChange={handleInputChange}
                 value={valueSearch}
+                onKeyPress={(e) => handleKeyDown(e)}
               />
               <img
                 src={IMAGES.icon_search}
