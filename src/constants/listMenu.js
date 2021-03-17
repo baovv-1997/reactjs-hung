@@ -113,7 +113,7 @@ export const SETUP = {
   icon: IMAGES.setup,
   items: [
     { id: 1, name: '계정 관리', to: '/accounts' },
-    { id: 1, name: '기기 관리', to: '/devices' },
+    { id: 2, name: '기기 관리', to: '/devices' },
   ],
 };
 

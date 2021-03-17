@@ -2,11 +2,10 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { ROUTES, API } from '../../../apis';
 import * as TestDashboardAction from '../redux';
 
-function* getListDeviceTestDashboard() {
+function* getListDeviceTestDashboard(action) {
   try {
-    const type = 'test_mockup';
     const response = yield call(() =>
-      API.get(`${ROUTES.GET_LIST_CARD_MEASURE}?type=${type}`)
+      API.get(ROUTES.GET_LIST_CARD_MEASURE, action.payload)
     );
 
     if (response.ok) {

@@ -1,6 +1,8 @@
 import MainLayout from 'layout/MainLayout';
 import { mockDataMain } from 'mockData/mainData';
-import React from 'react';
+import { getListPosition } from 'modules/main/redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import IMAGES from 'themes/images';
 import InfoReality from '../../InfoReality';
 import TotalPower from '../../TotalPower';
@@ -8,10 +10,17 @@ import VitualData from '../../VitualData';
 import WeeklyElectric from '../../WeeklyElectric';
 
 const DashboardArea = () => {
+  const dispatch = useDispatch();
+  const {isLoading} = useSelector((state) => state?.main);
   const { totalPower, infoReality, vitualData } = mockDataMain;
 
+  useEffect(() => {
+    dispatch(getListPosition());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   return (
-    <MainLayout isSelect>
+    <MainLayout isSelect isProcessing={isLoading}>
       <div className="dashboard-area">
         {/* thong tin  */}
 

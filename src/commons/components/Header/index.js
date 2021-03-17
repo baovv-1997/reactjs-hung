@@ -1,8 +1,10 @@
 // @flow
-import React, { memo, useRef, useState } from 'react';
-import { mockDataArea } from 'mockData/mainData';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
+import { useDispatch, useSelector } from 'react-redux';
+import useDebounce from 'customHooks/useDebounce';
+import { getListCompany, getListPosition } from 'modules/main/redux';
 import Search from '../Search';
 import SelectDropdown from '../Select';
 import ModalEvent from './ModalEvent';
@@ -18,11 +20,47 @@ const Header = ({
   isSelect = false,
   eventCount = 0,
 }: Props) => {
-  const [option, setOption] = useState(mockDataArea[0]);
+
+  const dispatch = useDispatch();
+  const {listPositions, listCompany, isSpinner} = useSelector(state => state?.main);
+  const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if(debouncedSearchTerm) {
+      dispatch(getListCompany({keyword: debouncedSearchTerm}));
+    dispatch(getListPosition({keyword: debouncedSearchTerm}));
+    }
+  }, [debouncedSearchTerm])
+
+  // set option dropdown value when listposition != [];
+  useEffect(() => {
+    setOptionDropdown(listPositions[0]);
+  }, [listPositions])
+
+  // Handle Icon search Click
+  const handleIconClick = () => {
+    console.log(searchTerm);
+  }
+
+  // Handle event press key enter search
+  const handleKeyDownSearch = (e) => {
+    if (e.key === 'Enter') {
+      console.log(searchTerm);
+    }
+  }
+
+  // when input search change set value
+  const handleSearchChange = (e) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+  };
 
   // handle click outside event
   useClickOutside(
@@ -41,7 +79,13 @@ const Header = ({
         {isSearch ? (
           <Search
             placeholder="회사명이나 구역명으로 검색해보세요."
-            handleClick={() => {}}
+            value={searchTerm}
+            onChange={handleSearchChange}
+            setSearchTerm={setSearchTerm}
+            options={[...listPositions,...listCompany]}
+            handleIconClick={handleIconClick}
+            handleKeyDown={handleKeyDownSearch}
+            isSpinner={isSpinner}
           />
         ) : (
           ''
@@ -49,11 +93,11 @@ const Header = ({
         {isSelect ? (
           <SelectDropdown
             placeholder="List Selects"
-            listItem={mockDataArea}
+            listItem={listPositions}
             onChange={(ops) => {
-              setOption(ops);
+              setOptionDropdown(ops);
             }}
-            option={option}
+            option={optionDropdown}
             disabled={false}
             isSearchable={false}
             blurInputOnSelect={false}
