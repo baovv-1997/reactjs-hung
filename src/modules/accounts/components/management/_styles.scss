@@ -1,14 +1,16 @@
 .account {
-  background-color: white;
-  // margin-top: pxToRem(97);
-  // margin-bottom: pxToRem(20);
+  margin: pxToRem(85) pxToRem(20) pxToRem(20);
+  padding: pxToRem(20);
+  // min-width: pxToRem(1670);
+  background-color: $white;
   border-radius: pxToRem(15);
-  padding: 0 pxToRem(20) pxToRem(50) pxToRem(20);
-  margin: 0 pxToRem(20);
+
+  @include customerSelect(32);
 
   &__head-menu {
     &__title {
       font-family: $Noto-Sans-Font;
+
       &__text {
         font-size: pxToRem(20);
         font-weight: 900;
@@ -28,11 +30,14 @@
         color: $gray-shadow;
       }
     }
+
     &__search {
-      margin-left: pxToRem(10);
       display: flex;
       align-items: center;
       margin-top: pxToRem(25);
+      margin: pxToRem(20) 0 pxToRem(20) 0;
+      justify-content: space-between;
+
       &__options {
         display: flex;
 
@@ -44,6 +49,7 @@
           color: $bg-button;
           font-weight: bold;
         }
+
         .search-option-character {
           color: $bg-button;
           opacity: 0.3;
@@ -56,6 +62,7 @@
       .customer-select {
         max-width: pxToRem(140);
       }
+
       &__input {
         position: relative;
 
@@ -67,10 +74,12 @@
           cursor: pointer;
           width: pxToRem(20);
           height: pxToRem(20);
+
           img {
             left: pxToRem(60);
           }
         }
+
         .wrapper-input-search {
           border-radius: pxToRem(3);
           border: solid 1px $color-light10;
@@ -79,6 +88,7 @@
           height: pxToRem(39);
           padding-left: pxToRem(55);
         }
+
         .wrapper-input-search::placeholder {
           font-size: pxToRem(15);
           line-height: 1.47;
@@ -129,50 +139,85 @@
       display: flex;
       margin-top: pxToRem(5);
     }
-  
+
     .row {
       border: 1px solid $color-border-card;
       margin: 0;
       // align-items: center;
       // overflow: hidden;
+      min-height: pxToRem(45);
     }
-  
+
     .row:nth-child(2) {
       border-top: none;
     }
-  
+
     .row:nth-child(3) {
       border-top: none;
     }
+
     .row:nth-child(4) {
       border-top: none;
     }
-  
+
     .col-2 {
       border-right: 1px solid $color-border-card;
       padding-top: 10px;
       padding-bottom: 10px;
       background-color: $bg-light10;
+      font-size: pxToRem(17);
+      font-weight: bold;
+      line-height: 1.47;
+      letter-spacing: pxToRem(-0.51);
+      text-align: center;
+      color: $bg-button;
+
+      &.disable {
+        background-color: $bg-light10;
+        color: rgba($bg-button, 0.5);
+      }
     }
+
     .disable {
       background-color: $input-disable;
-      padding-left: pxToRem(30);
+      // padding-left: pxToRem(30);
+    }
+
+    .cell-disable {
+      background-color: $input-disable;
     }
 
     .col-2:nth-child(3) {
       border-left: 1px solid $color-border-card;
     }
-  
+
     .col-4 {
       padding-top: 3px;
       padding-bottom: 3px;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      &.disable {
+        padding-left: pxToRem(30);
+      }
+      
     }
-  
-    .input-field {
+
+    .input-field,
+    .input,
+    .input-change {
       border: 1px solid $color-border-card;
       border-radius: pxToRem(3);
       width: pxToRem(180);
       height: pxToRem(32);
+      padding: pxToRem(5) pxToRem(15);
+      font-size: pxToRem(15);
+      font-weight: normal;
+      line-height: 1.47;
+      letter-spacing: pxToRem(-0.45);
+      text-align: left;
+      color: $black-active;
+      border: 1px solid $color-border-card !important;
     }
 
     .custom-input {
@@ -189,10 +234,11 @@
     .cus-select {
       width: pxToRem(130);
       height: pxToRem(32);
+
       .css-26l3qy-menu .css-4ljt47-MenuList * {
         padding: 0.3125rem 0.5rem !important;
       }
-  
+
       .css-g1d714-ValueContainer,
       .css-1fhf3k1-control {
         min-height: pxToRem(32);
@@ -200,16 +246,16 @@
         overflow: visible !important;
         font-size: pxToRem(14) !important;
       }
-      
+
       .css-yk16xz-control {
         min-height: pxToRem(32);
         max-height: pxToRem(32);
       }
-      
+
       .css-1pahdxg-control {
         min-height: pxToRem(32);
         max-height: pxToRem(32);
-      
+
         .css-g1d714-ValueContainer,
         .css-1uccc91-singleValue {
           min-height: pxToRem(32);
@@ -234,6 +280,7 @@
     .select-group:first-child {
       margin-top: pxToRem(7);
     }
+
     .select-group:last-child {
       margin-bottom: pxToRem(7);
     }

@@ -1,9 +1,10 @@
 // @flow
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { mockDataArea } from 'mockData/mainData';
 import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import useDebounce from 'customHooks/useDebounce';
+import { getListCompany, getListPosition } from 'modules/main/redux';
 import Search from '../Search';
 import SelectDropdown from '../Select';
 import ModalEvent from './ModalEvent';
@@ -19,13 +20,24 @@ const Header = ({
   isSelect = false,
   eventCount = 0,
 }: Props) => {
-  const {listPositions, listCompany} = useSelector(state => state?.main);
+
+  const dispatch = useDispatch();
+  const {listPositions, listCompany, isSpinner} = useSelector(state => state?.main);
   const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if(debouncedSearchTerm) {
+      dispatch(getListCompany({keyword: debouncedSearchTerm}));
+    dispatch(getListPosition({keyword: debouncedSearchTerm}));
+    }
+  }, [debouncedSearchTerm])
 
   // set option dropdown value when listposition != [];
   useEffect(() => {
@@ -73,6 +85,7 @@ const Header = ({
             options={[...listPositions,...listCompany]}
             handleIconClick={handleIconClick}
             handleKeyDown={handleKeyDownSearch}
+            isSpinner={isSpinner}
           />
         ) : (
           ''

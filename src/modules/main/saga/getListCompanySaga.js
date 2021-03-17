@@ -10,7 +10,6 @@ function* getListCompany(action) {
     if (response.ok) {
       const { data } = response;
       // In case: get card measure success
-      console.log(data);
       yield put({
         type: DashboardAction.getListCompanySuccess,
         data,

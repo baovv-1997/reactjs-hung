@@ -51,7 +51,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     const { name } = e.target;
     setCurrentOption(name);
   };
-  console.log('devices', devices);
+
   // handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -159,13 +159,15 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     setDevices(deviceFormat);
   }, [accountDetail]);
 
-  const errorsMessage = Object.values(errors).map((item, index) => {
-    return (
-      <ul className="error-list" key={index}>
-        <li>{item && item[0]}</li>
-      </ul>
-    );
-  });
+  const errorsMessage =
+    errors &&
+    Object.values(errors).map((item, index) => {
+      return (
+        <ul className="error-list" key={index}>
+          <li>{item && item[0]}</li>
+        </ul>
+      );
+    });
 
   useEffect(() => {
     switch (type) {
@@ -206,7 +208,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-2">이메일</div>
+          <div className="col-2 disable">이메일</div>
           <div className="col-4 disable">
             <div className="d-flex align-items-center h-100">
               {accountDetail?.email}
@@ -224,7 +226,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-2">권한</div>
+          <div className="col-2 disable">권한</div>
           <div className="col-4 disable">
             <div className="d-flex align-items-center h-100">
               {accountDetail?.username}
@@ -243,7 +245,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         </div>
         <div className="row">
           <div className="col-2">담당자</div>
-          <div className="col-4">
+          <div className="col-4 d-block mt-2">
             <input
               className="input-field"
               value={inputValue?.name}
@@ -255,7 +257,10 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           <div className="col-4">
             <div>
               {renderListDeviceMaintain}
-              <Button onClick={handleAddNewDevice} customClass="btn-add-device">
+              <Button
+                onClick={handleAddNewDevice}
+                customClass="btn-add-device mb-2"
+              >
                 추가
               </Button>
             </div>

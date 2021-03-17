@@ -35,6 +35,7 @@ const IMAGES = {
   icon_month_large: require('assets/images/icon_month_large.svg'),
   icon_year_large: require('assets/images/icon_year_large.svg'),
   icon_plus_large: require('assets/images/icon_plus_large.svg'),
+  btn_logout: require('assets/images/btn_logout.svg'),
 };
 
 export default IMAGES;

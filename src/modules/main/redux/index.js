@@ -5,6 +5,7 @@ const mainSlice = createSlice({
   name: 'main',
   initialState: {
     isLoading: false,
+    isSpinner: false,
     listCompanyInverters: [],
     listPositions: [],
     listCompany: [],
@@ -54,7 +55,7 @@ const mainSlice = createSlice({
       state.type = action.type;
     },
     getListPosition: (state, action) => {
-      state.isLoading = true;
+      state.isSpinner = true;
       state.type = action.type;
     },
     getListPositionSuccess: (state, action) => {
@@ -66,14 +67,14 @@ const mainSlice = createSlice({
         label: item.pos_name,
       }))
       state.listPositions = listPositions;
-      state.isLoading = false;
+      state.isSpinner = false;
     },
     getListPositionFailed: (state, action) => {
-      state.isLoading = false;
+      state.isSpinner = false;
       state.type = action.type;
     },
     getListCompany: (state, action) => {
-      state.isLoading = true;
+      state.isSpinner = true;
       state.type = action.type;
     },
     getListCompanySuccess: (state, action) => {
@@ -85,10 +86,10 @@ const mainSlice = createSlice({
         label: item.com_name,
       }))
       state.listCompany = listCompany;
-      state.isLoading = false;
+      state.isSpinner = false;
     },
     getListCompanyFailed: (state, action) => {
-      state.isLoading = false;
+      state.isSpinner = false;
       state.type = action.type;
     },
   },

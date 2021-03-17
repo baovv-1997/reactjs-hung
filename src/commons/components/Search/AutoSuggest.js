@@ -2,16 +2,14 @@
 import React, { memo } from 'react';
 
 type Props = {
-  search?: string,
   onClick: Function,
   options?: Array<{id: number, value: number, label: string}>
 };
 
-const AutoSuggest = ({ search = '', onClick, options = [] }: Props) => {
+const AutoSuggest = ({ onClick, options = [] }: Props) => {
   return (
     <div className="auto-suggest">
       {options
-        .filter(({ label }) => label.indexOf(search.toLowerCase()) > -1)
         .map((option, index) => (
           <p
             className="auto-suggest__item"
@@ -28,7 +26,6 @@ const AutoSuggest = ({ search = '', onClick, options = [] }: Props) => {
 };
 
 AutoSuggest.defaultProps = {
-  search: '',
   options: [],
 };
 

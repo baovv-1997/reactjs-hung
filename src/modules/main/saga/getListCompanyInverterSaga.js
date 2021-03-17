@@ -10,7 +10,6 @@ function* getListCompanyInverters(action) {
     if (response.ok) {
       const { data } = response;
       // In case: get card measure success
-      console.log(data);
       yield put({
         type: DashboardAction.getListCompanyInvertersSuccess,
         data,

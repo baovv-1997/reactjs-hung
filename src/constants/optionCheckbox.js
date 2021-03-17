@@ -19,14 +19,19 @@ export const DeviceManagementOptionSeach = [
 
 export const registerDeviceOptions = [
   {
-    name: 'mockup',
-    key: '1',
-    label: '목업',
-  },
-  {
     name: 'solar-monitoring',
     key: '0',
     label: '실증단지',
+  },
+  {
+    name: 'test-solar-monitoring',
+    key: '2',
+    label: '테스트(실증단지)',
+  },
+  {
+    name: 'test-mockup',
+    key: '3',
+    label: '테스트(실증단지)',
   },
 ];
 

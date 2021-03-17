@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MainLayout from 'layout/MainLayout';
 import { mockDataMain, mockLocationArea } from 'mockData/mainData';
 
 import IMAGES from 'themes/images';
-import { useDispatch, useSelector } from 'react-redux';
-import { getListPosition, getListCompany } from 'modules/main/redux';
+import { useSelector } from 'react-redux';
+// import { getListPosition, getListCompany } from 'modules/main/redux';
 import InfoReality from '../InfoReality';
 import TotalPower from '../TotalPower';
 import VitualData from '../VitualData';
 import WeeklyElectric from '../WeeklyElectric';
 
 const MainPage = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const {isLoading} = useSelector(state => state.main);
   const { totalPower, infoReality, vitualData } = mockDataMain;
 
-  useEffect(() => {
-    dispatch(getListPosition());
-    dispatch(getListCompany());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  // useEffect(() => {
+  //   dispatch(getListPosition());
+  //   dispatch(getListCompany());
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[])
 
   return (
     <MainLayout isSearch isProcessing={isLoading}>

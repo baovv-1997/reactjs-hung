@@ -11,7 +11,7 @@ import ROUTERS from 'constants/routers';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
-} from 'constants/headerTable';
+} from './constants';
 import { useHistory } from 'react-router-dom';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';

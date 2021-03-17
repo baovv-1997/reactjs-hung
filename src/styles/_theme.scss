@@ -7,6 +7,12 @@ html {
   }
 }
 
+.main-content {
+  >.content {
+    min-height: 90.08vh;
+  }
+}
+
 .search-wrapper {
   position: relative;
   margin-bottom: pxToRem(24);

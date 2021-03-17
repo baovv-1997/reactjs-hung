@@ -25,7 +25,7 @@ const ROUTERS = {
   STATISTICS_DEVELOP_AREA: `/statistics/develop/develop-by-area`,
   OPERATION_STATISTICS_COMPANY: `/statistics/operation/operation-by-company`,
   OPERATION_STATISTICS_AREA: `/statistics/operation/operation-by-area`,
-
+  // Test mockup solar
   TEST_MOCKUP_STATUS: `/test/mockup/status-of-development`,
   TEST_MOCKUP_OPERATION: `/test/mockup/operation-status`,
 
@@ -35,6 +35,13 @@ const ROUTERS = {
 
   TEST_MOCKUP_STATISTICS_DEVELOP: `/test/mockup/statistics/development-statistics`,
   TEST_MOCKUP_STATISTICS_OPERATION: `/test/mockup/statistics/operation-statistics`,
+
+  // Test solar monitoring
+  TEST_SOLAR_STATUS_DEVELOP: `/test/solar-monitoring/status-development`,
+  TEST_SOLAR_STATUS_OPERATION: `/test/solar-monitoring/status-operation`,
+
+  TEST_SOLAR_STATISTICS_DEVELOP: `/test/solar-monitoring/statistics/development-statistics`,
+  TEST_SOLAR_STATISTICS_OPERATION: `/test/solar-monitoring/statistics/operation-statistics`,
 };
 
 export default ROUTERS;

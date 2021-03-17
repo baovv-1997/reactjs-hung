@@ -1,13 +1,16 @@
 .wrapper-device {
-  background-color: white;
-  // margin-top: pxToRem(97);
-  // margin-bottom: pxToRem(20);
+  margin: pxToRem(85) pxToRem(20) pxToRem(20);
+  padding: pxToRem(20);
+  // min-width: pxToRem(1670);
+  background-color: $white;
   border-radius: pxToRem(15);
-  padding: 0 pxToRem(20);
+
+  @include customerSelect(37);
 
   &__head-menu {
     &__title {
       font-family: $Noto-Sans-Font;
+
       &__text {
         font-size: pxToRem(20);
         font-weight: 900;
@@ -27,11 +30,14 @@
         color: $gray-shadow;
       }
     }
+
     &__search {
-      margin-left: pxToRem(10);
       display: flex;
       align-items: center;
       margin-top: pxToRem(25);
+      margin: pxToRem(20) 0 pxToRem(20) 0;
+      justify-content: space-between;
+
       &__options {
         display: flex;
 
@@ -43,6 +49,7 @@
           color: $bg-button;
           font-weight: bold;
         }
+
         .search-option-character {
           color: $bg-button;
           opacity: 0.3;
@@ -55,6 +62,7 @@
       .customer-select {
         max-width: pxToRem(140);
       }
+
       &__input {
         position: relative;
 
@@ -66,10 +74,12 @@
           cursor: pointer;
           width: pxToRem(20);
           height: pxToRem(20);
+
           img {
             left: pxToRem(60);
           }
         }
+
         .wrapper-input-search {
           border-radius: pxToRem(3);
           border: solid 1px $color-light10;
@@ -78,6 +88,7 @@
           height: pxToRem(39);
           padding-left: pxToRem(55);
         }
+
         .wrapper-input-search::placeholder {
           font-size: pxToRem(15);
           line-height: 1.47;
@@ -123,7 +134,7 @@
   }
 
   &__table {
-    margin-top: pxToRem(30);
+    margin-top: pxToRem(20);
     min-height: 70vh;
   }
 
@@ -134,10 +145,13 @@
   }
 
   .device-detail {
+    @include customerSelect(32);
+
     &__title {
       display: flex;
       align-items: center;
       margin-left: pxToRem(10);
+
       p {
         font-family: $Noto-Sans-Font;
         font-size: pxToRem(18);
@@ -155,49 +169,75 @@
       }
     }
 
-    .col-span {
-      .col-item {
-        border-top: solid pxToRem(2) $color-light10;
-        border-bottom: none;
+    &__form {
+      display: flex;
+
+      .input-change {
+        font-family: $Roboto-Font;
+        font-size: pxToRem(15);
+        font-weight: normal;
+        line-height: 1.2;
+        letter-spacing: -0.45px;
+        text-align: left;
+        color: $black-active;
+      }
+
+      .col-item.col-2 {
         .cell {
-          border-top: none;
-          border-bottom: none;
-          padding-left: pxToRem(20);
+          background-color: $bg-light10;
+          border: solid pxToRem(1) $color-light10;
+          font-size: pxToRem(17);
+          font-weight: bold;
+          line-height: 1.47;
+          letter-spacing: pxToRem(-0.51);
+          text-align: center;
+          color: $bg-button;
+          text-align: center;
+          justify-content: center;
+          // border-left: 0;
+          border-top: 0;
+          border-right: 0;
         }
 
-        .react-datepicker-wrapper {
-          input {
-            border: solid 1px $color-border-card;
-            border-radius: pxToRem(3);
-            font-family: $Roboto-Font;
-            font-size: pxToRem(15);
-            line-height: 2.33;
-            letter-spacing: -0.38px;
-            text-align: left;
-            color: $black;
-            height: pxToRem(32);
-            width: pxToRem(180);
+        &.right .cell {
+          &:last-child {
+            border-bottom: 0;
           }
         }
       }
-    }
-    &__form {
-      display: flex;
+
+      .col-item.col-4 {
+        .cell {
+          // border-left: 0;
+          border-top: 0;
+          border-right: 0;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+
+          * {
+            font-size: pxToRem(15);
+          }
+        }
+      }
+
       .col-item {
         padding: 0;
 
         .cell {
-          border: solid pxToRem(0.25) $color-light10;
+          border: solid pxToRem(1) $color-light10;
           width: 100%;
-          height: pxToRem(38) !important;
+          height: pxToRem(40) !important;
           display: flex;
           justify-content: center;
           align-items: center;
 
+
           input {
             border: none;
             padding: 0;
-            height: pxToRem(36);
+            height: 100%;
             width: 100%;
             padding-left: pxToRem(20);
           }
@@ -208,15 +248,15 @@
         }
 
         .cell:first-child {
-          border-left: solid pxToRem(0.25) $color-light10;
+          // border-left: solid pxToRem(0.25) $color-light10;
           width: 100%;
-          height: pxToRem(50) !important;
+          height: pxToRem(40) !important;
         }
       }
 
       .col-item:first-child {
-        border-left: pxToRem(0.5) solid $color-light10;
-        height: pxToRem(50) !important;
+        // border-left: pxToRem(0.5) solid $color-light10;
+        height: pxToRem(40) !important;
       }
 
       .col-item:nth-child(odd) {
@@ -231,12 +271,14 @@
         border-top: pxToRem(0.5) solid $color-light10;
         border-bottom: pxToRem(0.5) solid $color-light10;
       }
+
+      
     }
 
     &__btn-group {
       display: flex;
       justify-content: center;
-      margin-top: pxToRem(30);
+      margin: pxToRem(30) 0;
 
       .btn-modify {
         height: pxToRem(37);
@@ -255,6 +297,7 @@
 
 .group-button {
   justify-content: center !important;
+
   .btn-custom {
     width: pxToRem(200);
     height: pxToRem(60);
@@ -270,12 +313,45 @@
 .register {
   &__form {
     display: flex;
+
+    &.col-span {
+      .col-item {
+        &.col-10 {
+          border-right: 0 !important;
+          border-bottom: 0 !important;
+        }
+
+        .cell {
+          border-top: 0 !important;
+          border-left: 0 !important;
+          border-bottom: 0 !important;
+        }
+
+        &.col-2 {
+          border-bottom: 0 !important;
+        }
+      }
+    }
+
     .col-item {
       padding: 0;
+      border-top-width: 0.5px;
+
+      &.col-4 {
+        &:last-child {
+          border-right: 0 !important;
+        }
+      }
+
+      .col-10 {
+        border-right: 0;
+      }
+
       img {
         position: absolute;
         left: pxToRem(165);
       }
+
       .cell {
         border: solid pxToRem(0.25) $color-light10;
         width: 100%;
@@ -283,23 +359,41 @@
         display: flex;
         align-items: center;
         padding-left: pxToRem(20);
+        border-top: 0;
+        border-left: 0;
+
+        .unit {
+          font-size: pxToRem(15);
+          line-height: 1.2;
+          letter-spacing: pxToRem(-0.45);
+          margin-left: pxToRem(10);
+          text-align: left;
+          color: $black-active;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
 
         .customer-select {
           height: pxToRem(30);
           display: flex;
           align-items: center;
           width: pxToRem(180);
+
           .css-2b097c-container {
             width: pxToRem(180);
           }
         }
+
         input {
           border: solid 1px #e3e3e3;
           padding: 0;
-          height: pxToRem(36);
+          height: pxToRem(32);
           width: pxToRem(180);
           padding-left: pxToRem(20);
           border-radius: pxToRem(3);
+          @include InputPlaceholder(#e3e3e3, 15);
         }
 
         input:disabled {
@@ -307,8 +401,13 @@
         }
       }
 
+      .cell-disable {
+        background-color: $input-disable;
+        cursor: none;
+      }
+
       .cell:first-child {
-        border-left: solid pxToRem(0.25) $color-light10;
+        // border-left: solid pxToRem(0.25) $color-light10;
         width: 100%;
         height: pxToRem(50) !important;
       }
@@ -355,6 +454,7 @@
   text-align: left;
   font-size: pxToRem(18);
   color: $color-label-event;
+
   li {
     list-style: disc;
   }

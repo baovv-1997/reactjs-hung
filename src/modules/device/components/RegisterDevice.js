@@ -1,7 +1,8 @@
 // @flow
 import React, { memo } from 'react';
-import IMAGES from 'themes/images';
 import { useSelector } from 'react-redux';
+import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
+import { TitleHeader } from 'commons/components/TitleHeader';
 import MainLayout from '../../../layout/MainLayout';
 import FormRegister from './FormRegister';
 
@@ -16,20 +17,12 @@ const RegisterDevice = ({ history }: Props) => {
     <MainLayout isProcessing={isLoading}>
       <div className="wrapper-device">
         <div className="wrapper-device__head-menu">
-          <div className="wrapper-device__head-menu__title">
-            <img src={IMAGES.iconTitle} alt="icon-title-device" />
-            <span className="wrapper-device__head-menu__title__text">
-              기기 관리
-            </span>
-            <span className="wrapper-device__head-menu__title__des">
-              기기 정보를 등록하실 수 있습니다.
-            </span>
-          </div>
+          <TitleHeader
+            title="기기 관리"
+            descSub="기기 정보를 등록하실 수 있습니다."
+          />
           <div className="device-detail">
-            <div className="device-detail__title">
-              <img src={IMAGES.iconSubtitle} alt="sub-title" />
-              <p>기기 정보</p>
-            </div>
+            <TitleSubHeader title="기기 정보" />
             <FormRegister history={history} />
           </div>
         </div>

@@ -10,7 +10,7 @@ import { listPaginationType } from 'constants/listKey';
 import {
   headTestMockupStatistics,
   headTestMockupStatisticsOfModule,
-} from 'constants/headerTable';
+} from '../constant';
 import FilterSearch from '../FilterSearch';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';

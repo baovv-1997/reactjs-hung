@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import IMAGES from 'themes/images';
 import MainLayout from '../../../layout/MainLayout';
 import FormDetail from './FormDetail';
 import { getDeivceDetail } from '../redux';
+import { TitleHeader } from 'commons/components/TitleHeader';
+import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
 
 type Props = {
   match: {
@@ -30,21 +31,13 @@ const DeviceDetail = ({ match, history }: Props) => {
     <MainLayout isProcessing={isLoading}>
       <div className="wrapper-device">
         <div className="wrapper-device__head-menu">
-          <div className="wrapper-device__head-menu__title">
-            <img src={IMAGES.iconTitle} alt="icon-title-device" />
-            <span className="wrapper-device__head-menu__title__text">
-              기기 관리
-            </span>
-            <span className="wrapper-device__head-menu__title__des">
-              등록되어있는 기기정보들을 관리하실 수 있습니다.
-            </span>
-          </div>
+          <TitleHeader
+            title="기기 관리"
+            descSub="등록되어있는 기기정보들을 관리하실 수 있습니다."
+          />
         </div>
         <div className="device-detail">
-          <div className="device-detail__title">
-            <img src={IMAGES.iconSubtitle} alt="sub-title" />
-            <p>계정 정보</p>
-          </div>
+          <TitleSubHeader title="계정 정보" />
           <FormDetail data={deviceDetail} history={history} />
         </div>
       </div>

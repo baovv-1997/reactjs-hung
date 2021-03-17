@@ -99,6 +99,20 @@ const testMockupOperationStaticsDevelopment = lazy(() =>
   import('modules/testMockupStatistics/components/statisticsDevelopment')
 );
 
+const testSolarMonitoringStatusDevelopment = lazy(() =>
+  import('modules/testSolarMonitoringStatus/components/statusDevelop')
+);
+const testSolarMonitoringStatusOperation = lazy(() =>
+  import('modules/testSolarMonitoringStatus/components/statusOperation')
+);
+
+const testSolarMonitoringStaticsDevelopment = lazy(() =>
+  import('modules/testSolarMonitoringStatistics/components/statisticsDevelop')
+);
+const testSolarMonitoringStaticsOperation = lazy(() =>
+  import('modules/testSolarMonitoringStatistics/components/statisticsOperation')
+);
+
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -238,6 +252,28 @@ const Router = () => {
             exact
             path={ROUTERS.TEST_MOCKUP_STATISTICS_DEVELOP}
             component={testMockupOperationStaticsDevelopment}
+          />
+
+          <Route
+            exact
+            path={ROUTERS.TEST_SOLAR_STATUS_DEVELOP}
+            component={testSolarMonitoringStatusDevelopment}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_SOLAR_STATUS_OPERATION}
+            component={testSolarMonitoringStatusOperation}
+          />
+
+          <Route
+            exact
+            path={ROUTERS.TEST_SOLAR_STATISTICS_DEVELOP}
+            component={testSolarMonitoringStaticsDevelopment}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_SOLAR_STATISTICS_OPERATION}
+            component={testSolarMonitoringStaticsOperation}
           />
         </Switch>
       </Suspense>
