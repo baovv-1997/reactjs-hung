@@ -14,19 +14,18 @@ const SolarDashboard = () => {
   );
 
   const [activePage, setActivePage] = useState(1);
-  const perPage = 8;
+  const perPage = 10;
 
   // pagination page
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+
   };
 
   // get list device of company
   useEffect(() => {
     dispatch(
-      getListDeviceTestSolarDashboard({
-        type: 'test_mockup',
-      })
+      getListDeviceTestSolarDashboard()
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

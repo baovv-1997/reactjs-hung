@@ -10,6 +10,7 @@ const mainSlice = createSlice({
     listPositions: [],
     listCompany: [],
     type: '',
+    key: '',
     page: 0,
     total: 0,
     perPage: 0,
@@ -59,12 +60,13 @@ const mainSlice = createSlice({
       state.type = action.type;
     },
     getListPositionSuccess: (state, action) => {
-      const {data} = action;
+      const { data } = action;
       state.type = action.type;
       const listPositions = data?.data.map(item => ({
         id: item.id,
         value: item.id,
         label: item.pos_name,
+        key: 'posId',
       }))
       state.listPositions = listPositions;
       state.isSpinner = false;
@@ -78,12 +80,13 @@ const mainSlice = createSlice({
       state.type = action.type;
     },
     getListCompanySuccess: (state, action) => {
-      const {data} = action;
+      const { data } = action;
       state.type = action.type;
       const listCompany = data?.data.map(item => ({
         id: item.id,
         value: item.id,
         label: item.com_name,
+        key: 'comId',
       }))
       state.listCompany = listCompany;
       state.isSpinner = false;

@@ -16,7 +16,9 @@ export const ROUTES = {
   GET_POS: '/position',
   ACCOUNTS: '/account',
   UPDATE_ACCOUNT: (id) => `account/${id}`,
-  GET_LIST_CARD_MEASURE: `/data/cards`,
+  GET_DASHBOARD_TEST_MOCKUP: `/data/test-mockup/cards`,
+  GET_DASHBOARD_TEST_SOLAR: `data/test-solar-monitoring/cards`,
+  GET_DASHBOARD: `data/solar-monitoring/cards`,
 };
 
 export const API = create({

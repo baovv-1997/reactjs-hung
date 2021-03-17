@@ -73,12 +73,18 @@
 .spinner {
   position: absolute;
   right: 0;
-  border: 5px solid $light-gray; /* Light grey */
-  border-top: 5px solid $blue; /* Blue */
+  border: 5px solid $light-gray; 
+  border-top: 5px solid $blue; 
   border-radius: 50%;
   width: 25px;
   height: 25px;
   animation: spin 0.5s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
 
 @keyframes spin {

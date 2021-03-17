@@ -22,11 +22,11 @@ const solarDashBoardSlice = createSlice({
         data?.data.map((item) => ({
           id: item.ds_id,
           name: item.com_name,
-          amountElectricDay: item.dm_prod_day,
-          amountElectricMonth: item.dm_prod_month,
-          electricRealtime: item.dm_prod,
-          ratePower: item.dm_prod_ratio,
-          cumulativeElectric: item.dm_prod_sum,
+          amountElectricDay: item.prod_today,
+          amountElectricMonth: item.prod_inmonth,
+          electricRealtime: item.prod_realtime,
+          ratePower: item.performance_ratio,
+          cumulativeElectric: item.prod_sum,
           event: item.event,
         }));
       state.listDevice = listDevice || [];
