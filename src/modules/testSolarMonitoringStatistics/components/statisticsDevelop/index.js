@@ -4,20 +4,20 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import { dataTableTestMockupStatisticsOfModule } from 'mockData/listCompany';
-import { listDataTable2 } from '../data';
+import { dataTable1 } from '../data';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import * as SignInAction from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
-const StatusByAreaCompany = () => {
+const OperationStatusPage = () => {
+  // const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
-  const perPage2 = 6;
-  const totalPage2 = 100;
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
+  const { listInverter } = useSelector((state) => state?.account);
 
   const defaultOption = {
     id: 1,
@@ -27,23 +27,23 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
+    classification: 'minute',
+    startDate: new Date() || null,
+    endDate: new Date() || null,
+    vendorCompany: null,
+    inverter: null,
     company: null,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    insolation: false,
+    performance: false,
+    generation: false,
     pagination: defaultOption,
-    pagination2: defaultOption,
-    page2: 1,
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    day: '300',
+    month: '9,000',
+    year: '300',
   };
   const dispatch = useDispatch();
 
@@ -51,20 +51,15 @@ const StatusByAreaCompany = () => {
     dispatch(StatusCompanyAction.getListStatusCompany());
   }, []);
 
-  // call api get list
+  // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
     console.log('Call api on page');
   }, [
     paramsSearch?.page,
-    paramsSearch?.page2,
     paramsSearch?.company,
-    paramsSearch?.PVVoltage,
-    paramsSearch?.PVCurrent,
-    paramsSearch?.outputVoltage,
-    paramsSearch?.outputCurrent,
-    paramsSearch?.print,
+    paramsSearch?.insolation,
+    paramsSearch?.generation,
     paramsSearch?.pagination,
-    paramsSearch?.pagination2,
     dispatch,
   ]);
 
@@ -72,6 +67,7 @@ const StatusByAreaCompany = () => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
 
+  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -80,34 +76,28 @@ const StatusByAreaCompany = () => {
           company: item.id,
         });
         break;
-      case 'PVVoltage':
+      case 'generation':
         setParamsSearch({
           ...paramsSearch,
-          PVVoltage: !item,
+          generation: !item,
         });
         break;
-      case 'PVCurrent':
+      case 'performance':
         setParamsSearch({
           ...paramsSearch,
-          PVCurrent: !item,
+          performance: !item,
         });
         break;
-      case 'outputVoltage':
+      case 'insolation':
         setParamsSearch({
           ...paramsSearch,
-          outputVoltage: !item,
+          insolation: !item,
         });
         break;
-      case 'print':
+      case 'classification':
         setParamsSearch({
           ...paramsSearch,
-          print: !item,
-        });
-        break;
-      case 'outputCurrent':
-        setParamsSearch({
-          ...paramsSearch,
-          outputCurrent: !item,
+          classification: item,
         });
         break;
       case 'pagination':
@@ -116,61 +106,79 @@ const StatusByAreaCompany = () => {
           pagination: item,
         });
         break;
+
+      case 'inverter':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter: item,
+        });
+        break;
+      case 'vendorCompany':
+        setParamsSearch({
+          ...paramsSearch,
+          vendorCompany: item,
+          inverter: null,
+        });
+
+        dispatch(
+          SignInAction.getListInverter({
+            per_page: 0,
+            com_id: item?.value,
+          })
+        );
+        break;
       case 'page':
         setParamsSearch({
           ...paramsSearch,
           page: item,
         });
         break;
-      case 'pagination2':
+
+      case 'startDate':
         setParamsSearch({
           ...paramsSearch,
-          pagination2: item,
+          startDate: item,
         });
         break;
-      case 'page2':
+      case 'endDate':
         setParamsSearch({
           ...paramsSearch,
-          page2: item,
+          endDate: item,
         });
         break;
+
       default:
         break;
     }
   };
 
   const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
+    console.log(name, 'download Trend');
   };
 
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 현황" />
+        <TitleHeader title="테스트(실증단지) 발전 통계" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={listStatusCompanySelect}
           />
-          <div className="content-body-left border-pd-20">
-            <div className="h-100">
-              <ItemContentTab
-                listMockupDataCompany={listDataTable2}
-                dataContent={{}}
-                dataBoxContent={dataBoxContent}
-                handleDownloadTrend={handleDownloadTrend}
-                handleChangeSearch={handleChangeSearch}
-                tableOperationStatusByAreaCompany={
-                  dataTableTestMockupStatisticsOfModule
-                }
-                paramsSearch={paramsSearch}
-                totalPage={totalPage}
-                perPage={perPage}
-                totalPage2={totalPage2}
-                perPage2={perPage2}
-              />
-            </div>
+          <div className="content-body-left w-100 border-pd-20">
+            <ItemContentTab
+              dataBoxContent={dataBoxContent}
+              dataTableStatisticsCompany={dataTable1}
+              handleDownloadTrend={handleDownloadTrend}
+              dataContent={{}}
+              totalPage={totalPage}
+              perPage={perPage}
+              listInverter={listInverter}
+              listStatusCompanySelect={listStatusCompanySelect}
+              paramsSearch={paramsSearch}
+              handleChangeSearch={handleChangeSearch}
+            />
           </div>
         </div>
       </div>
@@ -178,4 +186,4 @@ const StatusByAreaCompany = () => {
   );
 };
 
-export default StatusByAreaCompany;
+export default OperationStatusPage;

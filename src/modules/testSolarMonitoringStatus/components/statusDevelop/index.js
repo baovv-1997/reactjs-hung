@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import { listDataTestMockupStatus } from 'mockData/listCompany';
+import { dataTable1 } from '../data';
 // import { headStatusCompany } from 'constants/headerTable';
 import * as StatusCompanyAction from '../../redux';
 import ItemContentTab from './ItemContentTab';
@@ -135,7 +135,7 @@ const StatusByAreaCompany = () => {
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
-              listMockupDataCompany={listDataTestMockupStatus}
+              listMockupDataCompany={dataTable1}
               powerData={powerData}
               dataContent={{}}
               handleDownloadTrend={handleDownloadTrend}

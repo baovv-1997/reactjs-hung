@@ -11,11 +11,12 @@ import ROUTERS from 'constants/routers';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
-} from './constants';
+} from '../constant';
 import { useHistory } from 'react-router-dom';
-import BoxGroup from './BoxGroup';
-import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from './GroupActionDownload';
+import BoxGroup from '../BoxGroup';
+import GroupCompareChart from '../GroupCompareChart';
+import GroupActionDownload from '../GroupActionDownload';
+import { FilterSearch } from '../FilterSearch';
 
 type Props = {
   listMockupDataCompany: any,
@@ -26,13 +27,22 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableBottom: Array<{
     id: number,
   }>,
   isShowModalSorting: boolean,
-  handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  listStatusCompanySelect: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
+  listInverter: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
 };
 
 const ItemContentTab = ({
@@ -44,13 +54,14 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
+  dataTableBottom,
   isShowModalSorting,
-  handleClickDetail,
   handleChangeSearch,
   paramsSearch,
+  listStatusCompanySelect,
+  listInverter,
 }: Props) => {
-  console.log(dataContent);
+  console.log(dataContent, 'dataContent');
   const history = useHistory();
   const dataLengthChart = [
     {
@@ -79,12 +90,19 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
         dataBoxContent={dataBoxContent}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+      />
+      <FilterSearch
+        listStatusCompanySelect={listStatusCompanySelect}
+        listInverter={listInverter}
+        handleChangeSearch={handleChangeSearch}
+        paramsSearch={paramsSearch}
       />
 
       <div className="group-char">
@@ -100,7 +118,7 @@ const ItemContentTab = ({
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
 
-      <TitleSubHeader title="실시간 계측 현황" />
+      <TitleSubHeader title="실시간 계측정보 통계" />
       <GroupActionDownload
         handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
@@ -147,15 +165,14 @@ const ItemContentTab = ({
       </div>
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableBody={dataTableBottom}
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
           isShow: isShowModalSorting,
-          keyItem: 5,
+          keyItem: 4,
         }}
-        onClickRow={handleClickDetail}
       />
       <div className="group-btn-register text-right">
         <Button
