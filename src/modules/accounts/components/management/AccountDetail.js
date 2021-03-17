@@ -41,7 +41,7 @@ const AccountDetail = ({ match, history }: Props) => {
         <FormDetail
           history={history}
           accountDetail={accountDetail}
-          deviceList={accountDetail && accountDetail.devices}
+          // deviceList={accountDetail && accountDetail.devices}
         />
       </div>
     </MainLayout>

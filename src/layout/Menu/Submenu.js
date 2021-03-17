@@ -36,6 +36,7 @@ const Submenu = ({
     e.stopPropagation();
     setNestSubClicking(item);
   };
+
   const renderNestedSub =
     listNestSub &&
     listNestSub.length > 0 &&
@@ -43,6 +44,7 @@ const Submenu = ({
       const activeNestItem =
         item.name === nestSubClicking.name ||
         location.pathname.includes(item.to);
+
       return (
         <li
           className="item"
