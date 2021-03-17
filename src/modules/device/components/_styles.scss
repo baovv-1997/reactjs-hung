@@ -324,6 +324,10 @@
           border-left: 0 !important;
           border-bottom: 0 !important;
         }
+
+        &.col-2 {
+          border-bottom: 0 !important;
+        }
       }
     }
 
