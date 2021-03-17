@@ -181,12 +181,12 @@ export const MOCKUP = {
             {
               id: 1,
               name: '발전 현황',
-              to: '#',
+              to: ROUTERS.TEST_SOLAR_STATUS_DEVELOP,
             },
             {
               id: 2,
               name: '운영 현황',
-              to: '#',
+              to: ROUTERS.TEST_SOLAR_STATUS_OPERATION,
             },
           ],
         },
@@ -197,12 +197,12 @@ export const MOCKUP = {
             {
               id: 1,
               name: '발전 통계',
-              to: '#',
+              to: ROUTERS.TEST_SOLAR_STATISTICS_DEVELOP,
             },
             {
               id: 2,
               name: '운영 통계',
-              to: '#',
+              to: ROUTERS.TEST_SOLAR_STATISTICS_OPERATION,
             },
           ],
         },
