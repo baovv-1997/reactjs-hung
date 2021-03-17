@@ -7,6 +7,7 @@ deploy_dev:
     - cd /var/www/html/dev/app
     - pwd
     - git status
+    - git checkout .
     - git fetch
     - git checkout develop
     - git status
@@ -25,10 +26,11 @@ deploy_staging:
     - cd /var/www/html/staging/app
     - pwd
     - git status
+    - git checkout .
     - git fetch
-    - git checkout develop
+    - git checkout staging
     - git status
-    - git pull origin develop
+    - git pull origin staging
     - yarn
     - yarn build
   only:
