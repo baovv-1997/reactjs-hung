@@ -6,7 +6,7 @@ import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import {
   listDataTestMockupOperationStatus,
-  tableOperationStatusByAreaCompany,
+  tableTestMockupOperationStatistics,
 } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import * as SignInAction from 'modules/accounts/redux';
@@ -211,7 +211,7 @@ const StatusByAreaCompany = () => {
                 handleDownloadTrend={handleDownloadTrend}
                 handleChangeSearch={handleChangeSearch}
                 tableOperationStatusByAreaCompany={
-                  tableOperationStatusByAreaCompany
+                  tableTestMockupOperationStatistics
                 }
                 isShowModalSorting={isShowModalSorting}
                 handleClickDetail={handleClickDetail}
