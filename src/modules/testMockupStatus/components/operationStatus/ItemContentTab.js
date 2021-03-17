@@ -8,7 +8,7 @@ import { listPaginationType } from 'constants/listKey';
 import {
   headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
-} from 'constants/headerTable';
+} from '../constant';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';

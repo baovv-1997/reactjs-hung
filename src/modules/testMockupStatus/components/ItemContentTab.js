@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import { headTestMockupStatus } from 'constants/headerTable';
+import { headTestMockupStatus } from './constant';
 import LineSeriesChart from './chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';

@@ -8,7 +8,7 @@ import { listPaginationType } from 'constants/listKey';
 import {
   headTestSolarMonitoringOperationStatus,
   headTestMockupStatisticsOfModule,
-} from 'constants/headerTable';
+} from '../constant';
 // import LineSeriesChart from '../chart';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
@@ -29,7 +29,7 @@ type Props = {
   perPage2: number,
   tableOperationStatusByAreaCompany: Array<{
     id: number,
-  }>
+  }>,
 };
 
 const ItemContentTab = ({

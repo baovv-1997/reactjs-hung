@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-// import { headStatisticsCompany } from '../constants';
+import { headStatisticsCompany } from '../constant';
 import FilterSearch from '../FilterSearch';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
@@ -86,7 +86,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          // tableHeads={headStatisticsCompany}
+          tableHeads={headStatisticsCompany}
           tableBody={dataTableStatisticsCompany}
           // isShowId
         />

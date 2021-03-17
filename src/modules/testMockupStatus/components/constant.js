@@ -1,4 +1,4 @@
-export const headStatusCompany = [
+export const headTestMockupStatus = [
   {
     id: 0,
     name: 'No.',
@@ -17,41 +17,69 @@ export const headStatusCompany = [
   },
   {
     id: 4,
-    name: '설치위치',
-  },
-  {
-    id: 5,
     name: '인버터명',
   },
   {
+    id: 5,
+    name: '모듈 온도',
+  },
+  {
     id: 6,
-    name: 'PV전압(V1)',
+    name: '외기 온도',
   },
   {
     id: 7,
-    name: 'PV전류(l1)',
+    name: '수평 일사량',
   },
   {
     id: 8,
-    name: '출력전압(V2)',
+    name: '발전량',
   },
   {
     id: 9,
-    name: '출력전류(l2)',
+    name: '누적 발전량',
   },
   {
     id: 10,
-    name: '출력(P)',
-  },
-  {
-    id: 11,
-    name: '역률',
-  },
-  {
-    id: 12,
-    name: '주파수',
+    name: '성능비',
   },
 ];
+
+export const headTestMockupOperationStatus = [
+  {
+    id: 0,
+    name: 'No.',
+  },
+  {
+    id: 1,
+    name: '발생 일시',
+  },
+  {
+    id: 2,
+    name: '설치업체',
+  },
+  {
+    id: 3,
+    name: '방위각',
+  },
+  {
+    id: 4,
+    name: '입사각',
+  },
+  {
+    id: 5,
+    name: 'AC전압',
+  },
+  {
+    id: 6,
+    name: 'AC전류',
+  },
+  {
+    id: 7,
+    name: 'AC전력',
+  },
+];
+
 export const headOperationStatusByAreaCompany = [
   {
     id: 0,
@@ -82,8 +110,8 @@ export const headOperationStatusByAreaCompany = [
     name: '내용',
   },
 ];
-
 export default {
-  headStatusCompany,
+  headTestMockupStatus,
+  headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 };

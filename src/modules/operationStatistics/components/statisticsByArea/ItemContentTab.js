@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-// import { headStatusCompany } from '../constants';
+import { headStatusCompany } from '../constant';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -101,7 +101,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          tableHeads={[]}
+          tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
           // isShowId
         />

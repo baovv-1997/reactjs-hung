@@ -8,7 +8,7 @@ import { listPaginationType } from 'constants/listKey';
 import {
   headTestMockupOperationStatus,
   headTestMockupOperationStatistics,
-} from 'constants/headerTable';
+} from '../constant';
 // import LineSeriesChart from '../chart';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
