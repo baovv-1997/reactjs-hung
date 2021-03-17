@@ -8,10 +8,10 @@ import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
-import {
-  headStatusCompany,
-  headOperationStatusByAreaCompany,
-} from 'constants/headerTable';
+// import {
+//   headStatusCompany,
+//   headOperationStatusByAreaCompany,
+// } from '../constants';
 import { useHistory } from 'react-router-dom';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
@@ -127,7 +127,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          tableHeads={headStatusCompany}
+          // tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
           // isShowId
         />
@@ -165,7 +165,7 @@ const ItemContentTab = ({
         </div>
       </div>
       <Table
-        tableHeads={headOperationStatusByAreaCompany}
+        // tableHeads={headOperationStatusByAreaCompany}
         tableBody={tableOperationStatusByAreaCompany}
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}

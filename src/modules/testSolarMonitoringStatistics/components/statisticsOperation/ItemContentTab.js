@@ -8,14 +8,13 @@ import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
-import {
-  headStatusCompany,
-  headOperationStatusByAreaCompany,
-} from './constants';
+import { headOperationStatusByAreaCompany } from 'constants/headerTable';
+// import { headStatusCompany } from '../constants';
 import { useHistory } from 'react-router-dom';
-import BoxGroup from './BoxGroup';
-import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from './GroupActionDownload';
+import BoxGroup from '../BoxGroup';
+import GroupCompareChart from '../GroupCompareChart';
+import GroupActionDownload from '../GroupActionDownload';
+import { FilterSearch } from '../FilterSearch';
 
 type Props = {
   listMockupDataCompany: any,
@@ -33,6 +32,16 @@ type Props = {
   handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  listStatusCompanySelect: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
+  listInverter: Array<{
+    id: number,
+    value: any,
+    label: string,
+  }>,
 };
 
 const ItemContentTab = ({
@@ -49,8 +58,10 @@ const ItemContentTab = ({
   handleClickDetail,
   handleChangeSearch,
   paramsSearch,
+  listStatusCompanySelect,
+  listInverter,
 }: Props) => {
-  console.log(dataContent);
+  console.log(dataContent, 'dataContent');
   const history = useHistory();
   const dataLengthChart = [
     {
@@ -86,6 +97,12 @@ const ItemContentTab = ({
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
+      <FilterSearch
+        listStatusCompanySelect={listStatusCompanySelect}
+        listInverter={listInverter}
+        handleChangeSearch={handleChangeSearch}
+        paramsSearch={paramsSearch}
+      />
 
       <div className="group-char">
         <div className="group-char-left">
@@ -100,7 +117,7 @@ const ItemContentTab = ({
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
 
-      <TitleSubHeader title="실시간 계측 현황" />
+      <TitleSubHeader title="실시간 계측정보 통계" />
       <GroupActionDownload
         handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
@@ -108,7 +125,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          tableHeads={headStatusCompany}
+          // tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
           // isShowId
         />

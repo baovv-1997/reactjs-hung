@@ -7,10 +7,10 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
-import {
-  headStatisticsCompany,
-  headStatisticsOfModuleCompany,
-} from 'constants/headerTable';
+// import {
+//   headStatisticsCompany,
+//   headStatisticsOfModuleCompany,
+// } from '../constants';
 import FilterSearch from '../FilterSearch';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
@@ -105,7 +105,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          tableHeads={headStatisticsCompany}
+          // tableHeads={headStatisticsCompany}
           tableBody={dataTableStatisticsCompany}
           // isShowId
         />
@@ -143,7 +143,7 @@ const ItemContentTab = ({
         </div>
       </div>
       <Table
-        tableHeads={headStatisticsOfModuleCompany}
+        // tableHeads={headStatisticsCompany}
         tableBody={dataTableStatisticsOfModuleCompany}
         // isShowId
       />
