@@ -7,7 +7,7 @@ import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
 import {
   headTestMockupOperationStatus,
-  headOperationStatusByAreaCompany,
+  headTestMockupOperationStatistics,
 } from 'constants/headerTable';
 // import LineSeriesChart from '../chart';
 import Pagination from 'react-js-pagination';
@@ -147,14 +147,14 @@ const ItemContentTab = ({
       </div>
 
       <Table
-        tableHeads={headOperationStatusByAreaCompany}
+        tableHeads={headTestMockupOperationStatistics}
         tableBody={tableOperationStatusByAreaCompany}
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
           isShow: isShowModalSorting,
-          keyItem: 5,
+          keyItem: 4,
         }}
         onClickRow={handleClickDetail}
       />
