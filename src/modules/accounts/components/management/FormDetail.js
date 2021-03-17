@@ -51,7 +51,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     const { name } = e.target;
     setCurrentOption(name);
   };
-  console.log('devices', devices);
+
   // handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
