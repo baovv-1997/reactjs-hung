@@ -562,6 +562,53 @@ export const headTestMockupOperationStatistics = [
   },
 ];
 
+export const headTestSolarMonitoringOperationStatus = [
+  {
+    id: 0,
+    name: 'No.',
+  },
+  {
+    id: 1,
+    name: '발생 일시',
+  },
+  {
+    id: 2,
+    name: '설치업체',
+  },
+  {
+    id: 3,
+    name: '인버터ID',
+  },
+  {
+    id: 4,
+    name: 'PV전압(V1)',
+  },
+  {
+    id: 5,
+    name: 'PV전류(l1)',
+  },
+  {
+    id: 6,
+    name: '출력전압(V2)',
+  },
+  {
+    id: 7,
+    name: '출력전류(l2)',
+  },
+  {
+    id: 8,
+    name: '출력(P)',
+  },
+  {
+    id: 9,
+    name: '역률',
+  },
+  {
+    id: 10,
+    name: '주파수',
+  },
+];
+
 export default {
   headStatusCompany,
   headStatusByCompany,
@@ -573,4 +620,5 @@ export default {
   headTestMockupStatistics,
   headTestMockupStatisticsOfModule,
   headTestMockupOperationStatistics,
+  headTestSolarMonitoringOperationStatus,
 };

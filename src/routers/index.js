@@ -99,6 +99,20 @@ const testMockupOperationStaticsDevelopment = lazy(() =>
   import('modules/testMockupStatistics/components/statisticsDevelopment')
 );
 
+const testSolarMonitoringStatusDevelopment = lazy(() =>
+  import('modules/testSolarMonitoringStatus/components/statusDevelop')
+);
+const testSolarMonitoringStatusOperation = lazy(() =>
+  import('modules/testSolarMonitoringStatus/components/statusOperation')
+);
+
+// const testMockupOperationStatics = lazy(() =>
+//   import('modules/testMockupStatistics/components/statisticsOperation')
+// );
+// const testMockupOperationStaticsDevelopment = lazy(() =>
+//   import('modules/testMockupStatistics/components/statisticsDevelopment')
+// );
+
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
   if (token) {
@@ -238,6 +252,17 @@ const Router = () => {
             exact
             path={ROUTERS.TEST_MOCKUP_STATISTICS_DEVELOP}
             component={testMockupOperationStaticsDevelopment}
+          />
+
+          <Route
+            exact
+            path={ROUTERS.TEST_SOLAR_STATUS_DEVELOP}
+            component={testSolarMonitoringStatusDevelopment}
+          />
+          <Route
+            exact
+            path={ROUTERS.TEST_SOLAR_STATUS_OPERATION}
+            component={testSolarMonitoringStatusOperation}
           />
         </Switch>
       </Suspense>
