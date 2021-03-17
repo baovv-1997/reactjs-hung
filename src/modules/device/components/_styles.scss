@@ -271,6 +271,8 @@
         border-top: pxToRem(0.5) solid $color-light10;
         border-bottom: pxToRem(0.5) solid $color-light10;
       }
+
+      
     }
 
     &__btn-group {
@@ -397,6 +399,11 @@
         input:disabled {
           background-color: $input-disable;
         }
+      }
+
+      .cell-disable {
+        background-color: $input-disable;
+        cursor: none;
       }
 
       .cell:first-child {

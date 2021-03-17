@@ -113,14 +113,17 @@ const mainSlice = createSlice({
       state.type = action.type;
     },
     addDeviceSuccess: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.dataAddNew = action?.data?.data;
       state.type = action.type;
     },
     addDeviceFailed: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.type = action.type;
       state.errorsAddDevice = action.errors;
+    },
+    resetDeviceType: (state) => {
+      state.type = '';
     },
   },
 });
@@ -146,6 +149,7 @@ export const {
   addDevice,
   addDeviceSuccess,
   addDeviceFailed,
+  resetDeviceType,
 } = actions;
 
 export default reducer;

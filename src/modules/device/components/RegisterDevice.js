@@ -1,10 +1,10 @@
 // @flow
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
-import MainLayout from '../../../layout/MainLayout';
-import FormRegister from './FormRegister';
 import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
 import { TitleHeader } from 'commons/components/TitleHeader';
+import MainLayout from '../../../layout/MainLayout';
+import FormRegister from './FormRegister';
 
 type Props = {
   history: {

@@ -12,7 +12,7 @@ import Button from 'commons/components/Button';
 import ModalPopup from 'commons/components/Modal';
 import { isNumberKey } from 'helpers';
 import ROUTERS from 'constants/routers';
-import { addDevice } from '../redux';
+import { addDevice, resetDeviceType } from '../redux';
 
 type Props = {
   history: {
@@ -29,7 +29,7 @@ const FormRegister = ({ history }: Props) => {
   const dataAddNew = useSelector((state) => state?.device?.dataAddNew);
   const type = useSelector((state) => state?.device?.type);
   const [startDate, setStartDate] = useState(new Date());
-  const [currentType, setCurrentType] = useState('1');
+  const [currentType, setCurrentType] = useState('0');
   const [positionSelected, setPositionSelected] = useState(null);
   const [companySelected, setCompanySelected] = useState(null);
   const [isCancel, setIsCancel] = useState(false);
@@ -151,12 +151,17 @@ const FormRegister = ({ history }: Props) => {
         </div>
         <div className="col-item col-4">
           <div className="cell">{renderRadioList}</div>
-          <div className="cell">
+          <div
+            className={`cell ${
+              currentType === '2' || currentType === '3' ? 'cell-disable' : ''
+            }`}
+          >
             <Select
               listItem={posOptionList}
               onChange={(option) => onChangeSelect(option, 'position')}
               option={positionSelected}
               placeholder="위치선택"
+              disabled={currentType === '2' || currentType === '3'}
             />
           </div>
           <div className="cell">
@@ -209,12 +214,17 @@ const FormRegister = ({ history }: Props) => {
               placeholder="업체선택"
             />
           </div>
-          <div className="cell">
+          <div
+            className={`cell ${
+              currentType === '2' || currentType === '3' ? 'cell-disable' : ''
+            }`}
+          >
             <input
               placeholder="입력해주세요."
               onChange={(e) => handleInputChange(e)}
               name="name"
               value={inputValue.name}
+              disabled={currentType === '2' || currentType === '3'}
             />
           </div>
           <div className="cell">
@@ -289,9 +299,11 @@ const FormRegister = ({ history }: Props) => {
         isShowFooter
         handleCloseIcon={() => {
           setIsErrorAdd(false);
+          dispatch(resetDeviceType());
         }}
         handleClose={() => {
           setIsErrorAdd(false);
+          dispatch(resetDeviceType());
         }}
         textBtnLeft="OK"
         customClassButton="btn-custom"

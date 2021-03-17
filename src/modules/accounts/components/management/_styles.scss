@@ -183,6 +183,10 @@
       // padding-left: pxToRem(30);
     }
 
+    .cell-disable {
+      background-color: $input-disable;
+    }
+
     .col-2:nth-child(3) {
       border-left: 1px solid $color-border-card;
     }
@@ -196,6 +200,7 @@
       &.disable {
         padding-left: pxToRem(30);
       }
+      
     }
 
     .input-field,
