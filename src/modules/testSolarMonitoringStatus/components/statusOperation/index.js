@@ -4,10 +4,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import {
-  listDataTestSolarMonitringOperationStatus,
-  dataTableTestMockupStatisticsOfModule,
-} from 'mockData/listCompany';
+import { dataTableTestMockupStatisticsOfModule } from 'mockData/listCompany';
+import { listDataTable2 } from '../data';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
@@ -158,9 +156,7 @@ const StatusByAreaCompany = () => {
           <div className="content-body-left border-pd-20">
             <div className="h-100">
               <ItemContentTab
-                listMockupDataCompany={
-                  listDataTestSolarMonitringOperationStatus
-                }
+                listMockupDataCompany={listDataTable2}
                 dataContent={{}}
                 dataBoxContent={dataBoxContent}
                 handleDownloadTrend={handleDownloadTrend}

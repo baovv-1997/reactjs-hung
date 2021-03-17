@@ -1,33 +1,21 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-
-import {
-  listMockupType,
-  listMockupDataCompany,
-  tableOperationStatusByAreaCompany,
-  listParkingLot,
-} from 'mockData/listCompany';
+import { dataTableBottom, dataTable2 } from '../data';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import * as SignInAction from 'modules/accounts/redux';
-import { useHistory } from 'react-router-dom';
-import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
   const perPage2 = 6;
   const totalPage2 = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
   const { isProcessing, listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
@@ -206,17 +194,6 @@ const OperationStatusPage = () => {
     }
   };
 
-  //  click vào table bên dưới đến trang chi tiết
-  const handleClickDetail = (item) => {
-    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
-  };
-
-  const onSelect = (eventKey) => {
-    window.scrollTo(0, 0);
-    setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
-  };
-
   const handleDownloadTrend = (name) => {
     console.log(name, 'download Trend');
   };
@@ -224,108 +201,30 @@ const OperationStatusPage = () => {
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
-        <TitleHeader title="실증단지 운영 현황" />
+        <TitleHeader title="테스트(실증단지) 운영 통계" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
-            listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={listStatusCompanySelect}
-            listMockupType={listMockupType}
           />
-          <div className="content-body-left w-100">
-            <div className="h-100">
-              <Tabs
-                defaultActiveKey="all"
-                className="list-order tab-list"
-                onSelect={(eventKey) => onSelect(eventKey)}
-              >
-                <Tab
-                  eventKey="all"
-                  title={
-                    <div className="tab-name">
-                      아반시스코리아<span>전체</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
-                    }
-                    isShowModalSorting={isShowModalSorting}
-                    paramsSearch={paramsSearch}
-                    listInverter={listInverter}
-                    handleClickDetail={handleClickDetail}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="coes"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    listInverter={listInverter}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
-                    }
-                    isShowModalSorting={isShowModalSorting}
-                    paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="SK-Solar"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID<span>본관 동측</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    listInverter={listInverter}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
-                    }
-                    isShowModalSorting={isShowModalSorting}
-                    paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-              </Tabs>
-            </div>
+          <div className="content-body-left w-100 border-pd-20">
+            <ItemContentTab
+              dataBoxContent={dataBoxContent}
+              listMockupDataCompany={dataTable2}
+              handleDownloadTrend={handleDownloadTrend}
+              dataContent={{}}
+              totalPage={totalPage}
+              perPage={perPage}
+              totalPage2={totalPage2}
+              perPage2={perPage2}
+              dataTableBottom={dataTableBottom}
+              isShowModalSorting={isShowModalSorting}
+              paramsSearch={paramsSearch}
+              listInverter={listInverter}
+              handleChangeSearch={handleChangeSearch}
+              listStatusCompanySelect={listStatusCompanySelect}
+            />
           </div>
         </div>
       </div>

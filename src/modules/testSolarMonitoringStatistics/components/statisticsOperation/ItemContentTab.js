@@ -8,8 +8,10 @@ import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
-import { headOperationStatusByAreaCompany } from 'constants/headerTable';
-// import { headStatusCompany } from '../constants';
+import {
+  headStatusCompany,
+  headOperationStatusByAreaCompany,
+} from '../constant';
 import { useHistory } from 'react-router-dom';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
@@ -25,11 +27,10 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableBottom: Array<{
     id: number,
   }>,
   isShowModalSorting: boolean,
-  handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -53,9 +54,8 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
+  dataTableBottom,
   isShowModalSorting,
-  handleClickDetail,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
@@ -90,6 +90,7 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -125,7 +126,7 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          // tableHeads={headStatusCompany}
+          tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
           // isShowId
         />
@@ -164,15 +165,14 @@ const ItemContentTab = ({
       </div>
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableBody={dataTableBottom}
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
           isShow: isShowModalSorting,
-          keyItem: 5,
+          keyItem: 4,
         }}
-        onClickRow={handleClickDetail}
       />
       <div className="group-btn-register text-right">
         <Button

@@ -1,19 +1,22 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-// import { headStatusCompany } from '../constants';
-import BoxGroup from '../BoxGroup';
-import GroupCompareChart from '../GroupCompareChart';
+import { headStatisticsCompany } from '../constant';
+import FilterSearch from '../FilterSearch';
+import BoxGroup from './BoxGroup';
+import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { FilterSearch } from '../FilterSearch';
 
 type Props = {
-  listMockupDataCompany: any,
+  dataTableStatisticsCompany: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
+  totalPage: number,
+  perPage: number,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -29,10 +32,12 @@ type Props = {
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  dataTableStatisticsCompany,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
+  totalPage,
+  perPage,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
@@ -42,44 +47,29 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: 'PV전압',
+      name: '발전량 kWh',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: 'PV전류',
+      name: '일사량 ℃',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '출력전류',
+      name: '성능비 kWh/㎡·10초',
       color: '#fe8224',
-    },
-    {
-      id: 4,
-      name: '출력',
-      color: '#ffcc00',
-    },
-    {
-      id: 5,
-      name: '출력전압',
-      color: '#102a82',
     },
   ];
   return (
     <div className="content-wrap-tab">
-      <BoxGroup
-        dataBoxContent={dataBoxContent}
-        paramsSearch={paramsSearch}
-        handleChangeSearch={handleChangeSearch}
-      />
+      <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
       />
-
       <div className="group-char">
         <div className="group-char-left">
           <GroupCompareChart
@@ -92,19 +82,33 @@ const ItemContentTab = ({
         </div>
         <div className="group-char-right">{/* Add  Chart */}</div>
       </div>
-
-      <TitleSubHeader title="실시간 계측정보 통계" />
+      <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        handleDownloadTrend={handleDownloadTrend}
       />
       <div>
         <Table
-          // tableHeads={headStatusCompany}
-          tableBody={listMockupDataCompany}
+          tableHeads={headStatisticsCompany}
+          tableBody={dataTableStatisticsCompany}
           // isShowId
         />
+        <div className="opacity d-block pagination mt-0">
+          {totalPage > perPage && (
+            <div className="wrapper-device__pagination mt-0">
+              <Pagination
+                activePage={paramsSearch?.page}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={(e) => handleChangeSearch(e, 'page')}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

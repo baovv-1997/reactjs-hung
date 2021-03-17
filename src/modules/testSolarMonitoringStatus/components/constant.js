@@ -64,6 +64,10 @@ export const headTestSolarMonitoringOperationStatus = [
   },
   {
     id: 4,
+    name: '인버터명',
+  },
+  {
+    id: 4,
     name: 'PV전압(V1)',
   },
   {
