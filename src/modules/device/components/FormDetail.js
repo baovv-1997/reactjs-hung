@@ -1,11 +1,12 @@
 // @flow
 import React, { memo, useState, useEffect } from 'react';
-import { DeivceDetailHead } from 'constants/headerTable';
+// import { DeivceDetailHead } from 'constants/headerTable';
 import { renderLabelType } from 'helpers/';
 import { useDispatch } from 'react-redux';
 import Button from 'commons/components/Button';
 import ModalPopup from 'commons/components/Modal';
 import ROUTERS from 'constants/routers';
+import InputPhone from 'commons/components/Input/InputPhone';
 import { updateDevice } from '../redux';
 
 type Props = {
@@ -79,7 +80,7 @@ const FormDetail = ({ data, history }: Props) => {
         id: data.id,
         manager: nameManager,
         incidence_angle: incidenceAngle,
-        manager_phone: phoneManager,
+        manager_phone: phoneManager && phoneManager.replace(/-/g, ''),
         azimuth_angle: azimuthAngle,
         install_date: data?.ds_install_date,
         color: data?.ds_color,
@@ -95,12 +96,15 @@ const FormDetail = ({ data, history }: Props) => {
   return (
     <div>
       <div className="device-detail__form">
-        <div className="col-item col-2">
-          {DeivceDetailHead.slice(0, 5).map((item) => (
-            <div className="cell" key={item.id}>
-              {item.name}
-            </div>
-          ))}
+        <div className="col-item col-2 left">
+          <div className="cell">NO</div>
+          <div className="cell">구분</div>
+          {parseInt(data?.ds_type, 10) !== 0 && (
+            <div className="cell">설치위치</div>
+          )}
+          <div className="cell">담당자</div>
+          <div className="cell">모듈 출력</div>
+          <div className="cell">입사각</div>
         </div>
         <div className="col-item col-4">
           <div className="cell">
@@ -122,22 +126,26 @@ const FormDetail = ({ data, history }: Props) => {
             />
           </div>
           <div className="cell">
-            <input disabled value={data?.ds_max_power} />
+            <input disabled value={`${data?.ds_max_power}v`} />
           </div>
           <div className="cell">
             <input
               name="incidenceAngle"
               value={incidenceAngle}
               onChange={(e) => handleInputChange(e)}
+              maxLength="11"
             />
           </div>
         </div>
-        <div className="col-item col-2">
-          {DeivceDetailHead.slice(6, 12).map((item) => (
-            <div className="cell" key={item.id}>
-              {item.name}
-            </div>
-          ))}
+        <div className="col-item col-2 right">
+          <div className="cell">설치일</div>
+          <div className="cell">업체명</div>
+          {parseInt(data?.ds_type, 10) !== 0 && (
+            <div className="cell">모듈명</div>
+          )}
+          <div className="cell">담당자 전화번호</div>
+          <div className="cell">모듈 색상</div>
+          <div className="cell">방위각</div>
         </div>
         <div className="col-item col-4">
           <div className="cell">
@@ -151,11 +159,20 @@ const FormDetail = ({ data, history }: Props) => {
               <input value={data?.ds_name} disabled />
             </div>
           )}
-          <div className="cell">
-            <input
-              value={phoneManager}
-              name="phoneManager"
+          <div className="cell justify-content-start">
+            <InputPhone
+              className="input-field"
+              value={phoneManager || ''}
+              name="phone"
+              options={{
+                numericOnly: true,
+                delimiters: ['-', '-'],
+                blocks: [3, 4, 4],
+              }}
               onChange={(e) => handleInputChange(e)}
+              pattern="[0-9]*"
+              inputMode="numeric"
+              customClass="custom-input"
             />
           </div>
           <div className="cell">
@@ -166,13 +183,14 @@ const FormDetail = ({ data, history }: Props) => {
               value={azimuthAngle}
               name="azimuthAngle"
               onChange={(e) => handleInputChange(e)}
+              maxLength="11"
             />
           </div>
         </div>
       </div>
-      <div className="account-detail__btn-group">
+      <div className="device-detail__btn-group">
         <Button customClass="btn-modify" onClick={handleUpdateDevice}>
-          수정
+          수정 완료
         </Button>
         <Button
           customClass="btn-cancel"
@@ -180,7 +198,7 @@ const FormDetail = ({ data, history }: Props) => {
             setIsCancel(true);
           }}
         >
-          목록{' '}
+          목록
         </Button>
       </div>
 

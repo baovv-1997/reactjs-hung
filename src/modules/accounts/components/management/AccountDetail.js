@@ -31,7 +31,7 @@ const AccountDetail = ({ match, history }: Props) => {
 
   return (
     <MainLayout isProcessing={isProcessing}>
-      <div className="account content-wrap">
+      <div className="account">
         <TitleHeader
           title="관리자 계정 확인"
           descSub="관리자 계정 정보를 확인하실 수 있습니다."

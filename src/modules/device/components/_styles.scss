@@ -1,7 +1,6 @@
 .wrapper-device {
   margin: pxToRem(85) pxToRem(20) pxToRem(20);
   padding: pxToRem(20);
-  min-height: 85vh;
   // min-width: pxToRem(1670);
   background-color: $white;
   border-radius: pxToRem(15);
@@ -170,67 +169,75 @@
       }
     }
 
-    .col-span {
-      .col-item {
-        border-top: solid pxToRem(1) $color-light10;
-        border-bottom: none;
+    &__form {
+      display: flex;
 
+      .input-change {
+        font-family: $Roboto-Font;
+        font-size: pxToRem(15);
+        font-weight: normal;
+        line-height: 1.2;
+        letter-spacing: -0.45px;
+        text-align: left;
+        color: $black-active;
+      }
+
+      .col-item.col-2 {
         .cell {
-          border-top: none;
-          border-bottom: none;
-          padding-left: pxToRem(20);
+          background-color: $bg-light10;
+          border: solid pxToRem(1) $color-light10;
+          font-size: pxToRem(17);
+          font-weight: bold;
+          line-height: 1.47;
+          letter-spacing: pxToRem(-0.51);
+          text-align: center;
+          color: $bg-button;
+          text-align: center;
+          justify-content: center;
+          // border-left: 0;
+          border-top: 0;
+          border-right: 0;
         }
 
-        .react-datepicker-wrapper {
-          input {
-            border: solid 1px $color-border-card;
-            border-radius: pxToRem(3);
-            font-family: $Roboto-Font;
-            font-size: pxToRem(15);
-            line-height: 2.33;
-            letter-spacing: -0.38px;
-            text-align: left;
-            color: $black;
-            height: pxToRem(32);
-            width: pxToRem(180);
+        &.right .cell {
+          &:last-child {
+            border-bottom: 0;
           }
         }
       }
-    }
 
-    .col-item.col-2 {
-      .cell {
-        background-color: $bg-light10;
-        font-size: pxToRem(17);
-        font-weight: bold;
-        line-height: 1.47;
-        letter-spacing: pxToRem(-0.51);
-        text-align: center;
-        color: $bg-button;
-        text-align: center;
-        justify-content: center;
-        border-left: 0;
+      .col-item.col-4 {
+        .cell {
+          // border-left: 0;
+          border-top: 0;
+          border-right: 0;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+
+          * {
+            font-size: pxToRem(15);
+          }
+        }
       }
-    }
-
-    &__form {
-      display: flex;
 
       .col-item {
         padding: 0;
 
         .cell {
-          border: solid pxToRem(0.25) $color-light10;
+          border: solid pxToRem(1) $color-light10;
           width: 100%;
-          height: pxToRem(38) !important;
+          height: pxToRem(40) !important;
           display: flex;
           justify-content: center;
           align-items: center;
 
+
           input {
             border: none;
             padding: 0;
-            height: pxToRem(32);
+            height: 100%;
             width: 100%;
             padding-left: pxToRem(20);
           }
@@ -243,13 +250,13 @@
         .cell:first-child {
           // border-left: solid pxToRem(0.25) $color-light10;
           width: 100%;
-          height: pxToRem(50) !important;
+          height: pxToRem(40) !important;
         }
       }
 
       .col-item:first-child {
         // border-left: pxToRem(0.5) solid $color-light10;
-        height: pxToRem(50) !important;
+        height: pxToRem(40) !important;
       }
 
       .col-item:nth-child(odd) {
@@ -269,7 +276,7 @@
     &__btn-group {
       display: flex;
       justify-content: center;
-      margin-top: pxToRem(30);
+      margin: pxToRem(30) 0;
 
       .btn-modify {
         height: pxToRem(37);
@@ -309,11 +316,13 @@
       .col-item {
         &.col-10 {
           border-right: 0 !important;
+          border-bottom: 0 !important;
         }
 
         .cell {
           border-top: 0 !important;
           border-left: 0 !important;
+          border-bottom: 0 !important;
         }
       }
     }
@@ -347,6 +356,15 @@
         border-top: 0;
         border-left: 0;
 
+        .unit {
+          font-size: pxToRem(15);
+          line-height: 1.2;
+          letter-spacing: pxToRem(-0.45);
+          margin-left: pxToRem(10);
+          text-align: left;
+          color: $black-active;
+        }
+
         &:last-child {
           border-bottom: 0;
         }
@@ -369,6 +387,7 @@
           width: pxToRem(180);
           padding-left: pxToRem(20);
           border-radius: pxToRem(3);
+          @include InputPlaceholder(#e3e3e3, 15);
         }
 
         input:disabled {

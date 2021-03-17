@@ -304,3 +304,33 @@
     }
   }
 }
+
+@mixin InputPlaceholder($colorInput, $fontSize) {
+  &::-webkit-input-placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+
+  &::placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+
+  &::-moz-placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+
+  &:-ms-input-placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+}
