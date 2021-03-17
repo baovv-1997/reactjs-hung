@@ -23,3 +23,16 @@
     border: solid pxToRem(1) $color-border-card;
   }
 }
+
+.test-dashboard {
+  display: flex !important;
+  grid-gap: pxToRem(50);
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 pxToRem(20);
+
+  .header-event {
+    background-color: $bg-event;
+  }
+}

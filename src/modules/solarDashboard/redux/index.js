@@ -5,6 +5,10 @@ const solarDashBoardSlice = createSlice({
   name: 'solarDashboard',
   initialState: {
     isLoading: false,
+    listDevice: [],
+    type: '',
+    total: 0,
+    current_page: 0,
   },
   reducers: {
     getListDeviceTestSolarDashboard: (state, action) => {

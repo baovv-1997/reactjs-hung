@@ -10,6 +10,9 @@ type Props = {
   value?: string,
   onChange?: Function,
   setSearchTerm?: Function,
+  options?: Array<{id: number, value: number, label: string}>,
+  handleKeyDown: Function,
+  isSpinner?: boolean,
 };
 
 const Search = ({
@@ -19,6 +22,9 @@ const Search = ({
   value = '',
   onChange = () => {},
   setSearchTerm = () => {},
+  options = [],
+  handleKeyDown,
+  isSpinner = false
 }: Props) => {
   const [display, setDisplay] = useState(false);
 
@@ -50,17 +56,20 @@ const Search = ({
         onClick={() => setDisplay(true)}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e)}
+        onChange={onChange}
+        onKeyPress={(e) => handleKeyDown(e)}
       />
+
+      {isSpinner && <div className="spinner" />}
 
       <img
         src={images.icon_search}
         alt="Icon Search"
         className="search__icon"
-        onClick={() => handleIconClick(value)}
+        onClick={handleIconClick}
         role="presentation"
       />
-      {display && <AutoSuggest search={value} onClick={updateSearchInput} />}
+      {(display && options.length) ? <AutoSuggest search={value} onClick={updateSearchInput} options={options} /> : null}
     </div>
   );
 };
@@ -72,6 +81,8 @@ Search.defaultProps = {
   onChange: () => {},
   setSearchTerm: () => {},
   handleIconClick: () => {},
+  options:[],
+  isSpinner: false,
 };
 
 export default memo<Props>(Search);
