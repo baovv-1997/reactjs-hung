@@ -87,6 +87,12 @@ const DeviceManagement = ({ history }: Props) => {
     );
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmitSearch();
+    }
+  };
+
   const renderListOptions = () => {
     let listOptions = [];
     switch (currentOption) {
@@ -155,6 +161,7 @@ const DeviceManagement = ({ history }: Props) => {
                 customClass="wrapper-input-search"
                 onChange={handleInputChange}
                 value={valueSearch}
+                onKeyPress={(e) => handleKeyDown(e)}
               />
               <img
                 src={IMAGES.icon_search}
