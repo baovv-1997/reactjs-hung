@@ -178,6 +178,7 @@ const FormRegister = ({ history }: Props) => {
               onKeyPress={(e) => isNumberKey(e)}
               inputMode="numeric"
             />
+            <span className="unit">kW</span>
           </div>
           <div className="cell">
             <input
@@ -189,6 +190,7 @@ const FormRegister = ({ history }: Props) => {
               onKeyPress={(e) => isNumberKey(e)}
               inputMode="numeric"
             />
+            <span className="unit">°도</span>
           </div>
         </div>
         <div className="col-item col-2">
@@ -244,6 +246,7 @@ const FormRegister = ({ history }: Props) => {
               onKeyPress={(e) => isNumberKey(e)}
               inputMode="numeric"
             />
+            <span className="unit">°도</span>
           </div>
         </div>
       </div>
