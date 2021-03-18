@@ -276,7 +276,7 @@ const SignUp = () => {
         setListItemDevice(listItemChange);
         dispatch(
           SignInAction.getListInverter({
-            per_page: 0,
+            per_page: 999999,
             type: option?.value,
           })
         );
@@ -285,7 +285,7 @@ const SignUp = () => {
         setListItemDevice(listItemCompany);
         dispatch(
           SignInAction.getListInverter({
-            per_page: 0,
+            per_page: 999999,
             type: itemChange?.type?.value,
             com_id: option?.value,
           })
@@ -295,7 +295,7 @@ const SignUp = () => {
         setListItemDevice(listItemArea);
         dispatch(
           SignInAction.getListInverter({
-            per_page: 0,
+            per_page: 999999,
             type: itemChange?.type?.value,
             com_id: itemChange?.company?.value,
             pos_id: option?.value,
