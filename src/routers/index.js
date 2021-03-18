@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
 import { API } from '../apis';
+import PrivateRoute from './PrivateRoute';
 
 // components
 const StatusCompany = lazy(() => import('modules/statusCompany/components'));
@@ -119,161 +120,207 @@ const Router = () => {
     API.setHeader('Authorization', `Bearer ${token}`);
   }
 
+  const isAuthenticated = token !== '';
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Switch>
           <Route exact path={ROUTERS.LOGIN} component={SingIn} />
-          <Route exact path={ROUTERS.ROOT} component={MainPage} />
-          <Route
+          <PrivateRoute
+            exact
+            path={ROUTERS.ROOT}
+            component={MainPage}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
             exact
             path={ROUTERS.DASHBOARD_AREA}
             component={DashboardArea}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.DASHBOARD_COMPANY}
             component={DashboardCompany}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.STATUS_COMPANY}
             component={StatusCompany}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.REGISTER_DEVICE}
             component={RegisterDevice}
+            isAuthenticated={isAuthenticated}
           />
-          <Route exact path={ROUTERS.DEVICE} component={DeviceManagement} />
-          <Route exact path={ROUTERS.DEVICE_DETAIL} component={DeviceDetail} />
-          <Route
+          <PrivateRoute
+            exact
+            path={ROUTERS.DEVICE}
+            component={DeviceManagement}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={ROUTERS.DEVICE_DETAIL}
+            component={DeviceDetail}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
             exact
             path={ROUTERS.STATUS_COMPANY_BY_AREA}
             component={StatusCompanyByArea}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY}
             component={operationStatusByCompany}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER}
             component={operationStatusByCompanyRegister}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY_DETAIL}
             component={operationStatusByCompanyDetail}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY_EDIT}
             component={operationStatusByCompanyEdit}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_AREA}
             component={operationStatusByArea}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_DASHBOARD}
             component={TestDashboard}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.SOLAR_DASHBOARD}
             component={SolarDashboard}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.STATISTICS_DEVELOP}
             component={statisticsDevelopByCompany}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.STATISTICS_DEVELOP_AREA}
             component={statisticsDevelopByArea}
+            isAuthenticated={isAuthenticated}
           />
 
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.ACCOUNT_MANAGEMENT_DETAIL}
             component={accountDetail}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.ACCOUNT_MANAGEMENT}
             component={accountManagement}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
+            exact
             path={ROUTERS.OPERATION_STATISTICS_COMPANY}
             component={statisticsOperationByCompany}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATISTICS_AREA}
             component={statisticsOperationByArea}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_STATUS}
             component={testMockupStatus}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_OPERATION}
             component={testMockupOperationStatus}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_REGISTER}
             component={testMockupOperationStatusRegister}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_DETAIL}
             component={testMockupOperationStatusDetail}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_EDIT}
             component={testMockupOperationStatusEdit}
+            isAuthenticated={isAuthenticated}
           />
 
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_STATISTICS_OPERATION}
             component={testMockupOperationStatics}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_MOCKUP_STATISTICS_DEVELOP}
             component={testMockupOperationStaticsDevelopment}
+            isAuthenticated={isAuthenticated}
           />
 
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_SOLAR_STATUS_DEVELOP}
             component={testSolarMonitoringStatusDevelopment}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_SOLAR_STATUS_OPERATION}
             component={testSolarMonitoringStatusOperation}
+            isAuthenticated={isAuthenticated}
           />
 
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_SOLAR_STATISTICS_DEVELOP}
             component={testSolarMonitoringStaticsDevelopment}
+            isAuthenticated={isAuthenticated}
           />
-          <Route
+          <PrivateRoute
             exact
             path={ROUTERS.TEST_SOLAR_STATISTICS_OPERATION}
             component={testSolarMonitoringStaticsOperation}
+            isAuthenticated={isAuthenticated}
           />
         </Switch>
       </Suspense>
