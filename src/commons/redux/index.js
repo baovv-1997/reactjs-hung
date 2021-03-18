@@ -1,8 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
+import ROUTERS from 'routers';
 
 const initialState = {
-  menuClicking: {},
-  subMenuClicking: {},
+  menuClicking: {
+    id: 1,
+    name: '대시보드',
+    sub: [
+      {
+        id: 1,
+        name: '통합 대시보드',
+        to: ROUTERS.ROOT,
+      },
+      {
+        id: 2,
+        name: '구역 대시보드',
+        to: ROUTERS.DASHBOARD_AREA,
+      },
+      {
+        id: 3,
+        name: '업체 대시보드',
+        to: ROUTERS.DASHBOARD_COMPANY,
+      },
+    ],
+  },
+  subMenuClicking: {
+    id: 1,
+    name: '통합 대시보드',
+    to: ROUTERS.ROOT,
+  },
 };
 
 const commonSilice = createSlice({

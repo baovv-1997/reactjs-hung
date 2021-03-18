@@ -52,7 +52,6 @@ const MenuItem = ({
       setNestSubClicking({});
     }
   };
-
   const renderSub =
     listSub &&
     listSub.length > 0 &&
