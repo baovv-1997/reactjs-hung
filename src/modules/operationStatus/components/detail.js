@@ -1,29 +1,73 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import MainLayout from 'layout/MainLayout';
+import { useDispatch, useSelector } from 'react-redux';
+
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import images from 'themes/images';
 import ModalPopup from 'commons/components/Modal';
 import Button from 'commons/components/Button';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
+import { getEventList, deleteEvent } from '../redux';
 
-const StatusByAreaCompanyDetail = () => {
+type Props = {
+  match: {
+    params: {
+      id: any,
+    },
+  },
+};
+
+const StatusByAreaCompanyDetail = ({ match }: Props) => {
+  const dispatch = useDispatch();
+
+  const { eventList, isProcessing, type } = useSelector(
+    (state) => state.operationStatus
+  );
+
+  const userInfo = useSelector((state) => state.account.userInfo);
+
   const history = useHistory();
-  const { id } = useParams();
+
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '이벤트 현황을 삭제하시겠습니까?',
   });
 
   const handleDelete = () => {
-    history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+    dispatch(deleteEvent(id));
   };
+  const roleName =
+    userInfo &&
+    userInfo.roles &&
+    userInfo.roles[0] &&
+    userInfo.roles[0] &&
+    userInfo.roles[0].name;
+  const { id } = match.params;
+
+  useEffect(() => {
+    dispatch(
+      getEventList({
+        id,
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    switch (type) {
+      case 'operationStatus/deleteEventSuccess':
+        history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+        break;
+      default:
+        break;
+    }
+  }, [type]);
 
   return (
-    <MainLayout>
+    <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 발전 현황"
@@ -34,52 +78,62 @@ const StatusByAreaCompanyDetail = () => {
         <div className="table-form">
           <div className="item-row d-flex">
             <div className="colum-left">분류</div>
-            <div className="colum-right">설비이력</div>
+            <div className="colum-right">{eventList?.evt_type_label}</div>
           </div>
           <div className="item-row d-flex">
             <div className="colum-left">모듈정보</div>
             <div className="colum-right">
-              <span>아반시스코리아</span>
-              <img
-                src={images.arrow_right}
-                alt=""
-                className="mx-2 position-top-1"
-              />
-              <span>본관남측</span>
-              <img
-                src={images.arrow_right}
-                alt=""
-                className="mx-2 position-top-1"
-              />
-              <span>DSP-3320K-OR</span>
+              <span>{eventList?.com_name}</span>
+              {eventList?.com_name && eventList?.pos_name && (
+                <img
+                  src={images.arrow_right}
+                  alt=""
+                  className="mx-2 position-top-1"
+                />
+              )}
+              <span>{eventList?.pos_name}</span>
+              {eventList?.com_name && eventList?.pos_name && (
+                <img
+                  src={images.arrow_right}
+                  alt=""
+                  className="mx-2 position-top-1"
+                />
+              )}
+              <span>{eventList?.pos_name}</span>
             </div>
           </div>
           <div className="item-row d-flex mh-300">
             <div className="colum-left">내용</div>
-            <div className="colum-right">월 정기 설비 진행</div>
+            <div className="colum-right">{eventList?.evt_content}</div>
           </div>
         </div>
         <div className="group-btn-delete text-right mb-4">
-          <Button
-            onClick={() =>
-              setModalConform({
-                ...modalConform,
-                isShow: true,
-              })
-            }
-            customClass="btn-red"
-          >
-            삭제
-          </Button>
+          {(roleName === 'admin' || roleName === 'company') && (
+            <Button
+              onClick={() =>
+                setModalConform({
+                  ...modalConform,
+                  isShow: true,
+                })
+              }
+              customClass="btn-red"
+            >
+              삭제
+            </Button>
+          )}
         </div>
         <div className="group-btn-bottom">
-          <Button
-            onClick={() =>
-              history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/edit/${id}`)
-            }
-          >
-            수정
-          </Button>
+          {(roleName === 'admin' || roleName === 'company') && (
+            <Button
+              onClick={() =>
+                history.push(
+                  `${ROUTERS.OPERATION_STATUS_BY_COMPANY}/edit/${id}`
+                )
+              }
+            >
+              수정
+            </Button>
+          )}
           <Button
             onClick={() => history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)}
           >
@@ -100,12 +154,12 @@ const StatusByAreaCompanyDetail = () => {
             isShow: false,
           })
         }
-        handleClose={() =>
+        handleClose={() => {
           setModalConform({
             ...modalConform,
             isShow: false,
-          })
-        }
+          });
+        }}
         textBtnLeft="확인"
         textBtnRight="취소"
         isShowTwoBtn
@@ -118,4 +172,4 @@ const StatusByAreaCompanyDetail = () => {
   );
 };
 
-export default StatusByAreaCompanyDetail;
+export default memo<Props>(StatusByAreaCompanyDetail);

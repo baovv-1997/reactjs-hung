@@ -4,10 +4,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const statusCompanySlide = createSlice({
   name: 'statusCompany',
   initialState: {
-    isLoading: false,
+    isProcessing: false,
     listStatusCompany: [],
     listStatusCompanySelect: [],
     total: 0,
+    deviceList: [],
   },
 
   reducers: {

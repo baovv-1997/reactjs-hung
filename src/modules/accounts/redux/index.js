@@ -94,7 +94,7 @@ const accountSlice = createSlice({
       state.isProcessing = true;
     },
     getListInverterSuccess: (state, action) => {
-      const { data } = action;
+      const { data } = action.data;
       state.type = action.type;
       state.isProcessing = false;
       const listInverter =
