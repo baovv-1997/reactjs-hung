@@ -53,7 +53,6 @@ const SignIn = ({
   listType,
 }: Props) => {
   const { username, email, phone, person, role } = dataRegister;
-
   const renderListItemDevice =
     listItemDevice &&
     listItemDevice.map((item, index) => (
