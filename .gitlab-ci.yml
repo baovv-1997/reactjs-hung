@@ -13,7 +13,7 @@ deploy_dev:
     - git status
     - git pull origin develop
     - yarn
-    - yarn build
+    - npm run build
   only:
     - develop
 
