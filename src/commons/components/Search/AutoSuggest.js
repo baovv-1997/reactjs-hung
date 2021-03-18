@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 
 type Props = {
   onClick: Function,
-  options?: Array<{id: number, value: number, label: string}>
+  options?: Array<{ id: number, value: number, label: string }>
 };
 
 const AutoSuggest = ({ onClick, options = [] }: Props) => {
@@ -15,7 +15,7 @@ const AutoSuggest = ({ onClick, options = [] }: Props) => {
             className="auto-suggest__item"
             // eslint-disable-next-line react/no-array-index-key
             key={index}
-            onClick={() => onClick(option.label)}
+            onClick={() => onClick(option)}
             role="presentation"
           >
             {option.label}
@@ -29,4 +29,4 @@ AutoSuggest.defaultProps = {
   options: [],
 };
 
-export default memo<Props>(AutoSuggest);
+export default memo < Props > (AutoSuggest);

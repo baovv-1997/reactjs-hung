@@ -5,7 +5,7 @@ import * as TestDashboardAction from '../redux';
 function* getListDeviceTestDashboard(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.GET_LIST_CARD_MEASURE, action.payload)
+      API.get(ROUTES.GET_DASHBOARD_TEST_MOCKUP, action.payload)
     );
 
     if (response.ok) {

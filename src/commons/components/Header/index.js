@@ -21,47 +21,48 @@ const Header = ({
   isSelect = false,
   eventCount = 0,
 }: Props) => {
+
   const dispatch = useDispatch();
-  const { listPositions, listCompany, isSpinner } = useSelector(
-    (state) => state?.main
-  );
+  const { listPositions, listCompany, isSpinner } = useSelector(state => state?.main);
   const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState({ label: '', value: '', key: '', id: '' });
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const debouncedSearchTerm = useDebounce(searchTerm.label, 500);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
       dispatch(getListCompany({ keyword: debouncedSearchTerm }));
       dispatch(getListPosition({ keyword: debouncedSearchTerm }));
     }
-  }, [debouncedSearchTerm]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchTerm])
 
   // set option dropdown value when listposition != [];
   useEffect(() => {
-    setOptionDropdown(listPositions[0]);
-  }, [listPositions]);
+    const indexDefault = listPositions.findIndex((item) => item?.label.includes('본관 남측'));
+    setOptionDropdown(listPositions[indexDefault]);
+  }, [listPositions])
 
   // Handle Icon search Click
   const handleIconClick = () => {
     console.log(searchTerm);
-  };
+  }
 
   // Handle event press key enter search
   const handleKeyDownSearch = (e) => {
     if (e.key === 'Enter') {
       console.log(searchTerm);
     }
-  };
+  }
 
   // when input search change set value
   const handleSearchChange = (e) => {
     const { value } = e.target;
-    setSearchTerm(value);
+    setSearchTerm({ ...searchTerm, label: value });
   };
 
   // handle click outside event
@@ -81,7 +82,7 @@ const Header = ({
         {isSearch ? (
           <Search
             placeholder="회사명이나 구역명으로 검색해보세요."
-            value={searchTerm}
+            value={searchTerm.label}
             onChange={handleSearchChange}
             setSearchTerm={setSearchTerm}
             options={[...listPositions, ...listCompany]}
@@ -144,4 +145,4 @@ Header.defaultProps = {
   eventCount: 0,
 };
 
-export default memo<Props>(Header);
+export default memo < Props > (Header);
