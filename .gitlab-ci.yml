@@ -8,12 +8,10 @@ deploy_dev:
     - pwd
     - git status
     - git checkout .
-    - git fetch
     - git checkout develop
     - git status
     - git pull origin develop
-    - yarn
-    - npm run build
+
   only:
     - develop
 
@@ -27,12 +25,10 @@ deploy_staging:
     - pwd
     - git status
     - git checkout .
-    - git fetch
     - git checkout staging
     - git status
     - git pull origin staging
-    - yarn
-    - yarn build
+
   only:
     - staging
 
