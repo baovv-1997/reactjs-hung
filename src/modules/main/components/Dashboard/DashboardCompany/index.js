@@ -167,7 +167,7 @@ const DashboardCompany = () => {
 
 
   return (
-    <MainLayout>
+    <MainLayout >
       <div className="content-wrap">
         <TitleHeader
           title="설치 업체"

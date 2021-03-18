@@ -19,7 +19,6 @@ const SolarDashboard = () => {
   // pagination page
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
-
   };
 
   // get list device of company

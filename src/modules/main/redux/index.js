@@ -25,26 +25,21 @@ const mainSlice = createSlice({
     },
     getListCompanyInvertersSuccess: (state, action) => {
       const { data } = action;
-      const listCompanyInverters =
-        data &&
-        data?.data.map((item) => {
-          const { data_measure } = item;
-          const listInverter = {
-            InverterId: data_measure.ds_id,
-            name: data_measure.ds_name,
-            amountElectricDay: data_measure.dm_prod_day,
-            amountElectricMonth: data_measure.dm_prod_month,
-            electricRealtime: data_measure.dm_prod,
-            ratePower: data_measure.dm_prod_ratio,
-            cumulativeElectric: data_measure.dm_prod_sum,
-            event: data_measure.event,
-          };
-          return {
-            id: item.id,
-            companyName: item.com_name,
-            listInverter: [listInverter],
-          };
-        });
+      const listCompanyInverters = data && data?.data.map(item => ({
+        id: item.ds_id,
+        name: item.ds_name,
+        amountElectricDay: item.prod_today,
+        amountElectricMonth: item.prod_inmonth,
+        electricRealtime: item.prod_realtime,
+        ratePower: item.performance_ratio,
+        // cumulativeElectric: item.
+        comId: item.com_id,
+        posId: item.pos_id,
+        posName: item.pos_name,
+        comName: item.com_name,
+        event: item.ivent,
+      }))
+
       state.listCompanyInverters = listCompanyInverters || [];
       state.total = data?.total;
       state.perPage = data?.per_page;

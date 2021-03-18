@@ -227,10 +227,10 @@
 
 const comapyInverter = [
   {
-    InverterId: 1,
+    inverterId: 1,
     name: 'Inverter1',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -239,10 +239,10 @@ const comapyInverter = [
     comName: 'Com1'
   },
   {
-    InverterId: 2,
+    inverterId: 2,
     name: 'Inverter2',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -251,10 +251,10 @@ const comapyInverter = [
     comName: 'Com2'
   },
   {
-    InverterId: 3,
+    inverterId: 3,
     name: 'Inverter3',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -263,10 +263,10 @@ const comapyInverter = [
     comName: 'Com3'
   },
   {
-    InverterId: 4,
+    inverterId: 4,
     name: 'Inverter4',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -275,10 +275,10 @@ const comapyInverter = [
     comName: 'Com4'
   },
   {
-    InverterId: 5,
+    inverterId: 5,
     name: 'Inverter5',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -287,10 +287,10 @@ const comapyInverter = [
     comName: 'Com5'
   },
   {
-    InverterId: 6,
+    inverterId: 6,
     name: 'Inverter6',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -299,10 +299,10 @@ const comapyInverter = [
     comName: 'Com6'
   },
   {
-    InverterId: 7,
+    inverterId: 7,
     name: 'Inverter7',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,
@@ -311,10 +311,10 @@ const comapyInverter = [
     comName: 'Com7'
   },
   {
-    InverterId: 8,
+    inverterId: 8,
     name: 'Inverter8',
     amountElectricDay: 1,
-    amountElectricMonth:10,
+    amountElectricMonth: 10,
     cumulativeElectric: 100,
     electricRealtime: 1000,
     ratePower: 10000,

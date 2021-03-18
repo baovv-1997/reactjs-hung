@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @flow
 import React, { memo, useEffect, useRef, useState } from 'react';
 import images from 'themes/images';
