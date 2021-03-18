@@ -8,11 +8,11 @@ import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
+import { useHistory } from 'react-router-dom';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
 } from './constants';
-import { useHistory } from 'react-router-dom';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
@@ -167,7 +167,7 @@ const ItemContentTab = ({
         </Button>
       </div>
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

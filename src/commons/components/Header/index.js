@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @flow
 import React, { memo, useEffect, useRef, useState } from 'react';
 import images from 'themes/images';
@@ -20,9 +21,10 @@ const Header = ({
   isSelect = false,
   eventCount = 0,
 }: Props) => {
-
   const dispatch = useDispatch();
-  const {listPositions, listCompany, isSpinner} = useSelector(state => state?.main);
+  const { listPositions, listCompany, isSpinner } = useSelector(
+    (state) => state?.main
+  );
   const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,28 +35,28 @@ const Header = ({
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    if(debouncedSearchTerm) {
-      dispatch(getListCompany({keyword: debouncedSearchTerm}));
-    dispatch(getListPosition({keyword: debouncedSearchTerm}));
+    if (debouncedSearchTerm) {
+      dispatch(getListCompany({ keyword: debouncedSearchTerm }));
+      dispatch(getListPosition({ keyword: debouncedSearchTerm }));
     }
-  }, [debouncedSearchTerm])
+  }, [debouncedSearchTerm]);
 
   // set option dropdown value when listposition != [];
   useEffect(() => {
     setOptionDropdown(listPositions[0]);
-  }, [listPositions])
+  }, [listPositions]);
 
   // Handle Icon search Click
   const handleIconClick = () => {
     console.log(searchTerm);
-  }
+  };
 
   // Handle event press key enter search
   const handleKeyDownSearch = (e) => {
     if (e.key === 'Enter') {
       console.log(searchTerm);
     }
-  }
+  };
 
   // when input search change set value
   const handleSearchChange = (e) => {
@@ -82,7 +84,7 @@ const Header = ({
             value={searchTerm}
             onChange={handleSearchChange}
             setSearchTerm={setSearchTerm}
-            options={[...listPositions,...listCompany]}
+            options={[...listPositions, ...listCompany]}
             handleIconClick={handleIconClick}
             handleKeyDown={handleKeyDownSearch}
             isSpinner={isSpinner}
