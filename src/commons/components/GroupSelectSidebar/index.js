@@ -44,42 +44,42 @@ export const GroupSelect = ({
       </li>
     ));
 
-  const renderListMocKup =
-    listMockupType &&
-    listMockupType.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'mockupType')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
+  // const renderListMocKup =
+  //   listMockupType &&
+  //   listMockupType.map((item) => (
+  //     <li
+  //       key={item.id}
+  //       onClick={() => handleChangeSearch(item, 'mockupType')}
+  //       onKeyPress={() => {}}
+  //       role="menuitem"
+  //       className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
+  //     >
+  //       {item.label}
+  //     </li>
+  //   ));
 
-  const renderListParkingLot =
-    listParkingLot &&
-    listParkingLot.map((item) => (
-      <li
-        key={item.id}
-        onClick={() => handleChangeSearch(item, 'parkingLot')}
-        onKeyPress={() => {}}
-        role="menuitem"
-        className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
-      >
-        {item.label}
-      </li>
-    ));
+  // const renderListParkingLot =
+  //   listParkingLot &&
+  //   listParkingLot.map((item) => (
+  //     <li
+  //       key={item.id}
+  //       onClick={() => handleChangeSearch(item, 'parkingLot')}
+  //       onKeyPress={() => {}}
+  //       role="menuitem"
+  //       className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
+  //     >
+  //       {item.label}
+  //     </li>
+  //   ));
   return (
-    <div className="content-select-sidebar">
+    <div>
       {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
-        <>
+        <div className="content-select-sidebar">
           <TitleSubHeader title="실증단지" />
           <ul className="list-item-select overflowY">{renderListCompany}</ul>
-        </>
+        </div>
       )}
-      {listMockupType && listMockupType.length > 0 && (
+      {/* {listMockupType && listMockupType.length > 0 && (
         <>
           <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
           <ul className="list-item-select overflowY">{renderListMocKup}</ul>
@@ -90,7 +90,7 @@ export const GroupSelect = ({
           <TitleSubHeader title="주차장" className="mt-5" />
           <ul className="list-item-select overflowY">{renderListParkingLot}</ul>
         </>
-      )}
+      )} */}
     </div>
   );
 };
