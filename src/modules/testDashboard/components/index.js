@@ -17,19 +17,18 @@ const TestDashboard = () => {
   );
 
   const [activePage, setActivePage] = useState(1);
-  const perPage = 8;
+  const perPage = 10;
 
   // pagination page
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+    dispatch(getListDeviceTestDashboard({ page: pageNumber, per_page: perPage }))
   };
 
   // get list device of company
   useEffect(() => {
     dispatch(
-      getListDeviceTestDashboard({
-        type: 'test_mockup',
-      })
+      getListDeviceTestDashboard({ per_page: perPage })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

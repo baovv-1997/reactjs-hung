@@ -5,7 +5,7 @@ import * as TestSolarDashboardAction from '../redux';
 function* getListDeviceTestSolarDashboard(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.GET_LIST_CARD_MEASURE, action.payload)
+      API.get(ROUTES.GET_DASHBOARD_TEST_SOLAR, action.payload)
     );
 
     if (response.ok) {

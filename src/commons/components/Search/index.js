@@ -10,18 +10,18 @@ type Props = {
   value?: string,
   onChange?: Function,
   setSearchTerm?: Function,
-  options?: Array<{id: number, value: number, label: string}>,
+  options?: Array<{ id: number, value: number, label: string }>,
   handleKeyDown: Function,
   isSpinner?: boolean,
 };
 
 const Search = ({
   placeholder,
-  handleIconClick = () => {},
+  handleIconClick = () => { },
   customClass = '',
   value = '',
-  onChange = () => {},
-  setSearchTerm = () => {},
+  onChange = () => { },
+  setSearchTerm = () => { },
   options = [],
   handleKeyDown,
   isSpinner = false
@@ -45,6 +45,7 @@ const Search = ({
   });
 
   const updateSearchInput = (searchValue) => {
+    console.log(searchValue, "searchValue");
     setSearchTerm(searchValue);
     setDisplay(false);
   };
@@ -78,11 +79,11 @@ Search.defaultProps = {
   placeholder: '',
   customClass: '',
   value: '',
-  onChange: () => {},
-  setSearchTerm: () => {},
-  handleIconClick: () => {},
-  options:[],
+  onChange: () => { },
+  setSearchTerm: () => { },
+  handleIconClick: () => { },
+  options: [],
   isSpinner: false,
 };
 
-export default memo<Props>(Search);
+export default memo < Props > (Search);
