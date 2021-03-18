@@ -21,6 +21,8 @@ import getListDeviceTestSolarDashboardSaga from 'modules/solarDashboard/saga/get
 import getListCompanyInverterSaga from 'modules/main/saga/getListCompanyInverterSaga';
 import getListPositionMainSaga from 'modules/main/saga/getListPositionSaga';
 import getListCompanyMainSaga from 'modules/main/saga/getListCompanySaga';
+import getListDeviceSaga from 'modules/operationStatus/saga/getListDeviceSaga';
+import getEventListSaga from 'modules/operationStatus/saga/getEventListSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -43,5 +45,7 @@ export default function* RootSagas() {
     getListCompanyInverterSaga(),
     getListPositionMainSaga(),
     getListCompanyMainSaga(),
+    getListDeviceSaga(),
+    getEventListSaga(),
   ]);
 }
