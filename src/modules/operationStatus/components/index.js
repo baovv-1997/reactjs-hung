@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
@@ -193,7 +194,6 @@ const OperationStatusPage = () => {
   const handleClickDetail = (item) => {
     history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
   };
-  console.log('paramsSearch', paramsSearch);
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
@@ -254,7 +254,9 @@ const OperationStatusPage = () => {
                           eventList.length > 0 &&
                           eventList.map((event) => ({
                             id: event?.id,
-                            dateTime: event?.created_at,
+                            dateTime: moment(event?.created_at).format(
+                              'YYYY-MM-DD hh:mm:ss'
+                            ),
                             installer: event?.com_name,
                             inverterID: event?.username,
                             installationLocation: event?.pos_name,

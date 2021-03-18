@@ -14,20 +14,24 @@ import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
+import { addNewEvent } from '../redux';
 
 const StatusByAreaCompanyRegister = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isProcessing, listCompany, listArea, listInverter } = useSelector(
+  const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
+
+  const { isProcessing, type } = useSelector((state) => state.operationStatus);
+
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
   });
 
   const [dataSubmit, setDataSubmit] = useState({
-    typeEvent: 'event',
+    typeEvent: '0',
     content: '',
     company: null,
     area: null,
@@ -46,6 +50,26 @@ const StatusByAreaCompanyRegister = () => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    dispatch(
+      SignInAction.getListInverter({
+        per_page: 100,
+        com_id: dataSubmit?.company?.value,
+        pos_id: dataSubmit?.area?.value,
+      })
+    );
+  }, [dataSubmit?.company, dataSubmit?.area]);
+
+  useEffect(() => {
+    switch (type) {
+      case 'operationStatus/addNewEventSuccess':
+        history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+        break;
+      default:
+        break;
+    }
+  }, [type]);
+
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const handleSubmit = () => {
     let validation = {};
@@ -58,21 +82,29 @@ const StatusByAreaCompanyRegister = () => {
 
     const dataValidate = {
       content,
-      company: company && company.label,
-      area: area && area.label,
+      // company: company && company.label,
+      // area: area && area.label,
       inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
+
+    setModalConform({
+      ...modalConform,
+      isShow: false,
+    });
+
     if (Object.keys(validation).length > 0) {
       setError(validation);
-      setModalConform({
-        ...modalConform,
-        isShow: false,
-      });
       return;
     }
     // Call api register event
-    history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+    dispatch(
+      addNewEvent({
+        type: dataSubmit?.typeEvent,
+        content: dataSubmit?.content,
+        inverter_id: dataSubmit?.inverter?.value,
+      })
+    );
   };
 
   const handleChange = (value, name) => {
@@ -87,12 +119,7 @@ const StatusByAreaCompanyRegister = () => {
           company: value,
           inverter: '',
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: value && value.value,
-          })
-        );
+
         break;
       case 'area':
         setDataSubmit({
@@ -104,13 +131,7 @@ const StatusByAreaCompanyRegister = () => {
           ...error,
           area: '',
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: company && company.value,
-            pos_id: value && value.value,
-          })
-        );
+
         break;
       case 'inverter':
         setDataSubmit({
@@ -120,6 +141,12 @@ const StatusByAreaCompanyRegister = () => {
         setError({
           ...error,
           inverter: '',
+        });
+        break;
+      case 'content':
+        setDataSubmit({
+          ...dataSubmit,
+          content: value,
         });
         break;
       default:
@@ -152,10 +179,10 @@ const StatusByAreaCompanyRegister = () => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: 'event',
+                      typeEvent: '0',
                     })
                   }
-                  isChecked={typeEvent === 'event'}
+                  isChecked={typeEvent === '0'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
@@ -164,10 +191,10 @@ const StatusByAreaCompanyRegister = () => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: 'history',
+                      typeEvent: '1',
                     })
                   }
-                  isChecked={typeEvent === 'history'}
+                  isChecked={typeEvent === '1'}
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"
@@ -265,12 +292,12 @@ const StatusByAreaCompanyRegister = () => {
             isShow: false,
           })
         }
-        handleClose={() =>
+        handleClose={() => {
           setModalConform({
             ...modalConform,
             isShow: false,
-          })
-        }
+          });
+        }}
         textBtnLeft="확인"
         textBtnRight="취소"
         isShowTwoBtn

@@ -18,6 +18,8 @@ export const ROUTES = {
   UPDATE_ACCOUNT: (id) => `account/${id}`,
   GET_LIST_CARD_MEASURE: `/data/cards`,
   GET_EVENT_LIST: '/event',
+  DELETE_EVENT: (id) => `/event/${id}`,
+  UPDATE_EVENT: (id) => `/event/${id}`,
 };
 
 export const API = create({

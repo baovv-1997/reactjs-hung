@@ -14,25 +14,39 @@ import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
+import { getEventList, updateEvent } from '../redux';
+type Props = {
+  match: {
+    params: {
+      id: any,
+    },
+  },
+};
 
-const StatusByAreaCompanyEdit = () => {
+const StatusByAreaCompanyEdit = ({ match }: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isProcessing, listCompany, listArea, listInverter } = useSelector(
+  const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
+
+  const { eventList, isProcessing, type } = useSelector(
+    (state) => state.operationStatus
+  );
+
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
   });
 
   const [dataSubmit, setDataSubmit] = useState({
-    typeEvent: 'event',
+    typeEvent: eventList,
     content: '월 정기 설비 진행',
     company: null,
     area: null,
     inverter: null,
   });
+
   const [error, setError] = useState({
     content: '',
     company: '',
@@ -47,6 +61,8 @@ const StatusByAreaCompanyEdit = () => {
   }, []);
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
+  const { id } = match.params;
+
   const handleSubmit = () => {
     let validation = {};
     const rules = {
@@ -58,22 +74,48 @@ const StatusByAreaCompanyEdit = () => {
 
     const dataValidate = {
       content,
-      company: company && company.label,
-      area: area && area.label,
+      // company: company && company.label,
+      // area: area && area.label,
       inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
     if (Object.keys(validation).length > 0) {
       setError(validation);
-      setModalConform({
-        ...modalConform,
-        isShow: false,
-      });
       return;
     }
-    // Call api register event
-    history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+
+    setModalConform({
+      ...modalConform,
+      isShow: false,
+    });
+
+    dispatch(
+      updateEvent({
+        id,
+        type: dataSubmit?.typeEvent,
+        content: dataSubmit?.content,
+        inverter_id: dataSubmit?.inverter?.value,
+      })
+    );
   };
+
+  useEffect(() => {
+    switch (type) {
+      case 'operationStatus/updateEventSuccess':
+        history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+        break;
+      default:
+        break;
+    }
+  }, [type]);
+
+  useEffect(() => {
+    dispatch(
+      getEventList({
+        id,
+      })
+    );
+  }, []);
 
   const handleChange = (value, name) => {
     switch (name) {
@@ -135,6 +177,26 @@ const StatusByAreaCompanyEdit = () => {
     }
   };
 
+  useEffect(() => {
+    setDataSubmit({
+      ...dataSubmit,
+      typeEvent: eventList?.evt_type,
+      content: eventList?.evt_content,
+      company: {
+        label: eventList?.com_name,
+        value: eventList?.com_id,
+      },
+      area: {
+        label: eventList?.pos_name,
+        value: eventList?.pos_id,
+      },
+      inverter: {
+        label: eventList?.ds_name,
+        value: eventList?.ds_id,
+      },
+    });
+  }, [eventList]);
+
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
@@ -152,10 +214,10 @@ const StatusByAreaCompanyEdit = () => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: 'event',
+                      typeEvent: '0',
                     })
                   }
-                  isChecked={typeEvent === 'event'}
+                  isChecked={typeEvent === '0'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
@@ -164,10 +226,10 @@ const StatusByAreaCompanyEdit = () => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: 'history',
+                      typeEvent: '1',
                     })
                   }
-                  isChecked={typeEvent === 'history'}
+                  isChecked={typeEvent === '1'}
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"
