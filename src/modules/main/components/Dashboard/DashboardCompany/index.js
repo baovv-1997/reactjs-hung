@@ -4,7 +4,7 @@ import TitleHeader from 'commons/components/TitleHeader';
 import MainLayout from 'layout/MainLayout';
 import comapyInverter from 'mockData/dashboardComany';
 // import { getListCompanyInverters } from 'modules/main/redux';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Pagination from 'react-js-pagination';
 // import { useDispatch, useSelector } from 'react-redux';
 
@@ -124,50 +124,45 @@ const DashboardCompany = () => {
   //   <div>No data</div>
   // );
 
-  const renderInverter = comapyInverter && comapyInverter.map(item => {
-    const {
-      inverterId,
-      name,
-      amountElectricDay,
-      amountElectricMonth,
-      cumulativeElectric,
-      electricRealtime,
-      ratePower,
-      event,
-      // comId,
-      comName
-    } = item;
+  const renderInverter =
+    comapyInverter &&
+    comapyInverter.map((item) => {
+      const {
+        inverterId,
+        name,
+        amountElectricDay,
+        amountElectricMonth,
+        cumulativeElectric,
+        electricRealtime,
+        ratePower,
+        event,
+        // comId,
+        comName,
+      } = item;
 
-    return (
-      <div className="company-item" key={inverterId}>
-        <div
-          className="company-name"
-        >
-          {comName}
+      return (
+        <div className="company-item" key={inverterId}>
+          <div className="company-name">{comName}</div>
+
+          <div className="list-card-item ">
+            <Card
+              customClass="card-company"
+              isCardCompany
+              amountElectricDay={amountElectricDay}
+              title={name}
+              amountElectricMonth={amountElectricMonth}
+              cumulativeElectric={cumulativeElectric}
+              electricRealtime={electricRealtime}
+              ratePower={ratePower}
+              isEvent={!event}
+            />
+          </div>
         </div>
-
-        <div className="list-card-item ">
-          <Card
-            customClass="card-company"
-            isCardCompany
-            amountElectricDay={amountElectricDay}
-            title={name}
-            amountElectricMonth={amountElectricMonth}
-            cumulativeElectric={cumulativeElectric}
-            electricRealtime={electricRealtime}
-            ratePower={ratePower}
-            isEvent={!event}
-          />
-
-        </div>
-      </div>
-    )
-  })
-
-
+      );
+    });
 
   return (
-    <MainLayout >
+    <MainLayout>
       <div className="content-wrap">
         <TitleHeader
           title="설치 업체"
