@@ -1,0 +1,312 @@
+.account {
+  margin: pxToRem(85) pxToRem(20) pxToRem(20);
+  padding: pxToRem(20);
+  // min-width: pxToRem(1670);
+  background-color: $white;
+  border-radius: pxToRem(15);
+
+  @include customerSelect(32);
+
+  &__head-menu {
+    &__title {
+      font-family: $Noto-Sans-Font;
+
+      &__text {
+        font-size: pxToRem(20);
+        font-weight: 900;
+        line-height: 1.45;
+        letter-spacing: -0.6px;
+        text-align: left;
+        color: $bg-button;
+        margin-left: pxToRem(10);
+      }
+
+      &__des {
+        margin-left: pxToRem(10);
+        font-size: pxToRem(14);
+        line-height: 1.43;
+        letter-spacing: -0.42px;
+        text-align: left;
+        color: $gray-shadow;
+      }
+    }
+
+    &__search {
+      display: flex;
+      align-items: center;
+      margin-top: pxToRem(25);
+      margin: pxToRem(20) 0 pxToRem(20) 0;
+      justify-content: space-between;
+
+      &__options {
+        display: flex;
+
+        .search-option-title {
+          font-size: pxToRem(17);
+          line-height: 1.47;
+          letter-spacing: -0.51px;
+          text-align: left;
+          color: $bg-button;
+          font-weight: bold;
+        }
+
+        .search-option-character {
+          color: $bg-button;
+          opacity: 0.3;
+          margin-left: pxToRem(20);
+          width: pxToRem(2);
+          margin-right: pxToRem(30);
+        }
+      }
+
+      .customer-select {
+        max-width: pxToRem(140);
+      }
+
+      &__input {
+        position: relative;
+
+        .search__icon {
+          position: absolute;
+          left: pxToRem(70);
+          top: 55%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          width: pxToRem(20);
+          height: pxToRem(20);
+
+          img {
+            left: pxToRem(60);
+          }
+        }
+
+        .wrapper-input-search {
+          border-radius: pxToRem(3);
+          border: solid 1px $color-light10;
+          margin-left: pxToRem(50);
+          width: pxToRem(939);
+          height: pxToRem(39);
+          padding-left: pxToRem(55);
+        }
+
+        .wrapper-input-search::placeholder {
+          font-size: pxToRem(15);
+          line-height: 1.47;
+          letter-spacing: -0.45px;
+          text-align: left;
+          color: $color-input-search;
+          font-stretch: normal;
+        }
+
+        ::-webkit-input-placeholder {
+          /* Edge */
+          font-size: pxToRem(15);
+          line-height: 1.47;
+          letter-spacing: -0.45px;
+          text-align: left;
+          color: $color-input-search;
+        }
+
+        :-ms-input-placeholder {
+          /* Internet Explorer */
+          font-size: pxToRem(15);
+          line-height: 1.47;
+          letter-spacing: -0.45px;
+          text-align: left;
+          color: $color-input-search;
+        }
+      }
+
+      .custom-btn {
+        width: pxToRem(100);
+        height: pxToRem(37);
+        border-radius: pxToRem(3);
+        margin-left: pxToRem(10);
+        width: 27px;
+        font-size: pxToRem(15);
+        line-height: 1.28;
+        letter-spacing: -0.6px;
+        text-align: center;
+        color: $white;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .table {
+
+    .wrapper-radio {
+      display: flex;
+      margin-top: pxToRem(5);
+    }
+
+    .row {
+      border: 1px solid $color-border-card;
+      margin: 0;
+      // align-items: center;
+      // overflow: hidden;
+      min-height: pxToRem(45);
+    }
+
+    .row:nth-child(2) {
+      border-top: none;
+    }
+
+    .row:nth-child(3) {
+      border-top: none;
+    }
+
+    .row:nth-child(4) {
+      border-top: none;
+    }
+
+    .col-2 {
+      border-right: 1px solid $color-border-card;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: $bg-light10;
+      font-size: pxToRem(17);
+      font-weight: bold;
+      line-height: 1.47;
+      letter-spacing: pxToRem(-0.51);
+      text-align: center;
+      color: $bg-button;
+
+      &.disable {
+        background-color: $bg-light10;
+        color: rgba($bg-button, 0.5);
+      }
+    }
+
+    .disable {
+      background-color: $input-disable;
+      // padding-left: pxToRem(30);
+    }
+
+    .cell-disable {
+      background-color: $input-disable;
+    }
+
+    .col-2:nth-child(3) {
+      border-left: 1px solid $color-border-card;
+    }
+
+    .col-4 {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      &.disable {
+        padding-left: pxToRem(30);
+      }
+      
+    }
+
+    .input-field,
+    .input,
+    .input-change {
+      border: 1px solid $color-border-card;
+      border-radius: pxToRem(3);
+      width: pxToRem(180);
+      height: pxToRem(32);
+      padding: pxToRem(5) pxToRem(15);
+      font-size: pxToRem(15);
+      font-weight: normal;
+      line-height: 1.47;
+      letter-spacing: pxToRem(-0.45);
+      text-align: left;
+      color: $black-active;
+      border: 1px solid $color-border-card !important;
+    }
+
+    .custom-input {
+      width: pxToRem(180);
+      height: pxToRem(32);
+      border-radius: pxToRem(3);
+      outline: none;
+    }
+
+    .custom-input:focus {
+      border: none;
+    }
+
+    .cus-select {
+      width: pxToRem(130);
+      height: pxToRem(32);
+
+      .css-26l3qy-menu .css-4ljt47-MenuList * {
+        padding: 0.3125rem 0.5rem !important;
+      }
+
+      .css-g1d714-ValueContainer,
+      .css-1fhf3k1-control {
+        min-height: pxToRem(32);
+        max-height: pxToRem(32);
+        overflow: visible !important;
+        font-size: pxToRem(14) !important;
+      }
+
+      .css-yk16xz-control {
+        min-height: pxToRem(32);
+        max-height: pxToRem(32);
+      }
+
+      .css-1pahdxg-control {
+        min-height: pxToRem(32);
+        max-height: pxToRem(32);
+
+        .css-g1d714-ValueContainer,
+        .css-1uccc91-singleValue {
+          min-height: pxToRem(32);
+          max-height: pxToRem(32);
+        }
+      }
+    }
+
+    .select-group {
+      display: flex;
+      margin-top: pxToRem(10);
+      align-items: center;
+
+      .custom-btn {
+        min-width: pxToRem(60);
+        background-color: $color-label-event;
+        height: pxToRem(32);
+        margin-left: pxToRem(10);
+      }
+    }
+
+    .select-group:first-child {
+      margin-top: pxToRem(7);
+    }
+
+    .select-group:last-child {
+      margin-bottom: pxToRem(7);
+    }
+  }
+
+  .btn-add-device {
+    width: pxToRem(60);
+    height: pxToRem(32);
+    margin-top: pxToRem(10);
+  }
+
+  &__btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: pxToRem(30);
+
+    .btn-modify {
+      height: pxToRem(37);
+      width: pxToRem(150);
+    }
+
+    .btn-cancel {
+      height: pxToRem(37);
+      width: pxToRem(150);
+      margin-left: pxToRem(20);
+      background-color: $btn-shadow;
+    }
+  }
+}

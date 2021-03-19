@@ -2,22 +2,19 @@ import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
-// Import Swiper styles
-import 'swiper/swiper.scss';
-import 'swiper/components/pagination/pagination.scss';
 import './App.scss';
 import { Provider } from 'react-redux';
-// import Router from "routers";
-
+import Loading from 'commons/components/Loading';
+import Router from 'routers';
 import createStore from './stores/createStore';
 
 function App() {
   const { store, persistor } = createStore();
   return (
     <div className="App">
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
         <Provider store={store}>
-          <h1>main page</h1>
+          <Router />
         </Provider>
       </PersistGate>
     </div>

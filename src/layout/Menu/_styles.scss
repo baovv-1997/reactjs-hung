@@ -1,0 +1,111 @@
+.menu {
+  position: fixed;
+  z-index: 9999;
+  width: pxToRem(210);
+  height: 100vh;
+  color: #fff;
+  background-color: $bg-button;
+  box-shadow: 3px 0 6px 0 rgba(0, 0, 0, 0.28);
+
+  &__head {
+    font-family: $Noto-Sans-Font;
+    font-size: pxToRem(28);
+    font-weight: bold;
+    line-height: 1.46;
+    letter-spacing: -0.84px;
+    text-align: left;
+    color: $bg-footer;
+    margin: pxToRem(26) pxToRem(55) 0;
+  }
+
+  &__info {
+    margin-left: pxToRem(15);
+    margin-top: pxToRem(48);
+    padding-bottom: pxToRem(23);
+
+    span {
+      margin-left: pxToRem(5);
+    }
+  }
+
+  &__wraper-head {
+    // box-shadow: 3px 0 6px 0 rgba(0, 0, 0, 0.28);
+  }
+
+  &__list {
+    margin-top: pxToRem(10);
+    background-color: $color-black-light;
+  }
+
+  &__listsub {
+    display: none;
+
+    &.open {
+      display: block;
+    }
+  }
+
+  &__listNestsub {
+    display: none;
+
+    &.open {
+      display: block;
+    }
+  }
+}
+
+.item {
+  position: relative;
+ 
+  &__link {
+    padding: pxToRem(10) 0;
+    display: flex;
+    justify-content: space-between;
+    color: $bg-footer;    
+    align-items: center;
+    &__label {
+      margin-left: pxToRem(15);    
+      font-family: $Noto-Sans-Font;
+      font-size: pxToRem(15);
+      line-height: 1.47;
+      letter-spacing: -0.45px;
+      text-align: left;
+    }
+
+    &:hover {
+      color: $bg-footer;
+    }
+    svg {
+      margin-right: pxToRem(15);
+    }
+
+    &.active {
+      svg {
+        position: absolute;
+        right: pxToRem(15);
+        margin: 0;
+        font-size: pxToRem(15);
+        @include transformRotate(90deg);
+      }
+    }
+
+    &.active-link {
+      background-color: $bg-button-primary;
+    }
+  }
+
+}
+
+.sub-item {
+  margin-left: pxToRem(10);
+}
+.item-link-sub {
+  padding-left: pxToRem(10);
+}
+.item-link-nestsub {
+  padding-left: pxToRem(20);
+}
+
+.item-link-label-nest-sub {
+  padding-left: pxToRem(35);
+}

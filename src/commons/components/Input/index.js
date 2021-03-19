@@ -37,7 +37,7 @@ type Props = {
   autoFocus?: boolean,
 };
 
-const Input = ({
+export const Input = ({
   placeholder = '',
   value = '',
   errorMsg = '',

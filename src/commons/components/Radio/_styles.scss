@@ -1,0 +1,60 @@
+.custom-radio {
+  display: block;
+  position: relative;
+  padding-left: pxToRem(28);
+  margin-bottom: pxToRem(0);
+  cursor: pointer;
+  line-height: 1.8;
+  font-size: pxToRem(22);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-right: pxToRem(30);
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: pxToRem(23);
+    width: pxToRem(23);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    border: solid pxToRem(1) $color-light10;
+    background-color: $white;
+  }
+
+  .label {
+    font-size: pxToRem(15);
+    font-weight: 500;
+    line-height: 1.47;
+    letter-spacing: pxToRem(-0.45);
+    color: $black-active;
+  }
+
+  &:hover input~.checkmark {
+    background-color: $white;
+  }
+
+  input:checked~.checkmark {
+    background-image: url('../../../assets/images/icon_radio_on.svg');
+    background-position: center center;
+    background-size: cover;
+    border: 0;
+  }
+
+  input:checked~.checkmark:after {
+    display: block;
+  }
+}
+
+.group-radio {
+  display: flex;
+  align-items: center;
+}

@@ -7,7 +7,8 @@
         "constants/*": ["./src/constants"],
         "thems/*": ["./src/themes"],
         "commons/*": ["./src/commons/"],
-        "helpers/*": ["./src/helpers/"]
+        "helpers/*": ["./src/helpers/"],
+        "layout/*": ["./src/layout/"]
       }
     },
     "include": ["src"]

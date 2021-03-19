@@ -1,0 +1,274 @@
+.page-login {
+  height: 100vh;
+  position: relative;
+  background-image: url("../../../assets/images/bg-login.jpg");
+  background-size: cover;
+  background-position: pxToRem(-4) pxToRem(-140);
+
+  &::after {
+    content: '';
+    background-color: rgba($bg-button, 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .sign-up {
+    width: pxToRem(600);
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    left: 50%;
+    @include transform-translate(-50%, -50%);
+
+    .login-name {
+      font-size: pxToRem(100);
+      font-weight: $black;
+      line-height: 1.45;
+      letter-spacing: normal;
+      text-align: center;
+      color: $white;
+    }
+
+    .from-login {
+      margin-top: pxToRem(20);
+      height: pxToRem(450);
+      width: pxToRem(600);
+      padding: pxToRem(50) pxToRem(50) pxToRem(48);
+      border-radius: pxToRem(15);
+      background-color: $bg-button;
+
+      .input__box {
+        margin-bottom: pxToRem(15);
+
+        input {
+          padding: pxToRem(11) pxToRem(15);
+          border-radius: pxToRem(10);
+          background-color: rgba($white, 0.78);
+
+          &::-webkit-input-placeholder {
+            color: $color-black;
+          }
+
+          &::placeholder {
+            color: $color-black;
+          }
+
+          &::-moz-placeholder {
+            color: $color-black;
+          }
+
+          &:-ms-input-placeholder {
+            color: $color-black;
+          }
+        }
+      }
+
+      .login-title {
+        font-size: pxToRem(30);
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: pxToRem(0.6);
+        text-align: center;
+        color: $white;
+        margin-bottom: pxToRem(40);
+      }
+
+      .btn-wrapper {
+        margin-top: pxToRem(30);
+        margin-bottom: pxToRem(40);
+
+        button {
+          width: 100%;
+          height: pxToRem(60);
+          padding: pxToRem(12);
+          border-radius: pxToRem(10);
+          font-size: pxToRem(24);
+          font-weight: 500;
+          line-height: 1.5;
+        }
+      }
+
+      .register-wrapper {
+        text-align: center;
+
+        .name {
+          display: inline-block;
+          font-size: pxToRem(20);
+          font-weight: 300;
+          line-height: 1.45;
+          letter-spacing: normal;
+          color: rgba($white, 0.9);
+          position: relative;
+          cursor: pointer;
+
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            bottom: pxToRem(2);
+            border-bottom: pxToRem(1) solid rgba($white, 0.9);
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-register {
+  // margin-bottom: pxToRem(50);
+
+  .sign-in {
+    .sign-desc {
+      font-size: pxToRem(20);
+      font-weight: normal;
+      line-height: 1.45;
+      text-align: left;
+      color: rgba($bg-button, 0.8);
+    }
+  }
+}
+
+.form-register {
+  .item {
+    display: flex;
+    align-items: center;
+    border: solid pxToRem(1) $color-light10;
+    border-top: 0;
+    position: relative;
+    min-height: pxToRem(50);
+
+    &:first-child {
+      border-top: solid pxToRem(1) $color-light10;
+    }
+
+    .item-label {
+      padding: pxToRem(8) pxToRem(8) pxToRem(7);
+      min-width: pxToRem(220);
+      background-color: $bg-light10;
+      text-align: center;
+      font-size: pxToRem(17);
+      font-weight: bold;
+      line-height: 1.47;
+      letter-spacing: pxToRem(-0.51);
+      color: $bg-button;
+      height: 100%;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: pxToRem(1) solid $color-light10;
+    }
+
+    .item-content {
+      padding: pxToRem(8) pxToRem(8) pxToRem(7) pxToRem(20);
+      height: 100%;
+      margin-left: pxToRem(220);
+      width: 100%;
+
+      .input {
+        margin-right: pxToRem(270);
+
+        input {
+          padding: pxToRem(4) pxToRem(21);
+          height: pxToRem(32);
+
+          font-size: pxToRem(15);
+          line-height: 2.33;
+          letter-spacing: pxToRem(-0.38);
+          border-radius: pxToRem(3);
+
+          &::-webkit-input-placeholder {
+            color: rgba($color-black, 0.2);
+            font-size: pxToRem(15);
+          }
+
+          &::placeholder {
+            color: rgba($color-black, 0.2);
+            font-size: pxToRem(15);
+          }
+
+          &::-moz-placeholder {
+            color: rgba($color-black, 0.2);
+            font-size: pxToRem(15);
+          }
+
+          &:-ms-input-placeholder {
+            color: rgba($color-black, 0.2);
+            font-size: pxToRem(15);
+          }
+        }
+      }
+    }
+  }
+}
+
+.group-select {
+  display: flex;
+  align-items: center;
+  width: calc(100% - #{pxToRem(80)});
+
+  .group-item {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin: 0 pxToRem(10);
+    }
+  }
+
+  .customer-select {
+    .css-26l3qy-menu .css-4ljt47-MenuList * {
+      padding: 0.3125rem 0.5rem !important;
+    }
+
+    .css-g1d714-ValueContainer,
+    .css-1fhf3k1-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+      overflow: visible !important;
+      font-size: pxToRem(14) !important;
+    }
+
+    .css-yk16xz-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+    }
+
+    .css-1pahdxg-control {
+      min-height: pxToRem(32);
+      max-height: pxToRem(32);
+
+      .css-g1d714-ValueContainer,
+      .css-1uccc91-singleValue {
+        min-height: pxToRem(32);
+        max-height: pxToRem(32);
+      }
+    }
+  }
+}
+
+.item-role {
+  display: flex;
+  align-items: center;
+
+  .button {
+    width: pxToRem(60);
+    height: pxToRem(32);
+    padding: pxToRem(5) pxToRem(15);
+    border-radius: pxToRem(3);
+    background-color: $bg-button;
+    min-width: pxToRem(60);
+    margin-left: pxToRem(10);
+    font-size: pxToRem(15);
+    font-weight: normal;
+    line-height: 1.28;
+    letter-spacing: pxToRem(-0.6);
+  }
+}

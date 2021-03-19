@@ -1,0 +1,34 @@
+deploy_dev:
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - whoami
+  script:
+    - cd /var/www/html/dev/app
+    - pwd
+    - git status
+    - git checkout .
+    - git checkout develop
+    - git status
+    - git pull origin develop
+
+  only:
+    - develop
+
+deploy_staging:
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - whoami
+  script:
+    - cd /var/www/html/staging/app
+    - pwd
+    - git status
+    - git checkout .
+    - git checkout staging
+    - git status
+    - git pull origin staging
+
+  only:
+    - staging
+

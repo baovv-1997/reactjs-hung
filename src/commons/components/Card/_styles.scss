@@ -1,0 +1,124 @@
+.card {
+  width: pxToRem(300);
+  background-color: $white;
+  border-radius: pxToRem(15);
+  box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $box-shadow-card;
+
+  .title-middle {
+    border-radius: unset;
+  }
+  .header-company {
+    background-color: $white;
+    padding: pxToRem(10) pxToRem(20);
+    border-bottom: pxToRem(1) solid $color-border-card;
+    & .card__title {
+      color: $bg-button;
+    }
+  }
+  &__event {
+    color: $color-label-event !important;
+  }
+  &__header {
+    background-color: $bg-button;
+    padding: pxToRem(10) pxToRem(30);
+    color: $white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: pxToRem(15) pxToRem(15) 0 0;
+  }
+  &__logo-event {
+    width: pxToRem(25);
+    height: pxToRem(25);
+  }
+
+  &__title {
+    font-size: pxToRem(20);
+    font-weight: $medium;
+    line-height: pxToRem(29);
+    letter-spacing: pxToRem(-0.6);
+    cursor: pointer;
+  }
+
+  &__unit {
+    font-size: pxToRem(14);
+    line-height: pxToRem(17);
+    letter-spacing: pxToRem(-0.42);
+    font-family: $Roboto-Font;
+  }
+
+  &__body {
+    padding: pxToRem(20) pxToRem(30);
+    &--company {
+      padding: pxToRem(20);
+
+      .card__item__name {
+        width: pxToRem(100);
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: pxToRem(7);
+    &__name {
+      color: $text-card;
+      font-size: pxToRem(15);
+      line-height: pxToRem(22);
+      font-weight: $medium;
+      letter-spacing: pxToRem(-0.45);
+    }
+
+    &__number {
+      font-size: pxToRem(20);
+      font-weight: bold;
+      line-height: pxToRem(24);
+      letter-spacing: pxToRem(-0.6);
+      text-align: right;
+      color: $color-number-card;
+      margin-right: pxToRem(5);
+    }
+
+    &__unit {
+      font-family: $Roboto-Font;
+      font-size: pxToRem(15);
+      font-weight: bold;
+      line-height: 1.2;
+      letter-spacing: pxToRem(-0.45);
+      color: $black-light;
+    }
+  }
+
+  &__company {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: pxToRem(15);
+    &__item {
+      width: pxToRem(45);
+      height: pxToRem(30);
+      margin: 0 pxToRem(10);
+      object-fit: contain;
+      cursor: pointer;
+    }
+    &--top {
+      margin: pxToRem(9) 0;
+    }
+  }
+}
+
+.card-company {
+  width: pxToRem(270) !important;
+  cursor: pointer;
+  .card__header {
+    background-color: $white;
+    color: $bg-button;
+    padding: pxToRem(10) pxToRem(20);
+    border-bottom: pxToRem(1) solid $color-border-card;
+  }
+  .card__company {
+    margin: 0;
+  }
+}

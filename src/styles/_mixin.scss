@@ -246,10 +246,11 @@
   clear: both;
 }
 
-@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+
   // For Google Chrome
   &::-webkit-scrollbar {
-    width:  $size;
+    width: $size;
     height: $size;
   }
 
@@ -269,5 +270,67 @@
   & {
     scrollbar-face-color: $foreground-color;
     scrollbar-track-color: $background-color;
+  }
+}
+
+@mixin customerSelect($heigh) {
+  .customer-select {
+    .css-26l3qy-menu .css-4ljt47-MenuList * {
+      padding: 0.3125rem 0.5rem !important;
+    }
+
+    .css-g1d714-ValueContainer,
+    .css-1fhf3k1-control {
+      min-height: pxToRem($heigh);
+      max-height: pxToRem($heigh);
+      overflow: visible !important;
+      font-size: pxToRem(14) !important;
+    }
+
+    .css-yk16xz-control {
+      min-height: pxToRem($heigh);
+      max-height: pxToRem($heigh);
+    }
+
+    .css-1pahdxg-control {
+      min-height: pxToRem($heigh);
+      max-height: pxToRem($heigh);
+
+      .css-g1d714-ValueContainer,
+      .css-1uccc91-singleValue {
+        min-height: pxToRem($heigh);
+        max-height: pxToRem($heigh);
+      }
+    }
+  }
+}
+
+@mixin InputPlaceholder($colorInput, $fontSize) {
+  &::-webkit-input-placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+
+  &::placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+
+  &::-moz-placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
+  }
+
+  &:-ms-input-placeholder {
+    color: $colorInput;
+    font-weight: $light;
+    font-size: pxToRem($fontSize);
+    letter-spacing: pxToRem(-0.25);
   }
 }

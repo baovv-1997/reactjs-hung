@@ -27,9 +27,88 @@
 // css component Modal
 @import './commons/components/Modal/styles';
 
+// css menu
+@import 'layout/Menu/styles';
+
+// css layout
+@import 'layout/MainLayout/styles';
+
+// css component Checkbox
+@import './commons/components/CheckBox/style';
+
+// css component GroupCheckbox
+@import './commons/components/MultipleCheckbox/style';
+
+// css component select box
+@import './commons/components/SelectBox/style';
+
+// css component Search
+@import './commons/components/Search/style';
+
+// css component select box
+@import './commons/components/SelectBox/style';
+
+// css component Search
+@import './commons/components/Search/style';
 
 // css header
-// @import './commons/components/Header/styles';
+@import './commons/components/Header/styles';
 
 // @import './commons/components/Footer/styles';
 
+// css component Select
+@import './commons/components/Select/styles';
+
+// css component Radio
+@import './commons/components/Radio/styles';
+
+// css component Length Char
+@import './commons/components/LengthChart/styles';
+
+// css component Card
+@import './commons/components/Card/styles';
+
+// css title header
+@import './commons/components/TitleHeader/styles';
+
+// css table header
+@import './commons/components/Table/styles';
+
+// css component Login
+@import './modules/accounts/components/styles';
+
+// css component Label
+@import './commons/components/Label/LabelStatus/styles';
+
+// css main page
+@import './modules/main/components/Dashboard/style';
+
+// css component main page
+@import './modules/main/components/TotalPower/style';
+@import './modules/main/components/WeeklyElectric/style';
+@import './modules/main/components/InfoReality/style';
+@import './modules/main/components/VitualData/style';
+
+// css dashboard area
+@import './modules/main/components/Dashboard/DashboardArea/style';
+
+// css dashboard company
+@import './modules/main/components/Dashboard/DashboardCompany/style';
+
+// css status page
+@import './modules/statusCompany/components/styles';
+
+// css device page
+@import './modules/device/components/styles';
+// css operationStatus page
+@import './modules/operationStatus/components/styles';
+
+// css test dashboard
+@import './modules/testDashboard/components/style';
+// css statisticsDevelop page
+@import './modules/statisticsDevelop/components/styles';
+// css account management
+@import './modules/accounts/components/management/styles';
+
+// css testMockupStatusCompany page
+@import './modules/testMockupStatus/components/styles';

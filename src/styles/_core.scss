@@ -1,13 +1,36 @@
 .error-msg {
-  font-size: pxToVW(13);
+  font-size: pxToRem(13);
   font-weight: $medium;
   line-height: 1.15;
   letter-spacing: normal;
   text-align: left;
   color: $color-number-point;
-  margin-top: pxToVW(-5);
-  padding-bottom: pxToVW(5);
+  margin-top: pxToRem(-5);
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
-.pt-7{
-  padding-top: pxToVW(50);
+
+.pt-7 {
+  padding-top: pxToRem(50);
+}
+
+.pagination {
+  .page-item {
+    margin-left: pxToRem(5);
+    margin-right: pxToRem(5);
+    border-radius: pxToRem(3);
+    font-size: pxToRem(12);
+
+    &.active {
+      .page-link {
+        background-color: $bg-button;
+        border-color: $bg-button;
+        color: $white;
+      }
+    }
+
+    .page-link {
+      color: $bg-button;
+    }
+  }
 }
