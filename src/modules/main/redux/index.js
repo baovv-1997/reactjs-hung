@@ -32,12 +32,12 @@ const mainSlice = createSlice({
         amountElectricMonth: item.prod_inmonth,
         electricRealtime: item.prod_realtime,
         ratePower: item.performance_ratio,
-        // cumulativeElectric: item.
+        cumulativeElectric: item.prod_sum,
         comId: item.com_id,
         posId: item.pos_id,
         posName: item.pos_name,
         comName: item.com_name,
-        event: item.ivent,
+        event: item.event,
       }))
 
       state.listCompanyInverters = listCompanyInverters || [];
