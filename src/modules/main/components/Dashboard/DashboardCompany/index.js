@@ -1,173 +1,123 @@
 import { Card } from 'commons/components/Card';
 import TitleHeader from 'commons/components/TitleHeader';
-// import { spliceCompanyInverter } from 'helpers';
 import MainLayout from 'layout/MainLayout';
-import comapyInverter from 'mockData/dashboardComany';
-// import { getListCompanyInverters } from 'modules/main/redux';
+import { handleGroupItem, spliceCompanyInverter } from 'helpers';
+import { getListCompanyInverters } from 'modules/main/redux';
 import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DashboardCompany = () => {
-  // const dispatch = useDispatch();
-  // const { isLoading, total, listCompanyInverters, perPage } = useSelector(
-  //   (state) => state?.main
-  // );
+  const dispatch = useDispatch();
+  const { isLoading, total, listCompanyInverters, perPage } = useSelector(
+    (state) => state?.main
+  );
 
   const [activePage, setActivePage] = useState(1);
 
-  const total = 100;
-  const perPage = 8;
-
-  // useEffect(() => {
-  //   dispatch(
-  //     getListCompanyInverters({
-  //       type: 'company',
-  //     })
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    dispatch(
+      getListCompanyInverters({
+        type: 'inverter',
+        com_id: 0,
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
-    // dispatch(
-    //   getListCompanyInverters({
-    //     type: 'company',
-    //     page: pageNumber,
-    //   })
-    // );
+    dispatch(
+      getListCompanyInverters({
+        type: 'inverter',
+        com_id: 0,
+        page: pageNumber,
+      })
+    );
   };
 
-  // slice if item inverter > column
-  // spliceCompanyInverter(listCompanyInverters);
+  // Group item if has company duplicate
+  const newlistCompanyInverters = [];
+  if (listCompanyInverters && listCompanyInverters.length) {
+    handleGroupItem(listCompanyInverters, newlistCompanyInverters);
+  }
 
-  // render Inverter
-  // const renderInverter = listCompanyInverters.length ? (
-  //   listCompanyInverters.map((item, index) => {
-  //     const { id, companyName, listInverter } = item;
-  //     // get prev item
-  //     const prevInverter = listCompanyInverters[index - 1];
-  //     // get next item
-  //     const nextInverter = listCompanyInverters[index + 1];
+  // splice if index > length
+  spliceCompanyInverter(newlistCompanyInverters);
 
-  //     let hasEvent = false;
-  //     // check inverter have event?
-  //     listInverter.forEach((item1) => {
-  //       if (item1?.event) hasEvent = true;
-  //     });
+  // render list inverter Company
+  const renderInverter = newlistCompanyInverters.length && newlistCompanyInverters.map((item, index) => {
 
-  //     // check event if company have inverter has event
-  //     if (id === prevInverter?.id) {
-  //       prevInverter.listInverter.map((item2) => {
-  //         if (Boolean(item2.event) === true) hasEvent = true;
-  //         return hasEvent;
-  //       });
-  //     }
+    // get prev item
+    const prevInverter = newlistCompanyInverters[index - 1];
+    // get next item
+    const nextInverter = newlistCompanyInverters[index + 1];
 
-  //     // check event if company have inverter has event
-  //     if (id === nextInverter?.id) {
-  //       nextInverter.listInverter.map((item2) => {
-  //         if (Boolean(item2.event) === true) hasEvent = true;
-  //         return hasEvent;
-  //       });
-  //     }
+    let hasEvent = false;
+    // check inverter have event?
+    item.forEach((inverterItem) => {
+      if (inverterItem?.event) hasEvent = true;
+    });
 
-  //     return (
-  //       <div
-  //         className={`company-item item-${listInverter.length} ${
-  //           hasEvent ? 'company-hasevent' : ''
-  //         }`}
-  //         key={id}
-  //       >
-  //         <div
-  //           className={`company-name ${
-  //             hasEvent ? 'company-hasevent-title' : ''
-  //           }`}
-  //         >
-  //           {companyName}
-  //         </div>
+    // check event if company have inverter has event
+    if (item[0].comId === (prevInverter && prevInverter[0]?.comId)) {
+      // eslint-disable-next-line no-unused-expressions
+      prevInverter && prevInverter.map((inverter) => {
+        if (inverter?.event) hasEvent = true;
+        return hasEvent;
+      });
+    }
 
-  //         <div className="list-card-item ">
-  //           {listInverter &&
-  //             listInverter.map((inverterItem) => {
-  //               const {
-  //                 InverterId,
-  //                 amountElectricDay,
-  //                 amountElectricMonth,
-  //                 cumulativeElectric,
-  //                 electricRealtime,
-  //                 event,
-  //                 name,
-  //                 ratePower,
-  //               } = inverterItem;
-  //               const isEvent = Boolean(event);
-  //               return (
-  //                 <Card
-  //                   key={InverterId}
-  //                   customClass="card-company"
-  //                   isCardCompany
-  //                   amountElectricDay={amountElectricDay}
-  //                   title={name}
-  //                   amountElectricMonth={amountElectricMonth}
-  //                   cumulativeElectric={cumulativeElectric}
-  //                   electricRealtime={electricRealtime}
-  //                   ratePower={ratePower}
-  //                   isEvent={isEvent}
-  //                 />
-  //               );
-  //             })}
-  //         </div>
-  //       </div>
-  //     );
-  //   })
-  // ) : (
-  //   <div>No data</div>
-  // );
-
-  const renderInverter = comapyInverter && comapyInverter.map(item => {
-    const {
-      inverterId,
-      name,
-      amountElectricDay,
-      amountElectricMonth,
-      cumulativeElectric,
-      electricRealtime,
-      ratePower,
-      event,
-      // comId,
-      comName
-    } = item;
+    if (item[0].comId === (nextInverter && nextInverter[0]?.comId)) {
+      // eslint-disable-next-line no-unused-expressions
+      nextInverter && nextInverter.map((inverter) => {
+        if (inverter?.event) hasEvent = true;
+        return hasEvent;
+      });
+    }
 
     return (
-      <div className="company-item" key={inverterId}>
+      // eslint-disable-next-line react/no-array-index-key
+      <div className={`company-item item-${item.length} ${hasEvent ? 'company-hasevent' : ''}`} key={index}>
         <div
-          className="company-name"
+          className={`company-name ${hasEvent ? 'company-hasevent-title' : ''
+            }`}
         >
-          {comName}
+          {item[0]?.comName}
         </div>
 
         <div className="list-card-item ">
-          <Card
-            customClass="card-company"
-            isCardCompany
-            amountElectricDay={amountElectricDay}
-            title={name}
-            amountElectricMonth={amountElectricMonth}
-            cumulativeElectric={cumulativeElectric}
-            electricRealtime={electricRealtime}
-            ratePower={ratePower}
-            isEvent={!event}
-          />
-
+          {item?.map(inverterItem => {
+            const {
+              id,
+              amountElectricDay,
+              amountElectricMonth,
+              cumulativeElectric,
+              electricRealtime,
+              event,
+              name,
+              ratePower,
+            } = inverterItem;
+            return (<Card
+              key={id}
+              customClass="card-company"
+              isCardCompany
+              amountElectricDay={amountElectricDay}
+              title={name}
+              amountElectricMonth={amountElectricMonth}
+              cumulativeElectric={cumulativeElectric}
+              electricRealtime={electricRealtime}
+              ratePower={ratePower}
+              isEvent={!!event}
+            />)
+          })}
         </div>
       </div>
     )
   })
 
-
-
   return (
-    <MainLayout >
+    <MainLayout isProcessing={isLoading}>
       <div className="content-wrap">
         <TitleHeader
           title="설치 업체"
