@@ -139,7 +139,7 @@ const AccountManagement = ({ history }: Props) => {
             onClickRow={handleClickTableRow}
             isShowId
           />
-          {accountList && accountList.length > 10 && (
+          {totalPage > perPage && (
             <div className="account__pagination">
               <Pagination
                 activePage={activePage}
