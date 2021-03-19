@@ -39,6 +39,8 @@ const MainPage = () => {
         </div>
 
         {mockLocationArea.map((item) => (
+
+          <>
           <img
             src={IMAGES.icon_location}
             alt=""
@@ -49,6 +51,7 @@ const MainPage = () => {
             }}
             key={item.id}
           />
+          </>
         ))}
       </div>
     </MainLayout>
