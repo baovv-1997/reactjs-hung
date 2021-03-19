@@ -193,7 +193,7 @@ const DeviceManagement = ({ history }: Props) => {
               검색
             </Button>
           </div>
-          {deviceList && deviceList.length > perPage && (
+          {totalPage > perPage && (
             <div className="wrapper-device__pagination">
               <Pagination
                 activePage={activePage}
