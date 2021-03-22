@@ -1,12 +1,15 @@
 // @flow
-import React from 'react';
+import React, { memo } from 'react';
 import InfoRealityItem from './InfoRealityItem';
 
 type Props = {
-  data: any,
+  outputVoltage?: number,
+  outputCurrent?: number,
+  electricRealtime?: number,
+  ratePower?: number,
 };
 
-const InfoReality = ({ data }: Props) => {
+const InfoReality = ({ outputVoltage = 0, outputCurrent = 0, electricRealtime = 0, ratePower = 0 }: Props) => {
   return (
     <div className="info-reality main-card">
       <div className="info-reality__header main-card__header">
@@ -16,18 +19,40 @@ const InfoReality = ({ data }: Props) => {
       </div>
 
       <div className="info-reality__body main-card__body">
-        {data.map((item) => (
-          <InfoRealityItem
-            name={item.name}
-            subName={item.subName}
-            value={item.value}
-            unit={item.unit}
-            key={item.id}
-          />
-        ))}
+        <InfoRealityItem
+          name='출력전압'
+          subName='v2'
+          value={outputVoltage}
+          unit='V'
+        />
+        <InfoRealityItem
+          name='출력전류'
+          subName='l2'
+          value={outputCurrent}
+          unit='A'
+        />
+        <InfoRealityItem
+          name='전체 실시간 발전량'
+          subName='p'
+          value={electricRealtime}
+          unit='V'
+        />
+        <InfoRealityItem
+          name='전체 모듈 성능비'
+          subName=''
+          value={ratePower}
+          unit='%'
+        />
       </div>
     </div>
   );
 };
 
-export default InfoReality;
+InfoReality.defaultProps = {
+  outputVoltage: 0,
+  outputCurrent: 0,
+  electricRealtime: 0,
+  ratePower: 0,
+}
+
+export default memo < Props > (InfoReality);

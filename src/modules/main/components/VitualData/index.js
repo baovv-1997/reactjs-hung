@@ -1,11 +1,13 @@
 // @flow
-import React from 'react';
+import React, { memo } from 'react';
+import { formatNumber } from 'helpers';
 
 type Props = {
-  data: any,
+  radiance?: number,
+  temperature?: number,
 };
 
-const VitualData = ({ data }: Props) => {
+const VitualData = ({ radiance = 0, temperature = 0 }: Props) => {
   return (
     <div className="vitual-data main-card">
       <div className="vitual-data__header main-card__header">
@@ -13,18 +15,29 @@ const VitualData = ({ data }: Props) => {
       </div>
 
       <div className="vitual-data__body main-card__body">
-        {data.map((item) => (
-          <div className="vitual-data__item" key={item.id}>
-            <div className="vitual-data__group-name">
-              <p className="vitual-data__name">{item.name}</p>
-              <p className="vitual-data__unit">{item.unit}</p>
-            </div>
-            <div className="vitual-data__param">{item.value}</div>
+        <div className="vitual-data__item">
+          <div className="vitual-data__group-name">
+            <p className="vitual-data__name">수평 일사량</p>
+            <p className="vitual-data__unit">kWh/㎡·10초</p>
           </div>
-        ))}
+          <div className="vitual-data__param">{formatNumber(radiance)}</div>
+        </div>
+
+        <div className="vitual-data__item">
+          <div className="vitual-data__group-name">
+            <p className="vitual-data__name">온도</p>
+            <p className="vitual-data__unit">℃</p>
+          </div>
+          <div className="vitual-data__param">{formatNumber(temperature)}</div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default VitualData;
+VitualData.defaultProps = {
+  radiance: 0,
+  temperature: 0,
+}
+
+export default memo < Props > (VitualData);

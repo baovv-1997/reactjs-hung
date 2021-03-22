@@ -97,10 +97,10 @@ export const Card = ({
             {listCompany.map((item) => (
               <img
                 key={item.id}
-                src={item.logo}
+                src={item?.com_logo_path?.thumbnail}
                 alt="logocompany"
                 className="card__company__item"
-                onClick={logoClick}
+                onClick={() => logoClick(item?.id)}
                 role="presentation"
               />
             ))}
@@ -125,4 +125,4 @@ Card.defaultProps = {
   cumulativeElectric: 0,
 };
 
-export default memo<Props>(Card);
+export default memo < Props > (Card);

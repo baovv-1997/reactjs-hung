@@ -9,6 +9,9 @@ const mainSlice = createSlice({
     listCompanyInverters: [],
     listPositions: [],
     listCompany: [],
+    optionsPosition: [],
+    optionsCompany: [],
+    cardPositionMain: {},
     type: '',
     key: '',
     page: 0,
@@ -16,9 +19,6 @@ const mainSlice = createSlice({
     perPage: 0,
   },
   reducers: {
-    getMonitoringSystemDashboard: (state) => {
-      state.isLoading = true;
-    },
     getListCompanyInverters: (state, action) => {
       state.isLoading = true;
       state.type = action.type;
@@ -51,7 +51,7 @@ const mainSlice = createSlice({
       state.type = action.type;
     },
     getListPosition: (state, action) => {
-      state.isSpinner = true;
+      state.isLoading = true;
       state.type = action.type;
     },
     getListPositionSuccess: (state, action) => {
@@ -62,16 +62,18 @@ const mainSlice = createSlice({
         value: item.id,
         label: item.pos_name,
         key: 'posId',
+        posX: item.pos_map_x,
+        posY: item.pos_map_y,
       }))
       state.listPositions = listPositions;
-      state.isSpinner = false;
+      state.isLoading = false;
     },
     getListPositionFailed: (state, action) => {
-      state.isSpinner = false;
+      state.isLoading = false;
       state.type = action.type;
     },
     getListCompany: (state, action) => {
-      state.isSpinner = true;
+      state.isLoading = true;
       state.type = action.type;
     },
     getListCompanySuccess: (state, action) => {
@@ -84,10 +86,61 @@ const mainSlice = createSlice({
         key: 'comId',
       }))
       state.listCompany = listCompany;
-      state.isSpinner = false;
+      state.isLoading = false;
     },
     getListCompanyFailed: (state, action) => {
+      state.isLoading = false;
+      state.type = action.type;
+    },
+    getPositionSearchMain: (state, action) => {
+      state.isSpinner = true;
+      state.type = action.type;
+    },
+    getPositionSearchMainSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      const listPosition = data?.data.map(item => ({
+        id: item.id,
+        value: item.id,
+        label: item.pos_name,
+        key: 'posId',
+      }));
+      state.optionsPosition = listPosition;
       state.isSpinner = false;
+    },
+    getPositionSearchMainFaled: (state, action) => {
+      state.isSpinner = false;
+      state.type = action.type;
+    },
+    getCompanySearchMain: (state, action) => {
+      state.isSpinner = true;
+      state.type = action.type;
+    },
+    getCompanySearchMainSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      const listCompany = data?.data.map(item => ({
+        id: item.id,
+        value: item.id,
+        label: item.com_name,
+        key: 'comId',
+      }));
+      state.optionsCompany = listCompany;
+      state.isSpinner = false;
+    },
+    getCompanySearchMainFaled: (state, action) => {
+      state.isSpinner = true;
+      state.type = action.type;
+    },
+    getCardMeasureMain: (state, action) => {
+      state.type = action.type;
+    },
+    getCardMeasureMainSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.cardPositionMain = data?.data;
+    },
+    getCardMeasureMainFailed: (state, action) => {
       state.type = action.type;
     },
   },
@@ -96,7 +149,6 @@ const mainSlice = createSlice({
 const { actions, reducer } = mainSlice;
 
 export const {
-  getMonitoringSystemDashboard,
   getListCompanyInverters,
   getListCompanyInvertersSuccess,
   getListCompanyInvertersFailed,
@@ -105,7 +157,16 @@ export const {
   getListPositionFailed,
   getListCompany,
   getListCompanySuccess,
-  getListCompanyFailed
+  getListCompanyFailed,
+  getPositionSearchMain,
+  getPositionSearchMainSuccess,
+  getPositionSearchMainFailed,
+  getCompanySearchMain,
+  getCompanySearchMainSuccess,
+  getCompanySearchMainFailed,
+  getCardMeasureMain,
+  getCardMeasureMainSuccess,
+  getCardMeasureMainFailed,
 } = actions;
 
 export default reducer;
