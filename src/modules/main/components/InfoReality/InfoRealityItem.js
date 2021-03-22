@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { formatNumber } from 'helpers';
 
 type Props = {
   name?: string,
@@ -21,7 +22,7 @@ const InfoRealityItem = ({
         <span className="info-reality__sub-name">{subName}</span>
       </div>
       <div className="info-reality__group-value">
-        <p className="info-reality__value">{value}</p>
+        <p className="info-reality__value">{formatNumber(value)}</p>
         <span className="info-reality__unit">{unit}</span>
       </div>
     </div>
