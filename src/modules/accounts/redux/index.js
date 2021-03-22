@@ -169,6 +169,19 @@ const accountSlice = createSlice({
       state.isProcessing = false;
       state.errors = action.errors;
     },
+    deleteAccount: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    deleteAccountSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    deleteAccountFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.errors = action.errors;
+    },
     resetAccountType: (state) => {
       state.type = '';
     },
@@ -200,6 +213,9 @@ export const {
   updateAccountFailed,
   updateAccountSuccess,
   resetAccountType,
+  deleteAccount,
+  deleteAccountFailed,
+  deleteAccountSuccess,
 } = actions;
 
 export default reducer;

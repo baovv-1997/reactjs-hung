@@ -27,6 +27,8 @@ import deleteEventSaga from 'modules/operationStatus/saga/deleteEventSaga';
 import addNewEventSaga from 'modules/operationStatus/saga/addNewEventSaga';
 
 import updateEventSaga from 'modules/operationStatus/saga/updateEventSaga';
+import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
+import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -54,5 +56,7 @@ export default function* RootSagas() {
     deleteEventSaga(),
     addNewEventSaga(),
     updateEventSaga(),
+    getDataChartSaga(),
+    deleteAccountSaga(),
   ]);
 }

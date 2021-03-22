@@ -8,9 +8,8 @@ function* getDataChart(action) {
     const response = yield call(() =>
       API.get(ROUTES.STATUS_GENERATOR_CHART, action.payload)
     );
-
     if (response.ok) {
-      const { data } = response.data;
+      const { data } = response;
 
       // In case: request success
       yield put({

@@ -11,7 +11,15 @@ const LineSeriesChart = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (chartRef.current) {
+    if (
+      chartRef.current &&
+      lineSeriesData1 &&
+      lineSeriesData1.length > 0 &&
+      lineSeriesData2 &&
+      lineSeriesData2.length > 0 &&
+      lineSeriesData3 &&
+      lineSeriesData3.length > 0
+    ) {
       const chart = createChart('lineSeriesChart', {
         width: 800,
         height: 450,
@@ -50,7 +58,7 @@ const LineSeriesChart = () => {
       lineSeries3.setData(lineSeriesData3);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [lineSeriesData1, lineSeriesData2, lineSeriesData3]);
 
   return (
     <>
