@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { formatNumber } from 'helpers';
 
 type Props = {
   icon?: any,
@@ -20,7 +21,7 @@ const TotalPowerItem = ({
         <img src={icon} alt="" className="total-power__icon" />
         <p className="total-power__item-name">{name}</p>
       </div>
-      <p className="total-power__item-value">{value}</p>
+      <p className="total-power__item-value">{formatNumber(value)}</p>
     </div>
   );
 };
@@ -32,4 +33,4 @@ TotalPowerItem.defaultProps = {
   icon: '',
 };
 
-export default memo<Props>(TotalPowerItem);
+export default memo < Props > (TotalPowerItem);

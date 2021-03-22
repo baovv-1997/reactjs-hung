@@ -5,10 +5,11 @@ import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
 import useDebounce from 'customHooks/useDebounce';
-import { getListCompany, getListPosition } from 'modules/main/redux';
+import { getCompanySearchMain, getPositionSearchMain, getCardMeasureMain } from 'modules/main/redux';
 import Search from '../Search';
 import SelectDropdown from '../Select';
 import ModalEvent from './ModalEvent';
+import ModalPopup from '../Modal';
 
 type Props = {
   isSearch?: boolean,
@@ -23,10 +24,11 @@ const Header = ({
 }: Props) => {
 
   const dispatch = useDispatch();
-  const { listPositions, listCompany, isSpinner } = useSelector(state => state?.main);
+  const { listPositions, optionsCompany, optionsPosition, isSpinner } = useSelector(state => state?.main);
   const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState({ label: '', value: '', key: '', id: '' });
+  const [modal, setModal] = useState({ isShow: false, content: '' });
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
@@ -35,8 +37,8 @@ const Header = ({
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      dispatch(getListCompany({ keyword: debouncedSearchTerm }));
-      dispatch(getListPosition({ keyword: debouncedSearchTerm }));
+      dispatch(getCompanySearchMain({ keyword: debouncedSearchTerm }));
+      dispatch(getPositionSearchMain({ keyword: debouncedSearchTerm }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm])
@@ -47,14 +49,32 @@ const Header = ({
     setOptionDropdown(listPositions[indexDefault]);
   }, [listPositions])
 
+  const searchSubmit = () => {
+    const type = searchTerm?.key;
+    switch (type) {
+      case 'posId':
+        console.log('getposId');
+        dispatch(getCardMeasureMain({ type: 'summary', pos_id: searchTerm.id }));
+        break;
+      case 'comId':
+        dispatch(getCardMeasureMain({ type: 'summary', com_id: searchTerm.id }));
+        break;
+      default:
+        setModal({ ...modal, isShow: true, content: '구역명이나 업체명을 정확히 입력해주세요' });
+        break;
+    }
+  }
+
   // Handle Icon search Click
   const handleIconClick = () => {
+    searchSubmit();
     console.log(searchTerm);
   }
 
   // Handle event press key enter search
   const handleKeyDownSearch = (e) => {
     if (e.key === 'Enter') {
+      searchSubmit();
       console.log(searchTerm);
     }
   }
@@ -62,7 +82,7 @@ const Header = ({
   // when input search change set value
   const handleSearchChange = (e) => {
     const { value } = e.target;
-    setSearchTerm({ ...searchTerm, label: value });
+    setSearchTerm({ label: value });
   };
 
   // handle click outside event
@@ -85,7 +105,7 @@ const Header = ({
             value={searchTerm.label}
             onChange={handleSearchChange}
             setSearchTerm={setSearchTerm}
-            options={[...listPositions, ...listCompany]}
+            options={[...optionsPosition, ...optionsCompany]}
             handleIconClick={handleIconClick}
             handleKeyDown={handleKeyDownSearch}
             isSpinner={isSpinner}
@@ -135,6 +155,30 @@ const Header = ({
           <ModalEvent isShow={isShow} wrapperRef={wrapperRef} />
         </div>
       </div>
+      <ModalPopup
+        isOpen={modal.isShow}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() =>
+          setModal({
+            ...modal,
+            isShow: false,
+            content: '',
+          })
+        }
+        handleClose={() =>
+          setModal({
+            ...modal,
+            isShow: false,
+            content: '',
+          })
+        }
+        textBtnRight="확인"
+      >
+        {modal.content}
+      </ModalPopup>
     </div>
   );
 };

@@ -1,13 +1,15 @@
 // @flow
-import React from 'react';
+import React, { memo } from 'react';
 import images from 'themes/images';
 import TotalPowerItem from './TotalPowerItem';
 
 type Props = {
-  data: any,
+  amountElectricDay?: number,
+  amountElectricMonth?: number,
+  cumulativeElectric?: number
 };
 
-export const TotalPower = ({ data }: Props) => {
+export const TotalPower = ({ amountElectricDay = 0, amountElectricMonth = 0, cumulativeElectric = 0, }: Props) => {
   return (
     <div className="total-power main-card">
       <div className="total-power__header main-card__header">
@@ -16,60 +18,33 @@ export const TotalPower = ({ data }: Props) => {
       </div>
 
       <div className="total-power__body main-card__body">
-        {data &&
-          data.map((item) => {
-            switch (item.type) {
-              case 'day':
-                return (
-                  <TotalPowerItem
-                    icon={images.icon_day}
-                    name={item.name}
-                    value={item.value}
-                    customClass="bg-color-day"
-                    key={item.id}
-                  />
-                );
-
-              case 'month':
-                return (
-                  <TotalPowerItem
-                    icon={images.icon_month}
-                    name={item.name}
-                    value={item.value}
-                    customClass="bg-color-month"
-                    key={item.id}
-                  />
-                );
-
-              case 'year':
-                return (
-                  <TotalPowerItem
-                    icon={images.icon_year}
-                    name={item.name}
-                    value={item.value}
-                    customClass="bg-color-year"
-                    key={item.id}
-                  />
-                );
-
-              case 'plus':
-                return (
-                  <TotalPowerItem
-                    icon={images.icon_plus}
-                    name={item.name}
-                    value={item.value}
-                    customClass="bg-color-plus"
-                    key={item.id}
-                  />
-                );
-
-              default:
-                return <TotalPowerItem key={item.id} />;
-            }
-          })}
+        <TotalPowerItem
+          icon={images.icon_day}
+          name='금일 발전량'
+          value={amountElectricDay}
+          customClass="bg-color-day"
+        />
+        <TotalPowerItem
+          icon={images.icon_month}
+          name='금월 발전량'
+          value={amountElectricMonth}
+          customClass="bg-color-month"
+        />
+        <TotalPowerItem
+          icon={images.icon_plus}
+          name='누적 발전량'
+          value={cumulativeElectric}
+          customClass="bg-color-plus"
+        />
       </div>
     </div>
   );
 };
 
-export default TotalPower;
+TotalPower.defaultProps = {
+  amountElectricDay: 0,
+  amountElectricMonth: 0,
+  cumulativeElectric: 0,
+}
+
+export default memo < Props > (TotalPower);
