@@ -1,22 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { createChart } from 'lightweight-charts';
-// import {
-//   lineSeriesData1,
-//   lineSeriesData2,
-//   lineSeriesData3,
-// } from 'mockData/chart';
-
-type Props = {
-  lineSeriesData1: Array<{}>,
-  lineSeriesData2: Array<{}>,
-  lineSeriesData3: Array<{}>,
-};
-
-const LineSeriesChart = ({
+import {
   lineSeriesData1,
   lineSeriesData2,
   lineSeriesData3,
-}: Props) => {
+} from 'mockData/chart';
+
+const LineSeriesChart = () => {
   //   const { height, width } = useWindowDimensions();
   const chartRef = useRef(null);
 

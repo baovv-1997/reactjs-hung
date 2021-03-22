@@ -65,63 +65,37 @@ export const spliceCompanyInverter = (comapyInverter) => {
   let countIndex = 0;
 
   comapyInverter.map((item, index) => {
-    const { id, nameComany, listInverter } = item;
 
-    if (listInverter.length === 4 && countIndex === 2) {
-      const newListInverter = listInverter.splice(3);
-      comapyInverter.splice(index + 1, 0, {
-        id,
-        nameComany,
-        listInverter: newListInverter,
-      });
+    if (item.length === 4 && countIndex === 2) {
+      const newListInverter = item.splice(3);
+      comapyInverter.splice(index + 1, 0, newListInverter);
     }
 
-    if (listInverter.length === 4 && countIndex === 3) {
-      const newListInverter = listInverter.splice(2);
-      comapyInverter.splice(index + 1, 0, {
-        id,
-        nameComany,
-        listInverter: newListInverter,
-      });
+    if (item.length === 4 && countIndex === 3) {
+      const newListInverter = item.splice(2);
+      comapyInverter.splice(index + 1, 0, newListInverter);
     }
 
-    if (listInverter.length === 4 && countIndex === 4) {
-      const newListInverter = listInverter.splice(1);
-      comapyInverter.splice(index + 1, 0, {
-        id,
-        nameComany,
-        listInverter: newListInverter,
-      });
+    if (item.length === 4 && countIndex === 4) {
+      const newListInverter = item.splice(1);
+      comapyInverter.splice(index + 1, 0, newListInverter);
     }
 
-    if (listInverter.length === 3 && countIndex === 3) {
-      const newListInverter = listInverter.splice(2);
-      console.log(newListInverter, 'newListInverter');
-      comapyInverter.splice(index + 1, 0, {
-        id,
-        nameComany,
-        listInverter: newListInverter,
-      });
+    if (item.length === 3 && countIndex === 3) {
+      const newListInverter = item.splice(2);
+      comapyInverter.splice(index + 1, 0, newListInverter);
     }
 
-    if (listInverter.length === 3 && countIndex === 4) {
-      const newListInverter = listInverter.splice(1);
-      comapyInverter.splice(index + 1, 0, {
-        id,
-        nameComany,
-        listInverter: newListInverter,
-      });
+    if (item.length === 3 && countIndex === 4) {
+      const newListInverter = item.splice(1);
+      comapyInverter.splice(index + 1, 0, newListInverter);
     }
 
-    if (listInverter.length === 2 && countIndex === 4) {
-      const newListInverter = listInverter.splice(1);
-      comapyInverter.splice(index + 1, 0, {
-        id,
-        nameComany,
-        listInverter: newListInverter,
-      });
+    if (item.length === 2 && countIndex === 4) {
+      const newListInverter = item.splice(1);
+      comapyInverter.splice(index + 1, 0, newListInverter);
     }
-    countIndex += listInverter.length;
+    countIndex += item.length;
     return comapyInverter;
   });
 };
@@ -129,3 +103,19 @@ export const spliceCompanyInverter = (comapyInverter) => {
 export const formatNumber = (num) => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
+
+export const handleGroupItem = (arr, newArr) => {
+  for (let i = 0; i < arr.length; i += 1) {
+    let cloneArray = [arr[i]];
+    for (let j = i + 1; j < arr.length; j += 1) {
+      if (arr[i].comId === arr[j]?.comId) {
+        cloneArray = [...cloneArray, arr[j]]
+      }
+    }
+
+    if (arr[i].comId !== arr[i - 1]?.comId) {
+      newArr.push(cloneArray);
+    }
+  }
+  return newArr;
+}

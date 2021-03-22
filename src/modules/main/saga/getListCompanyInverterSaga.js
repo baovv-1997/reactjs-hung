@@ -5,7 +5,7 @@ import * as DashboardAction from '../redux';
 function* getListCompanyInverters(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.GET_LIST_CARD_MEASURE, action.payload)
+      API.get(ROUTES.GET_DASHBOARD, action.payload)
     );
     if (response.ok) {
       const { data } = response;
