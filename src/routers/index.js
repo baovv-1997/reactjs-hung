@@ -113,6 +113,9 @@ const testSolarMonitoringStaticsDevelopment = lazy(() =>
 const testSolarMonitoringStaticsOperation = lazy(() =>
   import('modules/testSolarMonitoringStatistics/components/statisticsOperation')
 );
+const EditAccount = lazy(() =>
+  import('modules/accounts/components/management/EditAccount')
+);
 
 const Router = () => {
   const token = useSelector((state) => state?.account?.token);
@@ -154,6 +157,12 @@ const Router = () => {
             exact
             path={ROUTERS.REGISTER_DEVICE}
             component={RegisterDevice}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={ROUTERS.ACCOUNT_MANAGEMENT_EDIT}
+            component={EditAccount}
             isAuthenticated={isAuthenticated}
           />
           <PrivateRoute

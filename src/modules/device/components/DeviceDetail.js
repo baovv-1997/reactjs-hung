@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { TitleHeader } from 'commons/components/TitleHeader';
+import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
 import MainLayout from '../../../layout/MainLayout';
 import FormDetail from './FormDetail';
 import { getDeivceDetail } from '../redux';
-import { TitleHeader } from 'commons/components/TitleHeader';
-import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
 
 type Props = {
   match: {

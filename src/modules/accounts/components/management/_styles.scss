@@ -300,6 +300,7 @@
     .btn-modify {
       height: pxToRem(37);
       width: pxToRem(150);
+      margin-left: pxToRem(20);
     }
 
     .btn-cancel {
@@ -308,5 +309,22 @@
       margin-left: pxToRem(20);
       background-color: $btn-shadow;
     }
+
+    .btn-delete {
+      height: pxToRem(37);
+      width: pxToRem(150);
+      margin-left: pxToRem(20);
+      background-color: $color-withdraw;
+    }
+  }
+
+  .item-device-maintain {
+    font-family: $Noto-Sans-Font;
+    font-size: pxToRem(15);
+    line-height: 1.47;
+    letter-spacing: -0.45px;
+    text-align: left;
+    color: $black-active;
+    margin-top: pxToRem(5);
   }
 }

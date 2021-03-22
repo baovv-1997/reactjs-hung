@@ -29,6 +29,8 @@ import addNewEventSaga from 'modules/operationStatus/saga/addNewEventSaga';
 import updateEventSaga from 'modules/operationStatus/saga/updateEventSaga';
 import getSearchMainSaga from 'modules/main/saga/getSearchMainSaga';
 import getCardMeasureMainSaga from 'modules/main/saga/getCardMeasureMainSaga';
+import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
+import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -58,5 +60,7 @@ export default function* RootSagas() {
     updateEventSaga(),
     getSearchMainSaga(),
     getCardMeasureMainSaga(),
+    getDataChartSaga(),
+    deleteAccountSaga(),
   ]);
 }
