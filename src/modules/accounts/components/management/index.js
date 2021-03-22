@@ -56,7 +56,7 @@ const AccountManagement = ({ history }: Props) => {
 
   // Handle click to table row
   const handleClickTableRow = (item) => {
-    history.push(`${ROUTERS.ACCOUNT_MANAGEMENT}/${item.no}`);
+    history.push(`${ROUTERS.ACCOUNT_MANAGEMENT}/detail/${item.no}`);
   };
 
   useEffect(() => {

@@ -16,7 +16,7 @@ function* getAccountList(action) {
       response = yield call(() =>
         API.get(ROUTES.ACCOUNTS, {
           ...action.payload,
-          relation: ['devices|position,company'],
+          relation: ['roles', 'devices|position,company'],
         })
       );
     }

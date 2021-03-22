@@ -174,7 +174,9 @@ const FormDetail = ({ accountDetail, history }: Props) => {
       case 'accounts/updateAccountFailed':
         setIsUpdateFailed(true);
         break;
-
+      case 'accounts/updateAccountSuccess':
+        history.push(ROUTERS.ACCOUNT_MANAGEMENT);
+        break;
       default:
         break;
     }
