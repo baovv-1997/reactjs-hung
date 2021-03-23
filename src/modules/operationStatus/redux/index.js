@@ -8,6 +8,7 @@ const operationStatusSlide = createSlice({
     total: 0,
     eventList: [],
     deviceList: [],
+    dataChart: [],
   },
 
   reducers: {
@@ -20,11 +21,12 @@ const operationStatusSlide = createSlice({
     },
 
     getListDeviceSuccess: (state, action) => {
-      const allOption = { ds_name: '전체', id: 0 };
+      const allOption = [{ ds_name: '전체', id: '' }];
       state.isProcessing = false;
+      console.log('action', action);
       state.deviceList =
         action.data && action.data && action.data.length > 1
-          ? [allOption, ...action.data]
+          ? [...allOption, ...action.data]
           : action.data;
       // state.perPage = action?.data?.per_page;
       // state.totalPage = action?.data?.total;
@@ -89,6 +91,21 @@ const operationStatusSlide = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getDataChart: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataChartSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChart = action.data;
+    },
+    getDataChartFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChart = [];
+    },
   },
 });
 
@@ -111,6 +128,9 @@ export const {
   updateEvent,
   updateEventSuccess,
   updateEventFailed,
+  getDataChart,
+  getDataChartSuccess,
+  getDataChartFailed,
 } = actions;
 
 export default reducer;

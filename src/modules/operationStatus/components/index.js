@@ -17,7 +17,7 @@ import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
-import { getListDevice, getEventList } from '../redux';
+import { getListDevice, getEventList, getDataChart } from '../redux';
 
 import ItemContentTab from './ItemContentTab';
 
@@ -25,8 +25,7 @@ const OperationStatusPage = () => {
   const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
+
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
@@ -37,6 +36,7 @@ const OperationStatusPage = () => {
     eventList,
     totalEventPage,
     perpageEvent,
+    dataChart,
   } = useSelector((state) => state.operationStatus);
 
   const defaultOption = {
@@ -59,6 +59,8 @@ const OperationStatusPage = () => {
     pagination2: defaultOption,
   };
 
+  const [menuTab, setMenuTab] = useState('');
+
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const [companySelected, setCompanySelected] = useState(null);
@@ -75,29 +77,40 @@ const OperationStatusPage = () => {
     dispatch(StatusCompanyAction.getListStatusCompany());
   }, []);
 
-  useEffect(() => {
-    dispatch(
-      getListDevice({
-        com_id: companySelected,
-      })
-    );
-  }, [companySelected]);
-
+  // update init inverter data
   useEffect(() => {
     if (deviceList && deviceList.length > 0) {
-      const initInverterId =
-        deviceList && deviceList.length > 1
-          ? 0
-          : deviceList && deviceList[0] && deviceList[0].id;
+      if (deviceList.length > 1) {
+        setMenuTab('');
+      } else {
+        setMenuTab(deviceList[0].id);
+      }
+    }
+  }, [deviceList]);
+
+  // get list device base company
+  useEffect(() => {
+    if (companySelected) {
+      dispatch(
+        getListDevice({
+          com_id: companySelected,
+        })
+      );
+    }
+  }, [companySelected]);
+
+  // get event list when inverter, page, perpage have change
+  useEffect(() => {
+    if (deviceList && deviceList.length > 0) {
       dispatch(
         getEventList({
-          inverter_id: initInverterId,
+          inverter_id: menuTab,
           per_page: paramsSearch?.pagination2?.value,
           page: paramsSearch?.page2,
         })
       );
     }
-  }, [deviceList, paramsSearch?.pagination2, paramsSearch?.page2]);
+  }, [paramsSearch?.pagination2, paramsSearch?.page2, menuTab]);
 
   useEffect(() => {
     setCompanySelected(
@@ -190,10 +203,21 @@ const OperationStatusPage = () => {
     }
   };
 
+  // get data line chart when company, device have change
+  useEffect(() => {
+    dispatch(
+      getDataChart({
+        com_id: companySelected,
+        inverter_ids: [menuTab],
+      })
+    );
+  }, [menuTab]);
+
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
     history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
   };
+
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
@@ -222,7 +246,7 @@ const OperationStatusPage = () => {
                 // set active tab
                 defaultActiveKey={
                   deviceList && deviceList.length > 1
-                    ? 0
+                    ? '0'
                     : deviceList && deviceList[0] && deviceList[0].id
                 }
                 className="list-order tab-list"
@@ -264,10 +288,13 @@ const OperationStatusPage = () => {
                             contents: event?.evt_content,
                           }))
                         }
+                        activeTab={menuTab}
                         isShowModalSorting={isShowModalSorting}
                         paramsSearch={paramsSearch}
                         handleClickDetail={handleClickDetail}
                         handleChangeSearch={handleChangeSearch}
+                        id={item.id}
+                        dataChart={dataChart}
                       />
                     </Tab>
                   ))}

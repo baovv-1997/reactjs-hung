@@ -1,6 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import moment from 'moment';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
@@ -9,6 +10,7 @@ import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
+import LineSeriesChart from 'commons/components/LineChart';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
@@ -16,6 +18,11 @@ import {
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import {
+  lineSeriesData1,
+  lineSeriesData2,
+  lineSeriesData3,
+} from 'mockData/chart';
 
 type Props = {
   listMockupDataCompany: any,
@@ -33,6 +40,9 @@ type Props = {
   handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  activeTab: string,
+  id: string,
+  dataChart: Array,
 };
 
 const ItemContentTab = ({
@@ -49,6 +59,9 @@ const ItemContentTab = ({
   handleClickDetail,
   handleChangeSearch,
   paramsSearch,
+  activeTab,
+  id,
+  dataChart,
 }: Props) => {
   console.log(dataContent);
   const history = useHistory();
@@ -79,6 +92,7 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -97,7 +111,34 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        {activeTab === id && (
+          <div className="group-char-right">
+            <LineSeriesChart
+              lineSeriesData1={
+                dataChart[0] &&
+                dataChart[0].map((item) => ({
+                  time: moment(item.time).format('YYYY-MM-DD'),
+                  value: item.value,
+                }))
+              }
+              lineSeriesData2={
+                dataChart[1] &&
+                dataChart[1].map((item) => ({
+                  time: moment(item.time).format('YYYY-MM-DD'),
+                  value: item.value,
+                }))
+              }
+              dataChart={dataChart}
+              lineSeriesData3={
+                dataChart[2] &&
+                dataChart[2].map((item) => ({
+                  time: moment(item.time).format('YYYY-MM-DD'),
+                  value: item.value,
+                }))
+              }
+            />
+          </div>
+        )}
       </div>
 
       <TitleSubHeader title="실시간 계측 현황" />

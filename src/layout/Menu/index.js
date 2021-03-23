@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
 import { setMenuClicking, setNestSubClicking } from 'commons/redux';
-import MenuItem from './MenuItem';
 import IMAGES from 'themes/images';
 import { Button } from 'commons/components/Button';
+import MenuItem from './MenuItem';
 
 type Props = {
   location: {
