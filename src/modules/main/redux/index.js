@@ -11,7 +11,7 @@ const mainSlice = createSlice({
     listCompany: [],
     optionsPosition: [],
     optionsCompany: [],
-    cardPositionMain: {},
+    cardPositionMain: [],
     type: '',
     key: '',
     page: 0,
@@ -129,7 +129,7 @@ const mainSlice = createSlice({
       state.isSpinner = false;
     },
     getCompanySearchMainFaled: (state, action) => {
-      state.isSpinner = true;
+      state.isSpinner = false;
       state.type = action.type;
     },
     getCardMeasureMain: (state, action) => {
@@ -138,10 +138,38 @@ const mainSlice = createSlice({
     getCardMeasureMainSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.cardPositionMain = data?.data;
+      state.cardPositionMain = [data?.data];
     },
     getCardMeasureMainFailed: (state, action) => {
       state.type = action.type;
+    },
+    getCardMeasureSearchPosition: (state, action) => {
+      state.type = action.type;
+      state.isLoading = true;
+    },
+    getCardMeasureSearchPositionSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.cardPositionMain = [data?.data];
+      state.isLoading = false;
+    },
+    getCardMeasureSearchPositionFailed: (state, action) => {
+      state.type = action.type;
+      state.isLoading = false;
+    },
+    getCardMeasureSearchCompany: (state, action) => {
+      state.type = action.type;
+      state.isLoading = true;
+    },
+    getCardMeasureSearchCompanySuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.cardPositionMain = data?.data;
+      state.isLoading = false;
+    },
+    getCardMeasureSearchCompanyFailed: (state, action) => {
+      state.type = action.type;
+      state.isLoading = false;
     },
   },
 });
@@ -167,6 +195,12 @@ export const {
   getCardMeasureMain,
   getCardMeasureMainSuccess,
   getCardMeasureMainFailed,
+  getCardMeasureSearchPosition,
+  getCardMeasureSearchPositionSuccess,
+  getCardMeasureSearchPositionFailed,
+  getCardMeasureSearchCompany,
+  getCardMeasureSearchCompanySuccess,
+  getCardMeasureSearchCompanyFailed,
 } = actions;
 
 export default reducer;

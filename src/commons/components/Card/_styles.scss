@@ -93,9 +93,11 @@
 
   &__company {
     display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
     margin-top: pxToRem(15);
+    overflow: hidden;
     &__item {
       width: pxToRem(45);
       height: pxToRem(30);
@@ -120,5 +122,10 @@
   }
   .card__company {
     margin: 0;
+  }
+}
+.card__company {
+  .swiper-slide {
+    width: fit-content !important;
   }
 }
