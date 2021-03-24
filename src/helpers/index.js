@@ -66,35 +66,103 @@ export const spliceCompanyInverter = (comapyInverter) => {
 
   comapyInverter.map((item, index) => {
 
-    if (item.length === 4 && countIndex === 2) {
-      const newListInverter = item.splice(3);
-      comapyInverter.splice(index + 1, 0, newListInverter);
+    let newListInverter;
+
+    if (item.length === 6 || item.length === 8 || item.length === 9 || item.length === 10 || item.length === 7) {
+      switch (countIndex) {
+        case 0:
+          newListInverter = item.splice(5);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 1:
+          newListInverter = item.splice(4);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 2:
+          newListInverter = item.splice(3);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 3:
+          newListInverter = item.splice(2);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 4:
+          newListInverter = item.splice(1);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        default:
+          break;
+      }
     }
 
-    if (item.length === 4 && countIndex === 3) {
-      const newListInverter = item.splice(2);
-      comapyInverter.splice(index + 1, 0, newListInverter);
+    if (item.length === 5) {
+      switch (countIndex) {
+        case 1:
+          newListInverter = item.splice(4);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 2:
+          newListInverter = item.splice(3);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 3:
+          newListInverter = item.splice(2);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 4:
+          newListInverter = item.splice(1);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        default:
+          break;
+      }
     }
 
-    if (item.length === 4 && countIndex === 4) {
-      const newListInverter = item.splice(1);
-      comapyInverter.splice(index + 1, 0, newListInverter);
+    if (item.length === 4) {
+      switch (countIndex) {
+        case 2:
+          newListInverter = item.splice(3);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 3:
+          newListInverter = item.splice(2);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 4:
+          newListInverter = item.splice(1);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        default:
+          break;
+      }
     }
 
-    if (item.length === 3 && countIndex === 3) {
-      const newListInverter = item.splice(2);
-      comapyInverter.splice(index + 1, 0, newListInverter);
+    if (item.length === 3) {
+      switch (countIndex) {
+        case 3:
+          newListInverter = item.splice(2);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        case 4:
+          newListInverter = item.splice(1);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        default:
+          break;
+      }
     }
 
-    if (item.length === 3 && countIndex === 4) {
-      const newListInverter = item.splice(1);
-      comapyInverter.splice(index + 1, 0, newListInverter);
+    if (item.length === 2) {
+      switch (countIndex) {
+        case 4:
+          newListInverter = item.splice(1);
+          comapyInverter.splice(index + 1, 0, newListInverter);
+          break;
+        default:
+          break;
+      }
     }
 
-    if (item.length === 2 && countIndex === 4) {
-      const newListInverter = item.splice(1);
-      comapyInverter.splice(index + 1, 0, newListInverter);
-    }
     countIndex += item.length;
     return comapyInverter;
   });

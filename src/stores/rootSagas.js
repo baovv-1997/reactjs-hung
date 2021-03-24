@@ -27,6 +27,8 @@ import deleteEventSaga from 'modules/operationStatus/saga/deleteEventSaga';
 import addNewEventSaga from 'modules/operationStatus/saga/addNewEventSaga';
 
 import updateEventSaga from 'modules/operationStatus/saga/updateEventSaga';
+import getSearchMainSaga from 'modules/main/saga/getSearchMainSaga';
+import getCardMeasureMainSaga from 'modules/main/saga/getCardMeasureMainSaga';
 import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
 import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
 import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
@@ -57,6 +59,8 @@ export default function* RootSagas() {
     deleteEventSaga(),
     addNewEventSaga(),
     updateEventSaga(),
+    getSearchMainSaga(),
+    getCardMeasureMainSaga(),
     getDataChartSaga(),
     deleteAccountSaga(),
     getTrendChartSaga(),
