@@ -23,7 +23,7 @@ import GroupActionDownload from './GroupActionDownload';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
+
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
@@ -62,7 +62,7 @@ const ItemContentTab = ({
   dataChart,
 }: Props) => {
   const history = useHistory();
-
+  console.log('activeTab', activeTab === id.toString());
   const dataLengthChart = [
     {
       id: 1,
