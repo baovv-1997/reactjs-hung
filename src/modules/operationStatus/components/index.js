@@ -62,8 +62,6 @@ const OperationStatusPage = () => {
     pagination2: defaultOption,
   };
 
-  const [menuTab, setMenuTab] = useState('');
-
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const [companySelected, setCompanySelected] = useState(null);
@@ -74,6 +72,8 @@ const OperationStatusPage = () => {
     moduleOutput: '378',
     moduleColor: '보라',
   };
+
+  const [menuTab, setMenuTab] = useState('');
 
   const dispatch = useDispatch();
 
@@ -108,10 +108,23 @@ const OperationStatusPage = () => {
     }
   }, [companySelected]);
 
+  // update init inverter data
+  // useEffect(() => {
+  //   if (deviceList && deviceList.length > 0) {
+  //     if (deviceList.length > 1) {
+  //       setMenuTab('');
+  //     } else {
+  //       setMenuTab(deviceList[0].id);
+  //     }
+  //   }
+  // }, [deviceList]);
+
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setCompanySelected(item.id);
+        setParamsSearch(defaultSearch);
+        setMenuTab('');
 
         break;
       case 'mockupType':
@@ -195,10 +208,12 @@ const OperationStatusPage = () => {
   // get data line chart when company, device have change
   useEffect(() => {
     if (companySelected && deviceList.length > 0) {
+      const idDevice =
+        deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
       dispatch(
         getDataChart({
           com_id: companySelected,
-          inverter_ids: [menuTab],
+          inverter_ids: [idDevice],
         })
       );
     }
@@ -206,10 +221,12 @@ const OperationStatusPage = () => {
 
   useEffect(() => {
     if (companySelected && deviceList.length > 0) {
+      const idDevice =
+        deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
       dispatch(
         getTrendChart({
           com_id: companySelected,
-          inverter_ids: [menuTab],
+          inverter_ids: [idDevice],
           page: paramsSearch?.page,
           per_page: paramsSearch?.pagination?.value,
         })
@@ -227,9 +244,11 @@ const OperationStatusPage = () => {
   // get event list when inverter, page, perpage have change
   useEffect(() => {
     if (companySelected && deviceList.length > 0) {
+      const idDevice =
+        deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
       dispatch(
         getEventList({
-          inverter_id: menuTab,
+          inverter_id: [idDevice],
           per_page: paramsSearch?.pagination2?.value,
           page: paramsSearch?.page2,
           type: optionFilters,
@@ -278,7 +297,9 @@ const OperationStatusPage = () => {
               <Tabs
                 // set active tab
                 defaultActiveKey={
-                  deviceList && deviceList[0] && deviceList[0].id
+                  deviceList && deviceList.length > 1
+                    ? '0'
+                    : deviceList && deviceList[0] && deviceList[0].id
                 }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}

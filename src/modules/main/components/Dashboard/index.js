@@ -18,7 +18,7 @@ const MainPage = () => {
   const { isLoading, listPositions, cardPositionMain } = useSelector(
     (state) => state.main
   );
-  const { card, company, measure, position } = cardPositionMain;
+  const { card, company, position } = cardPositionMain;
 
   useEffect(() => {
     dispatch(getListPosition());
