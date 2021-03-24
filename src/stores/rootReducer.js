@@ -10,6 +10,8 @@ import statisticsDevelopSlide from 'modules/statisticsDevelop/redux';
 import testMockupStatusSlide from 'modules/testMockupStatus/redux';
 import commonSilice from 'commons/redux';
 
+import testSolarMonitoringStatusSlide from 'modules/testSolarMonitoringStatus/redux';
+
 const appReducer = combineReducers({
   account: accountSlice,
   main: mainReducer,
@@ -21,6 +23,7 @@ const appReducer = combineReducers({
   statisticsDevelop: statisticsDevelopSlide,
   testMockupStatus: testMockupStatusSlide,
   commons: commonSilice,
+  testSolarMonitoringStatus: testSolarMonitoringStatusSlide,
 });
 
 export default appReducer;
