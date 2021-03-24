@@ -2,6 +2,7 @@ import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
+
 import './App.scss';
 import { Provider } from 'react-redux';
 import Loading from 'commons/components/Loading';

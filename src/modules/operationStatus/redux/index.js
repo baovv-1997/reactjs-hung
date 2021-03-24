@@ -8,6 +8,9 @@ const operationStatusSlide = createSlice({
     total: 0,
     eventList: [],
     deviceList: [],
+    dataChart: [],
+    rawData: [],
+    optionFilters: [],
   },
 
   reducers: {
@@ -20,11 +23,12 @@ const operationStatusSlide = createSlice({
     },
 
     getListDeviceSuccess: (state, action) => {
-      const allOption = { ds_name: '전체', id: 0 };
+      const allOption = [{ ds_name: '전체', id: '' }];
       state.isProcessing = false;
+
       state.deviceList =
         action.data && action.data && action.data.length > 1
-          ? [allOption, ...action.data]
+          ? [...allOption, ...action.data]
           : action.data;
       // state.perPage = action?.data?.per_page;
       // state.totalPage = action?.data?.total;
@@ -89,6 +93,43 @@ const operationStatusSlide = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getDataChart: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataChartSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChart = action.data;
+    },
+    getDataChartFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChart = [];
+    },
+
+    getTrendChart: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getTrendChartSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.rawData = action.data;
+      state.totalRawData = action.total;
+      state.currentPage = action.currentPage;
+    },
+    getTrendChartFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.rawData = [];
+    },
+
+    addEventFilter: (state, action) => {
+      state.type = action.type;
+      state.optionFilters = action.payload;
+    },
   },
 });
 
@@ -111,6 +152,13 @@ export const {
   updateEvent,
   updateEventSuccess,
   updateEventFailed,
+  getDataChart,
+  getDataChartSuccess,
+  getDataChartFailed,
+  getTrendChart,
+  getTrendChartSuccess,
+  getTrendChartFailed,
+  addEventFilter,
 } = actions;
 
 export default reducer;

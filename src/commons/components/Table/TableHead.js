@@ -8,6 +8,8 @@ type Props = {
   showModalSort?: any,
   handleCheckboxSort?: Function,
   handleShowModalSorting?: Function,
+  listOption: Array<{}>,
+  optionDefault?: Array<string>,
 };
 
 const TableHead = ({
@@ -15,6 +17,8 @@ const TableHead = ({
   showModalSort,
   handleCheckboxSort,
   handleShowModalSorting,
+  listOption,
+  optionDefault = [],
 }: Props) => (
   <tr>
     {listItems &&
@@ -46,7 +50,11 @@ const TableHead = ({
             showModalSort.isShow &&
             showModalSort.keyItem === index && (
               <div>
-                <ModalSortTable handleCheckboxSort={handleCheckboxSort} />
+                <ModalSortTable
+                  handleCheckboxSort={handleCheckboxSort}
+                  listOption={listOption}
+                  optionDefault={optionDefault}
+                />
               </div>
             )}
         </th>
@@ -58,6 +66,7 @@ TableHead.defaultProps = {
   showModalSort: null,
   handleCheckboxSort: () => {},
   handleShowModalSorting: () => {},
+  optionDefault: [],
 };
 
 export default memo<Props>(TableHead);

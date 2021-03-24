@@ -46,75 +46,86 @@ const DashboardCompany = () => {
   spliceCompanyInverter(newlistCompanyInverters);
 
   // render list inverter Company
-  const renderInverter = newlistCompanyInverters.length && newlistCompanyInverters.map((item, index) => {
+  const renderInverter =
+    newlistCompanyInverters.length &&
+    newlistCompanyInverters.map((item, index) => {
+      // get prev item
+      const prevInverter = newlistCompanyInverters[index - 1];
+      // get next item
+      const nextInverter = newlistCompanyInverters[index + 1];
 
-    // get prev item
-    const prevInverter = newlistCompanyInverters[index - 1];
-    // get next item
-    const nextInverter = newlistCompanyInverters[index + 1];
-
-    let hasEvent = false;
-    // check inverter have event?
-    item.forEach((inverterItem) => {
-      if (inverterItem?.event) hasEvent = true;
-    });
-
-    // check event if company have inverter has event
-    if (item[0].comId === (prevInverter && prevInverter[0]?.comId)) {
-      // eslint-disable-next-line no-unused-expressions
-      prevInverter && prevInverter.map((inverter) => {
-        if (inverter?.event) hasEvent = true;
-        return hasEvent;
+      let hasEvent = false;
+      // check inverter have event?
+      item.forEach((inverterItem) => {
+        if (inverterItem?.event) hasEvent = true;
       });
-    }
 
-    if (item[0].comId === (nextInverter && nextInverter[0]?.comId)) {
-      // eslint-disable-next-line no-unused-expressions
-      nextInverter && nextInverter.map((inverter) => {
-        if (inverter?.event) hasEvent = true;
-        return hasEvent;
-      });
-    }
+      // check event if company have inverter has event
+      if (item[0].comId === (prevInverter && prevInverter[0]?.comId)) {
+        // eslint-disable-next-line no-unused-expressions
+        prevInverter &&
+          prevInverter.map((inverter) => {
+            if (inverter?.event) hasEvent = true;
+            return hasEvent;
+          });
+      }
 
-    return (
-      // eslint-disable-next-line react/no-array-index-key
-      <div className={`company-item item-${item.length} ${hasEvent ? 'company-hasevent' : ''}`} key={index}>
+      if (item[0].comId === (nextInverter && nextInverter[0]?.comId)) {
+        // eslint-disable-next-line no-unused-expressions
+        nextInverter &&
+          nextInverter.map((inverter) => {
+            if (inverter?.event) hasEvent = true;
+            return hasEvent;
+          });
+      }
+
+      return (
+        // eslint-disable-next-line react/no-array-index-key
         <div
-          className={`company-name ${hasEvent ? 'company-hasevent-title' : ''
-            }`}
+          className={`company-item item-${item.length} ${
+            hasEvent ? 'company-hasevent' : ''
+          }`}
+          key={index}
         >
-          {item[0]?.comName}
-        </div>
+          <div
+            className={`company-name ${
+              hasEvent ? 'company-hasevent-title' : ''
+            }`}
+          >
+            {item[0]?.comName}
+          </div>
 
-        <div className="list-card-item ">
-          {item?.map(inverterItem => {
-            const {
-              id,
-              amountElectricDay,
-              amountElectricMonth,
-              cumulativeElectric,
-              electricRealtime,
-              event,
-              name,
-              ratePower,
-            } = inverterItem;
-            return (<Card
-              key={id}
-              customClass="card-company"
-              isCardCompany
-              amountElectricDay={amountElectricDay}
-              title={name}
-              amountElectricMonth={amountElectricMonth}
-              cumulativeElectric={cumulativeElectric}
-              electricRealtime={electricRealtime}
-              ratePower={ratePower}
-              isEvent={!!event}
-            />)
-          })}
+          <div className="list-card-item ">
+            {item?.map((inverterItem) => {
+              const {
+                id,
+                amountElectricDay,
+                amountElectricMonth,
+                cumulativeElectric,
+                electricRealtime,
+                event,
+                name,
+                ratePower,
+              } = inverterItem;
+              return (
+                <Card
+                  key={id}
+                  customClass="card-company"
+                  isCardCompany
+                  amountElectricDay={amountElectricDay}
+                  title={name}
+                  amountElectricMonth={amountElectricMonth}
+                  cumulativeElectric={cumulativeElectric}
+                  electricRealtime={electricRealtime}
+                  ratePower={ratePower}
+                  isEvent={!!event}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-    )
-  })
+      );
+    });
 
   return (
     <MainLayout isProcessing={isLoading}>

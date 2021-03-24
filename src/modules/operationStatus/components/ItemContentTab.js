@@ -4,11 +4,15 @@ import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
+import { operator_event_filter } from 'constants/optionCheckbox';
+
+import LineSeriesChart from 'commons/components/LineChart';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
@@ -33,11 +37,14 @@ type Props = {
   handleClickDetail: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  activeTab: string,
+  id: string,
+  dataChart: Array,
+  optionFilters: Array,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
@@ -49,9 +56,13 @@ const ItemContentTab = ({
   handleClickDetail,
   handleChangeSearch,
   paramsSearch,
+  activeTab,
+  optionFilters,
+  id,
+  dataChart,
 }: Props) => {
-  console.log(dataContent);
   const history = useHistory();
+
   const dataLengthChart = [
     {
       id: 1,
@@ -79,6 +90,7 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -97,7 +109,17 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+
+        <div className="group-char-right">
+          {activeTab === id.toString() && (
+            <LineSeriesChart
+              width={1100}
+              height={450}
+              dataChart={dataChart}
+              activeTab={activeTab}
+            />
+          )}
+        </div>
       </div>
 
       <TitleSubHeader title="실시간 계측 현황" />
@@ -156,6 +178,8 @@ const ItemContentTab = ({
           keyItem: 5,
         }}
         onClickRow={handleClickDetail}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
         <Button

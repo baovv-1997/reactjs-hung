@@ -31,6 +31,7 @@ import getSearchMainSaga from 'modules/main/saga/getSearchMainSaga';
 import getCardMeasureMainSaga from 'modules/main/saga/getCardMeasureMainSaga';
 import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
 import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
+import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -62,5 +63,6 @@ export default function* RootSagas() {
     getCardMeasureMainSaga(),
     getDataChartSaga(),
     deleteAccountSaga(),
+    getTrendChartSaga(),
   ]);
 }
