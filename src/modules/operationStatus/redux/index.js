@@ -9,6 +9,8 @@ const operationStatusSlide = createSlice({
     eventList: [],
     deviceList: [],
     dataChart: [],
+    rawData: [],
+    optionFilters: [],
   },
 
   reducers: {
@@ -23,7 +25,7 @@ const operationStatusSlide = createSlice({
     getListDeviceSuccess: (state, action) => {
       const allOption = [{ ds_name: '전체', id: '' }];
       state.isProcessing = false;
-      console.log('action', action);
+
       state.deviceList =
         action.data && action.data && action.data.length > 1
           ? [...allOption, ...action.data]
@@ -106,6 +108,28 @@ const operationStatusSlide = createSlice({
       state.isProcessing = false;
       state.dataChart = [];
     },
+
+    getTrendChart: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getTrendChartSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.rawData = action.data;
+      state.totalRawData = action.total;
+      state.currentPage = action.currentPage;
+    },
+    getTrendChartFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.rawData = [];
+    },
+
+    addEventFilter: (state, action) => {
+      state.type = action.type;
+      state.optionFilters = action.payload;
+    },
   },
 });
 
@@ -131,6 +155,10 @@ export const {
   getDataChart,
   getDataChartSuccess,
   getDataChartFailed,
+  getTrendChart,
+  getTrendChartSuccess,
+  getTrendChartFailed,
+  addEventFilter,
 } = actions;
 
 export default reducer;

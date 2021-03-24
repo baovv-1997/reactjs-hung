@@ -15,6 +15,8 @@ type Props = {
   showModalSort?: any,
   handleCheckboxSort?: Function,
   handleShowModalSorting?: Function,
+  listOption?: Array<{}>,
+  optionDefault?: Array<string>,
 };
 
 const TableData = ({
@@ -28,6 +30,8 @@ const TableData = ({
   showModalSort = '',
   handleCheckboxSort = () => {},
   handleShowModalSorting = () => {},
+  listOption = [],
+  optionDefault = [],
 }: Props) => {
   const renderBodyTable =
     tableBody &&
@@ -55,6 +59,7 @@ const TableData = ({
       </tr>
     );
   };
+
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -63,6 +68,8 @@ const TableData = ({
           showModalSort={showModalSort}
           handleCheckboxSort={handleCheckboxSort}
           handleShowModalSorting={handleShowModalSorting}
+          listOption={listOption}
+          optionDefault={optionDefault}
         />
       </thead>
       <tbody>{renderBody()}</tbody>
@@ -79,5 +86,7 @@ TableData.defaultProps = {
   showModalSort: '',
   handleCheckboxSort: () => {},
   handleShowModalSorting: () => {},
+  listOption: [],
+  optionDefault: [],
 };
 export default memo<Props>(TableData);

@@ -1,15 +1,17 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
-import moment from 'moment';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
+import { operator_event_filter } from 'constants/optionCheckbox';
+
 import LineSeriesChart from 'commons/components/LineChart';
 import {
   headStatusCompany,
@@ -18,11 +20,6 @@ import {
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
-import {
-  lineSeriesData1,
-  lineSeriesData2,
-  lineSeriesData3,
-} from 'mockData/chart';
 
 type Props = {
   listMockupDataCompany: any,
@@ -43,11 +40,11 @@ type Props = {
   activeTab: string,
   id: string,
   dataChart: Array,
+  optionFilters: Array,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
@@ -60,11 +57,12 @@ const ItemContentTab = ({
   handleChangeSearch,
   paramsSearch,
   activeTab,
+  optionFilters,
   id,
   dataChart,
 }: Props) => {
-  console.log(dataContent);
   const history = useHistory();
+
   const dataLengthChart = [
     {
       id: 1,
@@ -111,34 +109,17 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        {activeTab === id && (
-          <div className="group-char-right">
+
+        <div className="group-char-right">
+          {activeTab === id.toString() && (
             <LineSeriesChart
-              lineSeriesData1={
-                dataChart[0] &&
-                dataChart[0].map((item) => ({
-                  time: moment(item.time).format('YYYY-MM-DD'),
-                  value: item.value,
-                }))
-              }
-              lineSeriesData2={
-                dataChart[1] &&
-                dataChart[1].map((item) => ({
-                  time: moment(item.time).format('YYYY-MM-DD'),
-                  value: item.value,
-                }))
-              }
+              width={1100}
+              height={450}
               dataChart={dataChart}
-              lineSeriesData3={
-                dataChart[2] &&
-                dataChart[2].map((item) => ({
-                  time: moment(item.time).format('YYYY-MM-DD'),
-                  value: item.value,
-                }))
-              }
+              activeTab={activeTab}
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <TitleSubHeader title="실시간 계측 현황" />
@@ -197,6 +178,8 @@ const ItemContentTab = ({
           keyItem: 5,
         }}
         onClickRow={handleClickDetail}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
         <Button

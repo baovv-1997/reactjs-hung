@@ -57,3 +57,21 @@ export const accountOptions = [
     label: '모니터링',
   },
 ];
+
+export const operator_event_filter = [
+  {
+    name: '측정 문제',
+    key: 0,
+    label: '측정 문제',
+  },
+  {
+    name: '보수 이력',
+    key: 1,
+    label: '보수 이력',
+  },
+  {
+    name: '설비 이력',
+    key: 2,
+    label: '설비 이력',
+  },
+];

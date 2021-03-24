@@ -12,7 +12,7 @@ import WeeklyElectric from '../WeeklyElectric';
 
 const MainPage = () => {
   // const dispatch = useDispatch();
-  const {isLoading} = useSelector(state => state.main);
+  const { isLoading } = useSelector((state) => state.main);
   const { totalPower, infoReality, vitualData } = mockDataMain;
 
   // useEffect(() => {
@@ -39,18 +39,17 @@ const MainPage = () => {
         </div>
 
         {mockLocationArea.map((item) => (
-
           <>
-          <img
-            src={IMAGES.icon_location}
-            alt=""
-            className="location"
-            style={{
-              top: `${item.location?.top}px`,
-              left: `${item.location?.left}px`,
-            }}
-            key={item.id}
-          />
+            <img
+              src={IMAGES.icon_location}
+              alt=""
+              className="location"
+              style={{
+                top: `${item.location?.top}px`,
+                left: `${item.location?.left}px`,
+              }}
+              key={item.id}
+            />
           </>
         ))}
       </div>

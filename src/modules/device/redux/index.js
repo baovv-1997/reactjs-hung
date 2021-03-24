@@ -59,9 +59,10 @@ const mainSlice = createSlice({
         rowId:
           `${
             action.data.total -
-            (action?.data?.current_page - 1) * action?.data?.total -
+            (action?.data?.current_page - 1) * action?.data?.per_page -
             index
           }` || '',
+
         dateSetup: item.ds_install_date,
         companyName: item?.company?.com_name,
         dsType: renderLabelType(item?.ds_type),
