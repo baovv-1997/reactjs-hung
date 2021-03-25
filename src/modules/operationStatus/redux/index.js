@@ -11,6 +11,7 @@ const operationStatusSlide = createSlice({
     dataChart: [],
     rawData: [],
     optionFilters: [],
+    cardInfo: {},
   },
 
   reducers: {
@@ -130,6 +131,17 @@ const operationStatusSlide = createSlice({
       state.type = action.type;
       state.optionFilters = action.payload;
     },
+
+    getCardInfo: (state, action) => {
+      state.type = action.type;
+    },
+    getCardInfoSuccess: (state, action) => {
+      state.type = action.type;
+      state.cardInfo = action.data;
+    },
+    getCardInfoFailed: (state, action) => {
+      state.type = action.type;
+    },
   },
 });
 
@@ -159,6 +171,9 @@ export const {
   getTrendChartSuccess,
   getTrendChartFailed,
   addEventFilter,
+  getCardInfo,
+  getCardInfoSuccess,
+  getCardInfoFailed,
 } = actions;
 
 export default reducer;

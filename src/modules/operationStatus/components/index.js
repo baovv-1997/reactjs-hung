@@ -298,7 +298,7 @@ const OperationStatusPage = () => {
                 // set active tab
                 defaultActiveKey={
                   deviceList && deviceList.length > 1
-                    ? '0'
+                    ? ''
                     : deviceList && deviceList[0] && deviceList[0].id
                 }
                 className="list-order tab-list"

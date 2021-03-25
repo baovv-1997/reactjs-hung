@@ -28,6 +28,8 @@ const initialState = {
     name: '통합 대시보드',
     to: ROUTERS.ROOT,
   },
+  posList: [],
+  comList: [],
 };
 
 const commonSilice = createSlice({
@@ -42,11 +44,52 @@ const commonSilice = createSlice({
       state.type = action.type;
       state.subMenuClicking = action.payload;
     },
+    getPosList: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getPosListSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.posList = action.data;
+    },
+    getPosListFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    getCompanyList: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getCompanyListSuccess: (state, action) => {
+      const allOption = [
+        {
+          id: '',
+          com_name: '전체',
+        },
+      ];
+      state.type = action.type;
+      state.isProcessing = false;
+      state.comList = [...allOption, ...action.data];
+    },
+    getCompanyListFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
   },
 });
 
 const { actions, reducer } = commonSilice;
 
-export const { setMenuClicking, setNestSubClicking } = actions;
+export const {
+  setMenuClicking,
+  setNestSubClicking,
+  getPosList,
+  getPosListSuccess,
+  getPosListFailed,
+  getCompanyList,
+  getCompanyListSuccess,
+  getCompanyListFailed,
+} = actions;
 
 export default reducer;

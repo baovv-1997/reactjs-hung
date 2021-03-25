@@ -22,8 +22,9 @@ export const ROUTES = {
   GET_EVENT_LIST: '/event',
   DELETE_EVENT: (id) => `/event/${id}`,
   UPDATE_EVENT: (id) => `/event/${id}`,
-  STATUS_GENERATOR_CHART: `/data/solar-monitoring/status-generator/chart-data`,
-  STATUS_GENERATOR_TREND_CHART: `data/solar-monitoring/status-generator/raw-data`,
+  STATUS_OPERATOR_CHART: `/data/solar-monitoring/status-operation/chart-data`,
+  STATUS_OPERATOR_TREND_CHART: `data/solar-monitoring/status-operation/raw-data`,
+  STATUS_OPERATOR_CARD_INFOR: `/data/solar-monitoring/status-operation/status-cards`,
 };
 
 export const API = create({

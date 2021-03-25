@@ -6,7 +6,7 @@ import { ROUTES, API } from 'apis';
 function* getTrendChart(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.STATUS_GENERATOR_TREND_CHART, action.payload)
+      API.get(ROUTES.STATUS_OPERATOR_TREND_CHART, action.payload)
     );
     if (response.ok) {
       const { data } = response.data;

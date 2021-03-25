@@ -3,33 +3,34 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { ROUTES, API } from 'apis';
 
 // worker Saga: will be fired on SEND_INVITE actions
-function* getDataChart(action) {
+function* getCardInfo(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.STATUS_OPERATOR_CHART, action.payload)
+      API.get(ROUTES.STATUS_OPERATOR_CARD_INFOR, action.payload)
     );
+
     if (response.ok) {
       const { data } = response;
 
       // In case: request success
       yield put({
-        type: 'operationStatus/getDataChartSuccess',
+        type: 'operationStatus/getCardInfoSuccess',
         data,
       });
     } else {
       // In case: request failed
       yield put({
-        type: 'operationStatus/getDataChartFailed',
+        type: 'operationStatus/getCardInfoFailed',
       });
     }
   } catch (error) {
     // in case: server error
-    yield put({ type: 'operationStatus/getDataChartFailed', error });
+    yield put({ type: 'operationStatus/getCardInfoFailed', error });
   }
 }
 
-function* getDataChartSaga() {
-  yield takeLatest('operationStatus/getDataChart', getDataChart);
+function* getCardInfoSaga() {
+  yield takeLatest('operationStatus/getCardInfo', getCardInfo);
 }
 
-export default getDataChartSaga;
+export default getCardInfoSaga;
