@@ -20,6 +20,7 @@ type Props = {
 const LineSeriesChart = ({ dataChart, width, height }: Props) => {
   //   const { height, width } = useWindowDimensions();
   const chartRef = useRef(null);
+  console.log('dataChart', dataChart);
 
   const [chart, setChart] = useState(null);
   useEffect(() => {
@@ -27,13 +28,17 @@ const LineSeriesChart = ({ dataChart, width, height }: Props) => {
       const chart1 = createChart('lineSeriesChart', {
         width,
         height,
-
-        localization: {
-          locale: 'ko-KR',
-        },
         leftPriceScale: {
           visible: true,
           borderColor: 'rgba(197, 203, 206, 1)',
+        },
+        timeScale: {
+          tickMarkFormatter: (time) => {
+            const date = new Date(time);
+            console.log('time', time);
+            console.log('date', date);
+            return date.getSeconds();
+          },
         },
       });
       setChart(chart1);

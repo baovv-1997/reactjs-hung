@@ -18,7 +18,8 @@ const MainPage = () => {
   const { isLoading, listPositions, cardPositionMain } = useSelector(
     (state) => state.main
   );
-  const { card, company, position } = cardPositionMain;
+  console.log('cardPositionMain', cardPositionMain);
+  const { card, company, position, measure } = cardPositionMain;
 
   useEffect(() => {
     dispatch(getListPosition());
@@ -72,7 +73,7 @@ const MainPage = () => {
             amountElectricMonth={card?.prod_inmonth}
             cumulativeElectric={card?.prod_sum}
           />
-          <WeeklyElectric />
+          <WeeklyElectric measure={measure} />
           <InfoReality
             outputVoltage={card?.output_voltage}
             outputCurrent={card?.output_current}
