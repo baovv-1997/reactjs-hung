@@ -227,9 +227,9 @@ const OperationStatusPage = () => {
             <div className="h-100">
               <Tabs
                 defaultActiveKey={
-                  posList && posList.length > 1
+                  comList && comList.length > 1
                     ? ''
-                    : posList && posList[0] && posList[0].id
+                    : comList && comList[0] && comList[0].id
                 }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
