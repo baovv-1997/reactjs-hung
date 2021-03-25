@@ -38,7 +38,12 @@ export const GroupSelect = ({
         onClick={() => handleChangeSearch(item, 'statusCompany')}
         onKeyPress={() => {}}
         role="menuitem"
-        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
+        className={`${
+          paramsSearch?.company === item.id ||
+          paramsSearch?.posSelected === item.id
+            ? 'active'
+            : ''
+        }`}
       >
         {item.label}
       </li>
