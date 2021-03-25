@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import accountSlice from 'modules/accounts/redux';
 import mainReducer from 'modules/main/redux';
-import statusCompanySlide from 'modules/statusCompany/redux';
+import statusGenerator from 'modules/statusCompany/redux';
 import deviceReducer from 'modules/device/redux';
 import operationStatusSlide from 'modules/operationStatus/redux';
 import testDashboardSlice from 'modules/testDashboard/redux';
@@ -15,7 +15,7 @@ import testSolarMonitoringStatusSlide from 'modules/testSolarMonitoringStatus/re
 const appReducer = combineReducers({
   account: accountSlice,
   main: mainReducer,
-  statusCompany: statusCompanySlide,
+  statusCompany: statusGenerator,
   device: deviceReducer,
   operationStatus: operationStatusSlide,
   testDashboard: testDashboardSlice,

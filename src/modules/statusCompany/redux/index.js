@@ -9,6 +9,9 @@ const statusCompanySlide = createSlice({
     listStatusCompanySelect: [],
     total: 0,
     deviceList: [],
+    rawData: [],
+    cardInfo: {},
+    chartData: [],
   },
 
   reducers: {
@@ -36,6 +39,50 @@ const statusCompanySlide = createSlice({
       state.isProcessing = false;
       state.listCompany = [];
     },
+
+    getStatusGeneratorRaw: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getStatusGeneratorRawSuccess: (state, action) => {
+      const { data } = action.data;
+      state.type = action.type;
+      // state.isProcessing = true;
+      state.rawData = data;
+      state.totalRawData = action.data.total;
+    },
+    getStatusGeneratorRawFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+
+    getStatusGeneratorCard: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getStatusGeneratorCardSuccess: (state, action) => {
+      const { data } = action;
+      console.log('action', action);
+      state.type = action.type;
+      state.cardInfo = data;
+    },
+    getStatusGeneratorCardFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+
+    getStatusGeneratorChartData: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getStatusGeneratorChartDataSuccess: (state, action) => {
+      state.type = action.type;
+      state.chartData = action.data;
+    },
+    getStatusGeneratorChartDataFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
   },
 });
 
@@ -45,6 +92,15 @@ export const {
   getListStatusCompany,
   getListStatusCompanySuccess,
   getListStatusCompanyFailed,
+  getStatusGeneratorRaw,
+  getStatusGeneratorRawSuccess,
+  getStatusGeneratorRawFailed,
+  getStatusGeneratorCard,
+  getStatusGeneratorCardSuccess,
+  getStatusGeneratorCardFailed,
+  getStatusGeneratorChartData,
+  getStatusGeneratorChartDataSuccess,
+  getStatusGeneratorChartDataFailed,
 } = actions;
 
 export default reducer;
