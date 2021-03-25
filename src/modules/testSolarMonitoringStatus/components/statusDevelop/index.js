@@ -29,7 +29,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: (comList && comList[0]?.id) || null,
+    company: (comList && comList[1] && comList[1]?.id) || null,
     mockupType: null,
     parkingLot: null,
     power: false,
@@ -227,7 +227,7 @@ const StatusByAreaCompany = () => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList}
+            listStatusCompanySelect={comList && comList.slice(1)}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab

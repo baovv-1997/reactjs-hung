@@ -117,6 +117,7 @@ const testSMStatisticsGeneratorSlide = createSlice({
       state.type = action.type;
       state.isProcessing = false;
       state.total = 0;
+      state.listDataTableRaw = [];
     },
 
     getCardInformationStatisticsOperation: (state, action) => {
@@ -209,6 +210,7 @@ const testSMStatisticsGeneratorSlide = createSlice({
       state.type = action.type;
       state.isProcessing = false;
       state.total = 0;
+      state.listDataTableRawOperation = [];
     },
   },
 });
