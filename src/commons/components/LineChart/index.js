@@ -65,7 +65,7 @@ const LineSeriesChart = ({ dataChart, width, height }: Props) => {
       );
 
       const lineSeries2 = chart.addLineSeries({
-        color: '#bc5200',
+        color: '#c05e13',
         lineWidth: 2,
       });
       lineSeries2.setData(
@@ -79,7 +79,7 @@ const LineSeriesChart = ({ dataChart, width, height }: Props) => {
       );
 
       const lineSeries3 = chart.addLineSeries({
-        color: '#ff7913',
+        color: '#fe8224',
         lineWidth: 2,
         leftPriceScale: {
           visible: false,

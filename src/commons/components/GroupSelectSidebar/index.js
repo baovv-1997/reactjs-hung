@@ -10,24 +10,24 @@ type Props = {
     value: any,
     label: string,
   }>,
-  listMockupType?: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
-  listParkingLot?: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
+  // listInverter?: Array<{
+  //   id: number,
+  //   value: any,
+  //   label: string,
+  // }>,
+  // listParkingLot?: Array<{
+  //   id: number,
+  //   value: any,
+  //   label: string,
+  // }>,
   handleChangeSearch: Function,
 };
 
 export const GroupSelect = ({
   paramsSearch,
   listStatusCompanySelect,
-  listMockupType = [],
-  listParkingLot = [],
+  // listInverter = [],
+  // listParkingLot = [],
   handleChangeSearch,
 }: Props) => {
   const renderListCompany =
@@ -38,15 +38,20 @@ export const GroupSelect = ({
         onClick={() => handleChangeSearch(item, 'statusCompany')}
         onKeyPress={() => {}}
         role="menuitem"
-        className={`${paramsSearch?.company === item.id ? 'active' : ''}`}
+        className={`${
+          paramsSearch?.company === item.id ||
+          paramsSearch?.posSelected === item.id
+            ? 'active'
+            : ''
+        }`}
       >
         {item.label}
       </li>
     ));
 
-  // const renderListMocKup =
-  //   listMockupType &&
-  //   listMockupType.map((item) => (
+  // const renderListInverter =
+  //   listInverter &&
+  //   listInverter.map((item) => (
   //     <li
   //       key={item.id}
   //       onClick={() => handleChangeSearch(item, 'mockupType')}
@@ -79,13 +84,13 @@ export const GroupSelect = ({
           <ul className="list-item-select overflowY">{renderListCompany}</ul>
         </div>
       )}
-      {/* {listMockupType && listMockupType.length > 0 && (
+      {/* {listInverter && listInverter.length > 0 && (
         <>
           <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-          <ul className="list-item-select overflowY">{renderListMocKup}</ul>
+          <ul className="list-item-select overflowY">{renderListInverter}</ul>
         </>
-      )}
-      {listParkingLot && listParkingLot.length > 0 && (
+      )} */}
+      {/* {listParkingLot && listParkingLot.length > 0 && (
         <>
           <TitleSubHeader title="주차장" className="mt-5" />
           <ul className="list-item-select overflowY">{renderListParkingLot}</ul>

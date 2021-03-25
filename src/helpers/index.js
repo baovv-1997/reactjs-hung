@@ -187,3 +187,64 @@ export const handleGroupItem = (arr, newArr) => {
   }
   return newArr;
 }
+
+export const avenrageCard = (arr) => {
+  const sumCardMeasure = arr.reduce(
+    (accumulator, currentValue) => ({
+      card: {
+        output_current:
+          accumulator.card?.output_current +
+          currentValue.card?.output_current,
+        output_voltage:
+          accumulator.card?.output_voltage +
+          currentValue.card?.output_voltage,
+        performance_ratio:
+          accumulator.card?.performance_ratio +
+          currentValue.card?.performance_ratio,
+        prod_inmonth:
+          accumulator.card?.prod_inmonth + currentValue.card?.prod_inmonth,
+        prod_realtime:
+          accumulator.card?.prod_realtime + currentValue.card?.prod_realtime,
+        prod_sum: accumulator.card?.prod_sum + currentValue.card?.prod_sum,
+        prod_today:
+          accumulator.card?.prod_today + currentValue.card?.prod_today,
+        radiance: accumulator.card?.radiance + currentValue.card?.radiance,
+        temperature:
+          accumulator.card?.temperature + currentValue.card?.temperature,
+      },
+    })
+  );
+
+  const avenrage = {
+    card: {
+      output_current: Math.round(
+        sumCardMeasure?.card?.output_current / arr.length
+      ),
+      output_voltage: Math.round(
+        sumCardMeasure?.card?.output_voltage / arr.length
+      ),
+      performance_ratio: Math.round(
+        sumCardMeasure?.card?.performance_ratio / arr.length
+      ),
+      prod_inmonth: Math.round(
+        sumCardMeasure?.card?.prod_inmonth / arr.length
+      ),
+      prod_realtime: Math.round(
+        sumCardMeasure?.card?.prod_realtime / arr.length
+      ),
+      prod_sum: Math.round(
+        sumCardMeasure?.card?.prod_sum / arr.length
+      ),
+      prod_today: Math.round(
+        sumCardMeasure?.card?.prod_today / arr.length
+      ),
+      radiance: Math.round(
+        sumCardMeasure?.card?.radiance / arr.length
+      ),
+      temperature: Math.round(
+        sumCardMeasure?.card?.temperature / arr.length
+      ),
+    },
+  };
+  return avenrage;
+}

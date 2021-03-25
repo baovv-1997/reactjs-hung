@@ -2,24 +2,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import moment from 'moment';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import { dataTableBottom, dataTable2 } from '../data';
-import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import { TIME_REQUEST } from 'constants/index';
 import * as SignInAction from 'modules/accounts/redux';
+import * as CommonAction from 'commons/redux';
+import * as ActionGenerator from '../../redux';
+import { getEventList, addEventFilter } from 'modules/operationStatus/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const perPage = 6;
-  const totalPage = 100;
-  const perPage2 = 6;
-  const totalPage2 = 100;
-  const { isProcessing, listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
-  );
+  const { deviceList, comList } = useSelector((state) => state?.commons);
+  const {
+    isProcessing,
+    total,
+    dataChartOperation,
+    listDataTableRawOperation,
+  } = useSelector((state) => state?.testSMStatisticsGenerator);
   const { listInverter } = useSelector((state) => state?.account);
+  const [randomNumber, setRandomNumber] = useState(null);
+  const listInverterTest =
+    (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
+  const { optionFilters, eventList, totalEventPage } = useSelector(
+    (state) => state?.operationStatus
+  );
   const defaultOption = {
     id: 1,
     value: 6,
@@ -28,9 +36,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
-    mockupType: null,
-    parkingLot: null,
+    company: (deviceList && deviceList[1] && deviceList[1].id) || null,
     page2: 1,
     PVVoltage: false,
     PVCurrent: false,
@@ -40,10 +46,11 @@ const OperationStatusPage = () => {
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
-    startDate: new Date() || null,
-    endDate: new Date() || null,
+    startDate: null,
+    endDate: null,
     vendorCompany: null,
     inverter: null,
+    isSubmitSearch: false,
   };
 
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
@@ -56,38 +63,135 @@ const OperationStatusPage = () => {
   };
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
+    dispatch(CommonAction.getListDevice());
+    dispatch(CommonAction.getCompanyList());
   }, []);
 
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    //  Call api
-  }, [paramsSearch, dispatch]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRandomNumber(Math.random());
+    }, TIME_REQUEST);
+    return () => clearInterval(interval);
+  }, []);
+
+  let toDate =
+    (paramsSearch?.startDate &&
+      moment(paramsSearch?.startDate).format('YYYY')) ||
+    null;
+  let fromDate =
+    (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
+    null;
+
+  if (paramsSearch && paramsSearch.classification === 'year') {
+    toDate =
+      (paramsSearch?.startDate &&
+        moment(paramsSearch?.startDate).format('YYYY')) ||
+      null;
+    fromDate =
+      (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
+      null;
+  }
+  if (paramsSearch && paramsSearch.classification === 'month') {
+    toDate =
+      (paramsSearch?.startDate &&
+        moment(paramsSearch?.startDate).format('YYYY-MM')) ||
+      null;
+    fromDate =
+      (paramsSearch?.endDate &&
+        moment(paramsSearch?.endDate).format('YYYY-MM')) ||
+      null;
+  }
+
+  // call api getCardInformation
+  const handleGetCardInformation = useCallback(
+    (company) => {
+      dispatch(
+        ActionGenerator.getCardInformationStatisticsOperation({
+          inverter_id: company,
+        })
+      );
+    },
+    [dispatch]
+  );
+  useEffect(() => {
+    handleGetCardInformation(paramsSearch?.company);
+  }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
+  // call api getDataTrend chart
+  const handleGetDataTrendChart = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataTrendChartStatisticsOperation(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    handleGetDataTrendChart({
+      inverter_id: paramsSearch?.company,
+      type: paramsSearch?.classification || null,
+      from: fromDate,
+      to: toDate,
+      ds_id: paramsSearch?.inverter?.id,
+    });
+  }, [
+    handleGetDataTrendChart,
+    paramsSearch?.company,
+    randomNumber,
+    paramsSearch?.isSubmitSearch,
+  ]);
 
-  // console.log(type, 'type', isProcessing);
+  // call api getDataTrend table
+  const handleGetDataRawTable = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataRawTableOperation(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    handleGetDataRawTable({
+      inverter_id: paramsSearch?.company,
+      type: paramsSearch?.classification || null,
+      from: fromDate,
+      to: toDate,
+      per_page: paramsSearch?.pagination?.value,
+      page: paramsSearch?.page,
+    });
+  }, [
+    handleGetDataRawTable,
+    paramsSearch?.company,
+    paramsSearch?.pagination?.value,
+    paramsSearch?.page,
+    randomNumber,
+    paramsSearch?.isSubmitSearch,
+  ]);
+
+  // get event list when inverter, page, perpage have change
+  useEffect(() => {
+    dispatch(
+      getEventList({
+        inverter_id: paramsSearch?.company || null,
+        per_page: paramsSearch?.pagination2?.value,
+        page: paramsSearch?.page2,
+        type: optionFilters,
+      })
+    );
+  }, [
+    paramsSearch?.pagination2,
+    paramsSearch?.page2,
+    paramsSearch?.company,
+    optionFilters,
+    deviceList,
+    randomNumber,
+  ]);
+
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
-        });
-        break;
-      case 'mockupType':
-        setParamsSearch({
-          ...paramsSearch,
-          mockupType: item.id,
-        });
-        break;
-      case 'parkingLot':
-        setParamsSearch({
-          ...paramsSearch,
-          parkingLot: item.id,
         });
         break;
       case 'PVCurrent':
@@ -124,12 +228,14 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
+          page: 1,
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
+          page2: 1,
         });
         break;
       case 'page':
@@ -148,13 +254,15 @@ const OperationStatusPage = () => {
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
-        console.log(item, 'optionCheck', name);
+        dispatch(addEventFilter(item));
         setIsShowModalSorting(false);
         break;
       case 'classification':
         setParamsSearch({
           ...paramsSearch,
           classification: item,
+          startDate: null,
+          endDate: null,
         });
         break;
       case 'inverter':
@@ -171,8 +279,9 @@ const OperationStatusPage = () => {
         });
         dispatch(
           SignInAction.getListInverter({
-            per_page: 0,
+            per_page: 999999999,
             com_id: item?.value,
+            type: '2',
           })
         );
 
@@ -187,6 +296,13 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           endDate: item,
+        });
+        break;
+      case 'isSubmitSearch':
+        setParamsSearch({
+          ...paramsSearch,
+          isSubmitSearch: item,
+          page: 1,
         });
         break;
       default:
@@ -206,24 +322,25 @@ const OperationStatusPage = () => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
+            listStatusCompanySelect={listInverterTest}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
               dataBoxContent={dataBoxContent}
-              listMockupDataCompany={dataTable2}
+              listMockupDataCompany={listDataTableRawOperation}
               handleDownloadTrend={handleDownloadTrend}
-              dataContent={{}}
-              totalPage={totalPage}
-              perPage={perPage}
-              totalPage2={totalPage2}
-              perPage2={perPage2}
-              dataTableBottom={dataTableBottom}
+              totalPage={total}
+              perPage={paramsSearch?.pagination?.value}
+              totalPage2={totalEventPage}
+              perPage2={paramsSearch?.pagination2?.value}
+              dataTableBottom={eventList}
               isShowModalSorting={isShowModalSorting}
               paramsSearch={paramsSearch}
               listInverter={listInverter}
+              dataChartOperation={dataChartOperation}
+              optionFilters={optionFilters}
               handleChangeSearch={handleChangeSearch}
-              listStatusCompanySelect={listStatusCompanySelect}
+              listStatusCompanySelect={comList && comList.slice(1)}
             />
           </div>
         </div>

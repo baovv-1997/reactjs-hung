@@ -180,9 +180,13 @@
   padding: pxToRem(20) pxToRem(10);
   justify-content: center;
   overflow: hidden;
-  position: absolute;
-  bottom: pxToRem(45);
+  position: relative;
+  bottom: -10%;
   width: 100%;
+
+  @media screen and (max-width: 1600px) {
+    bottom: -2%;
+  }
 
   .name-user {
     font-size: pxToRem(15);

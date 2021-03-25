@@ -8,6 +8,7 @@ import {
   getCardMeasureMain,
 } from 'modules/main/redux';
 import { Card } from 'commons/components/Card';
+import { avenrageCard } from 'helpers';
 import InfoReality from '../InfoReality';
 import TotalPower from '../TotalPower';
 import VitualData from '../VitualData';
@@ -18,8 +19,13 @@ const MainPage = () => {
   const { isLoading, listPositions, cardPositionMain } = useSelector(
     (state) => state.main
   );
-  console.log('cardPositionMain', cardPositionMain);
-  const { card, company, position, measure } = cardPositionMain;
+
+  const { measure } = cardPositionMain;
+
+  let avenrageCardMeasure;
+  if (cardPositionMain.length) {
+    avenrageCardMeasure = avenrageCard(cardPositionMain);
+  }
 
   useEffect(() => {
     dispatch(getListPosition());
@@ -35,7 +41,6 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('ansd');
     const interval = setInterval(() => {
       count.current += 1;
       if (count.current > listPositions.length) {
@@ -57,6 +62,21 @@ const MainPage = () => {
     console.log(id);
   };
 
+  const renderPositionActive = cardPositionMain.length
+    ? cardPositionMain?.map((posItem) => (
+        <img
+          key={posItem.position?.id}
+          src={IMAGES.icon_location_on}
+          alt=""
+          className="location"
+          style={{
+            top: `${posItem.position?.pos_map_y}px`,
+            left: `${posItem.position?.pos_map_x}px`,
+          }}
+        />
+      ))
+    : '';
+
   return (
     <MainLayout isSearch isProcessing={isLoading}>
       <div className="main-page">
@@ -69,20 +89,20 @@ const MainPage = () => {
             <div className="line" />
           </div>
           <TotalPower
-            amountElectricDay={card?.prod_today}
-            amountElectricMonth={card?.prod_inmonth}
-            cumulativeElectric={card?.prod_sum}
+            amountElectricDay={avenrageCardMeasure?.card?.prod_today}
+            amountElectricMonth={avenrageCardMeasure?.card?.prod_inmonth}
+            cumulativeElectric={avenrageCardMeasure?.card?.prod_sum}
           />
           <WeeklyElectric measure={measure} />
           <InfoReality
-            outputVoltage={card?.output_voltage}
-            outputCurrent={card?.output_current}
-            electricRealtime={card?.prod_realtime}
-            ratePower={card?.performance_ratio}
+            outputVoltage={avenrageCardMeasure?.card?.output_voltage}
+            outputCurrent={avenrageCardMeasure?.card?.output_current}
+            electricRealtime={avenrageCardMeasure?.card?.prod_realtime}
+            ratePower={avenrageCardMeasure?.card?.performance_ratio}
           />
           <VitualData
-            radiance={card?.radiance}
-            temperature={card?.temperature}
+            radiance={avenrageCardMeasure?.card?.radiance}
+            temperature={avenrageCardMeasure?.card?.temperature}
           />
         </div>
 
@@ -100,40 +120,31 @@ const MainPage = () => {
             />
           ))}
 
-        {position && (
-          <img
-            src={IMAGES.icon_location_on}
-            alt=""
-            className="location"
-            style={{
-              top: `${position?.pos_map_y}px`,
-              left: `${position?.pos_map_x}px`,
-            }}
-          />
-        )}
-        {card && (
-          <div
-            className="display-main-card"
-            style={{
-              top: `${position?.pos_map_y - 300}px`,
-              left: `${position?.pos_map_x - 300}px`,
-            }}
-          >
-            <Card
-              title={position?.pos_name}
-              listCompany={company}
-              amountElectricDay={card?.prod_today}
-              amountElectricMonth={card?.prod_inmonth}
-              electricRealtime={card?.prod_realtime}
-              cumulativeElectric={card?.prod_sum}
-              ratePower={card?.performance_ratio}
-              // logoClick={action('on-logo-click')}
-              titleClick={() => handleTitleClick(position?.id)}
-              logoClick={handleLogoClick}
-              // titleClick={action('on-title-click')}
-            />
-          </div>
-        )}
+        {renderPositionActive}
+
+        {cardPositionMain &&
+          cardPositionMain?.map((posItem) => (
+            <div
+              // key={posItem?.position?.id}
+              className="display-main-card"
+              style={{
+                top: `${posItem?.position?.pos_map_y - 300}px`,
+                left: `${posItem?.position?.pos_map_x - 300}px`,
+              }}
+            >
+              <Card
+                title={posItem?.position?.pos_name}
+                listCompany={posItem?.company}
+                amountElectricDay={posItem?.card?.prod_today}
+                amountElectricMonth={posItem?.card?.prod_inmonth}
+                electricRealtime={posItem?.card?.prod_realtime}
+                cumulativeElectric={posItem?.card?.prod_sum}
+                ratePower={posItem?.card?.performance_ratio}
+                titleClick={() => handleTitleClick(posItem?.position?.id)}
+                logoClick={handleLogoClick}
+              />
+            </div>
+          ))}
       </div>
     </MainLayout>
   );
