@@ -46,6 +46,10 @@ import getCardInformationStatisticsGeneratorSaga from 'modules/testSolarMonitori
 import getDataTrendChartStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendChartSaga';
 import getDataRawTableGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendRawSaga';
 
+import getStatusGeneratorRawSaga from 'modules/statusCompany/sagas/getStatusGeneratorRawSaga';
+import getStatusGeneratorCardSaga from 'modules/statusCompany/sagas/getStatusGeneratorCardSaga';
+import getStatusGeneratorChartSaga from 'modules/statusCompany/sagas/getStatusGeneratorChartSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -90,6 +94,10 @@ export default function* RootSagas() {
     getDataRawTableSaga(),
     getDataTrendChartSagaSaga(),
 
+    // status generator company
+    getStatusGeneratorRawSaga(),
+    getStatusGeneratorChartSaga(),
+    getStatusGeneratorCardSaga(),
     // Statistics Generator
     getCardInformationStatisticsGeneratorSaga(),
     getDataTrendChartStatisticsGeneratorSaga(),

@@ -3,27 +3,32 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
-import TitleHeader from 'commons/components/TitleHeader';
-import {
-  listMockupDataStatusByCompany,
-  listParkingLot,
-  listMockupType,
-} from 'mockData/listCompany';
-// import { headStatusCompany } from 'constants/headerTable';
-import * as StatusCompanyAction from '../redux';
-import ItemContentTab from './ItemContentTab';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import moment from 'moment';
+import TitleHeader from 'commons/components/TitleHeader';
+import { listParkingLot, listMockupType } from 'mockData/listCompany';
+import { getCompanyList, getListDevice } from 'commons/redux';
+import {
+  getStatusGeneratorRaw,
+  getStatusGeneratorChartData,
+} from 'modules/statusCompany/redux';
+
+import ItemContentTab from './ItemContentTab';
+import { getStatusGeneratorCard } from '../redux';
 
 const StatusByAreaCompany = () => {
-  const perPage = 6;
-  const totalPage = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
+  const dispatch = useDispatch();
+  const [menuTab, setMenuTab] = useState('');
   console.log(menuTab, 'menuTab');
-  const { isProcessing, listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
+  const { comList, isProcessing, deviceList } = useSelector(
+    (state) => state?.commons
   );
+
+  const { totalRawData, rawData, cardInfo, chartData } = useSelector(
+    (state) => state.statusCompany
+  );
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -32,7 +37,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
+    company: comList && comList[1] && comList[1].id,
     mockupType: null,
     parkingLot: null,
     power: false,
@@ -43,46 +48,92 @@ const StatusByAreaCompany = () => {
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
 
-  const powerData = {
-    type: 'power',
-    data: [
-      { title: '일일 평균 1시간 발전량', value: '60' },
-      { title: '일일발전량 달성율', value: '85.2' },
-    ],
-  };
-
-  const performanceData = {
-    type: 'performance',
-    data: [
-      { title: '현재 모듈 온도', value: '30.8' },
-      { title: '최고 모듈 온도', value: '35.2' },
-    ],
-  };
-
-  const insolationData = {
-    type: 'insolation',
-    data: [
-      { title: '수평 일사량', value: '22' },
-      { title: '경사 일사량', value: '46' },
-    ],
-  };
+  /**
+   * get company list
+   */
+  const getListCompany = useCallback(() => {
+    dispatch(getCompanyList());
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
-  }, []);
+    getListCompany();
+  }, [getListCompany]);
 
-  const dispatch = useDispatch();
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-    // call api get list
-  }, [paramsSearch, dispatch]);
+  /**
+   * get Device list
+   */
+  const getDevices = useCallback(
+    (params) => {
+      dispatch(getListDevice(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    getDevices({ com_id: paramsSearch?.company });
+  }, [getDevices, paramsSearch?.company]);
 
-  // console.log(type, 'type', isProcessing);
+  /**
+   * get raw table data
+   */
+  const getRawData = useCallback(
+    (params) => {
+      dispatch(getStatusGeneratorRaw(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getRawData({
+      com_id: paramsSearch?.company,
+      inverter_id: menuTab,
+      page: paramsSearch?.page,
+      per_page: paramsSearch?.pagination?.value,
+    });
+  }, [
+    getRawData,
+    paramsSearch?.company,
+    menuTab,
+    paramsSearch?.pagination?.value,
+    paramsSearch?.page,
+  ]);
+
+  /**
+   * get chart data
+   */
+  const getChartData = useCallback(
+    (params) => {
+      dispatch(getStatusGeneratorChartData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getChartData({
+      com_id: paramsSearch?.company,
+      inverter_id: menuTab,
+    });
+  }, [getRawData, paramsSearch?.company, menuTab]);
+
+  /**
+   * get status card info
+   */
+
+  const getStatusGeneratorCardInfo = useCallback(
+    (params) => {
+      dispatch(getStatusGeneratorCard(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatusGeneratorCardInfo({
+      com_id: paramsSearch?.company,
+      inverter_id: menuTab,
+    });
+  }, [getStatusGeneratorCardInfo, paramsSearch?.company, menuTab]);
+
+  // getStatusGeneratorChartData
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -129,6 +180,7 @@ const StatusByAreaCompany = () => {
         });
         break;
       case 'page':
+        console.log('item', item);
         setParamsSearch({
           ...paramsSearch,
           page: item,
@@ -158,50 +210,110 @@ const StatusByAreaCompany = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
+            listStatusCompanySelect={comList.slice(1)}
             listMockupType={listMockupType}
           />
           <div className="content-body-left">
             <div className="h-100">
               <Tabs
-                defaultActiveKey="bulk"
+                defaultActiveKey={
+                  deviceList && deviceList.length > 1
+                    ? ''
+                    : deviceList && deviceList[0] && deviceList[0].id
+                }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                <Tab
-                  eventKey="bulk"
-                  title={
-                    <div className="tab-name">
-                      아반시스코리아 <span>전체</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    listMockupDataCompany={listMockupDataStatusByCompany}
-                    powerData={powerData}
-                    dataContent={{}}
-                    handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
-                    performanceData={performanceData}
-                    insolationData={insolationData}
-                    paramsSearch={paramsSearch}
-                  />
-                </Tab>
-                <div className="opacity d-block pagination">
-                  {totalPage > perPage && (
-                    <div className="wrapper-device__pagination mt-0">
-                      <Pagination
-                        activePage={paramsSearch?.page}
-                        itemsCountPerPage={perPage}
-                        totalItemsCount={totalPage}
-                        pageRangeDisplayed={5}
-                        onChange={(e) => handleChangeSearch(e, 'page')}
-                        itemClass="page-item"
-                        linkClass="page-link"
+                {deviceList &&
+                  deviceList.map((device) => (
+                    <Tab
+                      eventKey={device.id}
+                      title={
+                        <div className="tab-name">
+                          {device?.ds_name}
+                          {device?.ds_name !== '전체' && (
+                            <span>{device?.id}</span>
+                          )}
+                        </div>
+                      }
+                    >
+                      <ItemContentTab
+                        chartData={chartData}
+                        rawData={
+                          rawData &&
+                          rawData.map((raw, index) => ({
+                            rowId:
+                              `${
+                                totalRawData -
+                                (paramsSearch?.page - 1) *
+                                  paramsSearch.pagination.value -
+                                index
+                              }` || '',
+                            dateTime: moment(raw.dm_datetime).format(
+                              'YYYY-MM-DD'
+                            ),
+                            inverterID: raw?.ds_id,
+                            installationLocation: raw?.pos_name,
+                            inverterName: raw?.ds_name,
+                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
+                            outsideTemperature: `${raw?.dm_pv_current}A`,
+                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
+                            gradientInsolation: `${raw?.dm_o_current}A`,
+                            powerGeneration: `${raw?.dm_power}KW`,
+                            cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
+                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                          }))
+                        }
+                        powerData={{
+                          type: 'power',
+                          data: [
+                            {
+                              title: '일일 평균 1시간 발전량',
+                              value: cardInfo?.avg_prod
+                                ? Math.round(cardInfo?.avg_prod * 100) / 100
+                                : '',
+                            },
+                            {
+                              title: '일일발전량 달성율',
+                              value: cardInfo?.prod_ratio
+                                ? Math.round(cardInfo?.prod_ratio * 100) / 100
+                                : '',
+                            },
+                          ],
+                        }}
+                        dataContent={{}}
+                        handleDownloadTrend={handleDownloadTrend}
+                        handleChangeSearch={handleChangeSearch}
+                        performanceData={{
+                          type: 'performance',
+                          data: [
+                            {
+                              title: '현재 모듈 온도',
+                              value: cardInfo?.module_temp,
+                            },
+                            {
+                              title: '최고 모듈 온도',
+                              value: cardInfo?.max_module_temp,
+                            },
+                          ],
+                        }}
+                        insolationData={{
+                          type: 'insolation',
+                          data: [
+                            {
+                              title: '수평 일사량',
+                              value: cardInfo?.current_rad,
+                            },
+                            { title: '경사 일사량', value: cardInfo?.max_rad },
+                          ],
+                        }}
+                        paramsSearch={paramsSearch}
+                        totalRawData={totalRawData}
+                        activeTab={menuTab}
+                        id={device?.id}
                       />
-                    </div>
-                  )}
-                </div>
+                    </Tab>
+                  ))}
               </Tabs>
             </div>
           </div>
