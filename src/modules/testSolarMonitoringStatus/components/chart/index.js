@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+// @flow
+// libs
+import React, { useEffect, useRef, memo } from 'react';
 import { createChart } from 'lightweight-charts';
-import {
-  lineSeriesData1,
-  lineSeriesData2,
-  lineSeriesData3,
-} from 'mockData/chart';
 
-const LineSeriesChart = () => {
+type Props = {
+  lineSeriesData: Object,
+};
+
+const LineSeriesChart = ({ lineSeriesData }: Props) => {
   //   const { height, width } = useWindowDimensions();
   const chartRef = useRef(null);
 
   useEffect(() => {
+    console.log(chartRef, 'chartRef');
     if (chartRef.current) {
       const chart = createChart('lineSeriesChart', {
         width: 800,
@@ -29,13 +31,13 @@ const LineSeriesChart = () => {
         lineWidth: 2,
         priceScaleId: 'left',
       });
-      lineSeries1.setData(lineSeriesData1);
+      lineSeries1.setData(lineSeriesData?.lineSeriesData1);
 
       const lineSeries2 = chart.addLineSeries({
         color: '#bc5200',
         lineWidth: 2,
       });
-      lineSeries2.setData(lineSeriesData2);
+      lineSeries2.setData(lineSeriesData?.lineSeriesData2);
 
       const lineSeries3 = chart.addLineSeries({
         color: '#ff7913',
@@ -47,26 +49,25 @@ const LineSeriesChart = () => {
           visible: false,
         },
       });
-      lineSeries3.setData(lineSeriesData3);
+      lineSeries3.setData(lineSeriesData?.lineSeriesData3);
     }
+    console.log(lineSeriesData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [lineSeriesData]);
+  console.log(lineSeriesData, 'ssssssssssss');
   return (
-    <>
-      <div
-        id="lineSeriesChart"
-        className="lineSeriesChart"
-        style={{
-          width: '100%',
-          height: 'auto',
-          display: 'inline',
-          justifyContent: 'center',
-        }}
-        ref={chartRef}
-      />
-    </>
+    <div
+      id="lineSeriesChart"
+      className="lineSeriesChart"
+      style={{
+        width: '100%',
+        height: 'auto',
+        display: 'inline',
+        justifyContent: 'center',
+      }}
+      ref={chartRef}
+    />
   );
 };
 
-export default LineSeriesChart;
+export default memo<Props>(LineSeriesChart);

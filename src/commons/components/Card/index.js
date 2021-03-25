@@ -97,7 +97,7 @@ export const Card = ({
             {listCompany.map((item) => (
               <img
                 key={item.id}
-                src={IMAGES.default_logo}
+                src={item?.com_logo_path?.thumbnail}
                 alt="logocompany"
                 className="card__company__item"
                 onClick={() => logoClick(item?.id)}

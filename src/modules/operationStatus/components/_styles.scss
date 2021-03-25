@@ -3,6 +3,7 @@
   border: solid pxToRem(1) $color-light-b8;
 }
 
+
 .table-form {
   margin-bottom: pxToRem(20);
 
@@ -84,5 +85,40 @@
 
   .customer-select {
     width: 100% !important;
+  }
+}
+
+.content-wrap {
+  .tab-wrapper {
+    display: flex;
+    max-width: pxToRem(1360);
+    overflow: hidden;
+
+    .tab-name {
+      line-height: 1.47;
+      min-width: pxToRem(253);
+      height: pxToRem(60);
+      border: solid pxToRem(1) $color-border-card;
+      margin-right: pxToRem(5);
+      cursor: pointer;
+      text-align: center;
+      padding-top: pxToRem(20);
+      font-family: $Noto-Sans-Font;
+      letter-spacing: -0.51px;
+      color: $bg-button;
+      font-weight: $bold;
+      font-size: pxToRem(17);
+
+      span {
+        font-size: pxToRem(12);
+        font-weight: 500;
+        line-height: 1.5;
+        margin-left: pxToRem(5);
+      }
+    }
+  }
+
+  .tab-wrapper:hover {
+    overflow-x: scroll;
   }
 }

@@ -33,6 +33,11 @@ import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
 import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
 import getCardMeasureSearchPositionSaga from 'modules/main/saga/getCardMeasureSearchPositionSaga';
 import getCardMeasureSearchCompanySaga from 'modules/main/saga/getCardMeasureSearchCompanySaga';
+import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
+
+import getCardInformationSaga from 'modules/testSolarMonitoringStatus/sagas/getCardInformationSaga';
+import getDataRawTableSaga from 'modules/testSolarMonitoringStatus/sagas/getDataRawTableSaga';
+import getDataTrendChartSagaSaga from 'modules/testSolarMonitoringStatus/sagas/getDataTrendChartSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -66,5 +71,11 @@ export default function* RootSagas() {
     deleteAccountSaga(),
     getCardMeasureSearchPositionSaga(),
     getCardMeasureSearchCompanySaga(),
+    getTrendChartSaga(),
+
+    // test monitoring
+    getCardInformationSaga(),
+    getDataRawTableSaga(),
+    getDataTrendChartSagaSaga(),
   ]);
 }

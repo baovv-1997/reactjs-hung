@@ -9,21 +9,29 @@ type Props = {
     label: string,
   }>,
   label: string,
+  handleCheckboxDefault: Function,
   customClass: string,
+  optionDefault: Array<string>,
 };
 export const MutipleCheckbox = ({
   listCheckBox,
   label,
   customClass,
+  submitValue,
+  optionDefault,
 }: Props) => {
-  const [checkedItems, setCheckedItems] = useState({});
-
+  const [checkedItems, setCheckedItems] = useState(optionDefault);
+  console.log('optionDefault', optionDefault);
   const handleChange = (event) => {
-    // updating an object instead of a Map
-    setCheckedItems({
-      ...checkedItems,
-      [event.target.name]: event.target.checked,
-    });
+    const { id } = event.target;
+
+    if (!checkedItems.includes(id)) {
+      setCheckedItems([...checkedItems, id]);
+      submitValue([...checkedItems, id]);
+    } else {
+      setCheckedItems(checkedItems.filter((item) => item !== id));
+      submitValue(checkedItems.filter((item) => item !== id));
+    }
   };
 
   return (
@@ -31,14 +39,13 @@ export const MutipleCheckbox = ({
       <div>{label}</div>
       {listCheckBox.map((item) => (
         <div className={`${customClass}`}>
-          <label key={item.key}>
-            {item.name}
-            <CheckBox
-              name={item.name}
-              isChecked={checkedItems[item.name]}
-              handleToggleCheckbox={handleChange}
-            />
-          </label>
+          <CheckBox
+            name={item.name}
+            isChecked={checkedItems.includes(item.key.toString())}
+            handleToggleCheckbox={handleChange}
+            id={item.key}
+            label={item?.label}
+          />
         </div>
       ))}
     </>

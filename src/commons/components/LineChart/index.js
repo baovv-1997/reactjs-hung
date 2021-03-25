@@ -1,28 +1,32 @@
-import React, { useEffect, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
-import {
-  lineSeriesData1,
-  lineSeriesData2,
-  lineSeriesData3,
-} from 'mockData/chart';
+import moment from 'moment';
+// import {
+//   lineSeriesData1,
+//   lineSeriesData2,
+//   lineSeriesData3,
+// } from 'mockData/chart';
 
-const LineSeriesChart = () => {
+type Props = {
+  width: number,
+  height: Number,
+  dataChart: Array<>,
+  // lineSeriesData1: Array<{}>,
+  // lineSeriesData2: Array<{}>,
+  // lineSeriesData3: Array<{}>,
+};
+
+const LineSeriesChart = ({ dataChart, width, height }: Props) => {
   //   const { height, width } = useWindowDimensions();
   const chartRef = useRef(null);
 
+  const [chart, setChart] = useState(null);
   useEffect(() => {
-    if (
-      chartRef.current &&
-      lineSeriesData1 &&
-      lineSeriesData1.length > 0 &&
-      lineSeriesData2 &&
-      lineSeriesData2.length > 0 &&
-      lineSeriesData3 &&
-      lineSeriesData3.length > 0
-    ) {
-      const chart = createChart('lineSeriesChart', {
-        width: 800,
-        height: 450,
+    if (chartRef.current) {
+      const chart1 = createChart('lineSeriesChart', {
+        width,
+        height,
 
         localization: {
           locale: 'ko-KR',
@@ -32,21 +36,45 @@ const LineSeriesChart = () => {
           borderColor: 'rgba(197, 203, 206, 1)',
         },
       });
+      setChart(chart1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (chart) {
       const lineSeries1 = chart.addLineSeries({
         color: '#8567b4',
         lineWidth: 2,
         priceScaleId: 'left',
       });
-      lineSeries1.setData(lineSeriesData1);
+
+      lineSeries1.setData(
+        (dataChart &&
+          dataChart[0] &&
+          dataChart[0].map((item) => ({
+            time: moment(item.time).format('YYYY-MM-DD'),
+            value: item.value,
+          }))) ||
+          []
+      );
 
       const lineSeries2 = chart.addLineSeries({
-        color: '#bc5200',
+        color: '#c05e13',
         lineWidth: 2,
       });
-      lineSeries2.setData(lineSeriesData2);
+      lineSeries2.setData(
+        (dataChart &&
+          dataChart[1] &&
+          dataChart[1].map((item) => ({
+            time: moment(item.time).format('YYYY-MM-DD'),
+            value: item.value,
+          }))) ||
+          []
+      );
 
       const lineSeries3 = chart.addLineSeries({
-        color: '#ff7913',
+        color: '#fe8224',
         lineWidth: 2,
         leftPriceScale: {
           visible: false,
@@ -55,10 +83,17 @@ const LineSeriesChart = () => {
           visible: false,
         },
       });
-      lineSeries3.setData(lineSeriesData3);
+      lineSeries3.setData(
+        (dataChart &&
+          dataChart[2] &&
+          dataChart[2].map((item) => ({
+            time: moment(item.time).format('YYYY-MM-DD'),
+            value: item.value,
+          }))) ||
+          []
+      );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lineSeriesData1, lineSeriesData2, lineSeriesData3]);
+  }, [dataChart]);
 
   return (
     <>

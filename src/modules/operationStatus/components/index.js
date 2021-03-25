@@ -4,29 +4,28 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-
+import { TIME_REQUEST } from 'constants/index';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 
-import {
-  listMockupType,
-  listMockupDataCompany,
-  listParkingLot,
-} from 'mockData/listCompany';
+import { listMockupType, listParkingLot } from 'mockData/listCompany';
 import * as StatusCompanyAction from 'modules/statusCompany/redux';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
-import { getListDevice, getEventList } from '../redux';
+import {
+  getListDevice,
+  getEventList,
+  getDataChart,
+  getTrendChart,
+  addEventFilter,
+} from '../redux';
 
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const history = useHistory();
-  const perPage = 6;
-  const totalPage = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
+
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
@@ -37,6 +36,10 @@ const OperationStatusPage = () => {
     eventList,
     totalEventPage,
     perpageEvent,
+    dataChart,
+    rawData,
+    totalRawData,
+    optionFilters,
   } = useSelector((state) => state.operationStatus);
 
   const defaultOption = {
@@ -62,12 +65,15 @@ const OperationStatusPage = () => {
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const [companySelected, setCompanySelected] = useState(null);
+  const [randomNumber, setRandomNumber] = useState(null);
   const dataBoxContent = {
     angleOfIncidence: '15',
     azimuth: '남동10',
     moduleOutput: '378',
     moduleColor: '보라',
   };
+
+  const [menuTab, setMenuTab] = useState('');
 
   const dispatch = useDispatch();
 
@@ -76,29 +82,13 @@ const OperationStatusPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(
-      getListDevice({
-        com_id: companySelected,
-      })
-    );
-  }, [companySelected]);
+    const interval = setInterval(() => {
+      setRandomNumber(Math.random());
+    }, TIME_REQUEST);
+    return () => clearInterval(interval);
+  }, []);
 
-  useEffect(() => {
-    if (deviceList && deviceList.length > 0) {
-      const initInverterId =
-        deviceList && deviceList.length > 1
-          ? 0
-          : deviceList && deviceList[0] && deviceList[0].id;
-      dispatch(
-        getEventList({
-          inverter_id: initInverterId,
-          per_page: paramsSearch?.pagination2?.value,
-          page: paramsSearch?.page2,
-        })
-      );
-    }
-  }, [deviceList, paramsSearch?.pagination2, paramsSearch?.page2]);
-
+  // update init inverter data
   useEffect(() => {
     setCompanySelected(
       listStatusCompanySelect &&
@@ -107,10 +97,34 @@ const OperationStatusPage = () => {
     );
   }, [listStatusCompanySelect]);
 
+  // get list device base company
+  useEffect(() => {
+    if (companySelected) {
+      dispatch(
+        getListDevice({
+          com_id: companySelected,
+        })
+      );
+    }
+  }, [companySelected]);
+
+  // update init inverter data
+  // useEffect(() => {
+  //   if (deviceList && deviceList.length > 0) {
+  //     if (deviceList.length > 1) {
+  //       setMenuTab('');
+  //     } else {
+  //       setMenuTab(deviceList[0].id);
+  //     }
+  //   }
+  // }, [deviceList]);
+
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setCompanySelected(item.id);
+        setParamsSearch(defaultSearch);
+        setMenuTab('');
 
         break;
       case 'mockupType':
@@ -183,6 +197,7 @@ const OperationStatusPage = () => {
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
+        dispatch(addEventFilter(item));
         setIsShowModalSorting(false);
         break;
       default:
@@ -190,10 +205,71 @@ const OperationStatusPage = () => {
     }
   };
 
+  // get data line chart when company, device have change
+  useEffect(() => {
+    if (companySelected && deviceList.length > 0) {
+      const idDevice =
+        deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
+      dispatch(
+        getDataChart({
+          com_id: companySelected,
+          inverter_ids: [idDevice],
+        })
+      );
+    }
+  }, [menuTab, companySelected, deviceList, randomNumber]);
+
+  useEffect(() => {
+    if (companySelected && deviceList.length > 0) {
+      const idDevice =
+        deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
+      dispatch(
+        getTrendChart({
+          com_id: companySelected,
+          inverter_ids: [idDevice],
+          page: paramsSearch?.page,
+          per_page: paramsSearch?.pagination?.value,
+        })
+      );
+    }
+  }, [
+    menuTab,
+    companySelected,
+    paramsSearch?.page,
+    paramsSearch?.pagination,
+    deviceList,
+    randomNumber,
+  ]);
+
+  // get event list when inverter, page, perpage have change
+  useEffect(() => {
+    if (companySelected && deviceList.length > 0) {
+      const idDevice =
+        deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
+      dispatch(
+        getEventList({
+          inverter_id: [idDevice],
+          per_page: paramsSearch?.pagination2?.value,
+          page: paramsSearch?.page2,
+          type: optionFilters,
+        })
+      );
+    }
+  }, [
+    paramsSearch?.pagination2,
+    paramsSearch?.page2,
+    menuTab,
+    optionFilters,
+    companySelected,
+    deviceList,
+    randomNumber,
+  ]);
+
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
     history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
   };
+
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
@@ -222,7 +298,7 @@ const OperationStatusPage = () => {
                 // set active tab
                 defaultActiveKey={
                   deviceList && deviceList.length > 1
-                    ? 0
+                    ? '0'
                     : deviceList && deviceList[0] && deviceList[0].id
                 }
                 className="list-order tab-list"
@@ -242,11 +318,38 @@ const OperationStatusPage = () => {
                     >
                       <ItemContentTab
                         dataBoxContent={dataBoxContent}
-                        listMockupDataCompany={listMockupDataCompany}
+                        listMockupDataCompany={
+                          rawData &&
+                          rawData.map((rawItem, index) => ({
+                            rowId:
+                              `${
+                                totalRawData -
+                                (paramsSearch?.page - 1) *
+                                  paramsSearch.pagination.value -
+                                index
+                              }` || '',
+
+                            dateTime: moment(rawItem?.dm_datetime).format(
+                              'YYYY-MM-DD hh:mm:ss'
+                            ),
+                            installer: rawItem?.com_name,
+                            inverterID: rawItem?.ds_id,
+                            installationLocation: rawItem?.pos_name,
+                            inverterName: rawItem?.ds_name,
+                            moduleTemperature: `${rawItem?.dm_pv_voltage}V`,
+                            outsideTemperature: `${rawItem?.dm_pv_current}A`,
+                            horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
+                            gradientInsolation: `${rawItem?.dm_o_current}A`,
+                            powerGeneration: `${rawItem?.dm_power}KW`,
+                            cumulativePowerGeneration: `${rawItem?.dm_performance_ratio}%`,
+                            rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
+                          }))
+                        }
+                        optionFilters={optionFilters}
                         handleDownloadTrend={handleDownloadTrend}
                         dataContent={{}}
-                        totalPage={totalPage}
-                        perPage={perPage}
+                        totalPage={totalRawData}
+                        perPage={paramsSearch?.pagination?.value}
                         totalPage2={totalEventPage}
                         perPage2={perpageEvent}
                         tableOperationStatusByAreaCompany={
@@ -264,10 +367,14 @@ const OperationStatusPage = () => {
                             contents: event?.evt_content,
                           }))
                         }
+                        activeTab={menuTab}
                         isShowModalSorting={isShowModalSorting}
                         paramsSearch={paramsSearch}
                         handleClickDetail={handleClickDetail}
                         handleChangeSearch={handleChangeSearch}
+                        id={item.id}
+                        companySelected={companySelected}
+                        dataChart={dataChart}
                       />
                     </Tab>
                   ))}
