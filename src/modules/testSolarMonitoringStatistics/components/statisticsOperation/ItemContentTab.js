@@ -90,7 +90,6 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
-  console.log(dataTableBottom, 'eventList');
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -188,7 +187,7 @@ const ItemContentTab = ({
         optionDefault={optionFilters}
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

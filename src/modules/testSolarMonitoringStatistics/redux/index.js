@@ -50,7 +50,6 @@ const testSMStatisticsGeneratorSlide = createSlice({
     getDataTrendChartStatisticsGenerator: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
-      state.total = 0;
     },
     getDataTrendChartStatisticsGeneratorSuccess: (state, action) => {
       const { data } = action;
@@ -166,7 +165,6 @@ const testSMStatisticsGeneratorSlide = createSlice({
     getDataRawTableOperation: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
-      state.total = 0;
     },
     getDataRawTableOperationSuccess: (state, action) => {
       const { data, params } = action;

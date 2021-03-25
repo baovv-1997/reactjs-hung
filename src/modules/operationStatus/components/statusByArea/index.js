@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -14,7 +14,7 @@ import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
-  console.log(menuTab, 'menuTab');
+
   const { isProcessing, posList, comList } = useSelector(
     (state) => state?.commons
   );
@@ -29,7 +29,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    company: 1,
+    posSelected: posList && posList[0] && posList[0].id,
     mockupType: null,
     parkingLot: null,
     PVVoltage: false,
@@ -41,82 +41,101 @@ const OperationStatusPage = () => {
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
-  const [posSelected, setPosSelected] = useState(null);
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  /**
+   * get position list list
+   */
+  const getPosListCallback = useCallback(() => {
     dispatch(getPosList());
-  }, []);
+  }, [dispatch]);
 
-  // update init inverter data
   useEffect(() => {
-    setPosSelected(posList && posList[0] && posList[0].id);
-    setParamsSearch({
-      ...paramsSearch,
-      company: posList && posList[0] && posList[0].id,
+    getPosListCallback();
+  }, [getPosListCallback]);
+
+  /**
+   * get company list list
+   */
+  const getCompanyListCallback = useCallback(
+    (params) => {
+      dispatch(getCompanyList(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getCompanyListCallback({
+      pos_id: paramsSearch?.posSelected,
     });
-  }, [posList]);
+  }, [getCompanyListCallback, paramsSearch?.posSelected]);
+
+  /**
+   * get trend data chart
+   */
+  const getTrendChartCallback = useCallback(
+    (params) => {
+      dispatch(getTrendChart(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    if (posSelected) {
-      dispatch(
-        getCompanyList({
-          pos_id: posSelected,
-        })
-      );
-    }
-  }, [posSelected]);
+    getTrendChartCallback({
+      com_id: menuTab,
+      pos_id: paramsSearch?.posSelected,
+      page: paramsSearch?.page,
+      per_page: paramsSearch?.pagination?.value,
+    });
+  }, [
+    getTrendChartCallback,
+    paramsSearch?.posSelected,
+    paramsSearch?.page,
+    paramsSearch?.pagination,
+    menuTab,
+  ]);
+
+  /**
+   * get trend data chart
+   */
+  const getCardInfoCallback = useCallback(
+    (params) => {
+      dispatch(getCardInfo(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    if (posSelected && comList.length > 0) {
-      const idComInit =
-        comList && comList.length === 1 ? comList[0].id : menuTab;
-      dispatch(
-        getTrendChart({
-          com_id: idComInit,
-          page: paramsSearch?.page,
-          per_page: paramsSearch?.pagination?.value,
-        })
-      );
-    }
-  }, [menuTab, posSelected, paramsSearch?.page, paramsSearch?.pagination]);
+    getCardInfoCallback({
+      com_id: menuTab,
+      pos_id: paramsSearch?.posSelected,
+    });
+  }, [getCardInfoCallback, paramsSearch?.posSelected, menuTab]);
+
+  /**
+   * get  data chart
+   */
+  const getDataChartCallback = useCallback(
+    (params) => {
+      dispatch(getDataChart(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    if (posSelected && comList.length > 0) {
-      const idComInit =
-        comList && comList.length === 1 ? comList[0].id : menuTab;
-      dispatch(
-        getCardInfo({
-          com_id: idComInit,
-          pos_id: posSelected,
-        })
-      );
-    }
-  }, [posSelected, menuTab]);
-
-  // get data line chart when company, device have change
-  useEffect(() => {
-    if (posSelected && comList.length > 0) {
-      const idComInit =
-        comList && comList.length === 1 ? comList[0].id : menuTab;
-      dispatch(
-        getDataChart({
-          com_id: idComInit,
-          pos_id: posSelected,
-        })
-      );
-    }
-  }, [menuTab, posSelected]);
+    getDataChartCallback({
+      com_id: menuTab,
+      pos_id: paramsSearch?.posSelected,
+    });
+  }, [getDataChartCallback, paramsSearch?.posSelected, menuTab]);
 
   // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
-        setPosSelected(item.id);
         setParamsSearch({
           ...paramsSearch,
-          company: item.id,
+          posSelected: item,
         });
         setMenuTab(1);
         break;
@@ -218,7 +237,7 @@ const OperationStatusPage = () => {
                 {comList.map((item) => (
                   <Tab
                     eventKey={item.id}
-                    title={<div className="tab-name">{item?.com_name}</div>}
+                    title={<div className="tab-name">{item?.label}</div>}
                   >
                     <ItemContentTab
                       rawData={rawData.map((rawItem, index) => ({
@@ -246,10 +265,10 @@ const OperationStatusPage = () => {
                         rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
                       }))}
                       dataBoxContent={{
-                        angleOfIncidence: `${cardInfo?.current_rad}`,
-                        azimuth: `${cardInfo?.avg_prod}`,
-                        moduleOutput: `${cardInfo?.module_temp}`,
-                        moduleColor: `${cardInfo?.max_module_temp}`,
+                        angleOfIncidence: cardInfo?.ds_incidence_angle || null,
+                        azimuth: cardInfo?.ds_azimuth_angle || null,
+                        moduleOutput: cardInfo?.dm_power || null,
+                        moduleColor: cardInfo?.ds_color || null,
                       }}
                       handleDownloadTrend={handleDownloadTrend}
                       handleChangeSearch={handleChangeSearch}

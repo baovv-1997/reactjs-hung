@@ -65,7 +65,7 @@ const commonSilice = createSlice({
     getCompanyListSuccess: (state, action) => {
       const allOption = [
         {
-          id: null,
+          id: '',
           value: '',
           label: '전체',
         },
@@ -94,7 +94,7 @@ const commonSilice = createSlice({
     getListDeviceSuccess: (state, action) => {
       const allOption = [
         {
-          id: null,
+          id: '',
           value: '',
           label: '전체',
         },

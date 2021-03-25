@@ -254,7 +254,6 @@ const OperationStatusPage = () => {
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
-        console.log(item, 'optionCheck', name);
         dispatch(addEventFilter(item));
         setIsShowModalSorting(false);
         break;
