@@ -16,12 +16,16 @@ const LineSeriesChart = () => {
         width: 800,
         height: 450,
 
-        localization: {
-          locale: 'ko-KR',
-        },
         leftPriceScale: {
           visible: true,
           borderColor: 'rgba(197, 203, 206, 1)',
+        },
+        timeScale: {
+          tickMarkFormatter: (time) => {
+            console.log('time', time);
+            const date = new Date(time);
+            return date.getHours();
+          },
         },
       });
       const lineSeries1 = chart.addLineSeries({
