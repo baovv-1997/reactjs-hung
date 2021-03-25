@@ -7,17 +7,10 @@ import moment from 'moment';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
-
 import { getPosList, getCompanyList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
-import {
-  getListDevice,
-  getEventList,
-  getDataChart,
-  getTrendChart,
-  getCardInfo,
-} from '../../redux';
+import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');

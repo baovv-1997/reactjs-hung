@@ -19,13 +19,14 @@ const operationStatusSlide = createSlice({
       state.type = action.type;
       // state.isProcessing = true;
     },
-    getListDevice: (state) => {
-      state.isProcessing = true;
+    getListDevice: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
     },
 
     getListDeviceSuccess: (state, action) => {
       const allOption = [{ ds_name: '전체', id: '' }];
-      state.isProcessing = false;
+      // state.isProcessing = false;
 
       state.deviceList =
         action.data && action.data && action.data.length > 1
@@ -36,16 +37,16 @@ const operationStatusSlide = createSlice({
       state.type = action.type;
     },
     getListDeviceFailed: (state, action) => {
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.type = action.type;
     },
     getEventList: (state, action) => {
-      state.isProcessing = true;
+      // state.isProcessing = true;
       state.type = action.type;
     },
 
     getEventListSuccess: (state, action) => {
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.type = action.type;
       state.eventList = action.data;
       state.totalEventPage = action?.total;
@@ -53,7 +54,7 @@ const operationStatusSlide = createSlice({
     },
 
     getEventListFailed: (state, action) => {
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.type = action.type;
     },
     deleteEvent: (state, action) => {
@@ -97,33 +98,33 @@ const operationStatusSlide = createSlice({
 
     getDataChart: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      // state.isProcessing = true;
     },
     getDataChartSuccess: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.dataChart = action.data;
     },
     getDataChartFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.dataChart = [];
     },
 
     getTrendChart: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      // state.isProcessing = true;
     },
     getTrendChartSuccess: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.rawData = action.data;
       state.totalRawData = action.total;
       state.currentPage = action.currentPage;
     },
     getTrendChartFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      // state.isProcessing = false;
       state.rawData = [];
     },
 

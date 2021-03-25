@@ -76,6 +76,17 @@ const commonSilice = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getListDevice: (state, action) => {
+      state.type = action.type;
+    },
+
+    getListDeviceSuccess: (state, action) => {
+      state.type = action.type;
+    },
+    getListDeviceFailed: (state, action) => {
+      state.type = action.type;
+    },
   },
 });
 
@@ -90,6 +101,9 @@ export const {
   getCompanyList,
   getCompanyListSuccess,
   getCompanyListFailed,
+  getListDevice,
+  getListDeviceSuccess,
+  getListDeviceFailed,
 } = actions;
 
 export default reducer;

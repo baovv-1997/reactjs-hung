@@ -35,6 +35,7 @@ import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
 import getPosListSaga from 'commons/saga/getPosListSaga';
 import getCompanyListSaga from 'commons/saga/getCompanyListSaga';
 import getCardInfoSaga from 'modules/operationStatus/saga/getCardInfoSaga';
+import getDevicesListSaga from 'commons/saga/getDevicesListSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -70,5 +71,7 @@ export default function* RootSagas() {
     getPosListSaga(),
     getCompanyListSaga(),
     getCardInfoSaga(),
+    getListDeviceSaga(),
+    getDevicesListSaga(),
   ]);
 }

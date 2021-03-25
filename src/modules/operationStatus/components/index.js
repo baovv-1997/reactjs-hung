@@ -19,6 +19,7 @@ import {
   getDataChart,
   getTrendChart,
   addEventFilter,
+  getCardInfo,
 } from '../redux';
 
 import ItemContentTab from './ItemContentTab';
@@ -107,17 +108,6 @@ const OperationStatusPage = () => {
       );
     }
   }, [companySelected]);
-
-  // update init inverter data
-  // useEffect(() => {
-  //   if (deviceList && deviceList.length > 0) {
-  //     if (deviceList.length > 1) {
-  //       setMenuTab('');
-  //     } else {
-  //       setMenuTab(deviceList[0].id);
-  //     }
-  //   }
-  // }, [deviceList]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
@@ -212,6 +202,13 @@ const OperationStatusPage = () => {
         deviceList && deviceList.length === 1 ? deviceList[0].id : menuTab;
       dispatch(
         getDataChart({
+          com_id: companySelected,
+          inverter_ids: [idDevice],
+        })
+      );
+
+      dispatch(
+        getCardInfo({
           com_id: companySelected,
           inverter_ids: [idDevice],
         })
