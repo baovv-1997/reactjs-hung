@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import moment from 'moment';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -7,12 +8,11 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
-import ROUTERS from 'constants/routers';
+import { operator_event_filter } from 'constants/optionCheckbox';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
 } from '../constant';
-import { useHistory } from 'react-router-dom';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -20,7 +20,6 @@ import { FilterSearch } from '../FilterSearch';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
@@ -43,11 +42,12 @@ type Props = {
     value: any,
     label: string,
   }>,
+  dataChartOperation: Object,
+  optionFilters: Object,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
@@ -60,9 +60,9 @@ const ItemContentTab = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  dataChartOperation,
+  optionFilters,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
-  const history = useHistory();
   const dataLengthChart = [
     {
       id: 1,
@@ -90,7 +90,6 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
-
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -128,7 +127,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination mt-0 mb-3">
           {totalPage > perPage && (
@@ -165,26 +164,30 @@ const ItemContentTab = ({
       </div>
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={dataTableBottom}
-        // isShowId
+        tableBody={
+          (dataTableBottom &&
+            dataTableBottom.length > 0 &&
+            dataTableBottom.map((event) => ({
+              id: event?.id,
+              dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
+              comName: event?.com_name,
+              inverterID: event?.ds_id,
+              inverterName: event?.ds_name,
+              contents: event?.evt_content,
+            }))) ||
+          []
+        }
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
           isShow: isShowModalSorting,
           keyItem: 4,
         }}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
-      <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
-          }
-        >
-          등록
-        </Button>
-      </div>
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

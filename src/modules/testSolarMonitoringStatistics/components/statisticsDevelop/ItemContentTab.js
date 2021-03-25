@@ -28,6 +28,7 @@ type Props = {
     value: any,
     label: string,
   }>,
+  dataChart: Object,
 };
 
 const ItemContentTab = ({
@@ -40,6 +41,7 @@ const ItemContentTab = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  dataChart,
 }: Props) => {
   const dataLengthChart = [
     {
