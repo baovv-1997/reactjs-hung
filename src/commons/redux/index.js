@@ -65,12 +65,20 @@ const commonSilice = createSlice({
       const allOption = [
         {
           id: '',
-          com_name: '전체',
+          value: '',
+          label: '전체',
         },
       ];
+      const listCompany =
+        action.data &&
+        action.data.map((item) => ({
+          id: item.id,
+          value: item.id,
+          label: item.com_name,
+        }));
       state.type = action.type;
       state.isProcessing = false;
-      state.comList = [...allOption, ...action.data];
+      state.comList = [...allOption, ...listCompany];
     },
     getCompanyListFailed: (state, action) => {
       state.type = action.type;

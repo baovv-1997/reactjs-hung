@@ -10,24 +10,24 @@ type Props = {
     value: any,
     label: string,
   }>,
-  listMockupType?: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
-  listParkingLot?: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
+  // listMockupType?: Array<{
+  //   id: number,
+  //   value: any,
+  //   label: string,
+  // }>,
+  // listParkingLot?: Array<{
+  //   id: number,
+  //   value: any,
+  //   label: string,
+  // }>,
   handleChangeSearch: Function,
 };
 
 export const GroupSelect = ({
   paramsSearch,
   listStatusCompanySelect,
-  listMockupType = [],
-  listParkingLot = [],
+  // listMockupType = [],
+  // listParkingLot = [],
   handleChangeSearch,
 }: Props) => {
   const renderListCompany =
@@ -44,33 +44,6 @@ export const GroupSelect = ({
       </li>
     ));
 
-  // const renderListMocKup =
-  //   listMockupType &&
-  //   listMockupType.map((item) => (
-  //     <li
-  //       key={item.id}
-  //       onClick={() => handleChangeSearch(item, 'mockupType')}
-  //       onKeyPress={() => {}}
-  //       role="menuitem"
-  //       className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
-  //     >
-  //       {item.label}
-  //     </li>
-  //   ));
-
-  // const renderListParkingLot =
-  //   listParkingLot &&
-  //   listParkingLot.map((item) => (
-  //     <li
-  //       key={item.id}
-  //       onClick={() => handleChangeSearch(item, 'parkingLot')}
-  //       onKeyPress={() => {}}
-  //       role="menuitem"
-  //       className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
-  //     >
-  //       {item.label}
-  //     </li>
-  //   ));
   return (
     <div>
       {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
