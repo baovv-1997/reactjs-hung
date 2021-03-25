@@ -230,8 +230,8 @@ const StatusByAreaCompany = () => {
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {device?.ds_name}
-                          {device?.ds_name !== '전체' && (
+                          {device?.label}
+                          {device?.label !== '전체' && (
                             <span>{device?.id}</span>
                           )}
                         </div>
