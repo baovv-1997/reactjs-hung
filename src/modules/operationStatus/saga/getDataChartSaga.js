@@ -6,7 +6,7 @@ import { ROUTES, API } from 'apis';
 function* getDataChart(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.STATUS_GENERATOR_CHART, action.payload)
+      API.get(ROUTES.STATUS_OPERATOR_CHART, action.payload)
     );
     if (response.ok) {
       const { data } = response;
