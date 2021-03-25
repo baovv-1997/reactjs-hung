@@ -20,7 +20,7 @@ import { getStatusGeneratorCard } from '../redux';
 const StatusByAreaCompany = () => {
   const dispatch = useDispatch();
   const [menuTab, setMenuTab] = useState('');
-  console.log(menuTab, 'menuTab');
+
   const { comList, isProcessing, deviceList } = useSelector(
     (state) => state?.commons
   );
