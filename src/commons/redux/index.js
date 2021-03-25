@@ -30,6 +30,7 @@ const initialState = {
   },
   posList: [],
   comList: [],
+  deviceList: [],
 };
 
 const commonSilice = createSlice({
@@ -64,7 +65,7 @@ const commonSilice = createSlice({
     getCompanyListSuccess: (state, action) => {
       const allOption = [
         {
-          id: '',
+          id: null,
           value: '',
           label: '전체',
         },
@@ -72,7 +73,7 @@ const commonSilice = createSlice({
       const listCompany =
         action.data &&
         action.data.map((item) => ({
-          id: item.id,
+          ...item,
           value: item.id,
           label: item.com_name,
         }));
@@ -87,13 +88,32 @@ const commonSilice = createSlice({
 
     getListDevice: (state, action) => {
       state.type = action.type;
+      state.isProcessing = true;
     },
 
     getListDeviceSuccess: (state, action) => {
+      const allOption = [
+        {
+          id: null,
+          value: '',
+          label: '전체',
+        },
+      ];
+
+      const deviceList =
+        action.data &&
+        action.data.map((item) => ({
+          ...item,
+          value: item.id,
+          label: item.ds_name,
+        }));
       state.type = action.type;
+      state.isProcessing = false;
+      state.deviceList = [...allOption, ...deviceList];
     },
     getListDeviceFailed: (state, action) => {
       state.type = action.type;
+      state.isProcessing = false;
     },
   },
 });

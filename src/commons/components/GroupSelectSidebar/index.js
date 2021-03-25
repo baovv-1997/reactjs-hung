@@ -10,7 +10,7 @@ type Props = {
     value: any,
     label: string,
   }>,
-  // listMockupType?: Array<{
+  // listInverter?: Array<{
   //   id: number,
   //   value: any,
   //   label: string,
@@ -26,7 +26,7 @@ type Props = {
 export const GroupSelect = ({
   paramsSearch,
   listStatusCompanySelect,
-  // listMockupType = [],
+  // listInverter = [],
   // listParkingLot = [],
   handleChangeSearch,
 }: Props) => {
@@ -44,6 +44,33 @@ export const GroupSelect = ({
       </li>
     ));
 
+  // const renderListInverter =
+  //   listInverter &&
+  //   listInverter.map((item) => (
+  //     <li
+  //       key={item.id}
+  //       onClick={() => handleChangeSearch(item, 'mockupType')}
+  //       onKeyPress={() => {}}
+  //       role="menuitem"
+  //       className={`${paramsSearch?.mockupType === item.id ? 'active' : ''}`}
+  //     >
+  //       {item.label}
+  //     </li>
+  //   ));
+
+  // const renderListParkingLot =
+  //   listParkingLot &&
+  //   listParkingLot.map((item) => (
+  //     <li
+  //       key={item.id}
+  //       onClick={() => handleChangeSearch(item, 'parkingLot')}
+  //       onKeyPress={() => {}}
+  //       role="menuitem"
+  //       className={`${paramsSearch?.parkingLot === item.id ? 'active' : ''}`}
+  //     >
+  //       {item.label}
+  //     </li>
+  //   ));
   return (
     <div>
       {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
@@ -52,13 +79,13 @@ export const GroupSelect = ({
           <ul className="list-item-select overflowY">{renderListCompany}</ul>
         </div>
       )}
-      {/* {listMockupType && listMockupType.length > 0 && (
+      {/* {listInverter && listInverter.length > 0 && (
         <>
           <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />
-          <ul className="list-item-select overflowY">{renderListMocKup}</ul>
+          <ul className="list-item-select overflowY">{renderListInverter}</ul>
         </>
-      )}
-      {listParkingLot && listParkingLot.length > 0 && (
+      )} */}
+      {/* {listParkingLot && listParkingLot.length > 0 && (
         <>
           <TitleSubHeader title="주차장" className="mt-5" />
           <ul className="list-item-select overflowY">{renderListParkingLot}</ul>

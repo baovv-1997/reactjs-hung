@@ -57,9 +57,14 @@ const testSolarMonitoringStatusSlide = createSlice({
           inverterName: item.ds_name || '',
           dm_module_temp: `${item.dm_module_temp || 0}℃`,
           outsideTemperature: `${item.dm_env_temp || 0}℃`,
-          insolation: `${item?.dm_rad}kWh/㎡·10초`,
-          powerGeneration: `${item?.dm_prod}kWh`,
-          dm_performance_ratio: `${item?.dm_prod_sum || 0}kWh`,
+          insolation:
+            item?.dm_rad &&
+            `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`,
+          powerGeneration:
+            item?.dm_prod && `${item?.dm_prod.toLocaleString('en') || 0}kWh`,
+          dm_performance_ratio:
+            item?.dm_prod_sum &&
+            `${item?.dm_prod_sum.toLocaleString('en') || 0}kWh`,
           performanceRatio: `${item.dm_performance_ratio || 0}%`,
         }));
       state.type = action.type;
