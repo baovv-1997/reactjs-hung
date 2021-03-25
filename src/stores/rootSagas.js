@@ -31,6 +31,8 @@ import getSearchMainSaga from 'modules/main/saga/getSearchMainSaga';
 import getCardMeasureMainSaga from 'modules/main/saga/getCardMeasureMainSaga';
 import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
 import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
+import getCardMeasureSearchPositionSaga from 'modules/main/saga/getCardMeasureSearchPositionSaga';
+import getCardMeasureSearchCompanySaga from 'modules/main/saga/getCardMeasureSearchCompanySaga';
 import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
 
 import getCardInformationSaga from 'modules/testSolarMonitoringStatus/sagas/getCardInformationSaga';
@@ -67,6 +69,8 @@ export default function* RootSagas() {
     getCardMeasureMainSaga(),
     getDataChartSaga(),
     deleteAccountSaga(),
+    getCardMeasureSearchPositionSaga(),
+    getCardMeasureSearchCompanySaga(),
     getTrendChartSaga(),
 
     // test monitoring
