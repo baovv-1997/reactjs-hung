@@ -36,7 +36,9 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    company: (deviceList && deviceList[1] && deviceList[1].id) || null,
+    company:
+      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+      null,
     page2: 1,
     PVVoltage: false,
     PVCurrent: false,

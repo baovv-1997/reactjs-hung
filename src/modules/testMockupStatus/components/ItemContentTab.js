@@ -4,14 +4,13 @@ import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headTestMockupStatus } from './constant';
-import LineSeriesChart from './chart';
+// import LineSeriesChart from './chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
   powerData: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -23,14 +22,12 @@ type Props = {
 const ItemContentTab = ({
   listMockupDataCompany,
   powerData,
-  dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   performanceData,
   insolationData,
   paramsSearch,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -67,9 +64,7 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">
-          <LineSeriesChart />
-        </div>
+        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
 
       <TitleSubHeader title="발전 현황" />
@@ -82,7 +77,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headTestMockupStatus}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId
         />
       </div>
     </div>

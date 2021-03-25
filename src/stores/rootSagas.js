@@ -55,6 +55,10 @@ import getStatusGeneratorRawSaga from 'modules/statusCompany/sagas/getStatusGene
 import getStatusGeneratorCardSaga from 'modules/statusCompany/sagas/getStatusGeneratorCardSaga';
 import getStatusGeneratorChartSaga from 'modules/statusCompany/sagas/getStatusGeneratorChartSaga';
 
+import getCardInformationTestMkSaga from 'modules/testMockupStatus/sagas/generator/getCardInformationSaga';
+import getDataRawTableTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataRawTableSaga';
+import getDataTrendChartTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataTrendChartSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -111,5 +115,9 @@ export default function* RootSagas() {
     getCardInformationStatisticsOperationGenerator(),
     getDataTrendChartStatisticsOperationSaga(),
     getDataRawTableOperationSaga(),
+    // test mockup monitoring
+    getCardInformationTestMkSaga(),
+    getDataRawTableTestMkSaga(),
+    getDataTrendChartTestMkSaga(),
   ]);
 }
