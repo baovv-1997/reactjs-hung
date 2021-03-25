@@ -12,10 +12,10 @@ import { getCompanyList, getListDevice } from 'commons/redux';
 import {
   getStatusGeneratorRaw,
   getStatusGeneratorChartData,
+  getStatusGeneratorCard,
 } from 'modules/statusCompany/redux';
 
 import ItemContentTab from './ItemContentTab';
-import { getStatusGeneratorCard } from '../redux';
 
 const StatusByAreaCompany = () => {
   const dispatch = useDispatch();
@@ -101,7 +101,7 @@ const StatusByAreaCompany = () => {
   /**
    * get chart data
    */
-  const getChartData = useCallback(
+  const getChartDataCallback = useCallback(
     (params) => {
       dispatch(getStatusGeneratorChartData(params));
     },
@@ -109,16 +109,15 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getChartData({
+    getChartDataCallback({
       com_id: paramsSearch?.company,
       inverter_id: menuTab,
     });
-  }, [getRawData, paramsSearch?.company, menuTab]);
+  }, [getChartDataCallback, paramsSearch?.company, menuTab]);
 
   /**
    * get status card info
    */
-
   const getStatusGeneratorCardInfo = useCallback(
     (params) => {
       dispatch(getStatusGeneratorCard(params));

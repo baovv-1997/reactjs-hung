@@ -10,7 +10,7 @@ import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
-  listMockupDataCompany: any,
+  rawData: any,
   dataContent: Object,
   powerData: Object,
   handleDownloadTrend: Function,
@@ -21,7 +21,7 @@ type Props = {
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  rawData,
   powerData,
   dataContent,
   handleDownloadTrend,
@@ -79,7 +79,7 @@ const ItemContentTab = ({
       <div>
         <Table
           tableHeads={headStatusByCompany}
-          tableBody={listMockupDataCompany}
+          tableBody={rawData}
           // isShowId
         />
       </div>
