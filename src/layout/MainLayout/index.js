@@ -13,6 +13,7 @@ type Props = {
   isSearch?: boolean,
   isSelect?: boolean,
   isProcessing?: boolean,
+  handleChangeSelect?: Function,
 };
 
 export const MainLayout = ({
@@ -20,6 +21,7 @@ export const MainLayout = ({
   isSearch = false,
   isSelect = false,
   isProcessing = false,
+  handleChangeSelect = () => { }
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const refMenu = useRef(null);
@@ -42,7 +44,7 @@ export const MainLayout = ({
 
   let showHeader;
   if (isSearch) showHeader = <Header isSearch />;
-  else if (isSelect) showHeader = <Header isSelect />;
+  else if (isSelect) showHeader = <Header isSelect handleChangeSelect={handleChangeSelect} />;
   else showHeader = <Header />;
 
   return (
@@ -57,7 +59,7 @@ export const MainLayout = ({
             }}
             tabIndex={0}
             role="menuitem"
-            onKeyPress={() => {}}
+            onKeyPress={() => { }}
             ref={iconRef}
           >
             <span className="icon" />
@@ -81,6 +83,7 @@ MainLayout.defaultProps = {
   isSearch: false,
   isSelect: false,
   isProcessing: false,
+  handleChangeSelect: () => { },
 };
 
 export default MainLayout;

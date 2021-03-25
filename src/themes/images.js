@@ -37,6 +37,8 @@ const IMAGES = {
   icon_plus_large: require('assets/images/icon_plus_large.svg'),
   btn_logout: require('assets/images/btn_logout.svg'),
   default_logo: require('assets/images/logo_company/logo_l&c@3x.png'),
+  motion_weather_blue: require('assets/images/motion/icon_weather_blue.gif'),
+  motion_weather_orange: require('assets/images/motion/icon_weather_orange.gif'),
 };
 
 export default IMAGES;

@@ -38,6 +38,7 @@ import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
 import getCardInformationSaga from 'modules/testSolarMonitoringStatus/sagas/getCardInformationSaga';
 import getDataRawTableSaga from 'modules/testSolarMonitoringStatus/sagas/getDataRawTableSaga';
 import getDataTrendChartSagaSaga from 'modules/testSolarMonitoringStatus/sagas/getDataTrendChartSaga';
+import getCardMeasureAreaSaga from 'modules/main/saga/getCardMeasureAreaSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -72,6 +73,7 @@ export default function* RootSagas() {
     getCardMeasureSearchPositionSaga(),
     getCardMeasureSearchCompanySaga(),
     getTrendChartSaga(),
+    getCardMeasureAreaSaga(),
 
     // test monitoring
     getCardInformationSaga(),

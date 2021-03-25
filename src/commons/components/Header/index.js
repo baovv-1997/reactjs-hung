@@ -15,12 +15,14 @@ type Props = {
   isSearch?: boolean,
   isSelect?: boolean,
   eventCount?: number,
+  handleChangeSelect?: Function,
 };
 
 const Header = ({
   isSearch = false,
   isSelect = false,
   eventCount = 0,
+  handleChangeSelect = () => { },
 }: Props) => {
 
   const dispatch = useDispatch();
@@ -40,7 +42,6 @@ const Header = ({
       dispatch(getCompanySearchMain({ keyword: debouncedSearchTerm }));
       dispatch(getPositionSearchMain({ keyword: debouncedSearchTerm }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm])
 
   // set option dropdown value when listposition != [];
@@ -49,11 +50,17 @@ const Header = ({
     setOptionDropdown(listPositions[indexDefault]);
   }, [listPositions])
 
+  // optionDropdown change will pass optionvalue to Main -> Dashboard area
+  useEffect(() => {
+    if (optionDropdown) {
+      handleChangeSelect(optionDropdown);
+    }
+  }, [optionDropdown])
+
   const searchSubmit = () => {
     const type = searchTerm?.key;
     switch (type) {
       case 'posId':
-        console.log('getposId');
         dispatch(getCardMeasureSearchPosition({ type: 'summary', pos_id: searchTerm.id }));
         break;
       case 'comId':
@@ -185,6 +192,7 @@ Header.defaultProps = {
   isSearch: false,
   isSelect: false,
   eventCount: 0,
+  handleChangeSelect: () => { },
 };
 
 export default memo < Props > (Header);

@@ -248,3 +248,79 @@ export const avenrageCard = (arr) => {
   };
   return avenrage;
 }
+
+// export const randomNumber = (min, max) => {
+//   // eslint-disable-next-line no-param-reassign
+//   min = Math.ceil(min);
+//   // eslint-disable-next-line no-param-reassign
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min) + min);
+// }
+
+// eslint-disable-next-line consistent-return
+export const setPositionCardMeasure = (index) => {
+  switch (index) {
+    case 0:
+      return {
+        top: 404,
+        left: 40,
+      }
+
+    case 1:
+      return {
+        top: 385,
+        left: 380,
+      }
+
+    case 2:
+      return {
+        top: 410,
+        left: 1020,
+      }
+
+    case 3:
+      return {
+        top: 15,
+        left: 1000,
+      }
+
+    case 4:
+      return {
+        top: 25,
+        left: 379,
+      }
+
+    case 5:
+      return {
+        top: 9,
+        left: 47,
+      }
+
+    case 6:
+      return {
+        top: 25,
+        left: 688,
+      }
+
+    case 7:
+      return {
+        top: 404,
+        left: 699,
+      }
+
+    case 8:
+      return {
+        top: 725,
+        left: 379,
+      }
+
+    case 9:
+      return {
+        top: 719,
+        left: 47,
+      }
+
+    default:
+      break;
+  }
+}
