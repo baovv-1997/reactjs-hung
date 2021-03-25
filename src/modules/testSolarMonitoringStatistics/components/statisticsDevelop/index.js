@@ -38,7 +38,7 @@ const OperationStatusPage = () => {
     endDate: null,
     vendorCompany: null,
     inverter: null,
-    company: (deviceList && deviceList[1].id) || null,
+    company: (deviceList && deviceList[1] && deviceList[1].id) || null,
     insolation: false,
     performance: false,
     generation: false,

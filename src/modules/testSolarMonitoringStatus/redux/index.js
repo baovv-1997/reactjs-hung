@@ -39,7 +39,6 @@ const testSolarMonitoringStatusSlide = createSlice({
     getDataRawTable: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
-      state.total = 0;
     },
 
     getDataRawTableSuccess: (state, action) => {
@@ -76,6 +75,8 @@ const testSolarMonitoringStatusSlide = createSlice({
     getDataRawTableFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.total = 0;
+      state.listDataTableRaw = [];
     },
 
     getDataTrendChart: (state, action) => {
