@@ -5,7 +5,7 @@ import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
 import useDebounce from 'customHooks/useDebounce';
-import { getCompanySearchMain, getPositionSearchMain, getCardMeasureMain } from 'modules/main/redux';
+import { getCompanySearchMain, getPositionSearchMain, getCardMeasureSearchPosition, getCardMeasureSearchCompany } from 'modules/main/redux';
 import Search from '../Search';
 import SelectDropdown from '../Select';
 import ModalEvent from './ModalEvent';
@@ -54,10 +54,10 @@ const Header = ({
     switch (type) {
       case 'posId':
         console.log('getposId');
-        dispatch(getCardMeasureMain({ type: 'summary', pos_id: searchTerm.id }));
+        dispatch(getCardMeasureSearchPosition({ type: 'summary', pos_id: searchTerm.id }));
         break;
       case 'comId':
-        dispatch(getCardMeasureMain({ type: 'summary', com_id: searchTerm.id }));
+        dispatch(getCardMeasureSearchCompany({ type: 'summary', com_id: searchTerm.id }));
         break;
       default:
         setModal({ ...modal, isShow: true, content: '구역명이나 업체명을 정확히 입력해주세요' });
@@ -68,14 +68,12 @@ const Header = ({
   // Handle Icon search Click
   const handleIconClick = () => {
     searchSubmit();
-    console.log(searchTerm);
   }
 
   // Handle event press key enter search
   const handleKeyDownSearch = (e) => {
     if (e.key === 'Enter') {
       searchSubmit();
-      console.log(searchTerm);
     }
   }
 
@@ -141,7 +139,7 @@ const Header = ({
             ref={iconRef}
           />
           {eventCount > 0 ? (
-            <span className="header__notification">eventCount</span>
+            <span className="header__notification">{eventCount}</span>
           ) : (
             ''
           )}
