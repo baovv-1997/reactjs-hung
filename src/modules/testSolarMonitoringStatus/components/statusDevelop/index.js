@@ -7,7 +7,7 @@ import Pagination from 'react-js-pagination';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import * as ActionStatusGenerator from '../../redux';
-import * as AccountAction from 'modules/accounts/redux';
+import * as CommonAction from 'commons/redux';
 import ItemContentTab from './ItemContentTab';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 
@@ -20,7 +20,7 @@ const StatusByAreaCompany = () => {
     dataChart,
   } = useSelector((state) => state?.testSolarMonitoringStatus);
   const [randomNumber, setRandomNumber] = useState(null);
-  const { listCompany } = useSelector((state) => state?.account);
+  const { comList } = useSelector((state) => state?.commons);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -29,7 +29,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: (listCompany && listCompany[0]?.id) || null,
+    company: (comList && comList[0]?.id) || null,
     mockupType: null,
     parkingLot: null,
     power: false,
@@ -39,6 +39,7 @@ const StatusByAreaCompany = () => {
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setRandomNumber(Math.random());
@@ -112,7 +113,7 @@ const StatusByAreaCompany = () => {
   };
 
   useEffect(() => {
-    dispatch(AccountAction.getListCompany());
+    dispatch(CommonAction.getCompanyList());
   }, []);
 
   const dispatch = useDispatch();
@@ -225,7 +226,7 @@ const StatusByAreaCompany = () => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listCompany}
+            listStatusCompanySelect={comList}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
