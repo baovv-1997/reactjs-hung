@@ -66,17 +66,20 @@ const commonSilice = createSlice({
       const allOption = [
         {
           id: '',
+          value: '',
           label: '전체',
         },
       ];
-      const formatComList = action.data.map((com) => ({
-        ...com,
-        label: com?.com_name,
-      }));
-
+      const listCompany =
+        action.data &&
+        action.data.map((item) => ({
+          ...item,
+          value: item.id,
+          label: item.com_name,
+        }));
       state.type = action.type;
       state.isProcessing = false;
-      state.comList = [...allOption, ...formatComList];
+      state.comList = [...allOption, ...listCompany];
     },
     getCompanyListFailed: (state, action) => {
       state.type = action.type;
@@ -85,21 +88,32 @@ const commonSilice = createSlice({
 
     getListDevice: (state, action) => {
       state.type = action.type;
+      state.isProcessing = true;
     },
 
     getListDeviceSuccess: (state, action) => {
       const allOption = [
         {
           id: '',
-          ds_name: '전체',
+          value: '',
+          label: '전체',
         },
       ];
 
+      const deviceList =
+        action.data &&
+        action.data.map((item) => ({
+          ...item,
+          value: item.id,
+          label: item.ds_name,
+        }));
       state.type = action.type;
-      state.deviceList = [...allOption, ...action.data];
+      state.isProcessing = false;
+      state.deviceList = [...allOption, ...deviceList];
     },
     getListDeviceFailed: (state, action) => {
       state.type = action.type;
+      state.isProcessing = false;
     },
   },
 });

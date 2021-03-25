@@ -33,6 +33,10 @@ export const ROUTES = {
   API_TEST_SOLAR_MONITORING_STATUS_CARD: `/data/test-solar-monitoring/status-generator/status-cards`,
   API_TEST_SOLAR_MONITORING_STATUS_RAW: `/data/test-solar-monitoring/status-generator/raw-data`,
   API_TEST_SOLAR_MONITORING_STATUS_TREND_CHART: `/data/test-solar-monitoring/status-generator/chart-data`,
+
+  API_TEST_SOLAR_MONITORING_STATISTICS_CARD: `/data/test-solar-monitoring/statistic/cards`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_CHART: `/data/test-solar-monitoring/statistic/chart`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_RAW: `/data/test-solar-monitoring/statistic/raw-measure`,
 };
 
 export const API = create({

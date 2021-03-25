@@ -131,6 +131,7 @@ export const FilterSearch = ({
                   dropdownMode="select"
                   showMonthYearPicker={paramsSearch?.classification === 'month'}
                   showYearPicker={paramsSearch?.classification === 'year'}
+                  placeholderText="YYYY-MM-DD"
                 />
                 <img src={IMAGES.iconCalendar} alt="icon-calendar" />
               </div>
@@ -151,6 +152,7 @@ export const FilterSearch = ({
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown
+                        placeholderText="YYYY-MM-DD"
                         showMonthYearPicker={
                           paramsSearch?.classification === 'month'
                         }
@@ -162,7 +164,12 @@ export const FilterSearch = ({
                   </>
                 )}
               <Button
-                onClick={() => handleChangeSearch('', 'submitSearch')}
+                onClick={() =>
+                  handleChangeSearch(
+                    !paramsSearch?.isSubmitSearch,
+                    'isSubmitSearch'
+                  )
+                }
                 customClass="h-32"
               >
                 검색

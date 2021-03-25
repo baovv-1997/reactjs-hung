@@ -6,7 +6,7 @@ import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { dataTableTestMockupStatisticsOfModule } from 'mockData/listCompany';
 import { listDataTable2 } from '../data';
-import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
@@ -15,10 +15,8 @@ const StatusByAreaCompany = () => {
   const totalPage = 100;
   const perPage2 = 6;
   const totalPage2 = 100;
-  const { isProcessing, listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
-  );
 
+  const { comList } = useSelector((state) => state?.commons);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -27,7 +25,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
+    company: (comList && comList[0]?.id) || null,
     PVVoltage: false,
     PVCurrent: false,
     outputVoltage: false,
@@ -48,7 +46,7 @@ const StatusByAreaCompany = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
+    dispatch(CommonAction.getCompanyList());
   }, []);
 
   // call api get list
@@ -144,14 +142,14 @@ const StatusByAreaCompany = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
+    <MainLayout isProcessing={false}>
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 운영 현황" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
+            listStatusCompanySelect={comList}
           />
           <div className="content-body-left border-pd-20">
             <div className="h-100">
