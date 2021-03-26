@@ -13,14 +13,13 @@ import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const perPage = 6;
-  const totalPage = 100;
   const { deviceList, comList } = useSelector((state) => state?.commons);
   const {
     isProcessing,
     dataBoxCard,
     dataChart,
     listDataTableRaw,
+    total,
   } = useSelector((state) => state?.testSMStatisticsGenerator);
   const { listInverter } = useSelector((state) => state?.account);
   const [randomNumber, setRandomNumber] = useState(null);
@@ -39,7 +38,9 @@ const OperationStatusPage = () => {
     endDate: null,
     vendorCompany: null,
     inverter: null,
-    company: (deviceList && deviceList[1].id) || null,
+    company:
+      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+      null,
     insolation: false,
     performance: false,
     generation: false,
@@ -79,6 +80,34 @@ const OperationStatusPage = () => {
     dispatch(CommonAction.getCompanyList());
   }, []);
 
+  let toDate =
+    (paramsSearch?.startDate &&
+      moment(paramsSearch?.startDate).format('YYYY')) ||
+    null;
+  let fromDate =
+    (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
+    null;
+
+  if (paramsSearch && paramsSearch.classification === 'year') {
+    toDate =
+      (paramsSearch?.startDate &&
+        moment(paramsSearch?.startDate).format('YYYY')) ||
+      null;
+    fromDate =
+      (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
+      null;
+  }
+  if (paramsSearch && paramsSearch.classification === 'month') {
+    toDate =
+      (paramsSearch?.startDate &&
+        moment(paramsSearch?.startDate).format('YYYY-MM')) ||
+      null;
+    fromDate =
+      (paramsSearch?.endDate &&
+        moment(paramsSearch?.endDate).format('YYYY-MM')) ||
+      null;
+  }
+
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
     (company) => {
@@ -105,14 +134,8 @@ const OperationStatusPage = () => {
     handleGetDataTrendChart({
       inverter_id: paramsSearch?.company,
       type: paramsSearch?.classification || null,
-      from:
-        (paramsSearch?.startDate &&
-          moment(paramsSearch?.startDate).format('YYYY-MM-DD')) ||
-        null,
-      to:
-        (paramsSearch?.endDate &&
-          moment(paramsSearch?.endDate).format('YYYY-MM-DD')) ||
-        null,
+      from: fromDate,
+      to: toDate,
       ds_id: paramsSearch?.inverter?.id,
     });
   }, [
@@ -134,14 +157,8 @@ const OperationStatusPage = () => {
     handleGetDataRawTable({
       inverter_id: paramsSearch?.company,
       type: paramsSearch?.classification || null,
-      from:
-        (paramsSearch?.startDate &&
-          moment(paramsSearch?.startDate).format('YYYY-MM-DD')) ||
-        null,
-      to:
-        (paramsSearch?.endDate &&
-          moment(paramsSearch?.endDate).format('YYYY-MM-DD')) ||
-        null,
+      from: fromDate,
+      to: toDate,
       per_page: paramsSearch?.pagination?.value,
       page: paramsSearch?.page,
     });
@@ -184,12 +201,15 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
+          startDate: null,
+          endDate: null,
         });
         break;
       case 'pagination':
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
+          page: 1,
         });
         break;
 
@@ -236,6 +256,7 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           isSubmitSearch: item,
+          page: 1,
         });
         break;
       default:
@@ -255,7 +276,6 @@ const OperationStatusPage = () => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            dataChart={dataChart}
             listStatusCompanySelect={listInverterTest}
           />
           <div className="content-body-left w-100 border-pd-20">
@@ -263,11 +283,12 @@ const OperationStatusPage = () => {
               dataBoxContent={dataBoxContent}
               dataTableStatisticsCompany={listDataTableRaw}
               handleDownloadTrend={handleDownloadTrend}
-              totalPage={totalPage}
+              totalPage={total}
               listStatusCompanySelect={comList && comList.slice(1)}
-              perPage={perPage}
+              perPage={paramsSearch?.pagination?.value}
               listInverter={listInverter}
               paramsSearch={paramsSearch}
+              dataChart={dataChart}
               handleChangeSearch={handleChangeSearch}
             />
           </div>

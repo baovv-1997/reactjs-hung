@@ -6,9 +6,13 @@ import {
   getListPosition,
   getListCompany,
   getCardMeasureMain,
+  setPositionId,
+  setCompanyId
 } from 'modules/main/redux';
 import { Card } from 'commons/components/Card';
 import { avenrageCard } from 'helpers';
+import { useHistory } from 'react-router-dom';
+import ROUTERS from 'constants/routers';
 import InfoReality from '../InfoReality';
 import TotalPower from '../TotalPower';
 import VitualData from '../VitualData';
@@ -16,15 +20,17 @@ import WeeklyElectric from '../WeeklyElectric';
 
 const MainPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isLoading, listPositions, cardPositionMain } = useSelector(
     (state) => state.main
   );
+
+  const { measure } = cardPositionMain;
 
   let avenrageCardMeasure;
   if (cardPositionMain.length) {
     avenrageCardMeasure = avenrageCard(cardPositionMain);
   }
-  console.log(avenrageCardMeasure, 'avenrageCardMeasure');
 
   useEffect(() => {
     dispatch(getListPosition());
@@ -46,34 +52,37 @@ const MainPage = () => {
         count.current = 1;
       }
       dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
-    }, 30000);
+    }, 5000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listPositions, cardPositionMain]);
 
   // when click title redirect dashboard area of area
   const handleTitleClick = (id) => {
-    console.log(id);
+    // console.log(id);
+    history.push(ROUTERS.DASHBOARD_COMPANY);
+    dispatch(setPositionId({ id }))
   };
 
   // when click logo redirect dashboard company of company
   const handleLogoClick = (id) => {
-    console.log(id);
+    history.push(ROUTERS.DASHBOARD_AREA);
+    dispatch(setCompanyId({ id }));
   };
 
   const renderPositionActive = cardPositionMain.length
     ? cardPositionMain?.map((posItem) => (
-        <img
-          key={posItem.position?.id}
-          src={IMAGES.icon_location_on}
-          alt=""
-          className="location"
-          style={{
-            top: `${posItem.position?.pos_map_y}px`,
-            left: `${posItem.position?.pos_map_x}px`,
-          }}
-        />
-      ))
+      <img
+        key={posItem.position?.id}
+        src={IMAGES.icon_location_on}
+        alt=""
+        className="location"
+        style={{
+          top: `${posItem.position?.pos_map_y}px`,
+          left: `${posItem.position?.pos_map_x}px`,
+        }}
+      />
+    ))
     : '';
 
   return (
@@ -92,7 +101,7 @@ const MainPage = () => {
             amountElectricMonth={avenrageCardMeasure?.card?.prod_inmonth}
             cumulativeElectric={avenrageCardMeasure?.card?.prod_sum}
           />
-          <WeeklyElectric />
+          <WeeklyElectric measure={measure} />
           <InfoReality
             outputVoltage={avenrageCardMeasure?.card?.output_voltage}
             outputCurrent={avenrageCardMeasure?.card?.output_current}

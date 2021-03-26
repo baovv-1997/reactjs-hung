@@ -37,6 +37,13 @@ export const FilterSearch = ({
     month: 'yyyy-MM',
     year: 'yyyy',
   };
+  const CONTRACT_FORMAT_DATE_TEXT = {
+    minute: 'YYYY-MM-DD',
+    hour: 'YYYY-MM-DD',
+    day: 'YYYY-MM-DD',
+    month: 'YYYY-MM',
+    year: 'YYYY',
+  };
 
   return (
     <div className="group-search">
@@ -131,7 +138,9 @@ export const FilterSearch = ({
                   dropdownMode="select"
                   showMonthYearPicker={paramsSearch?.classification === 'month'}
                   showYearPicker={paramsSearch?.classification === 'year'}
-                  placeholderText="YYYY-MM-DD"
+                  placeholderText={
+                    CONTRACT_FORMAT_DATE_TEXT[paramsSearch?.classification]
+                  }
                 />
                 <img src={IMAGES.iconCalendar} alt="icon-calendar" />
               </div>
@@ -152,7 +161,11 @@ export const FilterSearch = ({
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown
-                        placeholderText="YYYY-MM-DD"
+                        placeholderText={
+                          CONTRACT_FORMAT_DATE_TEXT[
+                            paramsSearch?.classification
+                          ]
+                        }
                         showMonthYearPicker={
                           paramsSearch?.classification === 'month'
                         }

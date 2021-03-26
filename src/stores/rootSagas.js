@@ -42,15 +42,31 @@ import getDevicesListSaga from 'commons/saga/getDevicesListSaga';
 import getCardInformationSaga from 'modules/testSolarMonitoringStatus/sagas/getCardInformationSaga';
 import getDataRawTableSaga from 'modules/testSolarMonitoringStatus/sagas/getDataRawTableSaga';
 import getDataTrendChartSagaSaga from 'modules/testSolarMonitoringStatus/sagas/getDataTrendChartSaga';
+import getCardMeasureAreaSaga from 'modules/main/saga/getCardMeasureAreaSaga';
+
 import getCardInformationStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getCardInformationSaga';
 import getDataTrendChartStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendChartSaga';
 import getDataRawTableGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendRawSaga';
+
+import getCardInformationStatisticsOperationGenerator from 'modules/testSolarMonitoringStatistics/sagas/operation/getCardInformationSaga';
+import getDataTrendChartStatisticsOperationSaga from 'modules/testSolarMonitoringStatistics/sagas/operation/getTrendChartSaga';
+import getDataRawTableOperationSaga from 'modules/testSolarMonitoringStatistics/sagas/operation/getTrendRawSaga';
 
 import getStatusGeneratorRawSaga from 'modules/statusCompany/sagas/getStatusGeneratorRawSaga';
 import getStatusGeneratorCardSaga from 'modules/statusCompany/sagas/getStatusGeneratorCardSaga';
 import getStatusGeneratorChartSaga from 'modules/statusCompany/sagas/getStatusGeneratorChartSaga';
 
 import getStatisticGeneratorRawDataSaga from 'modules/operationStatistics/saga/getStatisticGeneratorRawDataSaga';
+import getCardInformationTestMkSaga from 'modules/testMockupStatus/sagas/generator/getCardInformationSaga';
+import getDataRawTableTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataRawTableSaga';
+import getDataTrendChartTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataTrendChartSaga';
+
+import getCardInformationOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getCardInformationOperationSaga';
+
+import getDataRawTableTestOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataRawTableSaga';
+
+import getDataTrendChartOperationSagaSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataTrendChartSaga';
+import getDataRawTableMockupOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataRawTableMockupSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -85,27 +101,54 @@ export default function* RootSagas() {
     getCardMeasureSearchPositionSaga(),
     getCardMeasureSearchCompanySaga(),
     getTrendChartSaga(),
+    getCardMeasureAreaSaga(),
     getPosListSaga(),
     getCompanyListSaga(),
     getCardInfoSaga(),
     getListDeviceSaga(),
     getDevicesListSaga(),
 
-    // test monitoring
+    /* Test Solar Monitoring
+        + Status of generator
+    */
     getCardInformationSaga(),
     getDataRawTableSaga(),
     getDataTrendChartSagaSaga(),
+
+    /* Test Solar Monitoring
+        + Status of Operation
+    */
+    getCardInformationOperationSaga(),
+    getDataRawTableTestOperationSaga(),
+    getDataTrendChartOperationSagaSaga(),
+    getDataRawTableMockupOperationSaga(),
+
+    /* Test Solar Monitoring
+        + Statistics of Operation
+    */
+    getCardInformationStatisticsOperationGenerator(),
+    getDataTrendChartStatisticsOperationSaga(),
+    getDataRawTableOperationSaga(),
 
     // status generator company
     getStatusGeneratorRawSaga(),
     getStatusGeneratorChartSaga(),
     getStatusGeneratorCardSaga(),
-    // Statistics Generator test
+
+    /* Test Solar Monitoring
+        + Statistics of Generator
+    */
     getCardInformationStatisticsGeneratorSaga(),
     getDataTrendChartStatisticsGeneratorSaga(),
     getDataRawTableGeneratorSaga(),
 
     // Statistics generator
     getStatisticGeneratorRawDataSaga(),
+    /* Test mockup monitoring
+        + Status of Generator
+    */
+    getCardInformationTestMkSaga(),
+    getDataRawTableTestMkSaga(),
+    getDataTrendChartTestMkSaga(),
   ]);
 }

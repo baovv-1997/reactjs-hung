@@ -3,7 +3,7 @@ import { ROUTES, API } from '../../../apis';
 import * as CompanyAction from '../redux';
 
 // worker Saga: will be fired on SIGN_IN actions
-function* getDataTrendChartSaga(action) {
+function* getDataTrendChart(action) {
   try {
     const response = yield call(() =>
       API.get(
@@ -35,7 +35,7 @@ function* getDataTrendChartSaga(action) {
   Starts signupAccount on each dispatched `SIGN_IN` action.
 */
 function* getDataTrendChartSagaSaga() {
-  yield takeLatest(CompanyAction.getDataTrendChart, getDataTrendChartSaga);
+  yield takeLatest(CompanyAction.getDataTrendChart, getDataTrendChart);
 }
 
 export default getDataTrendChartSagaSaga;

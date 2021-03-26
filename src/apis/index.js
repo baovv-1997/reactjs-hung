@@ -34,13 +34,24 @@ export const ROUTES = {
   API_TEST_SOLAR_MONITORING_STATUS_RAW: `/data/test-solar-monitoring/status-generator/raw-data`,
   API_TEST_SOLAR_MONITORING_STATUS_TREND_CHART: `/data/test-solar-monitoring/status-generator/chart-data`,
 
-  API_TEST_SOLAR_MONITORING_STATISTICS_CARD: `/data/test-solar-monitoring/statistic/cards`,
-  API_TEST_SOLAR_MONITORING_STATISTICS_CHART: `/data/test-solar-monitoring/statistic/chart`,
-  API_TEST_SOLAR_MONITORING_STATISTICS_RAW: `/data/test-solar-monitoring/statistic/raw-measure`,
-
   // generator statistics
   GENERATOR_STATISTICS_RAW:
     '/data/solar-monitoring/statistic/generator/raw-measure',
+  API_TEST_SOLAR_MONITORING_STATUS_OPERATION_CARD: `/data/test-solar-monitoring/status-operation/status-cards`,
+  API_TEST_SOLAR_MONITORING_STATUS_OPERATION_RAW: `/data/test-solar-monitoring/status-operation/raw-data`,
+  API_TEST_SOLAR_MONITORING_STATUS_OPERATION_TREND_CHART: `/data/test-solar-monitoring/status-operation/chart-data`,
+
+  API_TEST_SOLAR_MONITORING_STATISTICS_CARD: `/data/test-solar-monitoring/statistic/generator/cards`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_CHART: `/data/test-solar-monitoring/statistic/generator/chart`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_RAW: `/data/test-solar-monitoring/statistic/generator/raw-measure`,
+
+  API_TEST_SOLAR_MONITORING_STATISTICS_OPERATION_CARD: `/data/test-solar-monitoring/statistic/operation/cards`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_OPERATION_CHART: `/data/test-solar-monitoring/statistic/operation/chart`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_OPERATION_RAW: `/data/test-solar-monitoring/statistic/generator/raw-measure`,
+
+  API_TEST_MOCKUP_STATISTICS_CARD: `/data/test-solar-monitoring/status-generator/status-cards`,
+  API_TEST_MOCKUP_STATISTICS_RAW: `/data/test-mockup/status-generator/raw-data`,
+  API_TEST_MOCKUP_STATISTICS_CHART: `/data/test-mockup/status-generator/chart-data`,
 };
 
 export const API = create({
