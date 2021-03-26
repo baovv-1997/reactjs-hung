@@ -20,6 +20,7 @@ const OperationStatusPage = () => {
     total,
     dataChartOperation,
     listDataTableRawOperation,
+    dataCardOperation,
   } = useSelector((state) => state?.testSMStatisticsGenerator);
   const { listInverter } = useSelector((state) => state?.account);
   const [randomNumber, setRandomNumber] = useState(null);
@@ -57,11 +58,21 @@ const OperationStatusPage = () => {
 
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
+
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    angleOfIncidence:
+      (dataCardOperation?.incidence_angle &&
+        dataCardOperation?.incidence_angle.toLocaleString('en')) ||
+      '0',
+    azimuth:
+      (dataCardOperation?.azimuth_angle &&
+        dataCardOperation?.azimuth_angle.toLocaleString('en')) ||
+      '0',
+    moduleOutput:
+      (dataCardOperation?.power &&
+        dataCardOperation?.power.toLocaleString('en')) ||
+      '0',
+    moduleColor: dataCardOperation?.color,
   };
 
   const dispatch = useDispatch();
@@ -184,7 +195,6 @@ const OperationStatusPage = () => {
     paramsSearch?.page2,
     paramsSearch?.company,
     optionFilters,
-    deviceList,
     randomNumber,
   ]);
 

@@ -11,7 +11,12 @@ const testSMStatisticsGeneratorSlide = createSlice({
       prod_month: 0,
       prod_sum: 0,
     },
-    dataCardOperation: {},
+    dataCardOperation: {
+      azimuth_angle: 0,
+      color: '',
+      incidence_angle: 0,
+      power: 0,
+    },
     dataChart: {
       dmRad: [],
       dmProd: [],

@@ -18,7 +18,6 @@ import GroupActionDownload from './GroupActionDownload';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -27,7 +26,7 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableBottom: Array<{
     id: number,
   }>,
 };
@@ -35,7 +34,6 @@ type Props = {
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
@@ -43,9 +41,8 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
+  dataTableBottom,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -99,7 +96,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headTestSolarMonitoringOperationStatus}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination">
           {totalPage > perPage && (
@@ -135,11 +132,11 @@ const ItemContentTab = ({
 
       <Table
         tableHeads={headTestMockupStatisticsOfModule}
-        tableBody={tableOperationStatusByAreaCompany}
-        // isShowId
+        tableBody={dataTableBottom}
+        isShowId
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

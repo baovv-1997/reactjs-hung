@@ -60,6 +60,13 @@ import getCardInformationTestMkSaga from 'modules/testMockupStatus/sagas/generat
 import getDataRawTableTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataRawTableSaga';
 import getDataTrendChartTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataTrendChartSaga';
 
+import getCardInformationOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getCardInformationOperationSaga';
+
+import getDataRawTableTestOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataRawTableSaga';
+
+import getDataTrendChartOperationSagaSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataTrendChartSaga';
+import getDataRawTableMockupOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataRawTableMockupSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -100,24 +107,43 @@ export default function* RootSagas() {
     getListDeviceSaga(),
     getDevicesListSaga(),
 
-    // test monitoring
+    /* Test Solar Monitoring
+        + Status of generator
+    */
     getCardInformationSaga(),
     getDataRawTableSaga(),
     getDataTrendChartSagaSaga(),
+
+    /* Test Solar Monitoring
+        + Status of Operation
+    */
+    getCardInformationOperationSaga(),
+    getDataRawTableTestOperationSaga(),
+    getDataTrendChartOperationSagaSaga(),
+    getDataRawTableMockupOperationSaga(),
+
+    /* Test Solar Monitoring
+        + Statistics of Operation
+    */
+    getCardInformationStatisticsOperationGenerator(),
+    getDataTrendChartStatisticsOperationSaga(),
+    getDataRawTableOperationSaga(),
 
     // status generator company
     getStatusGeneratorRawSaga(),
     getStatusGeneratorChartSaga(),
     getStatusGeneratorCardSaga(),
-    // Statistics Generator
+
+    /* Test Solar Monitoring
+        + Statistics of Generator
+    */
     getCardInformationStatisticsGeneratorSaga(),
     getDataTrendChartStatisticsGeneratorSaga(),
     getDataRawTableGeneratorSaga(),
 
-    getCardInformationStatisticsOperationGenerator(),
-    getDataTrendChartStatisticsOperationSaga(),
-    getDataRawTableOperationSaga(),
-    // test mockup monitoring
+    /* Test mockup monitoring
+        + Status of Generator
+    */
     getCardInformationTestMkSaga(),
     getDataRawTableTestMkSaga(),
     getDataTrendChartTestMkSaga(),
