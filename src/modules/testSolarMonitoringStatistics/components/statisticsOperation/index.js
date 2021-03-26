@@ -9,12 +9,14 @@ import { TIME_REQUEST } from 'constants/index';
 import * as SignInAction from 'modules/accounts/redux';
 import * as CommonAction from 'commons/redux';
 import * as ActionGenerator from '../../redux';
-import { getEventList, addEventFilter } from 'modules/operationStatus/redux';
+import { getEventList } from 'modules/operationStatus/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const { deviceList, comList } = useSelector((state) => state?.commons);
+  const { deviceList, comList, optionFilters } = useSelector(
+    (state) => state?.commons
+  );
   const {
     isProcessing,
     total,
@@ -26,7 +28,7 @@ const OperationStatusPage = () => {
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
-  const { optionFilters, eventList, totalEventPage } = useSelector(
+  const { eventList, totalEventPage } = useSelector(
     (state) => state?.operationStatus
   );
   const defaultOption = {
@@ -266,7 +268,7 @@ const OperationStatusPage = () => {
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
-        dispatch(addEventFilter(item));
+        dispatch(CommonAction.addEventFilter(item));
         setIsShowModalSorting(false);
         break;
       case 'classification':

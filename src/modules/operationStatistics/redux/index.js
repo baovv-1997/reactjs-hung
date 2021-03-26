@@ -6,6 +6,8 @@ const statisticsDevelopSlide = createSlice({
   initialState: {
     isLoading: false,
     total: 0,
+    rawData: [],
+    totalRawData: null,
   },
 
   reducers: {
@@ -13,11 +15,42 @@ const statisticsDevelopSlide = createSlice({
       state.type = action.type;
       state.isProcessing = true;
     },
+    getStatisticGeneratorRawData: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getStatisticGeneratorRawDataSuccess: (state, action) => {
+      const { data } = action.data;
+      state.type = action.type;
+      state.rawData = data;
+      state.totalRawData = action.data.total;
+    },
+    getStatisticGeneratorRawDataFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getStatisticGeneratorChartData: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getStatisticGeneratorChartDataSuccess: (state, action) => {
+      state.type = action.type;
+      state.chartData = action.data;
+    },
+    getStatisticGeneratorChartDataFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
   },
 });
 
 const { actions, reducer } = statisticsDevelopSlide;
 
-export const { getListStatisticsDevelop } = actions;
+export const {
+  getListStatisticsDevelop,
+  getStatisticGeneratorRawData,
+  getStatisticGeneratorRawDataSuccess,
+  getStatisticGeneratorRawDataFailed,
+} = actions;
 
 export default reducer;

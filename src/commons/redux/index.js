@@ -31,6 +31,8 @@ const initialState = {
   posList: [],
   comList: [],
   deviceList: [],
+  eventList: [],
+  optionFilters: [],
 };
 
 const commonSilice = createSlice({
@@ -50,9 +52,21 @@ const commonSilice = createSlice({
       state.isProcessing = true;
     },
     getPosListSuccess: (state, action) => {
+      const allOption = [
+        {
+          id: '',
+          value: '',
+          label: '전체',
+        },
+      ];
+
+      const posListFormat = action.data.map((pos) => ({
+        id: pos.id,
+        label: pos.pos_name,
+      }));
       state.type = action.type;
       state.isProcessing = false;
-      state.posList = action.data;
+      state.posList = [...allOption, ...posListFormat];
     },
     getPosListFailed: (state, action) => {
       state.type = action.type;
@@ -115,6 +129,65 @@ const commonSilice = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getEventList: (state, action) => {
+      // state.isProcessing = true;
+      state.type = action.type;
+    },
+
+    getEventListSuccess: (state, action) => {
+      // state.isProcessing = false;
+      state.type = action.type;
+      state.eventList = action.data;
+      state.totalEventPage = action?.total;
+      state.perpageEvent = action?.perPage;
+    },
+
+    getEventListFailed: (state, action) => {
+      // state.isProcessing = false;
+      state.type = action.type;
+    },
+    deleteEvent: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    deleteEventSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    deleteEventFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+
+    addNewEvent: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    addNewEventSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    addNewEventFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    updateEvent: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    updateEventSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    updateEventFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    addEventFilter: (state, action) => {
+      state.type = action.type;
+      state.optionFilters = action.payload;
+    },
   },
 });
 
@@ -132,6 +205,19 @@ export const {
   getListDevice,
   getListDeviceSuccess,
   getListDeviceFailed,
+  getEventList,
+  getEventListSuccess,
+  getEventListFailed,
+  deleteEvent,
+  deleteEventSuccess,
+  deleteEventFailed,
+  addNewEvent,
+  addNewEventSuccess,
+  addNewEventFailed,
+  updateEvent,
+  updateEventSuccess,
+  updateEventFailed,
+  addEventFilter,
 } = actions;
 
 export default reducer;

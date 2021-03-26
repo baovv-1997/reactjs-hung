@@ -62,7 +62,7 @@ const ItemContentTab = ({
   dataChart,
 }: Props) => {
   const history = useHistory();
-  console.log('activeTab', activeTab === id.toString());
+
   const dataLengthChart = [
     {
       id: 1,
@@ -132,7 +132,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId={false}
         />
         <div className="opacity d-block pagination mt-0 mb-3">
           {totalPage > perPage && (
@@ -182,11 +182,7 @@ const ItemContentTab = ({
         optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
-          }
-        >
+        <Button onClick={() => history.push(`${ROUTERS.EVENT}/register`)}>
           등록
         </Button>
       </div>

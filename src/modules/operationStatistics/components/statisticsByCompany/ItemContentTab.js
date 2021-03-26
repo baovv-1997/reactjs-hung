@@ -7,19 +7,21 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
+import { operator_event_filter } from 'constants/optionCheckbox';
+
+import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import {
-  headStatusCompany,
   headOperationStatusByAreaCompany,
+  statisticsOperatorCompany,
 } from '../constant';
-import { useHistory } from 'react-router-dom';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 import { FilterSearch } from '../FilterSearch';
 
 type Props = {
-  listMockupDataCompany: any,
+  rawData: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
@@ -44,10 +46,11 @@ type Props = {
     value: any,
     label: string,
   }>,
+  optionFilters: Array,
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  rawData,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
@@ -62,6 +65,7 @@ const ItemContentTab = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  optionFilters,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const history = useHistory();
@@ -127,8 +131,8 @@ const ItemContentTab = ({
       />
       <div>
         <Table
-          tableHeads={headStatusCompany}
-          tableBody={listMockupDataCompany}
+          tableHeads={statisticsOperatorCompany}
+          tableBody={rawData}
           // isShowId
         />
         <div className="opacity d-block pagination mt-0 mb-3">
@@ -175,6 +179,8 @@ const ItemContentTab = ({
           keyItem: 5,
         }}
         onClickRow={handleClickDetail}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
         <Button
