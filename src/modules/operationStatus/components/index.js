@@ -7,44 +7,42 @@ import moment from 'moment';
 import { TIME_REQUEST } from 'constants/index';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import { getCompanyList, getListDevice } from 'commons/redux';
+import {
+  getCompanyList,
+  getListDevice,
+  getEventList,
+  addEventFilter,
+} from 'commons/redux';
 
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
 
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
-import {
-  getEventList,
-  getDataChart,
-  getTrendChart,
-  addEventFilter,
-  getCardInfo,
-} from '../redux';
+import { getDataChart, getTrendChart, getCardInfo } from '../redux';
 
 import ItemContentTab from './ItemContentTab';
 
-const OperationStatusPage = () => {
+type Props = {
+  location: {
+    pathname: string,
+  },
+};
+const OperationStatusPage = ({ location }: Props) => {
   const history = useHistory();
 
-  const { listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
+  const { dataChart, rawData, totalRawData, cardInfo } = useSelector(
+    (state) => state.operationStatus
   );
-
+  console.log('cardInfo', cardInfo);
   const {
     eventList,
+    comList,
+    isProcessing,
+    deviceList,
     totalEventPage,
-    perpageEvent,
-    dataChart,
-    rawData,
-    totalRawData,
     optionFilters,
-    cardInfo,
-  } = useSelector((state) => state.operationStatus);
-
-  const { comList, isProcessing, deviceList } = useSelector(
-    (state) => state?.commons
-  );
+  } = useSelector((state) => state?.commons);
 
   const defaultOption = {
     id: 1,
@@ -53,7 +51,7 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
-    company: comList && comList[0] && comList[0].id,
+    company: comList && comList[1] && comList[1].id,
     page: 1,
     mockupType: null,
     parkingLot: null,
@@ -116,6 +114,8 @@ const OperationStatusPage = () => {
     },
     [dispatch]
   );
+
+  console.log('comList', comList);
 
   useEffect(() => {
     getCardInfoCallback({
@@ -199,6 +199,7 @@ const OperationStatusPage = () => {
         });
         break;
       case 'page2':
+        console.log('item', item);
         setParamsSearch({
           ...paramsSearch,
           page2: item,
@@ -273,8 +274,8 @@ const OperationStatusPage = () => {
     getEventListCallback({
       com_id: paramsSearch?.company,
       inverter_ids: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
+      page: paramsSearch?.page2,
+      per_page: paramsSearch?.pagination2?.value,
       type: optionFilters,
     });
   }, [
@@ -289,7 +290,10 @@ const OperationStatusPage = () => {
 
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
-    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
+    history.push({
+      pathname: `${ROUTERS.EVENT}/detail/${item.id}`,
+      state: { prevRoute: location.pathname },
+    });
   };
 
   const onSelect = (eventKey) => {
@@ -302,7 +306,6 @@ const OperationStatusPage = () => {
     console.log(name, 'download Trend');
   };
 
-  console.log('cardInfo', cardInfo);
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
@@ -312,7 +315,7 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
+            listStatusCompanySelect={comList.slice(1)}
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">
@@ -366,7 +369,7 @@ const OperationStatusPage = () => {
                             horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
                             gradientInsolation: `${rawItem?.dm_o_current}A`,
                             powerGeneration: `${rawItem?.dm_power}KW`,
-                            cumulativePowerGeneration: `${rawItem?.dm_performance_ratio}%`,
+                            cumulativePowerGeneration: `${rawItem?.dm_power_eff}%`,
                             rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
                           }))
                         }
@@ -376,12 +379,12 @@ const OperationStatusPage = () => {
                         totalPage={totalRawData}
                         perPage={paramsSearch?.pagination?.value}
                         totalPage2={totalEventPage}
-                        perPage2={perpageEvent}
+                        perPage2={paramsSearch?.pagination?.value}
                         tableOperationStatusByAreaCompany={
                           eventList &&
                           eventList.length > 0 &&
                           eventList.map((event) => ({
-                            id: event?.id,
+                            no: event?.no,
                             dateTime: moment(event?.created_at).format(
                               'YYYY-MM-DD hh:mm:ss'
                             ),
@@ -390,6 +393,7 @@ const OperationStatusPage = () => {
                             installationLocation: event?.pos_name,
                             eventName: event?.evt_type_label,
                             contents: event?.evt_content,
+                            id: event?.id,
                           }))
                         }
                         activeTab={menuTab}

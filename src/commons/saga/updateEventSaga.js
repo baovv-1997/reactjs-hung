@@ -3,10 +3,13 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { ROUTES, API } from 'apis';
 
 // worker Saga: will be fired on SEND_INVITE actions
-function* getEventList(action) {
+function* updateEvent(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.GET_EVENT_LIST, action.payload)
+      API.put(
+        ROUTES.UPDATE_EVENT(action.payload.id),
+        JSON.stringify(action.payload)
+      )
     );
 
     if (response.ok) {
@@ -14,25 +17,23 @@ function* getEventList(action) {
 
       // In case: request success
       yield put({
-        type: 'operationStatus/getEventListSuccess',
+        type: 'commons/updateEventSuccess',
         data,
-        total: response?.data?.total,
-        perPage: response?.data?.per_page,
       });
     } else {
       // In case: request failed
       yield put({
-        type: 'operationStatus/getEventListFailed',
+        type: 'commons/updateEventFailed',
       });
     }
   } catch (error) {
     // in case: server error
-    yield put({ type: 'operationStatus/getEventListFailed', error });
+    yield put({ type: 'commons/updateEventFailed', error });
   }
 }
 
-function* getEventListSaga() {
-  yield takeLatest('operationStatus/getEventList', getEventList);
+function* updateEventSaga() {
+  yield takeLatest('commons/updateEvent', updateEvent);
 }
 
-export default getEventListSaga;
+export default updateEventSaga;

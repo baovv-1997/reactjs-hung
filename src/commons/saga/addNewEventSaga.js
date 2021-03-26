@@ -14,7 +14,7 @@ function* addNewEvent(action) {
 
       // In case: request success
       yield put({
-        type: 'operationStatus/addNewEventSuccess',
+        type: 'commons/addNewEventSuccess',
         data,
         total: response?.data?.total,
         perPage: response?.data?.per_page,
@@ -22,17 +22,17 @@ function* addNewEvent(action) {
     } else {
       // In case: request failed
       yield put({
-        type: 'operationStatus/addNewEventFailed',
+        type: 'commons/addNewEventFailed',
       });
     }
   } catch (error) {
     // in case: server error
-    yield put({ type: 'operationStatus/addNewEventFailed', error });
+    yield put({ type: 'commons/addNewEventFailed', error });
   }
 }
 
 function* addNewEventSaga() {
-  yield takeLatest('operationStatus/addNewEvent', addNewEvent);
+  yield takeLatest('commons/addNewEvent', addNewEvent);
 }
 
 export default addNewEventSaga;

@@ -29,7 +29,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    posSelected: posList && posList[0] && posList[0].id,
+    posSelected: posList && posList[1] && posList[1].id,
     mockupType: null,
     parkingLot: null,
     PVVoltage: false,
@@ -217,10 +217,7 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={posList.map((pos) => ({
-              id: pos.id,
-              label: pos.pos_name,
-            }))}
+            listStatusCompanySelect={posList.slice(1)}
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">

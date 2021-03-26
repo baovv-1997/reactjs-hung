@@ -12,7 +12,6 @@ const ROUTERS = {
   STATUS_COMPANY_BY_AREA: `/status/company-by-area`,
   OPERATION_STATUS_BY_COMPANY: `/operation/status-by-company`,
   OPERATION_STATUS_BY_AREA: `/operation/status-by-area`,
-  OPERATION_STATUS_BY_COMPANY_DETAIL: `/operation/status-by-company/:id`,
   OPERATION_STATUS_BY_COMPANY_REGISTER: `/operation/status-by-company/register`,
   OPERATION_STATUS_BY_COMPANY_UPDATE: `/operation/status-by-company/update/:id`,
   TEST_DASHBOARD: `/test/dashboard`,
@@ -43,6 +42,10 @@ const ROUTERS = {
 
   TEST_SOLAR_STATISTICS_DEVELOP: `/test/solar-monitoring/statistics/development-statistics`,
   TEST_SOLAR_STATISTICS_OPERATION: `/test/solar-monitoring/statistics/operation-statistics`,
+  EVENT: '/event',
+  EVENT_DETAIL: `/event/detail/:id`,
+  EVENT_EDIT: `/event/edit/:id`,
+  EVENT_REGISTER: `/event/register`,
 };
 
 export default ROUTERS;

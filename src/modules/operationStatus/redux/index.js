@@ -10,7 +10,6 @@ const operationStatusSlide = createSlice({
     deviceList: [],
     dataChart: [],
     rawData: [],
-    optionFilters: [],
     cardInfo: {},
   },
 
@@ -39,48 +38,6 @@ const operationStatusSlide = createSlice({
     getListDeviceFailed: (state, action) => {
       // state.isProcessing = false;
       state.type = action.type;
-    },
-    getEventList: (state, action) => {
-      // state.isProcessing = true;
-      state.type = action.type;
-    },
-
-    getEventListSuccess: (state, action) => {
-      // state.isProcessing = false;
-      state.type = action.type;
-      state.eventList = action.data;
-      state.totalEventPage = action?.total;
-      state.perpageEvent = action?.perPage;
-    },
-
-    getEventListFailed: (state, action) => {
-      // state.isProcessing = false;
-      state.type = action.type;
-    },
-    deleteEvent: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
-    deleteEventSuccess: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
-    deleteEventFailed: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
-
-    addNewEvent: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
-    addNewEventSuccess: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
-    addNewEventFailed: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
     },
 
     updateEvent: (state, action) => {
@@ -128,11 +85,6 @@ const operationStatusSlide = createSlice({
       state.rawData = [];
     },
 
-    addEventFilter: (state, action) => {
-      state.type = action.type;
-      state.optionFilters = action.payload;
-    },
-
     getCardInfo: (state, action) => {
       state.type = action.type;
     },
@@ -171,7 +123,6 @@ export const {
   getTrendChart,
   getTrendChartSuccess,
   getTrendChartFailed,
-  addEventFilter,
   getCardInfo,
   getCardInfoSuccess,
   getCardInfoFailed,

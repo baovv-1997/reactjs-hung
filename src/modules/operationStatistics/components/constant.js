@@ -83,7 +83,63 @@ export const headOperationStatusByAreaCompany = [
   },
 ];
 
+export const statisticsOperatorCompany = [
+  {
+    id: 0,
+    name: 'No.',
+  },
+  {
+    id: 1,
+    name: '측정일시',
+  },
+  {
+    id: 2,
+    name: '설치업체',
+  },
+  {
+    id: 3,
+    name: '인버터 ID',
+  },
+  {
+    id: 4,
+    name: '인버터명',
+  },
+  {
+    id: 5,
+    name: '설치위치',
+  },
+  {
+    id: 6,
+    name: 'PV전압(V1)',
+  },
+  {
+    id: 7,
+    name: 'PV전류(l1)',
+  },
+  {
+    id: 8,
+    name: '출력전압(V2)',
+  },
+  {
+    id: 9,
+    name: '출력전류(l2)',
+  },
+  {
+    id: 10,
+    name: '출력(P)',
+  },
+  {
+    id: 11,
+    name: '역률',
+  },
+  {
+    id: 12,
+    name: '주파수',
+  },
+];
+
 export default {
   headStatusCompany,
   headOperationStatusByAreaCompany,
+  statisticsOperatorCompany,
 };

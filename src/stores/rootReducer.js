@@ -9,6 +9,7 @@ import solarDashboardSlice from 'modules/solarDashboard/redux';
 import statisticsDevelopSlide from 'modules/statisticsDevelop/redux';
 import testMockupStatusSlide from 'modules/testMockupStatus/redux';
 import commonSilice from 'commons/redux';
+import statisticsDevelopStatus from 'modules/operationStatistics/redux';
 
 import testSolarMonitoringStatusSlide from 'modules/testSolarMonitoringStatus/redux';
 import testSMStatisticsGeneratorSlide from 'modules/testSolarMonitoringStatistics/redux';
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   commons: commonSilice,
   testSolarMonitoringStatus: testSolarMonitoringStatusSlide,
   testSMStatisticsGenerator: testSMStatisticsGeneratorSlide,
+  generatorStatistics: statisticsDevelopStatus,
 });
 
 export default appReducer;

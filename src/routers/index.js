@@ -8,6 +8,9 @@ import Loading from 'commons/components/Loading';
 import { API } from '../apis';
 import PrivateRoute from './PrivateRoute';
 
+const eventDetail = lazy(() => import('commons/components/Event/Detail'));
+const eventEdit = lazy(() => import('commons/components/Event/Edit'));
+const EventRegister = lazy(() => import('commons/components/Event/Register'));
 // components
 const StatusCompany = lazy(() => import('modules/statusCompany/components'));
 const StatusCompanyByArea = lazy(() =>
@@ -19,17 +22,10 @@ const operationStatusByCompany = lazy(() =>
 const operationStatusByArea = lazy(() =>
   import('modules/operationStatus/components/statusByArea')
 );
-const operationStatusByCompanyDetail = lazy(() =>
-  import('modules/operationStatus/components/detail')
-);
 
-const operationStatusByCompanyRegister = lazy(() =>
-  import('modules/operationStatus/components/register')
-);
-
-const operationStatusByCompanyEdit = lazy(() =>
-  import('modules/operationStatus/components/edit')
-);
+// const operationStatusByCompanyEdit = lazy(() =>
+//   import('modules/operationStatus/components/edit')
+// );
 
 const statisticsDevelopByCompany = lazy(() =>
   import('modules/statisticsDevelop/components/statisticsByCompany')
@@ -177,6 +173,25 @@ const Router = () => {
             component={DeviceDetail}
             isAuthenticated={isAuthenticated}
           />
+
+          <PrivateRoute
+            exact
+            path={ROUTERS.EVENT_DETAIL}
+            component={eventDetail}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={ROUTERS.EVENT_EDIT}
+            component={eventEdit}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={ROUTERS.EVENT_REGISTER}
+            component={EventRegister}
+            isAuthenticated={isAuthenticated}
+          />
           <PrivateRoute
             exact
             path={ROUTERS.STATUS_COMPANY_BY_AREA}
@@ -189,24 +204,13 @@ const Router = () => {
             component={operationStatusByCompany}
             isAuthenticated={isAuthenticated}
           />
-          <PrivateRoute
-            exact
-            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER}
-            component={operationStatusByCompanyRegister}
-            isAuthenticated={isAuthenticated}
-          />
-          <PrivateRoute
-            exact
-            path={ROUTERS.OPERATION_STATUS_BY_COMPANY_DETAIL}
-            component={operationStatusByCompanyDetail}
-            isAuthenticated={isAuthenticated}
-          />
-          <PrivateRoute
+
+          {/* <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_COMPANY_EDIT}
             component={operationStatusByCompanyEdit}
             isAuthenticated={isAuthenticated}
-          />
+          /> */}
           <PrivateRoute
             exact
             path={ROUTERS.OPERATION_STATUS_BY_AREA}

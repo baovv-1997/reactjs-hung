@@ -14,9 +14,11 @@ import WeeklyElectric from '../../WeeklyElectric';
 
 const DashboardArea = () => {
   const dispatch = useDispatch();
-  const { isLoading, cardMeasureArea, listPositions } = useSelector((state) => state?.main);
+  const { isLoading, cardMeasureArea, listPositions } = useSelector(
+    (state) => state?.main
+  );
   const { totalPower, infoReality, vitualData } = mockDataMain;
-  const [bgImage, setBgImage] = useState(null);
+  const [setBgImage] = useState(null);
   const [positionName, setPositionName] = useState(null);
 
   useEffect(() => {
@@ -26,21 +28,28 @@ const DashboardArea = () => {
 
   const handleChangeSelect = (value) => {
     dispatch(getCardMeasureArea({ type: 'inverter', pos_id: value.id }));
-    const positionSelected = listPositions.filter(item => item.id === value.id);
+    const positionSelected = listPositions.filter(
+      (item) => item.id === value.id
+    );
     setBgImage(positionSelected[0]?.pos_map_path?.thumbnail);
     setPositionName(positionSelected[0]?.label);
-  }
+  };
 
   const handleLogoClick = (id) => {
     console.log('logoClick', id);
-  }
+  };
 
   console.log(cardMeasureArea, 'cardMeasureArea');
 
   return (
-    <MainLayout isSelect isProcessing={isLoading} handleChangeSelect={handleChangeSelect} >
-      <div className="dashboard-area"
-      //  style={{ backgroundImage: `url('${bgImage}')` }}
+    <MainLayout
+      isSelect
+      isProcessing={isLoading}
+      handleChangeSelect={handleChangeSelect}
+    >
+      <div
+        className="dashboard-area"
+        //  style={{ backgroundImage: `url('${bgImage}')` }}
       >
         {/* thong tin  */}
 

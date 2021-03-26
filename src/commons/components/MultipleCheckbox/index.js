@@ -21,7 +21,6 @@ export const MutipleCheckbox = ({
   optionDefault,
 }: Props) => {
   const [checkedItems, setCheckedItems] = useState(optionDefault);
-  console.log('optionDefault', optionDefault);
   const handleChange = (event) => {
     const { id } = event.target;
 
@@ -33,7 +32,7 @@ export const MutipleCheckbox = ({
       submitValue(checkedItems.filter((item) => item !== id));
     }
   };
-
+  console.log('checkedItems', checkedItems);
   return (
     <>
       <div>{label}</div>
