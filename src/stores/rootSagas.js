@@ -42,6 +42,7 @@ import getDevicesListSaga from 'commons/saga/getDevicesListSaga';
 import getCardInformationSaga from 'modules/testSolarMonitoringStatus/sagas/getCardInformationSaga';
 import getDataRawTableSaga from 'modules/testSolarMonitoringStatus/sagas/getDataRawTableSaga';
 import getDataTrendChartSagaSaga from 'modules/testSolarMonitoringStatus/sagas/getDataTrendChartSaga';
+import getCardMeasureAreaSaga from 'modules/main/saga/getCardMeasureAreaSaga';
 
 import getCardInformationStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getCardInformationSaga';
 import getDataTrendChartStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendChartSaga';
@@ -92,6 +93,7 @@ export default function* RootSagas() {
     getCardMeasureSearchPositionSaga(),
     getCardMeasureSearchCompanySaga(),
     getTrendChartSaga(),
+    getCardMeasureAreaSaga(),
     getPosListSaga(),
     getCompanyListSaga(),
     getCardInfoSaga(),

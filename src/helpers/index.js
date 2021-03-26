@@ -248,3 +248,76 @@ export const avenrageCard = (arr) => {
   };
   return avenrage;
 }
+
+// eslint-disable-next-line consistent-return
+export const setPositionCardMeasure = (index) => {
+  switch (index) {
+    case 0:
+      return {
+        top: 366,
+        left: 19,
+      }
+
+    case 1:
+      return {
+        top: 366,
+        left: 346,
+      }
+
+    case 2:
+      return {
+        top: 366,
+        left: 1020,
+      }
+
+    case 3:
+      return {
+        top: 9,
+        left: 1006,
+      }
+
+    case 4:
+      return {
+        top: 9,
+        left: 347,
+      }
+
+    case 5:
+      return {
+        top: 9,
+        left: 17,
+      }
+
+    case 6:
+      return {
+        top: 9,
+        left: 677,
+      }
+
+    case 7:
+      return {
+        top: 366,
+        left: 682,
+      }
+
+    case 8:
+      return {
+        top: 660,
+        left: 194,
+      }
+
+    case 9:
+      return {
+        top: 660,
+        left: 527,
+      }
+    case 10:
+      return {
+        top: 660,
+        left: 861,
+      }
+
+    default:
+      break;
+  }
+}

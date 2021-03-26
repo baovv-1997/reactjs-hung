@@ -12,6 +12,9 @@ const mainSlice = createSlice({
     optionsPosition: [],
     optionsCompany: [],
     cardPositionMain: [],
+    cardMeasureArea: [],
+    positionId: null,
+    companyId: null,
     type: '',
     key: '',
     page: 0,
@@ -64,6 +67,7 @@ const mainSlice = createSlice({
         key: 'posId',
         posX: item.pos_map_x,
         posY: item.pos_map_y,
+        pos_map_path: item.pos_map_path,
       }))
       state.listPositions = listPositions;
       state.isLoading = false;
@@ -171,6 +175,28 @@ const mainSlice = createSlice({
       state.type = action.type;
       state.isLoading = false;
     },
+    getCardMeasureArea: (state, action) => {
+      state.isLoading = true;
+      state.type = action.type;
+    },
+    getCardMeasureAreaSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.cardMeasureArea = data;
+      state.isLoading = false;
+    },
+    getCardMeasureAreaFailed: (state, action) => {
+      state.type = action.type;
+      state.isLoading = false;
+    },
+    setPositionId: (state, action) => {
+      state.type = action.type;
+      state.positionId = action.payload.id;
+    },
+    setCompanyId: (state, action) => {
+      state.type = action.type;
+      state.companyId = action.payload.id;
+    },
   },
 });
 
@@ -201,6 +227,11 @@ export const {
   getCardMeasureSearchCompany,
   getCardMeasureSearchCompanySuccess,
   getCardMeasureSearchCompanyFailed,
+  getCardMeasureArea,
+  getCardMeasureAreaSuccess,
+  getCardMeasureAreaFailed,
+  setPositionId,
+  setCompanyId
 } = actions;
 
 export default reducer;

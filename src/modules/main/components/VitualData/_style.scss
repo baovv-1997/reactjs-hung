@@ -31,19 +31,40 @@
     letter-spacing: pxToRem(-0.3);
   }
 
+  // &__param {
+  //   width: pxToRem(70);
+  //   height: pxToRem(70);
+  //   box-shadow: 0 pxToRem(3) pxToRem(6) 0 rgba(254, 86, 75, 0.24);
+  //   border: solid pxToRem(2) $bg-button-primary;
+  //   background-color: $white;
+  //   border-radius: 50%;
+
+  //   color: $bg-button-primary;
+
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+
   &__param {
     width: pxToRem(70);
     height: pxToRem(70);
-    box-shadow: 0 pxToRem(3) pxToRem(6) 0 rgba(254, 86, 75, 0.24);
-    border: solid pxToRem(2) $bg-button-primary;
-    background-color: $white;
-    border-radius: 50%;
-
     color: $bg-button-primary;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    img {
+      width: pxToRem(70);
+      height: pxToRem(70);
+      object-fit: contain;
+    }
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .color-orange {
+      color: $bg-color-year;
+    }
   }
 }
 .location {
