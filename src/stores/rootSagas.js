@@ -66,6 +66,10 @@ import getDataRawTableTestOperationSaga from 'modules/testSolarMonitoringStatus/
 import getDataTrendChartOperationSagaSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataTrendChartSaga';
 import getDataRawTableMockupOperationSaga from 'modules/testSolarMonitoringStatus/sagas/operation/getDataRawTableMockupSaga';
 
+import getCardTestMKStatusOperationSaga from 'modules/testMockupStatus/sagas/operation/getCardInformationSaga';
+import getDataTestMKRawTableOperationSaga from 'modules/testMockupStatus/sagas/operation/getDataRawTableSaga';
+import getDataTestMKChartStatusOperationSaga from 'modules/testMockupStatus/sagas/operation/getDataTrendChartSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -145,5 +149,12 @@ export default function* RootSagas() {
     getCardInformationTestMkSaga(),
     getDataRawTableTestMkSaga(),
     getDataTrendChartTestMkSaga(),
+
+    /* Test mockup monitoring
+        + Statistics of Generator
+    */
+    getCardTestMKStatusOperationSaga(),
+    getDataTestMKRawTableOperationSaga(),
+    getDataTestMKChartStatusOperationSaga(),
   ]);
 }

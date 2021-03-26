@@ -6,6 +6,16 @@ const testMockupStatusSlide = createSlice({
   initialState: {
     isLoading: false,
     total: 0,
+    dataCardOperation: {
+      azimuth_angle: 0,
+      color: '',
+      incidence_angle: 0,
+      power: 0,
+    },
+    dataBox: {},
+    listDataTableRaw: [],
+    dataChartOperation: {},
+    listDataTableRawOperation: [],
   },
 
   reducers: {
@@ -83,6 +93,87 @@ const testMockupStatusSlide = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getCardTestMKStatusOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getCardTestMKStatusOperationSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataCardOperation = data;
+    },
+    getCardTestMKStatusOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    getDataTestMKChartStatusOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataTestMKChartStatusOperationSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChartOperation = data;
+    },
+    getDataTestMKChartStatusOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChartOperation = {};
+    },
+
+    getDataTestMKRawTableOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataTestMKRawTableOperationSuccess: (state, action) => {
+      const { data, params } = action;
+      const listDataTableRaw =
+        data &&
+        data?.data.map((item, index) => ({
+          id: item.id,
+          rowId: `${
+            data?.total - (params?.page - 1) * params.per_page - index || ''
+          }`,
+          dm_datetime: item.dm_datetime || '',
+          com_name: item.com_name || '',
+          inverterId: item.ds_id || '',
+          inverterName: item.ds_name || '',
+          dm_pv_voltage:
+            item.dm_pv_voltage &&
+            `${item.dm_pv_voltage.toLocaleString('en') || 0}V`,
+          dm_pv_current:
+            item.dm_pv_current &&
+            `${item.dm_pv_current.toLocaleString('en') || 0}A`,
+          dm_o_voltage:
+            item?.dm_o_voltage && `${item?.dm_o_voltage.toLocaleString('en')}V`,
+          dm_o_current:
+            item.dm_o_current &&
+            `${item.dm_o_current.toLocaleString('en') || 0}A`,
+          dm_power:
+            item.dm_power && `${item.dm_power.toLocaleString('en') || 0}KW`,
+          dm_performance_ratio:
+            item.dm_performance_ratio &&
+            `${item.dm_performance_ratio.toLocaleString('en') || 0}%`,
+          dm_power_eff:
+            (item.dm_power_eff &&
+              `${item.dm_power_eff.toLocaleString('en') || 0}Hz`) ||
+            '0Hz',
+        }));
+      state.total = (data && data.total) || 0;
+      state.listDataTableRawOperation = listDataTableRaw;
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    getDataTestMKRawTableOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.total = 0;
+      state.listDataTableRawOperation = [];
+    },
   },
 });
 
@@ -100,6 +191,18 @@ export const {
   getDataTrendChartTestMk,
   getDataTrendChartTestMkSuccess,
   getDataTrendChartTestMkFailed,
+
+  getDataTestMKChartStatusOperation,
+  getDataTestMKChartStatusOperationSuccess,
+  getDataTestMKChartStatusOperationFailed,
+
+  getDataTestMKRawTableOperation,
+  getDataTestMKRawTableOperationSuccess,
+  getDataTestMKRawTableOperationFailed,
+
+  getCardTestMKStatusOperation,
+  getCardTestMKStatusOperationSuccess,
+  getCardTestMKStatusOperationFailed,
 } = actions;
 
 export default reducer;

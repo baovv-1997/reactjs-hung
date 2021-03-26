@@ -315,6 +315,7 @@ const OperationStatusPage = () => {
           ...paramsSearch,
           isSubmitSearch: item,
           page: 1,
+          page2: 1,
         });
         break;
       default:

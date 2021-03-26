@@ -13,14 +13,13 @@ import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
-import LineSeriesChart from '../chart';
+// import LineSeriesChart from '../chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -34,12 +33,12 @@ type Props = {
   }>,
   isShowModalSorting: boolean,
   handleClickDetail: Function,
+  dataChartOperation: Object,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
@@ -50,9 +49,9 @@ const ItemContentTab = ({
   tableOperationStatusByAreaCompany,
   isShowModalSorting,
   handleClickDetail,
+  dataChartOperation,
 }: Props) => {
   const history = useHistory();
-  console.log(dataContent, 'dataContent', headTestMockupOperationStatus);
   const dataLengthChart = [
     {
       id: 1,
@@ -84,9 +83,7 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">
-          <LineSeriesChart />
-        </div>
+        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
@@ -98,7 +95,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headTestMockupOperationStatus}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination">
           {totalPage > perPage && (
