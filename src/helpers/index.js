@@ -249,75 +249,72 @@ export const avenrageCard = (arr) => {
   return avenrage;
 }
 
-// export const randomNumber = (min, max) => {
-//   // eslint-disable-next-line no-param-reassign
-//   min = Math.ceil(min);
-//   // eslint-disable-next-line no-param-reassign
-//   max = Math.floor(max);
-//   return Math.floor(Math.random() * (max - min) + min);
-// }
-
 // eslint-disable-next-line consistent-return
 export const setPositionCardMeasure = (index) => {
   switch (index) {
     case 0:
       return {
-        top: 404,
-        left: 40,
+        top: 366,
+        left: 19,
       }
 
     case 1:
       return {
-        top: 385,
-        left: 380,
+        top: 366,
+        left: 346,
       }
 
     case 2:
       return {
-        top: 410,
+        top: 366,
         left: 1020,
       }
 
     case 3:
       return {
-        top: 15,
-        left: 1000,
+        top: 9,
+        left: 1006,
       }
 
     case 4:
       return {
-        top: 25,
-        left: 379,
+        top: 9,
+        left: 347,
       }
 
     case 5:
       return {
         top: 9,
-        left: 47,
+        left: 17,
       }
 
     case 6:
       return {
-        top: 25,
-        left: 688,
+        top: 9,
+        left: 677,
       }
 
     case 7:
       return {
-        top: 404,
-        left: 699,
+        top: 366,
+        left: 682,
       }
 
     case 8:
       return {
-        top: 725,
-        left: 379,
+        top: 660,
+        left: 194,
       }
 
     case 9:
       return {
-        top: 719,
-        left: 47,
+        top: 660,
+        left: 527,
+      }
+    case 10:
+      return {
+        top: 660,
+        left: 861,
       }
 
     default:

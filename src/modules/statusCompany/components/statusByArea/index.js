@@ -3,25 +3,29 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
+import moment from 'moment';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import {
-  listMockupDataStatusByCompany,
-  listParkingLot,
-  listMockupType,
-} from 'mockData/listCompany';
-import * as StatusCompanyAction from '../../redux';
-import ItemContentTab from './ItemContentTab';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import { getPosList, getCompanyList } from 'commons/redux';
+import { listParkingLot, listMockupType } from 'mockData/listCompany';
+import {
+  getStatusGeneratorRaw,
+  getStatusGeneratorChartData,
+  getStatusGeneratorCard,
+} from 'modules/statusCompany/redux';
+
+import ItemContentTab from './ItemContentTab';
 
 const StatusByAreaCompany = () => {
-  const perPage = 6;
-  const totalPage = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
-  const { isProcessing, listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
+  const [menuTab, setMenuTab] = useState('');
+
+  const { isProcessing, posList, comList } = useSelector(
+    (state) => state?.commons
+  );
+
+  const { totalRawData, rawData, cardInfo, chartData } = useSelector(
+    (state) => state.statusCompany
   );
   const defaultOption = {
     id: 1,
@@ -31,7 +35,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
+    posSelected: posList && posList[0] && posList[0].id,
     power: false,
     performance: false,
     insolation: false,
@@ -40,48 +44,99 @@ const StatusByAreaCompany = () => {
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
 
-  const powerData = {
-    type: 'power',
-    data: [
-      { title: '일일 평균 1시간 발전량', value: '60' },
-      { title: '일일발전량 달성율', value: '85.2' },
-    ],
-  };
-
-  const performanceData = {
-    type: 'temperature',
-    data: [
-      { title: '현재 모듈 온도', value: '30.8' },
-      { title: '최고 모듈 온도', value: '35.2' },
-    ],
-  };
-
-  const insolationData = {
-    type: 'insolation',
-    data: [
-      { title: '수평 일사량', value: '22' },
-      { title: '경사 일사량', value: '46' },
-    ],
-  };
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
-  }, []);
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-  }, [paramsSearch, dispatch]);
+  /**
+   * get position list list
+   */
+  const getPosListCallback = useCallback(() => {
+    dispatch(getPosList());
+  }, [dispatch]);
 
   useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    getPosListCallback();
+  }, [getPosListCallback]);
+
+  /**
+   * get company list list
+   */
+  const getCompanyListCallback = useCallback(
+    (params) => {
+      dispatch(getCompanyList(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getCompanyListCallback({
+      pos_id: paramsSearch?.posSelected,
+    });
+  }, [getCompanyListCallback, paramsSearch?.posSelected]);
+
+  /**
+   * get raw table data
+   */
+  const getRawDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatusGeneratorRaw(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getRawDataCallback({
+      com_id: menuTab,
+      pos_id: paramsSearch?.posSelected,
+      page: paramsSearch?.page,
+      per_page: paramsSearch?.pagination?.value,
+    });
+  }, [
+    getRawDataCallback,
+    paramsSearch?.posSelected,
+    menuTab,
+    paramsSearch?.pagination?.value,
+    paramsSearch?.page,
+  ]);
+
+  /**
+   * get status card info
+   */
+  const getStatusGeneratorCardInfo = useCallback(
+    (params) => {
+      dispatch(getStatusGeneratorCard(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatusGeneratorCardInfo({
+      pos_id: paramsSearch?.posSelected,
+      com_id: menuTab,
+    });
+  }, [getStatusGeneratorCardInfo, paramsSearch?.posSelected, menuTab]);
+
+  /**
+   * get chart data
+   */
+  const getChartDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatusGeneratorChartData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getChartDataCallback({
+      pos_id: paramsSearch?.posSelected,
+      com_id: menuTab,
+    });
+  }, [getChartDataCallback, paramsSearch?.posSelected, menuTab]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
           ...paramsSearch,
-          company: item.id,
+          posSelected: item.id,
         });
         break;
 
@@ -123,7 +178,7 @@ const StatusByAreaCompany = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    setParamsSearch({ ...defaultSearch });
   };
 
   const handleDownloadTrend = (name) => {
@@ -139,87 +194,106 @@ const StatusByAreaCompany = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
+            listStatusCompanySelect={posList.map((pos) => ({
+              id: pos.id,
+              label: pos.pos_name,
+            }))}
             listMockupType={listMockupType}
           />
           <div className="content-body-left">
             <div className="h-100">
               <Tabs
-                defaultActiveKey="bulk"
+                defaultActiveKey={
+                  comList && comList.length > 1
+                    ? ''
+                    : comList && comList[0] && comList[0].id
+                }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                <Tab
-                  eventKey="bulk"
-                  title={<div className="tab-name">전체</div>}
-                >
-                  <ItemContentTab
-                    listMockupDataCompany={listMockupDataStatusByCompany}
-                    powerData={powerData}
-                    dataContent={{}}
-                    handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
-                    performanceData={performanceData}
-                    insolationData={insolationData}
-                    paramsSearch={paramsSearch}
-                  />
-                </Tab>
-
-                <Tab
-                  eventKey="bulk1"
-                  title={
-                    <div className="tab-name">
-                      코에스 <span>인버터 ID</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    listMockupDataCompany={listMockupDataStatusByCompany}
-                    powerData={powerData}
-                    dataContent={{}}
-                    handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
-                    performanceData={performanceData}
-                    insolationData={insolationData}
-                    paramsSearch={paramsSearch}
-                  />
-                </Tab>
-
-                <Tab
-                  eventKey="bulk2"
-                  title={
-                    <div className="tab-name">
-                      에스케이솔라<span>인버터 ID</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    listMockupDataCompany={listMockupDataStatusByCompany}
-                    powerData={powerData}
-                    dataContent={{}}
-                    handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
-                    performanceData={performanceData}
-                    insolationData={insolationData}
-                    paramsSearch={paramsSearch}
-                  />
-                </Tab>
-
-                <div className="opacity d-block pagination">
-                  {totalPage > perPage && (
-                    <div className="wrapper-device__pagination mt-0">
-                      <Pagination
-                        activePage={paramsSearch?.page}
-                        itemsCountPerPage={perPage}
-                        totalItemsCount={totalPage}
-                        pageRangeDisplayed={5}
-                        onChange={(e) => handleChangeSearch(e, 'page')}
-                        itemClass="page-item"
-                        linkClass="page-link"
+                {comList &&
+                  comList.map((item) => (
+                    <Tab
+                      eventKey={item.id}
+                      title={<div className="tab-name">{item?.label}</div>}
+                    >
+                      <ItemContentTab
+                        chartData={chartData}
+                        rawData={
+                          rawData &&
+                          rawData.map((raw, index) => ({
+                            rowId:
+                              `${
+                                totalRawData -
+                                (paramsSearch?.page - 1) *
+                                  paramsSearch.pagination.value -
+                                index
+                              }` || '',
+                            dateTime: moment(raw.dm_datetime).format(
+                              'YYYY-MM-DD'
+                            ),
+                            inverterID: raw?.ds_id,
+                            installationLocation: raw?.pos_name,
+                            inverterName: raw?.ds_name,
+                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
+                            outsideTemperature: `${raw?.dm_pv_current}A`,
+                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
+                            gradientInsolation: `${raw?.dm_o_current}A`,
+                            powerGeneration: `${raw?.dm_power}KW`,
+                            cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
+                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                          }))
+                        }
+                        powerData={{
+                          type: 'power',
+                          data: [
+                            {
+                              title: '일일 평균 1시간 발전량',
+                              value: cardInfo?.avg_prod
+                                ? Math.round(cardInfo?.avg_prod * 100) / 100
+                                : '',
+                            },
+                            {
+                              title: '일일발전량 달성율',
+                              value: cardInfo?.prod_ratio
+                                ? Math.round(cardInfo?.prod_ratio * 100) / 100
+                                : '',
+                            },
+                          ],
+                        }}
+                        dataContent={{}}
+                        handleDownloadTrend={handleDownloadTrend}
+                        handleChangeSearch={handleChangeSearch}
+                        performanceData={{
+                          type: 'performance',
+                          data: [
+                            {
+                              title: '현재 모듈 온도',
+                              value: cardInfo?.module_temp,
+                            },
+                            {
+                              title: '최고 모듈 온도',
+                              value: cardInfo?.max_module_temp,
+                            },
+                          ],
+                        }}
+                        insolationData={{
+                          type: 'insolation',
+                          data: [
+                            {
+                              title: '수평 일사량',
+                              value: cardInfo?.current_rad,
+                            },
+                            { title: '경사 일사량', value: cardInfo?.max_rad },
+                          ],
+                        }}
+                        paramsSearch={paramsSearch}
+                        totalRawData={totalRawData}
+                        activeTab={menuTab}
+                        id={item?.id}
                       />
-                    </div>
-                  )}
-                </div>
+                    </Tab>
+                  ))}
               </Tabs>
             </div>
           </div>

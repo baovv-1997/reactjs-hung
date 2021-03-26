@@ -12,7 +12,6 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   dataTableStatisticsCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
@@ -29,11 +28,11 @@ type Props = {
     value: any,
     label: string,
   }>,
+  dataChart: Object,
 };
 
 const ItemContentTab = ({
   dataTableStatisticsCompany,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
@@ -42,8 +41,8 @@ const ItemContentTab = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  dataChart,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -92,7 +91,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headStatisticsCompany}
           tableBody={dataTableStatisticsCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination mt-0">
           {totalPage > perPage && (

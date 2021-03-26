@@ -28,6 +28,9 @@ const initialState = {
     name: '통합 대시보드',
     to: ROUTERS.ROOT,
   },
+  posList: [],
+  comList: [],
+  deviceList: [],
 };
 
 const commonSilice = createSlice({
@@ -42,11 +45,93 @@ const commonSilice = createSlice({
       state.type = action.type;
       state.subMenuClicking = action.payload;
     },
+    getPosList: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getPosListSuccess: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.posList = action.data;
+    },
+    getPosListFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    getCompanyList: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getCompanyListSuccess: (state, action) => {
+      const allOption = [
+        {
+          id: '',
+          value: '',
+          label: '전체',
+        },
+      ];
+      const listCompany =
+        action.data &&
+        action.data.map((item) => ({
+          ...item,
+          value: item.id,
+          label: item.com_name,
+        }));
+      state.type = action.type;
+      state.isProcessing = false;
+      state.comList = [...allOption, ...listCompany];
+    },
+    getCompanyListFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    getListDevice: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+
+    getListDeviceSuccess: (state, action) => {
+      const allOption = [
+        {
+          id: '',
+          value: '',
+          label: '전체',
+        },
+      ];
+
+      const deviceList =
+        action.data &&
+        action.data.map((item) => ({
+          ...item,
+          value: item.id,
+          label: item.ds_name,
+        }));
+      state.type = action.type;
+      state.isProcessing = false;
+      state.deviceList = [...allOption, ...deviceList];
+    },
+    getListDeviceFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
   },
 });
 
 const { actions, reducer } = commonSilice;
 
-export const { setMenuClicking, setNestSubClicking } = actions;
+export const {
+  setMenuClicking,
+  setNestSubClicking,
+  getPosList,
+  getPosListSuccess,
+  getPosListFailed,
+  getCompanyList,
+  getCompanyListSuccess,
+  getCompanyListFailed,
+  getListDevice,
+  getListDeviceSuccess,
+  getListDeviceFailed,
+} = actions;
 
 export default reducer;

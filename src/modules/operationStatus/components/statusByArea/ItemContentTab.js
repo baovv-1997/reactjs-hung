@@ -1,29 +1,39 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import LineSeriesChart from 'commons/components/LineChart';
 import { headStatusCompany } from '../constants';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
-  listMockupDataCompany: any,
+  rawData: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  activeTab: string,
+  id: number,
+  totalPage: number,
+  dataChart: Array,
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  rawData,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
+  activeTab,
+  id,
+  totalPage,
+  dataChart,
 }: Props) => {
   console.log(dataContent);
   const dataLengthChart = [
@@ -53,6 +63,8 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
+
+  console.log('totalPage', totalPage);
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -71,7 +83,16 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          {activeTab === id.toString() && (
+            <LineSeriesChart
+              width={1100}
+              height={450}
+              dataChart={dataChart}
+              activeTab={activeTab}
+            />
+          )}
+        </div>
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
@@ -79,12 +100,28 @@ const ItemContentTab = ({
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
+
       <div>
         <Table
           tableHeads={headStatusCompany}
-          tableBody={listMockupDataCompany}
+          tableBody={rawData}
           // isShowId
         />
+        <div className="opacity d-block pagination mt-0 mb-3">
+          {totalPage > paramsSearch?.pagination?.value && (
+            <div className="wrapper-device__pagination mt-0">
+              <Pagination
+                activePage={paramsSearch?.page}
+                itemsCountPerPage={paramsSearch?.pagination?.value}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={(e) => handleChangeSearch(e, 'page')}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

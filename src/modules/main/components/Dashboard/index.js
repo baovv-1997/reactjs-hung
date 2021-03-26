@@ -20,11 +20,12 @@ const MainPage = () => {
     (state) => state.main
   );
 
+  const { measure } = cardPositionMain;
+
   let avenrageCardMeasure;
   if (cardPositionMain.length) {
     avenrageCardMeasure = avenrageCard(cardPositionMain);
   }
-  console.log(avenrageCardMeasure, 'avenrageCardMeasure');
 
   useEffect(() => {
     dispatch(getListPosition());
@@ -63,17 +64,17 @@ const MainPage = () => {
 
   const renderPositionActive = cardPositionMain.length
     ? cardPositionMain?.map((posItem) => (
-        <img
-          key={posItem.position?.id}
-          src={IMAGES.icon_location_on}
-          alt=""
-          className="location"
-          style={{
-            top: `${posItem.position?.pos_map_y}px`,
-            left: `${posItem.position?.pos_map_x}px`,
-          }}
-        />
-      ))
+      <img
+        key={posItem.position?.id}
+        src={IMAGES.icon_location_on}
+        alt=""
+        className="location"
+        style={{
+          top: `${posItem.position?.pos_map_y}px`,
+          left: `${posItem.position?.pos_map_x}px`,
+        }}
+      />
+    ))
     : '';
 
   return (
@@ -92,7 +93,7 @@ const MainPage = () => {
             amountElectricMonth={avenrageCardMeasure?.card?.prod_inmonth}
             cumulativeElectric={avenrageCardMeasure?.card?.prod_sum}
           />
-          <WeeklyElectric />
+          <WeeklyElectric measure={measure} />
           <InfoReality
             outputVoltage={avenrageCardMeasure?.card?.output_voltage}
             outputCurrent={avenrageCardMeasure?.card?.output_current}

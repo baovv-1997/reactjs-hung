@@ -55,7 +55,7 @@ const Submenu = ({
           key={item.id}
         >
           <Link
-            to={item?.to}
+            to={item?.to || '#'}
             className={`item__link item-link-nest-sub ${
               activeNestItem ? 'active-link' : ''
             }`}
@@ -79,7 +79,7 @@ const Submenu = ({
       onKeyPress={() => {}}
     >
       <Link
-        to={to}
+        to={to || '#'}
         className={`item__link ${
           isActiveNestSub ? 'active' : ''
         } item-link-sub ${isActiveNestSub && !sub ? 'active-link' : ''}`}

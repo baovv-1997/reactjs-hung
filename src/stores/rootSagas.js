@@ -34,11 +34,31 @@ import deleteAccountSaga from 'modules/accounts/sagas/deleteAccountSaga';
 import getCardMeasureSearchPositionSaga from 'modules/main/saga/getCardMeasureSearchPositionSaga';
 import getCardMeasureSearchCompanySaga from 'modules/main/saga/getCardMeasureSearchCompanySaga';
 import getTrendChartSaga from 'modules/operationStatus/saga/getTrendChartSaga';
+import getPosListSaga from 'commons/saga/getPosListSaga';
+import getCompanyListSaga from 'commons/saga/getCompanyListSaga';
+import getCardInfoSaga from 'modules/operationStatus/saga/getCardInfoSaga';
+import getDevicesListSaga from 'commons/saga/getDevicesListSaga';
 
 import getCardInformationSaga from 'modules/testSolarMonitoringStatus/sagas/getCardInformationSaga';
 import getDataRawTableSaga from 'modules/testSolarMonitoringStatus/sagas/getDataRawTableSaga';
 import getDataTrendChartSagaSaga from 'modules/testSolarMonitoringStatus/sagas/getDataTrendChartSaga';
 import getCardMeasureAreaSaga from 'modules/main/saga/getCardMeasureAreaSaga';
+
+import getCardInformationStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getCardInformationSaga';
+import getDataTrendChartStatisticsGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendChartSaga';
+import getDataRawTableGeneratorSaga from 'modules/testSolarMonitoringStatistics/sagas/generator/getTrendRawSaga';
+
+import getCardInformationStatisticsOperationGenerator from 'modules/testSolarMonitoringStatistics/sagas/operation/getCardInformationSaga';
+import getDataTrendChartStatisticsOperationSaga from 'modules/testSolarMonitoringStatistics/sagas/operation/getTrendChartSaga';
+import getDataRawTableOperationSaga from 'modules/testSolarMonitoringStatistics/sagas/operation/getTrendRawSaga';
+
+import getStatusGeneratorRawSaga from 'modules/statusCompany/sagas/getStatusGeneratorRawSaga';
+import getStatusGeneratorCardSaga from 'modules/statusCompany/sagas/getStatusGeneratorCardSaga';
+import getStatusGeneratorChartSaga from 'modules/statusCompany/sagas/getStatusGeneratorChartSaga';
+
+import getCardInformationTestMkSaga from 'modules/testMockupStatus/sagas/generator/getCardInformationSaga';
+import getDataRawTableTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataRawTableSaga';
+import getDataTrendChartTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataTrendChartSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -74,10 +94,32 @@ export default function* RootSagas() {
     getCardMeasureSearchCompanySaga(),
     getTrendChartSaga(),
     getCardMeasureAreaSaga(),
+    getPosListSaga(),
+    getCompanyListSaga(),
+    getCardInfoSaga(),
+    getListDeviceSaga(),
+    getDevicesListSaga(),
 
     // test monitoring
     getCardInformationSaga(),
     getDataRawTableSaga(),
     getDataTrendChartSagaSaga(),
+
+    // status generator company
+    getStatusGeneratorRawSaga(),
+    getStatusGeneratorChartSaga(),
+    getStatusGeneratorCardSaga(),
+    // Statistics Generator
+    getCardInformationStatisticsGeneratorSaga(),
+    getDataTrendChartStatisticsGeneratorSaga(),
+    getDataRawTableGeneratorSaga(),
+
+    getCardInformationStatisticsOperationGenerator(),
+    getDataTrendChartStatisticsOperationSaga(),
+    getDataRawTableOperationSaga(),
+    // test mockup monitoring
+    getCardInformationTestMkSaga(),
+    getDataRawTableTestMkSaga(),
+    getDataTrendChartTestMkSaga(),
   ]);
 }

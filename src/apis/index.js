@@ -17,18 +17,34 @@ export const ROUTES = {
   ACCOUNTS: '/account',
   UPDATE_ACCOUNT: (id) => `account/${id}`,
   GET_DASHBOARD_TEST_MOCKUP: `/data/test-mockup/cards`,
-  GET_DASHBOARD_TEST_SOLAR: `data/test-solar-monitoring/cards`,
-  GET_DASHBOARD: `data/solar-monitoring/cards`,
+  GET_DASHBOARD_TEST_SOLAR: `/data/test-solar-monitoring/cards`,
+  GET_DASHBOARD: `/data/solar-monitoring/cards`,
   GET_EVENT_LIST: '/event',
   DELETE_EVENT: (id) => `/event/${id}`,
   UPDATE_EVENT: (id) => `/event/${id}`,
+  STATUS_OPERATOR_CHART: `/data/solar-monitoring/status-operation/chart-data`,
+  STATUS_OPERATOR_TREND_CHART: `/data/solar-monitoring/status-operation/raw-data`,
+  STATUS_OPERATOR_CARD_INFOR: `/data/solar-monitoring/status-operation/status-cards`,
   STATUS_GENERATOR_CHART: `/data/solar-monitoring/status-generator/chart-data`,
-  STATUS_GENERATOR_TREND_CHART: `data/solar-monitoring/status-generator/raw-data`,
+  STATUS_GENERATOR_TREND_CHART: `/data/solar-monitoring/status-generator/raw-data`,
+  STATUS_GENERATOR_CARD_INFO: `/data/solar-monitoring/status-generator/status-cards`,
 
   //  Test solar monitoring
   API_TEST_SOLAR_MONITORING_STATUS_CARD: `/data/test-solar-monitoring/status-generator/status-cards`,
   API_TEST_SOLAR_MONITORING_STATUS_RAW: `/data/test-solar-monitoring/status-generator/raw-data`,
   API_TEST_SOLAR_MONITORING_STATUS_TREND_CHART: `/data/test-solar-monitoring/status-generator/chart-data`,
+
+  API_TEST_SOLAR_MONITORING_STATISTICS_CARD: `/data/test-solar-monitoring/statistic/cards`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_CHART: `/data/test-solar-monitoring/statistic/chart`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_RAW: `/data/test-solar-monitoring/statistic/raw-measure`,
+
+  API_TEST_SOLAR_MONITORING_STATISTICS_OPERATION_CARD: `/data/test-solar-monitoring/statistic/operation/cards`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_OPERATION_CHART: `/data/test-solar-monitoring/statistic/operation/chart`,
+  API_TEST_SOLAR_MONITORING_STATISTICS_OPERATION_RAW: `/data/test-solar-monitoring/statistic/raw-measure`,
+
+  API_TEST_MOCKUP_STATISTICS_CARD: `/data/test-solar-monitoring/status-generator/status-cards`,
+  API_TEST_MOCKUP_STATISTICS_RAW: `/data/test-mockup/status-generator/raw-data`,
+  API_TEST_MOCKUP_STATISTICS_CHART: `/data/test-mockup/status-generator/chart-data`,
 };
 
 export const API = create({
