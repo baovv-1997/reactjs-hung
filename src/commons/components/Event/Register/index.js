@@ -14,25 +14,16 @@ import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
-import { getEventList, updateEvent } from '../redux';
-type Props = {
-  match: {
-    params: {
-      id: any,
-    },
-  },
-};
+import { addNewEvent } from 'commons/redux';
 
-const StatusByAreaCompanyEdit = ({ match }: Props) => {
+const EventRegister = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
 
-  const { eventList, isProcessing, type } = useSelector(
-    (state) => state.operationStatus
-  );
+  const { isProcessing, type } = useSelector((state) => state.commons);
 
   const [modalConform, setModalConform] = useState({
     isShow: false,
@@ -40,13 +31,12 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
   });
 
   const [dataSubmit, setDataSubmit] = useState({
-    typeEvent: eventList,
-    content: '월 정기 설비 진행',
+    typeEvent: '0',
+    content: '',
     company: null,
     area: null,
     inverter: null,
   });
-
   const [error, setError] = useState({
     content: '',
     company: '',
@@ -60,9 +50,27 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
     // eslint-disable-next-line
   }, []);
 
-  const { typeEvent, content, company, area, inverter } = dataSubmit;
-  const { id } = match.params;
+  useEffect(() => {
+    dispatch(
+      SignInAction.getListInverter({
+        per_page: 100,
+        com_id: dataSubmit?.company?.value,
+        pos_id: dataSubmit?.area?.value,
+      })
+    );
+  }, [dataSubmit?.company, dataSubmit?.area]);
 
+  useEffect(() => {
+    switch (type) {
+      case 'commons/addNewEventSuccess':
+        history.go(-1);
+        break;
+      default:
+        break;
+    }
+  }, [type]);
+
+  const { typeEvent, content, company, area, inverter } = dataSubmit;
   const handleSubmit = () => {
     let validation = {};
     const rules = {
@@ -79,43 +87,25 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
       inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
-    if (Object.keys(validation).length > 0) {
-      setError(validation);
-      return;
-    }
 
     setModalConform({
       ...modalConform,
       isShow: false,
     });
 
+    if (Object.keys(validation).length > 0) {
+      setError(validation);
+      return;
+    }
+    // Call api register event
     dispatch(
-      updateEvent({
-        id,
+      addNewEvent({
         type: dataSubmit?.typeEvent,
         content: dataSubmit?.content,
         inverter_id: dataSubmit?.inverter?.value,
       })
     );
   };
-
-  useEffect(() => {
-    switch (type) {
-      case 'operationStatus/updateEventSuccess':
-        history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
-        break;
-      default:
-        break;
-    }
-  }, [type]);
-
-  useEffect(() => {
-    dispatch(
-      getEventList({
-        id,
-      })
-    );
-  }, []);
 
   const handleChange = (value, name) => {
     switch (name) {
@@ -129,12 +119,7 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
           company: value,
           inverter: '',
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: value && value.value,
-          })
-        );
+
         break;
       case 'area':
         setDataSubmit({
@@ -146,13 +131,7 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
           ...error,
           area: '',
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: company && company.value,
-            pos_id: value && value.value,
-          })
-        );
+
         break;
       case 'inverter':
         setDataSubmit({
@@ -162,6 +141,12 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
         setError({
           ...error,
           inverter: '',
+        });
+        break;
+      case 'content':
+        setDataSubmit({
+          ...dataSubmit,
+          content: value,
         });
         break;
       default:
@@ -176,26 +161,6 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
         break;
     }
   };
-
-  useEffect(() => {
-    setDataSubmit({
-      ...dataSubmit,
-      typeEvent: eventList?.evt_type,
-      content: eventList?.evt_content,
-      company: {
-        label: eventList?.com_name,
-        value: eventList?.com_id,
-      },
-      area: {
-        label: eventList?.pos_name,
-        value: eventList?.pos_id,
-      },
-      inverter: {
-        label: eventList?.ds_name,
-        value: eventList?.ds_id,
-      },
-    });
-  }, [eventList]);
 
   return (
     <MainLayout isProcessing={isProcessing}>
@@ -327,12 +292,12 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
             isShow: false,
           })
         }
-        handleClose={() =>
+        handleClose={() => {
           setModalConform({
             ...modalConform,
             isShow: false,
-          })
-        }
+          });
+        }}
         textBtnLeft="확인"
         textBtnRight="취소"
         isShowTwoBtn
@@ -345,4 +310,4 @@ const StatusByAreaCompanyEdit = ({ match }: Props) => {
   );
 };
 
-export default StatusByAreaCompanyEdit;
+export default EventRegister;

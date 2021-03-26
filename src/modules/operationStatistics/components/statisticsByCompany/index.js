@@ -1,35 +1,49 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
+import moment from 'moment';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-
 import {
-  listMockupType,
-  listMockupDataCompany,
-  tableOperationStatusByAreaCompany,
-  listParkingLot,
-} from 'mockData/listCompany';
-import * as StatusCompanyAction from 'modules/statusCompany/redux';
+  getCompanyList,
+  getListDevice,
+  getEventList,
+  addEventFilter,
+  getPosList,
+} from 'commons/redux';
+import { listMockupType, listParkingLot } from 'mockData/listCompany';
 import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
+import { getStatisticGeneratorRawData } from '../../redux';
 
-const OperationStatusPage = () => {
+type Props = {
+  location: {
+    pathname: string,
+  },
+};
+const OperatorStatisticCompany = ({ location }: Props) => {
   const history = useHistory();
   const perPage = 6;
   const totalPage = 100;
-  const perPage2 = 6;
-  const totalPage2 = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
+  const [menuTab, setMenuTab] = useState('');
   console.log(menuTab, 'menuTab');
-  const { isProcessing, listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
+  const {
+    comList,
+    isProcessing,
+    deviceList,
+    optionFilters,
+    eventList,
+    totalEventPage,
+    posList,
+  } = useSelector((state) => state?.commons);
+  const { rawData, totalRawData } = useSelector(
+    (state) => state.generatorStatistics
   );
   const { listInverter } = useSelector((state) => state?.account);
   const defaultOption = {
@@ -40,7 +54,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
+    company: comList && comList[1] && comList[1].id,
     mockupType: null,
     parkingLot: null,
     page2: 1,
@@ -68,20 +82,99 @@ const OperationStatusPage = () => {
   };
 
   const dispatch = useDispatch();
+
+  /**
+   * get company list
+   */
+  const getListCompanyCallback = useCallback(() => {
+    dispatch(getCompanyList());
+  }, [dispatch]);
+
   useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
-  }, []);
+    getListCompanyCallback();
+  }, [getListCompanyCallback]);
 
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    //  Call api
-  }, [paramsSearch, dispatch]);
+  /**
+   * get company list
+   */
+  const getPosListCallback = useCallback(
+    (params) => {
+      dispatch(getPosList(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    getPosListCallback({
+      id: paramsSearch?.company,
+    });
+  }, [getPosListCallback, paramsSearch?.company]);
 
-  // console.log(type, 'type', isProcessing);
+  /**
+   * get Device list
+   */
+  const getDevicesCallback = useCallback(
+    (params) => {
+      dispatch(getListDevice(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getDevicesCallback({ com_id: paramsSearch?.company });
+  }, [getDevicesCallback, paramsSearch?.company]);
+
+  /**
+   * get raw data list
+   */
+  const getStatisticGeneratorRawDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticGeneratorRawData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatisticGeneratorRawDataCallback({
+      com_id: paramsSearch?.company,
+      inverter_ids: menuTab,
+      page: paramsSearch?.page,
+      per_page: paramsSearch?.pagination?.value,
+    });
+  }, [
+    getStatisticGeneratorRawDataCallback,
+    paramsSearch?.company,
+    menuTab,
+    paramsSearch?.pagination,
+  ]);
+
+  /**
+   * get Event List data
+   */
+  const getEventListCallback = useCallback(
+    (params) => {
+      dispatch(getEventList(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getEventListCallback({
+      com_id: paramsSearch?.company,
+      inverter_ids: menuTab,
+      page: paramsSearch?.page2,
+      per_page: paramsSearch?.pagination2?.value,
+      type: optionFilters,
+    });
+  }, [
+    menuTab,
+    paramsSearch?.company,
+    getEventListCallback,
+    paramsSearch?.pagination2,
+    paramsSearch?.page2,
+    optionFilters,
+  ]);
+
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -160,7 +253,7 @@ const OperationStatusPage = () => {
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
-        console.log(item, 'optionCheck', name);
+        dispatch(addEventFilter(item));
         setIsShowModalSorting(false);
         break;
       case 'classification':
@@ -205,10 +298,14 @@ const OperationStatusPage = () => {
         break;
     }
   };
+  console.log('paramsSearch', paramsSearch);
 
-  //  click vào table bên dưới đến trang chi tiết
+  // click to event detail
   const handleClickDetail = (item) => {
-    history.push(`${ROUTERS.OPERATION_STATUS_BY_COMPANY}/${item.id}`);
+    history.push({
+      pathname: `${ROUTERS.EVENT}/detail/${item.id}`,
+      state: { prevRoute: location.pathname },
+    });
   };
 
   const onSelect = (eventKey) => {
@@ -230,100 +327,93 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
+            listStatusCompanySelect={comList.slice(1)}
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey="all"
+                defaultActiveKey={
+                  deviceList && deviceList.length > 1
+                    ? ''
+                    : deviceList && deviceList[0] && deviceList[0].id
+                }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                <Tab
-                  eventKey="all"
-                  title={
-                    <div className="tab-name">
-                      아반시스코리아<span>전체</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
-                    }
-                    isShowModalSorting={isShowModalSorting}
-                    paramsSearch={paramsSearch}
-                    listInverter={listInverter}
-                    handleClickDetail={handleClickDetail}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="coes"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    listInverter={listInverter}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
-                    }
-                    isShowModalSorting={isShowModalSorting}
-                    paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="SK-Solar"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID<span>본관 동측</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    listInverter={listInverter}
-                    tableOperationStatusByAreaCompany={
-                      tableOperationStatusByAreaCompany
-                    }
-                    isShowModalSorting={isShowModalSorting}
-                    paramsSearch={paramsSearch}
-                    handleClickDetail={handleClickDetail}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
+                {posList &&
+                  posList.map((pos) => (
+                    <Tab
+                      eventKey={pos.id}
+                      title={
+                        <div className="tab-name">
+                          {pos?.label}
+                          {pos?.label !== '전체' && <span>{pos?.id}</span>}
+                        </div>
+                      }
+                    >
+                      <ItemContentTab
+                        dataBoxContent={dataBoxContent}
+                        rawData={
+                          rawData &&
+                          rawData.map((raw, index) => ({
+                            rowId:
+                              `${
+                                totalRawData -
+                                (paramsSearch?.page - 1) *
+                                  paramsSearch.pagination.value -
+                                index
+                              }` || '',
+                            dateTime: moment(raw.dm_datetime).format(
+                              'YYYY-MM-DD hh:mm:ss'
+                            ),
+                            companyName: raw?.com_name || '',
+                            inverterID: raw?.ds_id || '',
+                            inverterName: raw?.ds_name || '',
+                            installationLocation: raw?.pos_name || '',
+                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
+                            outsideTemperature: `${raw?.dm_pv_current}A`,
+                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
+                            gradientInsolation: `${raw?.dm_o_current}A`,
+                            powerGeneration: `${raw?.dm_power}KW`,
+                            cumulativePowerGeneration: `${
+                              raw?.dm_power_eff ? raw?.dm_power_eff : 0
+                            }%`,
+                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                          }))
+                        }
+                        handleDownloadTrend={handleDownloadTrend}
+                        dataContent={{}}
+                        totalPage={totalPage}
+                        perPage={perPage}
+                        totalPage2={totalEventPage}
+                        perPage2={paramsSearch?.pagination2?.value}
+                        tableOperationStatusByAreaCompany={
+                          eventList &&
+                          eventList.length > 0 &&
+                          eventList.map((event) => ({
+                            no: event?.no,
+                            dateTime: moment(event?.created_at).format(
+                              'YYYY-MM-DD hh:mm:ss'
+                            ),
+                            installer: event?.com_name,
+                            inverterID: event?.username,
+                            installationLocation: event?.pos_name,
+                            eventName: event?.evt_type_label,
+                            contents: event?.evt_content,
+                            id: event?.id,
+                          }))
+                        }
+                        isShowModalSorting={isShowModalSorting}
+                        paramsSearch={paramsSearch}
+                        listInverter={listInverter}
+                        handleClickDetail={handleClickDetail}
+                        handleChangeSearch={handleChangeSearch}
+                        optionFilters={optionFilters}
+                        // listStatusCompanySelect={listStatusCompanySelect}
+                      />
+                    </Tab>
+                  ))}
               </Tabs>
             </div>
           </div>
@@ -333,4 +423,4 @@ const OperationStatusPage = () => {
   );
 };
 
-export default OperationStatusPage;
+export default OperatorStatisticCompany;

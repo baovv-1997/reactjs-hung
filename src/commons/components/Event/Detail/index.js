@@ -11,7 +11,7 @@ import ModalPopup from 'commons/components/Modal';
 import Button from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
-import { getEventList, deleteEvent } from '../redux';
+import { getEventList, deleteEvent } from 'commons/redux';
 
 type Props = {
   match: {
@@ -19,27 +19,30 @@ type Props = {
       id: any,
     },
   },
+  location: {
+    pathname: string,
+    state: {
+      prevRoute: string,
+    },
+  },
 };
 
-const StatusByAreaCompanyDetail = ({ match }: Props) => {
+const EventDetail = ({ match, location }: Props) => {
   const dispatch = useDispatch();
 
   const { eventList, isProcessing, type } = useSelector(
-    (state) => state.operationStatus
+    (state) => state.commons
   );
 
   const userInfo = useSelector((state) => state.account.userInfo);
 
   const history = useHistory();
 
-  const [modalConform, setModalConform] = useState({
+  const [modalConform, setModalConfirm] = useState({
     isShow: false,
     content: '이벤트 현황을 삭제하시겠습니까?',
   });
 
-  const handleDelete = () => {
-    dispatch(deleteEvent(id));
-  };
   const roleName =
     userInfo &&
     userInfo.roles &&
@@ -56,10 +59,18 @@ const StatusByAreaCompanyDetail = ({ match }: Props) => {
     );
   }, []);
 
+  const handleDelete = () => {
+    dispatch(deleteEvent(id));
+    setModalConfirm({
+      ...modalConform,
+      isShow: false,
+    });
+  };
+
   useEffect(() => {
     switch (type) {
-      case 'operationStatus/deleteEventSuccess':
-        history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+      case 'commons/deleteEventSuccess':
+        history.push(location?.state?.prevRoute);
         break;
       default:
         break;
@@ -111,7 +122,7 @@ const StatusByAreaCompanyDetail = ({ match }: Props) => {
           {(roleName === 'admin' || roleName === 'company') && (
             <Button
               onClick={() =>
-                setModalConform({
+                setModalConfirm({
                   ...modalConform,
                   isShow: true,
                 })
@@ -124,19 +135,11 @@ const StatusByAreaCompanyDetail = ({ match }: Props) => {
         </div>
         <div className="group-btn-bottom">
           {(roleName === 'admin' || roleName === 'company') && (
-            <Button
-              onClick={() =>
-                history.push(
-                  `${ROUTERS.OPERATION_STATUS_BY_COMPANY}/edit/${id}`
-                )
-              }
-            >
+            <Button onClick={() => history.push(`${ROUTERS.EVENT}/edit/${id}`)}>
               수정
             </Button>
           )}
-          <Button
-            onClick={() => history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)}
-          >
+          <Button onClick={() => history.push(location.state.prevRoute)}>
             목록
           </Button>
         </div>
@@ -149,13 +152,13 @@ const StatusByAreaCompanyDetail = ({ match }: Props) => {
         isShowIconClose
         isShowFooter
         handleCloseIcon={() =>
-          setModalConform({
+          setModalConfirm({
             ...modalConform,
             isShow: false,
           })
         }
         handleClose={() => {
-          setModalConform({
+          setModalConfirm({
             ...modalConform,
             isShow: false,
           });
@@ -172,4 +175,4 @@ const StatusByAreaCompanyDetail = ({ match }: Props) => {
   );
 };
 
-export default memo<Props>(StatusByAreaCompanyDetail);
+export default memo<Props>(EventDetail);

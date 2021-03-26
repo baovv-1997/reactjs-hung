@@ -14,7 +14,7 @@ function* deleteEvent(action) {
 
       // In case: request success
       yield put({
-        type: 'operationStatus/deleteEventSuccess',
+        type: 'commons/deleteEventSuccess',
         data,
         total: response?.data?.total,
         perPage: response?.data?.per_page,
@@ -22,17 +22,17 @@ function* deleteEvent(action) {
     } else {
       // In case: request failed
       yield put({
-        type: 'operationStatus/deleteEventFailed',
+        type: 'commons/deleteEventFailed',
       });
     }
   } catch (error) {
     // in case: server error
-    yield put({ type: 'operationStatus/deleteEventFailed', error });
+    yield put({ type: 'commons/deleteEventFailed', error });
   }
 }
 
 function* deleteEventSaga() {
-  yield takeLatest('operationStatus/deleteEvent', deleteEvent);
+  yield takeLatest('commons/deleteEvent', deleteEvent);
 }
 
 export default deleteEventSaga;

@@ -22,11 +22,11 @@ import getListCompanyInverterSaga from 'modules/main/saga/getListCompanyInverter
 import getListPositionMainSaga from 'modules/main/saga/getListPositionSaga';
 import getListCompanyMainSaga from 'modules/main/saga/getListCompanySaga';
 import getListDeviceSaga from 'modules/operationStatus/saga/getListDeviceSaga';
-import getEventListSaga from 'modules/operationStatus/saga/getEventListSaga';
-import deleteEventSaga from 'modules/operationStatus/saga/deleteEventSaga';
-import addNewEventSaga from 'modules/operationStatus/saga/addNewEventSaga';
+import getEventListSaga from 'commons/saga/getEventListSaga';
+import deleteEventSaga from 'commons/saga/deleteEventSaga';
+import addNewEventSaga from 'commons/saga/addNewEventSaga';
 
-import updateEventSaga from 'modules/operationStatus/saga/updateEventSaga';
+import updateEventSaga from 'commons/saga/updateEventSaga';
 import getSearchMainSaga from 'modules/main/saga/getSearchMainSaga';
 import getCardMeasureMainSaga from 'modules/main/saga/getCardMeasureMainSaga';
 import getDataChartSaga from 'modules/operationStatus/saga/getDataChartSaga';
@@ -49,6 +49,8 @@ import getDataRawTableGeneratorSaga from 'modules/testSolarMonitoringStatistics/
 import getStatusGeneratorRawSaga from 'modules/statusCompany/sagas/getStatusGeneratorRawSaga';
 import getStatusGeneratorCardSaga from 'modules/statusCompany/sagas/getStatusGeneratorCardSaga';
 import getStatusGeneratorChartSaga from 'modules/statusCompany/sagas/getStatusGeneratorChartSaga';
+
+import getStatisticGeneratorRawDataSaga from 'modules/operationStatistics/saga/getStatisticGeneratorRawDataSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -98,9 +100,12 @@ export default function* RootSagas() {
     getStatusGeneratorRawSaga(),
     getStatusGeneratorChartSaga(),
     getStatusGeneratorCardSaga(),
-    // Statistics Generator
+    // Statistics Generator test
     getCardInformationStatisticsGeneratorSaga(),
     getDataTrendChartStatisticsGeneratorSaga(),
     getDataRawTableGeneratorSaga(),
+
+    // Statistics generator
+    getStatisticGeneratorRawDataSaga(),
   ]);
 }
