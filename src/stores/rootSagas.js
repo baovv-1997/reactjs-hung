@@ -72,6 +72,15 @@ import getCardTestMKStatusOperationSaga from 'modules/testMockupStatus/sagas/ope
 import getDataTestMKRawTableOperationSaga from 'modules/testMockupStatus/sagas/operation/getDataRawTableSaga';
 import getDataTestMKChartStatusOperationSaga from 'modules/testMockupStatus/sagas/operation/getDataTrendChartSaga';
 
+import getCardTestMKStatisticsGeneratorSaga from 'modules/testMockupStatistics/sagas/generator/getCardInformationSaga';
+import getTrendChartTestMKStatisticsGeneratorSaga from 'modules/testMockupStatistics/sagas/generator/getTrendChartSaga';
+import getDataTestMKRawTableGeneratorSaga from 'modules/testMockupStatistics/sagas/generator/getTrendRawSaga';
+import getDataRawTableMockupStatisticGeneratorSaga from 'modules//testMockupStatistics/sagas/generator/getDataRawTableMockupSaga';
+
+import getCardTestMKStatisticsOperationSaga from 'modules/testMockupStatistics/sagas/operation/getCardInformationSaga';
+import getDataChartTestMKStatisticsOperationSaga from 'modules/testMockupStatistics/sagas/operation/getTrendChartSaga';
+import getDataRawTestMKStatisticOperationSaga from 'modules/testMockupStatistics/sagas/operation/getTrendRawSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -161,5 +170,20 @@ export default function* RootSagas() {
     getCardTestMKStatusOperationSaga(),
     getDataTestMKRawTableOperationSaga(),
     getDataTestMKChartStatusOperationSaga(),
+
+    /* Test mockup 
+        + Status of generator
+    */
+    getCardTestMKStatisticsGeneratorSaga(),
+    getTrendChartTestMKStatisticsGeneratorSaga(),
+    getDataTestMKRawTableGeneratorSaga(),
+    getDataRawTableMockupStatisticGeneratorSaga(),
+
+    /* Test mockup 
+        + Status of operation
+    */
+    getCardTestMKStatisticsOperationSaga(),
+    getDataChartTestMKStatisticsOperationSaga(),
+    getDataRawTestMKStatisticOperationSaga(),
   ]);
 }

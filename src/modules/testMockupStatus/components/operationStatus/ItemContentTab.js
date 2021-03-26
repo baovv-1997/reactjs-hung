@@ -9,6 +9,7 @@ import {
   headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 } from '../constant';
+import { operator_event_filter } from 'constants/optionCheckbox';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
@@ -17,6 +18,7 @@ import { useHistory } from 'react-router-dom';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import moment from 'moment';
 
 type Props = {
   listMockupDataCompany: any,
@@ -28,12 +30,13 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableBottom: Array<{
     id: number,
   }>,
   isShowModalSorting: boolean,
   handleClickDetail: Function,
   dataChartOperation: Object,
+  optionFilters: any,
 };
 
 const ItemContentTab = ({
@@ -46,10 +49,11 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
+  dataTableBottom,
   isShowModalSorting,
   handleClickDetail,
   dataChartOperation,
+  optionFilters,
 }: Props) => {
   const history = useHistory();
   const dataLengthChart = [
@@ -131,15 +135,29 @@ const ItemContentTab = ({
 
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableBody={
+          (dataTableBottom &&
+            dataTableBottom.length > 0 &&
+            dataTableBottom.map((event) => ({
+              id: event?.id,
+              dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
+              comName: event?.com_name,
+              inverterID: event?.ds_id,
+              inverterName: event?.ds_name,
+              contents: event?.evt_content,
+            }))) ||
+          []
+        }
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
           isShow: isShowModalSorting,
-          keyItem: 5,
+          keyItem: 4,
         }}
         onClickRow={handleClickDetail}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
         <Button

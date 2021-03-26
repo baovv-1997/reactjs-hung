@@ -140,29 +140,21 @@ const testMockupStatusSlide = createSlice({
           }`,
           dm_datetime: item.dm_datetime || '',
           com_name: item.com_name || '',
-
-          
-          inverterId: item.ds_id || '',
-          inverterName: item.ds_name || '',
-          dm_pv_voltage:
-            item.dm_pv_voltage &&
-            `${item.dm_pv_voltage.toLocaleString('en') || 0}V`,
-          dm_pv_current:
-            item.dm_pv_current &&
-            `${item.dm_pv_current.toLocaleString('en') || 0}A`,
-          dm_o_voltage:
-            item?.dm_o_voltage && `${item?.dm_o_voltage.toLocaleString('en')}V`,
-          dm_o_current:
-            item.dm_o_current &&
-            `${item.dm_o_current.toLocaleString('en') || 0}A`,
-          dm_power:
-            item.dm_power && `${item.dm_power.toLocaleString('en') || 0}KW`,
-          dm_performance_ratio:
-            item.dm_performance_ratio &&
-            `${item.dm_performance_ratio.toLocaleString('en') || 0}%`,
-          dm_power_eff:
-            (item.dm_power_eff &&
-              `${item.dm_power_eff.toLocaleString('en') || 0}Hz`) ||
+          ds_azimuth_angle:
+            item?.ds_azimuth_angle &&
+            `${item?.ds_azimuth_angle.toLocaleString('en')}°`,
+          ds_incidence_angle:
+            item.ds_incidence_angle &&
+            `${item.ds_incidence_angle.toLocaleString('en') || 0}°`,
+          dm_ac_voltage:
+            item.dm_ac_voltage &&
+            `${item.dm_ac_voltage.toLocaleString('en') || 0}KW`,
+          dm_ac_power:
+            item.dm_ac_power &&
+            `${item.dm_ac_power.toLocaleString('en') || 0}A`,
+          dm_ac_current:
+            (item.dm_ac_current &&
+              `${item.dm_ac_current.toLocaleString('en') || 0}A`) ||
             '0Hz',
         }));
       state.total = (data && data.total) || 0;

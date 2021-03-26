@@ -9,9 +9,12 @@ import * as CommonAction from 'commons/redux';
 import * as ActionGenerator from '../../redux';
 import { getEventList, addEventFilter } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import { useHistory } from 'react-router-dom';
 import ItemContentTab from './ItemContentTab';
+import ROUTERS from 'constants/routers';
 
 const OperationStatusPage = () => {
+  const history = useHistory();
   const { deviceList, optionFilters, eventList, totalEventPage } = useSelector(
     (state) => state?.commons
   );
@@ -228,7 +231,10 @@ const OperationStatusPage = () => {
   const handleDownloadTrend = (name) => {
     console.log(name, 'download Trend');
   };
-
+  //  click vào table bên dưới đến trang chi tiết
+  const handleClickDetail = (item) => {
+    history.push(`${ROUTERS.TEST_MOCKUP_OPERATION}/${item.id}`);
+  };
   return (
     <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
@@ -254,6 +260,7 @@ const OperationStatusPage = () => {
               dataChartOperation={dataChartOperation}
               optionFilters={optionFilters}
               handleChangeSearch={handleChangeSearch}
+              handleClickDetail={handleClickDetail}
             />
           </div>
         </div>
