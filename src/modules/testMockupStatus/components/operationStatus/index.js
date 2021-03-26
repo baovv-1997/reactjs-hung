@@ -7,12 +7,14 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import * as ActionGenerator from '../../redux';
-import { getEventList, addEventFilter } from 'modules/operationStatus/redux';
+import { getEventList, addEventFilter } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const { deviceList } = useSelector((state) => state?.commons);
+  const { deviceList, optionFilters, eventList, totalEventPage } = useSelector(
+    (state) => state?.commons
+  );
   const {
     isProcessing,
     total,
@@ -23,9 +25,6 @@ const OperationStatusPage = () => {
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
-  const { optionFilters, eventList, totalEventPage } = useSelector(
-    (state) => state?.operationStatus
-  );
 
   const defaultOption = {
     id: 1,
@@ -90,7 +89,7 @@ const OperationStatusPage = () => {
     },
     [dispatch]
   );
-  
+
   useEffect(() => {
     handleGetCardInformation(paramsSearch?.company);
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);

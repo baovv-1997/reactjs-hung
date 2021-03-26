@@ -140,6 +140,8 @@ const testMockupStatusSlide = createSlice({
           }`,
           dm_datetime: item.dm_datetime || '',
           com_name: item.com_name || '',
+
+          
           inverterId: item.ds_id || '',
           inverterName: item.ds_name || '',
           dm_pv_voltage:
