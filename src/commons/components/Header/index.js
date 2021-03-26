@@ -5,7 +5,7 @@ import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
 import useDebounce from 'customHooks/useDebounce';
-import { getCompanySearchMain, getPositionSearchMain, getCardMeasureSearchPosition, getCardMeasureSearchCompany } from 'modules/main/redux';
+import { getCompanySearchMain, getPositionSearchMain, getCardMeasureSearchPosition, getCardMeasureSearchCompany, setPositionId } from 'modules/main/redux';
 import Search from '../Search';
 import SelectDropdown from '../Select';
 import ModalEvent from './ModalEvent';
@@ -26,7 +26,7 @@ const Header = ({
 }: Props) => {
 
   const dispatch = useDispatch();
-  const { listPositions, optionsCompany, optionsPosition, isSpinner } = useSelector(state => state?.main);
+  const { listPositions, optionsCompany, optionsPosition, isSpinner, positionId } = useSelector(state => state?.main);
   const [optionDropdown, setOptionDropdown] = useState(null);
   const [isShow, setIsShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState({ label: '', value: '', key: '', id: '' });
@@ -34,6 +34,7 @@ const Header = ({
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
+  const posId = useRef(positionId);
 
   const debouncedSearchTerm = useDebounce(searchTerm.label, 500);
 
@@ -46,9 +47,17 @@ const Header = ({
 
   // set option dropdown value when listposition != [];
   useEffect(() => {
-    const indexDefault = listPositions.findIndex((item) => item?.label.includes('본관 남측'));
-    setOptionDropdown(listPositions[indexDefault]);
-  }, [listPositions])
+    if (posId.current) {
+      const positionSelected = listPositions.filter(item => item.id === posId.current);
+      setOptionDropdown(positionSelected[0]);
+      // set positionId = 0 to set default dropdown
+      dispatch(setPositionId({ id: 0 }))
+    }
+    else {
+      const indexDefault = listPositions.findIndex((item) => item?.label.includes('본관 남측'));
+      setOptionDropdown(listPositions[indexDefault]);
+    }
+  }, [listPositions, positionId])
 
   // optionDropdown change will pass optionvalue to Main -> Dashboard area
   useEffect(() => {

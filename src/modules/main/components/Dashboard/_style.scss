@@ -48,10 +48,11 @@
     letter-spacing: pxToRem(-0.6);
     color: $bg-button;
     margin: 0 pxToRem(10);
+    white-space: nowrap;
   }
 
   .line {
-    width: pxToRem(260);
+    width: 100%;
     border: 1px solid $bg-button;
     background-color: $bg-button;
   }

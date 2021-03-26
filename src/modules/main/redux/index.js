@@ -13,6 +13,8 @@ const mainSlice = createSlice({
     optionsCompany: [],
     cardPositionMain: [],
     cardMeasureArea: [],
+    positionId: null,
+    companyId: null,
     type: '',
     key: '',
     page: 0,
@@ -187,6 +189,14 @@ const mainSlice = createSlice({
       state.type = action.type;
       state.isLoading = false;
     },
+    setPositionId: (state, action) => {
+      state.type = action.type;
+      state.positionId = action.payload.id;
+    },
+    setCompanyId: (state, action) => {
+      state.type = action.type;
+      state.companyId = action.payload.id;
+    },
   },
 });
 
@@ -220,6 +230,8 @@ export const {
   getCardMeasureArea,
   getCardMeasureAreaSuccess,
   getCardMeasureAreaFailed,
+  setPositionId,
+  setCompanyId
 } = actions;
 
 export default reducer;
