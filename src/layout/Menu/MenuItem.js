@@ -46,12 +46,15 @@ const MenuItem = ({
   const handleClickItemSub = (e, itemSub, active) => {
     e.stopPropagation();
     setActiveSub(active);
+
     dispatch(setNestSubClicking(itemSub));
     setListNestSub(itemSub.sub);
+    console.log('itemSub', itemSub);
     if (itemSub.name === subMenuClicking.name && active) {
       setNestSubClicking({});
     }
   };
+  console.log('listSub', listSub);
   const renderSub =
     listSub &&
     listSub.length > 0 &&

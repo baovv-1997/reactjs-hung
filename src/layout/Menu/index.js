@@ -1,6 +1,6 @@
 // @flow
 // libs
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
@@ -18,15 +18,14 @@ type Props = {
 const Menu = ({ location }: Props) => {
   const dispatch = useDispatch();
   const menuClicking = useSelector((state) => state?.commons?.menuClicking);
-  const [listSub, setListSub] = useState(menuClicking?.sub);
-  const handleClickItem = (item, active) => {
-    setListSub(item.sub);
 
+  const handleClickItem = (item, active) => {
     dispatch(setMenuClicking(item));
 
     if (item.name === menuClicking.name && active) {
       dispatch(setMenuClicking({}));
     }
+
     if (item.id !== menuClicking?.id) {
       dispatch(setNestSubClicking({}));
     }
@@ -40,7 +39,7 @@ const Menu = ({ location }: Props) => {
         <MenuItem
           key={item.id}
           item={item}
-          listSub={listSub}
+          listSub={item?.sub}
           handleClickItem={handleClickItem}
           menuClicking={menuClicking}
           isActive={isActive}
