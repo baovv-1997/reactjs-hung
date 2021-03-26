@@ -4,19 +4,28 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import { dataTableTestMockupStatisticsOfModule } from 'mockData/listCompany';
-import { listDataTable2 } from '../data';
+import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
+import * as ActionGenerator from '../../redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
-const StatusByAreaCompany = () => {
-  const perPage = 6;
-  const totalPage = 100;
-  const perPage2 = 6;
-  const totalPage2 = 100;
+const OperationStatusPage = () => {
+  const { deviceList } = useSelector((state) => state?.commons);
+  const {
+    isProcessing,
+    total,
+    dataChartOperation,
+    listDataTableRaw,
+    dataBoxOperation,
+    totalMockup,
+    listDataTableRawMockup,
+  } = useSelector((state) => state?.testSolarMonitoringStatus);
 
-  const { comList } = useSelector((state) => state?.commons);
+  const [randomNumber, setRandomNumber] = useState(null);
+  const listInverterTest =
+    (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -25,7 +34,10 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: (comList && comList[0]?.id) || null,
+    company:
+      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+      null,
+    page2: 1,
     PVVoltage: false,
     PVCurrent: false,
     outputVoltage: false,
@@ -33,55 +45,121 @@ const StatusByAreaCompany = () => {
     print: false,
     pagination: defaultOption,
     pagination2: defaultOption,
-    page2: 1,
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
+
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    angleOfIncidence:
+      (dataBoxOperation?.ds_incidence_angle &&
+        dataBoxOperation?.ds_incidence_angle.toLocaleString('en')) ||
+      '0',
+    azimuth:
+      (dataBoxOperation?.ds_azimuth_angle &&
+        dataBoxOperation?.ds_azimuth_angle.toLocaleString('en')) ||
+      '0',
+    moduleOutput:
+      (dataBoxOperation?.dm_power &&
+        dataBoxOperation?.dm_power.toLocaleString('en')) ||
+      '0',
+    moduleColor: dataBoxOperation?.ds_color || '',
   };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CommonAction.getCompanyList());
+    dispatch(CommonAction.getListDevice());
   }, []);
 
-  // call api get list
-  const getDataListStatusCompany = useCallback(() => {
-    console.log('Call api on page');
-  }, [
-    paramsSearch?.page,
-    paramsSearch?.page2,
-    paramsSearch?.company,
-    paramsSearch?.PVVoltage,
-    paramsSearch?.PVCurrent,
-    paramsSearch?.outputVoltage,
-    paramsSearch?.outputCurrent,
-    paramsSearch?.print,
-    paramsSearch?.pagination,
-    paramsSearch?.pagination2,
-    dispatch,
-  ]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRandomNumber(Math.random());
+    }, TIME_REQUEST);
+    return () => clearInterval(interval);
+  }, []);
+
+  // call api getCardInformation
+  const handleGetCardInformation = useCallback(
+    (company) => {
+      dispatch(
+        ActionGenerator.getCardInformationOperation({
+          inverter_id: company,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    handleGetCardInformation(paramsSearch?.company);
+  }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
+
+  // call api getDataTrend chart
+  const handleGetDataTrendChart = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataTrendChartOperation(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    handleGetDataTrendChart({
+      inverter_id: paramsSearch?.company,
+    });
+  }, [handleGetDataTrendChart, paramsSearch?.company, randomNumber]);
+
+  // call api getDataTrend table
+  const handleGetDataRawTable = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataRawTableOperation(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    handleGetDataRawTable({
+      inverter_id: paramsSearch?.company,
+      per_page: paramsSearch?.pagination?.value,
+      page: paramsSearch?.page,
+    });
+  }, [
+    handleGetDataRawTable,
+    paramsSearch?.company,
+    paramsSearch?.pagination?.value,
+    paramsSearch?.page,
+    randomNumber,
+  ]);
+
+  // call api getDataTrend table Mockup
+  const handleGetDataRawTableMockup = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataRawTableMockupOperation(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    handleGetDataRawTableMockup({
+      inverter_id: paramsSearch?.company,
+      per_page: paramsSearch?.pagination2?.value,
+      page: paramsSearch?.page2,
+    });
+  }, [
+    handleGetDataRawTableMockup,
+    paramsSearch?.company,
+    paramsSearch?.pagination2?.value,
+    paramsSearch?.page2,
+    randomNumber,
+  ]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
-        });
-        break;
-      case 'PVVoltage':
-        setParamsSearch({
-          ...paramsSearch,
-          PVVoltage: !item,
+          page: 1,
+          page2: 1,
         });
         break;
       case 'PVCurrent':
@@ -90,10 +168,10 @@ const StatusByAreaCompany = () => {
           PVCurrent: !item,
         });
         break;
-      case 'outputVoltage':
+      case 'outputCurrent':
         setParamsSearch({
           ...paramsSearch,
-          outputVoltage: !item,
+          outputCurrent: !item,
         });
         break;
       case 'print':
@@ -102,16 +180,30 @@ const StatusByAreaCompany = () => {
           print: !item,
         });
         break;
-      case 'outputCurrent':
+      case 'PVVoltage':
         setParamsSearch({
           ...paramsSearch,
-          outputCurrent: !item,
+          PVVoltage: !item,
+        });
+        break;
+      case 'outputVoltage':
+        setParamsSearch({
+          ...paramsSearch,
+          outputVoltage: !item,
         });
         break;
       case 'pagination':
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
+          page: 1,
+        });
+        break;
+      case 'pagination2':
+        setParamsSearch({
+          ...paramsSearch,
+          pagination2: item,
+          page2: 1,
         });
         break;
       case 'page':
@@ -120,55 +212,46 @@ const StatusByAreaCompany = () => {
           page: item,
         });
         break;
-      case 'pagination2':
-        setParamsSearch({
-          ...paramsSearch,
-          pagination2: item,
-        });
-        break;
       case 'page2':
         setParamsSearch({
           ...paramsSearch,
           page2: item,
         });
         break;
+
       default:
         break;
     }
   };
 
   const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
+    console.log(name, 'download Trend');
   };
 
   return (
-    <MainLayout isProcessing={false}>
+    <MainLayout isProcessing={isProcessing}>
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 운영 현황" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList}
+            listStatusCompanySelect={listInverterTest}
           />
-          <div className="content-body-left border-pd-20">
-            <div className="h-100">
-              <ItemContentTab
-                listMockupDataCompany={listDataTable2}
-                dataContent={{}}
-                dataBoxContent={dataBoxContent}
-                handleDownloadTrend={handleDownloadTrend}
-                handleChangeSearch={handleChangeSearch}
-                tableOperationStatusByAreaCompany={
-                  dataTableTestMockupStatisticsOfModule
-                }
-                paramsSearch={paramsSearch}
-                totalPage={totalPage}
-                perPage={perPage}
-                totalPage2={totalPage2}
-                perPage2={perPage2}
-              />
-            </div>
+          <div className="content-body-left w-100 border-pd-20">
+            <ItemContentTab
+              dataBoxContent={dataBoxContent}
+              listMockupDataCompany={listDataTableRaw}
+              handleDownloadTrend={handleDownloadTrend}
+              totalPage={total}
+              perPage={paramsSearch?.pagination?.value}
+              totalPage2={totalMockup}
+              perPage2={paramsSearch?.pagination2?.value}
+              dataTableBottom={listDataTableRawMockup}
+              paramsSearch={paramsSearch}
+              dataChartOperation={dataChartOperation}
+              handleChangeSearch={handleChangeSearch}
+            />
           </div>
         </div>
       </div>
@@ -176,4 +259,4 @@ const StatusByAreaCompany = () => {
   );
 };
 
-export default StatusByAreaCompany;
+export default OperationStatusPage;
