@@ -9,14 +9,18 @@ import { TIME_REQUEST } from 'constants/index';
 import * as SignInAction from 'modules/accounts/redux';
 import * as CommonAction from 'commons/redux';
 import * as ActionGenerator from '../../redux';
-import { getEventList } from 'modules/operationStatus/redux';
+import { getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const { deviceList, comList, optionFilters } = useSelector(
-    (state) => state?.commons
-  );
+  const {
+    deviceList,
+    comList,
+    optionFilters,
+    eventList,
+    totalEventPage,
+  } = useSelector((state) => state?.commons);
   const {
     isProcessing,
     total,
@@ -28,9 +32,7 @@ const OperationStatusPage = () => {
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
-  const { eventList, totalEventPage } = useSelector(
-    (state) => state?.operationStatus
-  );
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -317,6 +319,7 @@ const OperationStatusPage = () => {
           ...paramsSearch,
           isSubmitSearch: item,
           page: 1,
+          page2: 1,
         });
         break;
       default:

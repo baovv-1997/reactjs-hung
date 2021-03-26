@@ -9,18 +9,19 @@ import {
   headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 } from '../constant';
+import { operator_event_filter } from 'constants/optionCheckbox';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
-import LineSeriesChart from '../chart';
+// import LineSeriesChart from '../chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import moment from 'moment';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -29,17 +30,18 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableBottom: Array<{
     id: number,
   }>,
   isShowModalSorting: boolean,
   handleClickDetail: Function,
+  dataChartOperation: Object,
+  optionFilters: any,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
@@ -47,12 +49,13 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
+  dataTableBottom,
   isShowModalSorting,
   handleClickDetail,
+  dataChartOperation,
+  optionFilters,
 }: Props) => {
   const history = useHistory();
-  console.log(dataContent, 'dataContent', headTestMockupOperationStatus);
   const dataLengthChart = [
     {
       id: 1,
@@ -84,9 +87,7 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">
-          <LineSeriesChart />
-        </div>
+        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
@@ -98,7 +99,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headTestMockupOperationStatus}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination">
           {totalPage > perPage && (
@@ -134,15 +135,29 @@ const ItemContentTab = ({
 
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableBody={
+          (dataTableBottom &&
+            dataTableBottom.length > 0 &&
+            dataTableBottom.map((event) => ({
+              id: event?.id,
+              dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
+              comName: event?.com_name,
+              inverterID: event?.ds_id,
+              inverterName: event?.ds_name,
+              contents: event?.evt_content,
+            }))) ||
+          []
+        }
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
           isShow: isShowModalSorting,
-          keyItem: 5,
+          keyItem: 4,
         }}
         onClickRow={handleClickDetail}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
         <Button

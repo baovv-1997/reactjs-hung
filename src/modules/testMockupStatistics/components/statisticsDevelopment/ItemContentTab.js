@@ -18,16 +18,12 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   dataTableStatisticsCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  dataTableStatisticsOfModuleCompany: Array<{
-    id: number,
-  }>,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -40,24 +36,23 @@ type Props = {
     value: any,
     label: string,
   }>,
+  dataTableBottom: Array<{}>,
 };
 
 const ItemContentTab = ({
   dataTableStatisticsCompany,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
   perPage2,
-  dataTableStatisticsOfModuleCompany,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  dataTableBottom,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -107,7 +102,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headTestMockupStatistics}
           tableBody={dataTableStatisticsCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination mt-0">
           {totalPage > perPage && (
@@ -144,11 +139,11 @@ const ItemContentTab = ({
       </div>
       <Table
         tableHeads={headTestMockupStatisticsOfModule}
-        tableBody={dataTableStatisticsOfModuleCompany}
-        // isShowId
+        tableBody={dataTableBottom}
+        isShowId
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

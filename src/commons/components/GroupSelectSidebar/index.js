@@ -78,12 +78,14 @@ export const GroupSelect = ({
   //   ));
   return (
     <div>
-      {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
-        <div className="content-select-sidebar">
-          <TitleSubHeader title="실증단지" />
-          <ul className="list-item-select overflowY">{renderListCompany}</ul>
-        </div>
-      )}
+      <div className="content-select-sidebar">
+        {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
+          <>
+            <TitleSubHeader title="실증단지" />
+            <ul className="list-item-select overflowY">{renderListCompany}</ul>
+          </>
+        )}
+      </div>
       {/* {listInverter && listInverter.length > 0 && (
         <>
           <TitleSubHeader title="목업" titleLight="RTU" className="mt-5" />

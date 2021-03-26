@@ -5,6 +5,7 @@ import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
+import { operator_event_filter } from 'constants/optionCheckbox';
 import {
   headTestMockupOperationStatus,
   headTestMockupOperationStatistics,
@@ -16,10 +17,10 @@ import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
 import { FilterSearch } from '../FilterSearch';
+import moment from 'moment';
 
 type Props = {
   listMockupDataCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -28,7 +29,7 @@ type Props = {
   perPage: number,
   totalPage2: number,
   perPage2: number,
-  tableOperationStatusByAreaCompany: Array<{
+  dataTableBottom: Array<{
     id: number,
   }>,
   isShowModalSorting: boolean,
@@ -43,12 +44,12 @@ type Props = {
     value: any,
     label: string,
   }>,
+  optionFilters: any,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
@@ -56,13 +57,13 @@ const ItemContentTab = ({
   perPage,
   totalPage2,
   perPage2,
-  tableOperationStatusByAreaCompany,
   isShowModalSorting,
   handleClickDetail,
   listStatusCompanySelect,
   listInverter,
+  dataTableBottom,
+  optionFilters,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -148,7 +149,19 @@ const ItemContentTab = ({
 
       <Table
         tableHeads={headTestMockupOperationStatistics}
-        tableBody={tableOperationStatusByAreaCompany}
+        tableBody={
+          (dataTableBottom &&
+            dataTableBottom.length > 0 &&
+            dataTableBottom.map((event) => ({
+              id: event?.id,
+              dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
+              comName: event?.com_name,
+              inverterID: event?.ds_id,
+              inverterName: event?.ds_name,
+              contents: event?.evt_content,
+            }))) ||
+          []
+        }
         // isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
@@ -157,9 +170,11 @@ const ItemContentTab = ({
           keyItem: 4,
         }}
         onClickRow={handleClickDetail}
+        listOption={operator_event_filter}
+        optionDefault={optionFilters}
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

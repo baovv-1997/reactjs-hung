@@ -14,6 +14,8 @@ import statisticsDevelopStatus from 'modules/operationStatistics/redux';
 import testSolarMonitoringStatusSlide from 'modules/testSolarMonitoringStatus/redux';
 import testSMStatisticsGeneratorSlide from 'modules/testSolarMonitoringStatistics/redux';
 
+import testMockupStatisticsSlide from 'modules/testMockupStatistics/redux';
+
 const appReducer = combineReducers({
   account: accountSlice,
   main: mainReducer,
@@ -28,6 +30,7 @@ const appReducer = combineReducers({
   testSolarMonitoringStatus: testSolarMonitoringStatusSlide,
   testSMStatisticsGenerator: testSMStatisticsGeneratorSlide,
   generatorStatistics: statisticsDevelopStatus,
+  testMockupStatistics: testMockupStatisticsSlide,
 });
 
 export default appReducer;

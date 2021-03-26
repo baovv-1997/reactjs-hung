@@ -99,14 +99,10 @@ export const headOperationStatusByAreaCompany = [
   },
   {
     id: 4,
-    name: '설치위치',
-  },
-  {
-    id: 5,
     name: '이벤트명',
   },
   {
-    id: 6,
+    id: 5,
     name: '내용',
   },
 ];
