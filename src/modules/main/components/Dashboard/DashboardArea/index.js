@@ -18,7 +18,7 @@ const DashboardArea = () => {
     (state) => state?.main
   );
   const { totalPower, infoReality, vitualData } = mockDataMain;
-  const [setBgImage] = useState(null);
+  const [bgImage, setBgImage] = useState(null);
   const [positionName, setPositionName] = useState(null);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const DashboardArea = () => {
     >
       <div
         className="dashboard-area"
-        //  style={{ backgroundImage: `url('${bgImage}')` }}
+        style={{ backgroundImage: `url('${bgImage}')` }}
       >
         {/* thong tin  */}
 
