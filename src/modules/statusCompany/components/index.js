@@ -9,6 +9,7 @@ import moment from 'moment';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listParkingLot, listMockupType } from 'mockData/listCompany';
 import { getCompanyList, getListDevice } from 'commons/redux';
+import { setCompanyId } from 'modules/main/redux';
 import {
   getStatusGeneratorRaw,
   getStatusGeneratorChartData,
@@ -22,6 +23,7 @@ const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
 
   const { comList, deviceList } = useSelector((state) => state?.commons);
+  const { companyId } = useSelector((state) => state?.main);
 
   const { totalRawData, rawData, cardInfo, chartData } = useSelector(
     (state) => state.statusCompany
@@ -35,12 +37,12 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: comList && comList[1] && comList[1].id,
+    company: companyId || (comList && comList[1] && comList[1].id),
     mockupType: null,
     parkingLot: null,
-    power: false,
-    performance: false,
-    insolation: false,
+    power: true,
+    performance: true,
+    insolation: true,
     pagination: defaultOption,
   };
 
@@ -138,6 +140,7 @@ const StatusByAreaCompany = () => {
           ...paramsSearch,
           company: item.id,
         });
+        dispatch(setCompanyId({ id: 0 }));
         break;
       case 'mockupType':
         setParamsSearch({
@@ -197,6 +200,7 @@ const StatusByAreaCompany = () => {
   const handleDownloadTrend = (name) => {
     console.log('download Trend', name);
   };
+  // console.log('abcdef');
 
   return (
     // <MainLayout isProcessing={isProcessing}>
@@ -210,7 +214,7 @@ const StatusByAreaCompany = () => {
           listStatusCompanySelect={comList.slice(1)}
           listMockupType={listMockupType}
         />
-        <div className="content-body-left">
+        <div className="content-body-left w-100">
           <div className="h-100">
             <Tabs
               defaultActiveKey={

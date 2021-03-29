@@ -82,6 +82,7 @@ import getDataChartTestMKStatisticsOperationSaga from 'modules/testMockupStatist
 import getDataRawTestMKStatisticOperationSaga from 'modules/testMockupStatistics/sagas/operation/getTrendRawSaga';
 import getStatisticOperatorCardSaga from 'modules/operationStatistics/saga/getStatisticOperatorCardSaga';
 import getStatisticOperatorChartDataSaga from 'modules/operationStatistics/saga/getStatisticOperatorChartDataSaga';
+import getTotalMetricSaga from 'modules/main/saga/getTotalMetricSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -122,6 +123,7 @@ export default function* RootSagas() {
     getCardInfoSaga(),
     getListDeviceSaga(),
     getDevicesListSaga(),
+    getTotalMetricSaga(),
 
     /* Test Solar Monitoring
         + Status of generator
