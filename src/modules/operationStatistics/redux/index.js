@@ -15,31 +15,41 @@ const statisticsDevelopSlide = createSlice({
       state.type = action.type;
       state.isProcessing = true;
     },
-    getStatisticGeneratorRawData: (state, action) => {
+    getStatisticOperatorRawData: (state, action) => {
       state.type = action.type;
       // state.isProcessing = true;
     },
-    getStatisticGeneratorRawDataSuccess: (state, action) => {
+    getStatisticOperatorRawDataSuccess: (state, action) => {
       const { data } = action.data;
       state.type = action.type;
       state.rawData = data;
       state.totalRawData = action.data.total;
     },
-    getStatisticGeneratorRawDataFailed: (state, action) => {
+    getStatisticOperatorRawDataFailed: (state, action) => {
       state.type = action.type;
       // state.isProcessing = true;
     },
-    getStatisticGeneratorChartData: (state, action) => {
+    getStatisticOperatorChartData: (state, action) => {
       state.type = action.type;
       // state.isProcessing = true;
     },
-    getStatisticGeneratorChartDataSuccess: (state, action) => {
+    getStatisticOperatorChartDataSuccess: (state, action) => {
       state.type = action.type;
       state.chartData = action.data;
     },
-    getStatisticGeneratorChartDataFailed: (state, action) => {
+    getStatisticOperatorChartDataFailed: (state, action) => {
       state.type = action.type;
       // state.isProcessing = true;
+    },
+    getStatisticOperatorCard: (state, action) => {
+      state.type = action.type;
+    },
+    getStatisticOperatorCardSuccess: (state, action) => {
+      state.type = action.type;
+      state.cardInfo = action.data;
+    },
+    getStatisticOperatorCardFailed: (state, action) => {
+      state.type = action.type;
     },
   },
 });
@@ -48,9 +58,15 @@ const { actions, reducer } = statisticsDevelopSlide;
 
 export const {
   getListStatisticsDevelop,
-  getStatisticGeneratorRawData,
-  getStatisticGeneratorRawDataSuccess,
-  getStatisticGeneratorRawDataFailed,
+  getStatisticOperatorRawData,
+  getStatisticOperatorRawDataSuccess,
+  getStatisticOperatorRawDataFailed,
+  getStatisticOperatorCard,
+  getStatisticOperatorCardSuccess,
+  getStatisticOperatorCardFailed,
+  getStatisticOperatorChartData,
+  getStatisticOperatorChartDataSuccess,
+  getStatisticOperatorChartDataFailed,
 } = actions;
 
 export default reducer;

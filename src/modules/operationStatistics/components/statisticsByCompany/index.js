@@ -12,15 +12,19 @@ import {
   getListDevice,
   getEventList,
   addEventFilter,
-  getPosList,
 } from 'commons/redux';
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
-import * as SignInAction from 'modules/accounts/redux';
+// import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import { getListInverter } from 'modules/accounts/redux';
 import ItemContentTab from './ItemContentTab';
-import { getStatisticGeneratorRawData } from '../../redux';
+import {
+  getStatisticOperatorRawData,
+  getStatisticOperatorCard,
+  getStatisticOperatorChartData,
+} from '../../redux';
 
 type Props = {
   location: {
@@ -40,10 +44,10 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     optionFilters,
     eventList,
     totalEventPage,
-    posList,
   } = useSelector((state) => state?.commons);
-  const { rawData, totalRawData } = useSelector(
-    (state) => state.generatorStatistics
+
+  const { rawData, totalRawData, cardInfo } = useSelector(
+    (state) => state.operationStatistics
   );
   const { listInverter } = useSelector((state) => state?.account);
   const defaultOption = {
@@ -66,8 +70,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
-    startDate: new Date() || null,
-    endDate: new Date() || null,
+    startDate: null,
+    endDate: null,
     vendorCompany: null,
     inverter: null,
   };
@@ -75,10 +79,10 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    angleOfIncidence: cardInfo?.ds_azimuth_angle,
+    azimuth: cardInfo?.ds_incidence_angle,
+    moduleOutput: cardInfo?.dm_power,
+    moduleColor: cardInfo?.ds_color,
   };
 
   const dispatch = useDispatch();
@@ -93,22 +97,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   useEffect(() => {
     getListCompanyCallback();
   }, [getListCompanyCallback]);
-
-  /**
-   * get company list
-   */
-  const getPosListCallback = useCallback(
-    (params) => {
-      dispatch(getPosList(params));
-    },
-    [dispatch]
-  );
-
-  useEffect(() => {
-    getPosListCallback({
-      id: paramsSearch?.company,
-    });
-  }, [getPosListCallback, paramsSearch?.company]);
 
   /**
    * get Device list
@@ -127,26 +115,43 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   /**
    * get raw data list
    */
-  const getStatisticGeneratorRawDataCallback = useCallback(
+  const getStatisticOperatorRawDataCallback = useCallback(
     (params) => {
-      dispatch(getStatisticGeneratorRawData(params));
+      dispatch(getStatisticOperatorRawData(params));
     },
     [dispatch]
   );
 
   useEffect(() => {
-    getStatisticGeneratorRawDataCallback({
+    getStatisticOperatorRawDataCallback({
       com_id: paramsSearch?.company,
       inverter_ids: menuTab,
       page: paramsSearch?.page,
       per_page: paramsSearch?.pagination?.value,
     });
   }, [
-    getStatisticGeneratorRawDataCallback,
+    getStatisticOperatorRawDataCallback,
     paramsSearch?.company,
     menuTab,
     paramsSearch?.pagination,
+    paramsSearch?.page,
   ]);
+
+  /**
+   * get card info data
+   */
+  const getCardInfoCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticOperatorCard(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getCardInfoCallback({
+      inverter_ids: menuTab,
+    });
+  }, [getCardInfoCallback, menuTab]);
 
   /**
    * get Event List data
@@ -174,6 +179,40 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     paramsSearch?.page2,
     optionFilters,
   ]);
+
+  /**
+   * get Event List data
+   */
+  const getListInverterCallback = useCallback(
+    (params) => {
+      dispatch(getListInverter(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getListInverterCallback({
+      com_id: paramsSearch?.vendorCompany?.id,
+      per_page: 9999,
+    });
+  }, [paramsSearch?.vendorCompany, getListInverterCallback]);
+
+  /**
+   * get Event List data
+   */
+  const getStatisticOperatorChartDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticOperatorChartData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatisticOperatorChartDataCallback({
+      com_id: paramsSearch?.company,
+      inverter_ids: menuTab,
+    });
+  }, [getStatisticOperatorChartDataCallback, paramsSearch?.company, menuTab]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
@@ -274,12 +313,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
           vendorCompany: item,
           inverter: null,
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: item?.value,
-          })
-        );
 
         break;
       case 'startDate':
@@ -298,6 +331,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         break;
     }
   };
+
   console.log('paramsSearch', paramsSearch);
 
   // click to event detail
@@ -316,6 +350,48 @@ const OperatorStatisticCompany = ({ location }: Props) => {
 
   const handleDownloadTrend = (name) => {
     console.log(name, 'download Trend');
+  };
+
+  const handleSubmitSearch = () => {
+    let from;
+    let to;
+    if (paramsSearch?.startDate && paramsSearch?.endDate) {
+      from = moment(new Date()).format('YYYY-MM-DD');
+      to = new Date();
+    } else if (
+      paramsSearch?.startDate &&
+      !paramsSearch?.endDate &&
+      (paramsSearch?.classification === 'minutes' ||
+        paramsSearch?.classification === 'hours')
+    ) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
+      from = moment(new Date()).format('YYYY-MM-DD');
+      to = moment(new Date()).format('YYYY-MM-DD');
+    } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+    } else if (
+      paramsSearch?.startDate &&
+      !paramsSearch?.endDate &&
+      (paramsSearch?.classification === 'day' ||
+        paramsSearch?.classification === 'month' ||
+        paramsSearch?.classification === 'year')
+    ) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(new Date()).format('YYYY-MM-DD');
+    }
+    dispatch(
+      getStatisticOperatorChartData({
+        com_id: paramsSearch?.company,
+        ds_id: paramsSearch?.inverter?.id,
+        from,
+        to,
+        type: paramsSearch?.classification,
+        inverter_ids: menuTab,
+      })
+    );
   };
 
   return (
@@ -341,14 +417,14 @@ const OperatorStatisticCompany = ({ location }: Props) => {
               className="list-order tab-list"
               onSelect={(eventKey) => onSelect(eventKey)}
             >
-              {posList &&
-                posList.map((pos) => (
+              {deviceList &&
+                deviceList.map((dev) => (
                   <Tab
-                    eventKey={pos.id}
+                    eventKey={dev.id}
                     title={
                       <div className="tab-name">
-                        {pos?.label}
-                        {pos?.label !== '전체' && <span>{pos?.id}</span>}
+                        {dev?.label}
+                        {dev?.label !== '전체' && <span>{dev?.id}</span>}
                       </div>
                     }
                   >
@@ -406,11 +482,12 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                       }
                       isShowModalSorting={isShowModalSorting}
                       paramsSearch={paramsSearch}
-                      listInverter={listInverter}
+                      listInverter={deviceList.slice(1)}
                       handleClickDetail={handleClickDetail}
                       handleChangeSearch={handleChangeSearch}
                       optionFilters={optionFilters}
-                      // listStatusCompanySelect={listStatusCompanySelect}
+                      listStatusCompanySelect={listInverter}
+                      handleSubmitSearch={handleSubmitSearch}
                     />
                   </Tab>
                 ))}

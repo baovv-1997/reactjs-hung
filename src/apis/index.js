@@ -37,6 +37,9 @@ export const ROUTES = {
   // generator statistics
   GENERATOR_STATISTICS_RAW:
     '/data/solar-monitoring/statistic/generator/raw-measure',
+  OPERATOR_STATISTICS_CARD: `/data/solar-monitoring/statistic/operation/cards`,
+  OPERATOR_STATISTICS_RAW: `/solar-monitoring/statistic/generator/raw-measure`,
+  OPERATOR_STATISTICS_CHART: `/data/solar-monitoring/statistic/operation/chart`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_CARD: `/data/test-solar-monitoring/status-operation/status-cards`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_RAW: `/data/test-solar-monitoring/status-operation/raw-data`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_TREND_CHART: `/data/test-solar-monitoring/status-operation/chart-data`,

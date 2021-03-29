@@ -52,6 +52,49 @@ export const headStatusCompany = [
     name: '주파수',
   },
 ];
+
+export const headStatisticOperatorByPos = [
+  {
+    id: 0,
+    name: 'No.',
+  },
+  {
+    id: 1,
+    name: '측정 일시',
+  },
+  {
+    id: 2,
+    name: '설치업체',
+  },
+  {
+    id: 3,
+    name: '인버터ID',
+  },
+  {
+    id: 4,
+    name: '인버터명',
+  },
+  {
+    id: 5,
+    name: '설치위치',
+  },
+  {
+    id: 6,
+    name: '금일발전량',
+  },
+  {
+    id: 7,
+    name: '금월발전량',
+  },
+  {
+    id: 8,
+    name: '누적발전량',
+  },
+  {
+    id: 9,
+    name: '성능비',
+  },
+];
 export const headOperationStatusByAreaCompany = [
   {
     id: 0,

@@ -56,7 +56,7 @@ import getStatusGeneratorRawSaga from 'modules/statusCompany/sagas/getStatusGene
 import getStatusGeneratorCardSaga from 'modules/statusCompany/sagas/getStatusGeneratorCardSaga';
 import getStatusGeneratorChartSaga from 'modules/statusCompany/sagas/getStatusGeneratorChartSaga';
 
-import getStatisticGeneratorRawDataSaga from 'modules/operationStatistics/saga/getStatisticGeneratorRawDataSaga';
+import getStatisticOperatorRawDataSaga from 'modules/operationStatistics/saga/getStatisticOperatorRawDataSaga';
 import getCardInformationTestMkSaga from 'modules/testMockupStatus/sagas/generator/getCardInformationSaga';
 import getDataRawTableTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataRawTableSaga';
 import getDataTrendChartTestMkSaga from 'modules/testMockupStatus/sagas/generator/getDataTrendChartSaga';
@@ -80,6 +80,8 @@ import getDataRawTableMockupStatisticGeneratorSaga from 'modules//testMockupStat
 import getCardTestMKStatisticsOperationSaga from 'modules/testMockupStatistics/sagas/operation/getCardInformationSaga';
 import getDataChartTestMKStatisticsOperationSaga from 'modules/testMockupStatistics/sagas/operation/getTrendChartSaga';
 import getDataRawTestMKStatisticOperationSaga from 'modules/testMockupStatistics/sagas/operation/getTrendRawSaga';
+import getStatisticOperatorCardSaga from 'modules/operationStatistics/saga/getStatisticOperatorCardSaga';
+import getStatisticOperatorChartDataSaga from 'modules/operationStatistics/saga/getStatisticOperatorChartDataSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -156,7 +158,7 @@ export default function* RootSagas() {
     getDataRawTableGeneratorSaga(),
 
     // Statistics generator
-    getStatisticGeneratorRawDataSaga(),
+    getStatisticOperatorRawDataSaga(),
     /* Test mockup monitoring
         + Status of Generator
     */
@@ -185,5 +187,8 @@ export default function* RootSagas() {
     getCardTestMKStatisticsOperationSaga(),
     getDataChartTestMKStatisticsOperationSaga(),
     getDataRawTestMKStatisticOperationSaga(),
+
+    getStatisticOperatorCardSaga(),
+    getStatisticOperatorChartDataSaga(),
   ]);
 }

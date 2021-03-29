@@ -1,7 +1,8 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, memo } from 'react';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
+import Loading from 'commons/components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TitleHeader from 'commons/components/TitleHeader';
@@ -78,7 +79,8 @@ const EventDetail = ({ match, location }: Props) => {
   }, [type]);
 
   return (
-    <MainLayout isProcessing={isProcessing}>
+    <>
+      {isProcessing && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 발전 현황"
@@ -135,11 +137,18 @@ const EventDetail = ({ match, location }: Props) => {
         </div>
         <div className="group-btn-bottom">
           {(roleName === 'admin' || roleName === 'company') && (
-            <Button onClick={() => history.push(`${ROUTERS.EVENT}/edit/${id}`)}>
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: `${ROUTERS.EVENT}/edit/${id}`,
+                  state: { prevRoute: location.state.prevRoute },
+                })
+              }
+            >
               수정
             </Button>
           )}
-          <Button onClick={() => history.push(location.state.prevRoute)}>
+          <Button onClick={() => history.push(location?.state?.prevRoute)}>
             목록
           </Button>
         </div>
@@ -171,7 +180,7 @@ const EventDetail = ({ match, location }: Props) => {
       >
         {modalConform?.content}
       </ModalPopup>
-    </MainLayout>
+    </>
   );
 };
 
