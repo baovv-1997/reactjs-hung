@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import ROUTERS from 'constants/routers';
 
 const initialState = {
-  menuActived: {
+  menuClicking: {
     id: 1,
     name: '대시보드',
     sub: [
@@ -23,7 +23,7 @@ const initialState = {
       },
     ],
   },
-  subMenuActived: {
+  subMenuClicking: {
     id: 1,
     name: '통합 대시보드',
     to: ROUTERS.ROOT,
@@ -39,14 +39,14 @@ const commonSilice = createSlice({
   name: 'commons',
   initialState,
   reducers: {
-    setMenuItemClicking: (state, action) => {
+    setMenuClicking: (state, action) => {
       state.type = action.type;
-      state.menuActived = action.payload;
+      state.menuClicking = action.payload;
     },
 
-    setSubMenuItemActived: (state, action) => {
+    setNestSubClicking: (state, action) => {
       state.type = action.type;
-      state.subMenuActived = action.payload;
+      state.subMenuClicking = action.payload;
     },
     getPosList: (state, action) => {
       state.type = action.type;
@@ -195,8 +195,8 @@ const commonSilice = createSlice({
 const { actions, reducer } = commonSilice;
 
 export const {
-  setSubMenuItemActived,
-  setMenuItemClicking,
+  setNestSubClicking,
+  setMenuClicking,
   getPosList,
   getPosListSuccess,
   getPosListFailed,
