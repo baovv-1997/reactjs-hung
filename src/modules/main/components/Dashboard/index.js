@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import IMAGES from 'themes/images';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -21,7 +21,7 @@ import WeeklyElectric from '../WeeklyElectric';
 const MainPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoading, listPositions, cardPositionMain } = useSelector(
+  const { listPositions, cardPositionMain } = useSelector(
     (state) => state.main
   );
 
@@ -85,75 +85,75 @@ const MainPage = () => {
     : '';
 
   return (
-    <MainLayout isSearch isProcessing={isLoading}>
-      <div className="main-page">
-        {/* thong tin  */}
+    // <MainLayout isSearch isProcessing={isLoading}>
+    <div className="main-page">
+      {/* thong tin  */}
 
-        <div className="current-electric">
-          <div className="current-electric__title">
-            <img src={IMAGES.icon_title} alt="Title" className="icon-title" />
-            <p className="title">전체</p>
-            <div className="line" />
-          </div>
-          <TotalPower
-            amountElectricDay={avenrageCardMeasure?.card?.prod_today}
-            amountElectricMonth={avenrageCardMeasure?.card?.prod_inmonth}
-            cumulativeElectric={avenrageCardMeasure?.card?.prod_sum}
-          />
-          <WeeklyElectric measure={measure} />
-          <InfoReality
-            outputVoltage={avenrageCardMeasure?.card?.output_voltage}
-            outputCurrent={avenrageCardMeasure?.card?.output_current}
-            electricRealtime={avenrageCardMeasure?.card?.prod_realtime}
-            ratePower={avenrageCardMeasure?.card?.performance_ratio}
-          />
-          <VitualData
-            radiance={avenrageCardMeasure?.card?.radiance}
-            temperature={avenrageCardMeasure?.card?.temperature}
-          />
+      <div className="current-electric">
+        <div className="current-electric__title">
+          <img src={IMAGES.icon_title} alt="Title" className="icon-title" />
+          <p className="title">전체</p>
+          <div className="line" />
         </div>
-
-        {listPositions &&
-          listPositions.map((item) => (
-            <img
-              src={IMAGES.icon_location}
-              alt=""
-              className="location"
-              style={{
-                top: `${item.posY}px`,
-                left: `${item.posX}px`,
-              }}
-              key={item.id}
-            />
-          ))}
-
-        {renderPositionActive}
-
-        {cardPositionMain &&
-          cardPositionMain?.map((posItem) => (
-            <div
-              // key={posItem?.position?.id}
-              className="display-main-card"
-              style={{
-                top: `${posItem?.position?.pos_map_y - 300}px`,
-                left: `${posItem?.position?.pos_map_x - 300}px`,
-              }}
-            >
-              <Card
-                title={posItem?.position?.pos_name}
-                listCompany={posItem?.company}
-                amountElectricDay={posItem?.card?.prod_today}
-                amountElectricMonth={posItem?.card?.prod_inmonth}
-                electricRealtime={posItem?.card?.prod_realtime}
-                cumulativeElectric={posItem?.card?.prod_sum}
-                ratePower={posItem?.card?.performance_ratio}
-                titleClick={() => handleTitleClick(posItem?.position?.id)}
-                logoClick={handleLogoClick}
-              />
-            </div>
-          ))}
+        <TotalPower
+          amountElectricDay={avenrageCardMeasure?.card?.prod_today}
+          amountElectricMonth={avenrageCardMeasure?.card?.prod_inmonth}
+          cumulativeElectric={avenrageCardMeasure?.card?.prod_sum}
+        />
+        <WeeklyElectric measure={measure} />
+        <InfoReality
+          outputVoltage={avenrageCardMeasure?.card?.output_voltage}
+          outputCurrent={avenrageCardMeasure?.card?.output_current}
+          electricRealtime={avenrageCardMeasure?.card?.prod_realtime}
+          ratePower={avenrageCardMeasure?.card?.performance_ratio}
+        />
+        <VitualData
+          radiance={avenrageCardMeasure?.card?.radiance}
+          temperature={avenrageCardMeasure?.card?.temperature}
+        />
       </div>
-    </MainLayout>
+
+      {listPositions &&
+        listPositions.map((item) => (
+          <img
+            src={IMAGES.icon_location}
+            alt=""
+            className="location"
+            style={{
+              top: `${item.posY}px`,
+              left: `${item.posX}px`,
+            }}
+            key={item.id}
+          />
+        ))}
+
+      {renderPositionActive}
+
+      {cardPositionMain &&
+        cardPositionMain?.map((posItem) => (
+          <div
+            // key={posItem?.position?.id}
+            className="display-main-card"
+            style={{
+              top: `${posItem?.position?.pos_map_y - 300}px`,
+              left: `${posItem?.position?.pos_map_x - 300}px`,
+            }}
+          >
+            <Card
+              title={posItem?.position?.pos_name}
+              listCompany={posItem?.company}
+              amountElectricDay={posItem?.card?.prod_today}
+              amountElectricMonth={posItem?.card?.prod_inmonth}
+              electricRealtime={posItem?.card?.prod_realtime}
+              cumulativeElectric={posItem?.card?.prod_sum}
+              ratePower={posItem?.card?.performance_ratio}
+              titleClick={() => handleTitleClick(posItem?.position?.id)}
+              logoClick={handleLogoClick}
+            />
+          </div>
+        ))}
+    </div>
+    // </MainLayout>
   );
 };
 

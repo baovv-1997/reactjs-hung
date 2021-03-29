@@ -4,16 +4,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TIME_REQUEST } from 'constants/index';
 import Pagination from 'react-js-pagination';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import * as ActionStatusGenerator from '../redux';
 import * as CommonAction from 'commons/redux';
-import ItemContentTab from './ItemContentTab';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import * as ActionStatusGenerator from '../redux';
+import ItemContentTab from './ItemContentTab';
 
 const StatusByAreaCompany = () => {
   const {
-    isProcessing,
+    // isProcessing,
     dataBox,
     listDataTableRaw,
     total,
@@ -225,45 +225,45 @@ const StatusByAreaCompany = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="테스트(목업) 발전 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="테스트(목업) 발전 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listInverterTest}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            listMockupDataCompany={listDataTableRaw}
+            powerData={powerData}
+            handleDownloadTrend={handleDownloadTrend}
             handleChangeSearch={handleChangeSearch}
+            performanceData={performanceData}
+            insolationData={insolationData}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            dataChart={dataChart}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              listMockupDataCompany={listDataTableRaw}
-              powerData={powerData}
-              handleDownloadTrend={handleDownloadTrend}
-              handleChangeSearch={handleChangeSearch}
-              performanceData={performanceData}
-              insolationData={insolationData}
-              paramsSearch={paramsSearch}
-              dataChart={dataChart}
-            />
-            <div className="opacity d-block pagination">
-              {total > paramsSearch?.pagination?.value && (
-                <div className="wrapper-device__pagination mt-0">
-                  <Pagination
-                    activePage={paramsSearch?.page}
-                    itemsCountPerPage={paramsSearch?.pagination?.value}
-                    totalItemsCount={total}
-                    pageRangeDisplayed={5}
-                    onChange={(e) => handleChangeSearch(e, 'page')}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-              )}
-            </div>
+          <div className="opacity d-block pagination">
+            {total > paramsSearch?.pagination?.value && (
+              <div className="wrapper-device__pagination mt-0">
+                <Pagination
+                  activePage={paramsSearch?.page}
+                  itemsCountPerPage={paramsSearch?.pagination?.value}
+                  totalItemsCount={total}
+                  pageRangeDisplayed={5}
+                  onChange={(e) => handleChangeSearch(e, 'page')}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 

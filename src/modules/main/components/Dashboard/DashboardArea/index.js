@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card } from 'commons/components/Card';
 import { setPositionCardMeasure } from 'helpers';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import { mockDataMain } from 'mockData/mainData';
-import { getListPosition, getCardMeasureArea } from 'modules/main/redux';
+import { getListPosition } from 'modules/main/redux';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IMAGES from 'themes/images';
@@ -14,9 +14,7 @@ import WeeklyElectric from '../../WeeklyElectric';
 
 const DashboardArea = () => {
   const dispatch = useDispatch();
-  const { isLoading, cardMeasureArea, listPositions } = useSelector(
-    (state) => state?.main
-  );
+  const { cardMeasureArea } = useSelector((state) => state?.main);
   const { totalPower, infoReality, vitualData } = mockDataMain;
   const [bgImage, setBgImage] = useState(null);
   const [positionName, setPositionName] = useState(null);
@@ -26,14 +24,14 @@ const DashboardArea = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChangeSelect = (value) => {
-    dispatch(getCardMeasureArea({ type: 'inverter', pos_id: value.id }));
-    const positionSelected = listPositions.filter(
-      (item) => item.id === value.id
-    );
-    setBgImage(positionSelected[0]?.pos_map_path?.thumbnail);
-    setPositionName(positionSelected[0]?.label);
-  };
+  // const handleChangeSelect = (value) => {
+  //   dispatch(getCardMeasureArea({ type: 'inverter', pos_id: value.id }));
+  //   const positionSelected = listPositions.filter(
+  //     (item) => item.id === value.id
+  //   );
+  //   setBgImage(positionSelected[0]?.pos_map_path?.thumbnail);
+  //   setPositionName(positionSelected[0]?.label);
+  // };
 
   const handleLogoClick = (id) => {
     console.log('logoClick', id);
@@ -42,10 +40,9 @@ const DashboardArea = () => {
   console.log(cardMeasureArea, 'cardMeasureArea');
 
   return (
-    <MainLayout
-      isSelect
-      isProcessing={isLoading}
-      handleChangeSelect={handleChangeSelect}
+    <div
+      className="dashboard-area"
+      //  style={{ backgroundImage: `url('${bgImage}')` }}
     >
       <div
         className="dashboard-area"
@@ -93,7 +90,7 @@ const DashboardArea = () => {
             </div>
           ))}
       </div>
-    </MainLayout>
+    </div>
   );
 };
 

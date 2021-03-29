@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import {
   listMockupType,
@@ -24,7 +24,7 @@ const OperationStatusPage = () => {
   const totalPage2 = 100;
   const [menuTab, setMenuTab] = useState('bulk');
   console.log(menuTab, 'menuTab');
-  const { isProcessing, listStatusCompanySelect } = useSelector(
+  const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
   const { listInverter } = useSelector((state) => state?.account);
@@ -205,108 +205,108 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
-            listParkingLot={listParkingLot}
-            paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
-            listMockupType={listMockupType}
-          />
-          <div className="content-body-left w-100">
-            <div className="h-100">
-              <Tabs
-                defaultActiveKey="all"
-                className="list-order tab-list"
-                onSelect={(eventKey) => onSelect(eventKey)}
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 발전 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          listParkingLot={listParkingLot}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listStatusCompanySelect}
+          listMockupType={listMockupType}
+        />
+        <div className="content-body-left w-100">
+          <div className="h-100">
+            <Tabs
+              defaultActiveKey="all"
+              className="list-order tab-list"
+              onSelect={(eventKey) => onSelect(eventKey)}
+            >
+              <Tab
+                eventKey="all"
+                title={
+                  <div className="tab-name">
+                    아반시스 코리아 <span>전체</span>
+                  </div>
+                }
               >
-                <Tab
-                  eventKey="all"
-                  title={
-                    <div className="tab-name">
-                      아반시스 코리아 <span>전체</span>
-                    </div>
+                <ItemContentTab
+                  dataBoxContent={dataBoxContent}
+                  dataTableStatisticsCompany={dataTableStatisticsCompany}
+                  handleDownloadTrend={handleDownloadTrend}
+                  dataContent={{}}
+                  totalPage={totalPage}
+                  perPage={perPage}
+                  totalPage2={totalPage2}
+                  perPage2={perPage2}
+                  dataTableStatisticsOfModuleCompany={
+                    dataTableStatisticsOfModuleCompany
                   }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    dataTableStatisticsCompany={dataTableStatisticsCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    dataTableStatisticsOfModuleCompany={
-                      dataTableStatisticsOfModuleCompany
-                    }
-                    listInverter={listInverter}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                    paramsSearch={paramsSearch}
-                    handleChangeSearch={handleChangeSearch}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="coes"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
-                    </div>
+                  listInverter={listInverter}
+                  listStatusCompanySelect={listStatusCompanySelect}
+                  paramsSearch={paramsSearch}
+                  handleChangeSearch={handleChangeSearch}
+                />
+              </Tab>
+              <Tab
+                eventKey="coes"
+                title={
+                  <div className="tab-name">
+                    인버터 ID <span>본관 남측</span>
+                  </div>
+                }
+              >
+                <ItemContentTab
+                  dataBoxContent={dataBoxContent}
+                  dataTableStatisticsCompany={dataTableStatisticsCompany}
+                  handleDownloadTrend={handleDownloadTrend}
+                  dataContent={{}}
+                  totalPage={totalPage}
+                  perPage={perPage}
+                  totalPage2={totalPage2}
+                  perPage2={perPage2}
+                  dataTableStatisticsOfModuleCompany={
+                    dataTableStatisticsOfModuleCompany
                   }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    dataTableStatisticsCompany={dataTableStatisticsCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    dataTableStatisticsOfModuleCompany={
-                      dataTableStatisticsOfModuleCompany
-                    }
-                    listInverter={listInverter}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                    paramsSearch={paramsSearch}
-                    handleChangeSearch={handleChangeSearch}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="SK-Solar"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID <span>본관 동측</span>
-                    </div>
+                  listInverter={listInverter}
+                  listStatusCompanySelect={listStatusCompanySelect}
+                  paramsSearch={paramsSearch}
+                  handleChangeSearch={handleChangeSearch}
+                />
+              </Tab>
+              <Tab
+                eventKey="SK-Solar"
+                title={
+                  <div className="tab-name">
+                    인버터 ID <span>본관 동측</span>
+                  </div>
+                }
+              >
+                <ItemContentTab
+                  dataBoxContent={dataBoxContent}
+                  dataTableStatisticsCompany={dataTableStatisticsCompany}
+                  handleDownloadTrend={handleDownloadTrend}
+                  dataContent={{}}
+                  totalPage={totalPage}
+                  perPage={perPage}
+                  totalPage2={totalPage2}
+                  perPage2={perPage2}
+                  dataTableStatisticsOfModuleCompany={
+                    dataTableStatisticsOfModuleCompany
                   }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    dataTableStatisticsCompany={dataTableStatisticsCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    totalPage={totalPage}
-                    perPage={perPage}
-                    totalPage2={totalPage2}
-                    perPage2={perPage2}
-                    dataTableStatisticsOfModuleCompany={
-                      dataTableStatisticsOfModuleCompany
-                    }
-                    listInverter={listInverter}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                    paramsSearch={paramsSearch}
-                    handleChangeSearch={handleChangeSearch}
-                  />
-                </Tab>
-              </Tabs>
-            </div>
+                  listInverter={listInverter}
+                  listStatusCompanySelect={listStatusCompanySelect}
+                  paramsSearch={paramsSearch}
+                  handleChangeSearch={handleChangeSearch}
+                />
+              </Tab>
+            </Tabs>
           </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 

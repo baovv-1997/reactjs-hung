@@ -2,16 +2,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
-import * as ActionGenerator from '../../redux';
 import { getEventList, addEventFilter } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
-import ItemContentTab from './ItemContentTab';
 import ROUTERS from 'constants/routers';
+import ItemContentTab from './ItemContentTab';
+import * as ActionGenerator from '../../redux';
 
 const OperationStatusPage = () => {
   const history = useHistory();
@@ -19,7 +19,7 @@ const OperationStatusPage = () => {
     (state) => state?.commons
   );
   const {
-    isProcessing,
+    // isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
@@ -236,36 +236,37 @@ const OperationStatusPage = () => {
     history.push(`${ROUTERS.TEST_MOCKUP_OPERATION}/${item.id}`);
   };
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 운영 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listInverterTest}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRawOperation}
+            handleDownloadTrend={handleDownloadTrend}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalEventPage}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={eventList}
+            isShowModalSorting={isShowModalSorting}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            dataChartOperation={dataChartOperation}
+            optionFilters={optionFilters}
+            handleChangeSearch={handleChangeSearch}
+            handleClickDetail={handleClickDetail}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              listMockupDataCompany={listDataTableRawOperation}
-              handleDownloadTrend={handleDownloadTrend}
-              totalPage={total}
-              perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalEventPage}
-              perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={eventList}
-              isShowModalSorting={isShowModalSorting}
-              paramsSearch={paramsSearch}
-              dataChartOperation={dataChartOperation}
-              optionFilters={optionFilters}
-              handleChangeSearch={handleChangeSearch}
-              handleClickDetail={handleClickDetail}
-            />
-          </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+
+    // </MainLayout>
   );
 };
 
