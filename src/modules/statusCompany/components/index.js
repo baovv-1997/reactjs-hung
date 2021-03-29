@@ -40,9 +40,9 @@ const StatusByAreaCompany = () => {
     company: companyId || (comList && comList[1] && comList[1].id),
     mockupType: null,
     parkingLot: null,
-    power: false,
-    performance: false,
-    insolation: false,
+    power: true,
+    performance: true,
+    insolation: true,
     pagination: defaultOption,
   };
 

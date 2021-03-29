@@ -71,7 +71,7 @@ export const LineChart = ({
             argumentField="time"
           />
 
-          {!optionLine?.line1 && (
+          {optionLine?.line1 && (
             <Series
               valueField="y1"
               type="spline"
@@ -82,12 +82,12 @@ export const LineChart = ({
               <Point visible={false} />
             </Series>
           )}
-          {!optionLine?.line2 && (
+          {optionLine?.line2 && (
             <Series valueField="y2" type="spline" color="#bc5200" width={4}>
               <Point visible={false} />
             </Series>
           )}
-          {!optionLine?.line3 && (
+          {optionLine?.line3 && (
             <Series
               valueField="y3"
               type="spline"
