@@ -1,6 +1,9 @@
 // @flow
 // libs
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMenuItemClicking } from 'commons/redux';
+
 import { withRouter } from 'react-router-dom';
 import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
 import IMAGES from 'themes/images';
@@ -14,10 +17,20 @@ type Props = {
 };
 
 const Menu = ({ location }: Props) => {
+  const menuActived = useSelector((state) => state?.commons?.menuActived);
+
+  const dispatch = useDispatch();
   const [listSub, setListSub] = useState([]);
-  const [menuClicking, setMenuClicking] = useState({});
+  const [menuClicking, setMenuClicking] = useState(menuActived);
+
+  useEffect(() => {
+    setMenuClicking(menuActived);
+    setListSub(menuActived?.sub);
+  }, [menuActived]);
+
   const handleClickItem = (item, active) => {
     setListSub(item.sub);
+    dispatch(setMenuItemClicking(item));
     setMenuClicking(item);
     if (item.name === menuClicking.name && active) {
       setMenuClicking({});
@@ -27,7 +40,7 @@ const Menu = ({ location }: Props) => {
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
       const isActive =
-        menuClicking.name === item.name || location.pathname.includes(item.to);
+        menuClicking?.name === item.name || location.pathname.includes(item.to);
       return (
         <MenuItem
           key={item.id}
