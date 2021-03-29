@@ -35,6 +35,11 @@ export const LineChart = ({
     dataChart[dataChart.length] &&
     dataChart[dataChart.length].time &&
     dataChart[dataChart.length].time - 3600;
+
+  // const customizeText = (arg) => {
+  //   const labelText = arg.valueText.substring(0, arg.valueText.length - 2);
+  //   return `${labelText}`;
+  // };
   const customizeTooltip = (arg) => {
     let text = '';
     switch (arg.seriesName) {
@@ -102,6 +107,7 @@ export const LineChart = ({
             pane="top"
             name="frequency1"
             position="left"
+            showZero={true}
           />
           <ValueAxis
             name="frequency2"
@@ -124,7 +130,9 @@ export const LineChart = ({
               length: { seconds: 3600 },
             }}
             argumentType="datetime"
-          />
+          >
+            <Label format="S" />
+          </ArgumentAxis>
           <Tooltip enabled={true} customizeTooltip={customizeTooltip} />
           <Legend visible={false} />
           <ZoomAndPan argumentAxis="both" />
