@@ -5,14 +5,15 @@ import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatusByCompany } from './constants';
-import LineSeriesChart from './chart';
+// import LineSeriesChart from './chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import LineChart from 'commons/components/LineChart/lineChart';
 
 type Props = {
   rawData: any,
-  dataContent: Object,
+  // dataContent: Object,
   powerData: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -22,12 +23,13 @@ type Props = {
   totalRawData: number,
   activeTab: string,
   id: number,
+  chartData: any,
 };
 
 const ItemContentTab = ({
   rawData,
   powerData,
-  dataContent,
+  // dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   performanceData,
@@ -36,8 +38,8 @@ const ItemContentTab = ({
   totalRawData,
   activeTab,
   id,
+  chartData,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -75,7 +77,9 @@ const ItemContentTab = ({
           </div>
         </div>
         <div className="group-char-right">
-          {activeTab === id.toString() && <LineSeriesChart />}
+          {activeTab === id.toString() && chartData && (
+            <LineChart dataChart={chartData} />
+          )}
         </div>
       </div>
 
