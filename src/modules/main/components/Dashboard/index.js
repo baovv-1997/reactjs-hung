@@ -52,14 +52,13 @@ const MainPage = () => {
         count.current = 1;
       }
       dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
-    }, 5000);
+    }, 30000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listPositions, cardPositionMain]);
 
   // when click title redirect dashboard area of area
   const handleTitleClick = (id) => {
-    // console.log(id);
     history.push(ROUTERS.DASHBOARD_COMPANY);
     dispatch(setPositionId({ id }));
   };

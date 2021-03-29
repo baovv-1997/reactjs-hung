@@ -4,25 +4,31 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import {
-  listDataTestMockupOperationStatus,
-  tableOperationStatusByAreaCompany,
-} from 'mockData/listCompany';
-import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import { TIME_REQUEST } from 'constants/index';
+import * as CommonAction from 'commons/redux';
+import { getEventList, addEventFilter } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
+import ROUTERS from 'constants/routers';
 import ItemContentTab from './ItemContentTab';
+import * as ActionGenerator from '../../redux';
 
-const StatusByAreaCompany = () => {
+const OperationStatusPage = () => {
   const history = useHistory();
-  const perPage = 6;
-  const totalPage = 100;
-  const perPage2 = 6;
-  const totalPage2 = 100;
-  const { listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
+  const { deviceList, optionFilters, eventList, totalEventPage } = useSelector(
+    (state) => state?.commons
   );
+  const {
+    // isProcessing,
+    total,
+    dataChartOperation,
+    listDataTableRawOperation,
+    dataCardOperation,
+  } = useSelector((state) => state?.testMockupStatus);
+  const [randomNumber, setRandomNumber] = useState(null);
+  const listInverterTest =
+    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -31,44 +37,130 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
+    company:
+      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+      null,
+    page2: 1,
     ACVoltage: false,
     ACCurrent: false,
     ACPower: false,
     pagination: defaultOption,
     pagination2: defaultOption,
-    page2: 1,
+    isSubmitSearch: false,
   };
 
-  const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
+  const [paramsSearch, setParamsSearch] = useState(defaultSearch);
+
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    angleOfIncidence:
+      (dataCardOperation?.incidence_angle &&
+        dataCardOperation?.incidence_angle.toLocaleString('en')) ||
+      '0',
+    azimuth:
+      (dataCardOperation?.azimuth_angle &&
+        dataCardOperation?.azimuth_angle.toLocaleString('en')) ||
+      '0',
+    moduleOutput:
+      (dataCardOperation?.power &&
+        dataCardOperation?.power.toLocaleString('en')) ||
+      '0',
+    moduleColor: dataCardOperation?.color,
   };
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
+    dispatch(CommonAction.getListDevice());
   }, []);
 
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    // dispatch(StatusCompanyAction.getListStatusCompany(paramsSearch));
-    // call api get list
-  }, [paramsSearch, dispatch]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRandomNumber(Math.random());
+    }, TIME_REQUEST);
+    return () => clearInterval(interval);
+  }, []);
+
+  // call api getCardInformation
+  const handleGetCardInformation = useCallback(
+    (company) => {
+      dispatch(
+        ActionGenerator.getCardTestMKStatusOperation({
+          inverter_id: company,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    handleGetCardInformation(paramsSearch?.company);
+  }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
+
+  // call api getDataTrend chart
+  const handleGetDataTrendChart = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataTestMKChartStatusOperation(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    handleGetDataTrendChart({
+      inverter_id: paramsSearch?.company,
+    });
+  }, [
+    handleGetDataTrendChart,
+    paramsSearch?.company,
+    randomNumber,
+    paramsSearch?.isSubmitSearch,
+  ]);
+
+  // call api getDataTrend table
+  const handleGetDataRawTable = useCallback(
+    (params) => {
+      dispatch(ActionGenerator.getDataTestMKRawTableOperation(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    handleGetDataRawTable({
+      inverter_id: paramsSearch?.company,
+      per_page: paramsSearch?.pagination?.value,
+      page: paramsSearch?.page,
+    });
+  }, [
+    handleGetDataRawTable,
+    paramsSearch?.company,
+    paramsSearch?.pagination?.value,
+    paramsSearch?.page,
+    randomNumber,
+  ]);
+
+  // get event list when inverter, page, perpage have change
+  useEffect(() => {
+    dispatch(
+      getEventList({
+        inverter_id: paramsSearch?.company || null,
+        per_page: paramsSearch?.pagination2?.value,
+        page: paramsSearch?.page2,
+        type: optionFilters,
+      })
+    );
+  }, [
+    paramsSearch?.pagination2,
+    paramsSearch?.page2,
+    paramsSearch?.company,
+    optionFilters,
+    randomNumber,
+  ]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
         });
         break;
@@ -94,18 +186,20 @@ const StatusByAreaCompany = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-        });
-        break;
-      case 'page':
-        setParamsSearch({
-          ...paramsSearch,
-          page: item,
+          page: 1,
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
+          page2: 1,
+        });
+        break;
+      case 'page':
+        setParamsSearch({
+          ...paramsSearch,
+          page: item,
         });
         break;
       case 'page2':
@@ -118,8 +212,16 @@ const StatusByAreaCompany = () => {
         setIsShowModalSorting(!isShowModalSorting);
         break;
       case 'checkBox':
-        console.log(item, 'optionCheck', name);
+        dispatch(addEventFilter(item));
         setIsShowModalSorting(false);
+        break;
+      case 'isSubmitSearch':
+        setParamsSearch({
+          ...paramsSearch,
+          isSubmitSearch: item,
+          page: 1,
+          page2: 1,
+        });
         break;
       default:
         break;
@@ -127,7 +229,7 @@ const StatusByAreaCompany = () => {
   };
 
   const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
+    console.log(name, 'download Trend');
   };
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
@@ -136,38 +238,36 @@ const StatusByAreaCompany = () => {
   return (
     // <MainLayout isProcessing={isProcessing}>
     <div className="content-wrap">
-      <TitleHeader title="테스트(목업) 운영 현황" />
+      <TitleHeader title="테스트(실증단지) 운영 통계" />
       <div className="content-body page-company">
         <GroupSelectSidebar
           handleChangeSearch={handleChangeSearch}
           paramsSearch={paramsSearch}
-          listStatusCompanySelect={listStatusCompanySelect}
+          listStatusCompanySelect={listInverterTest}
         />
-        <div className="content-body-left border-pd-20">
-          <div className="h-100">
-            <ItemContentTab
-              listMockupDataCompany={listDataTestMockupOperationStatus}
-              dataContent={{}}
-              dataBoxContent={dataBoxContent}
-              handleDownloadTrend={handleDownloadTrend}
-              handleChangeSearch={handleChangeSearch}
-              tableOperationStatusByAreaCompany={
-                tableOperationStatusByAreaCompany
-              }
-              isShowModalSorting={isShowModalSorting}
-              handleClickDetail={handleClickDetail}
-              paramsSearch={paramsSearch}
-              totalPage={totalPage}
-              perPage={perPage}
-              totalPage2={totalPage2}
-              perPage2={perPage2}
-            />
-          </div>
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRawOperation}
+            handleDownloadTrend={handleDownloadTrend}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalEventPage}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={eventList}
+            isShowModalSorting={isShowModalSorting}
+            paramsSearch={paramsSearch}
+            dataChartOperation={dataChartOperation}
+            optionFilters={optionFilters}
+            handleChangeSearch={handleChangeSearch}
+            handleClickDetail={handleClickDetail}
+          />
         </div>
       </div>
     </div>
+
     // </MainLayout>
   );
 };
 
-export default StatusByAreaCompany;
+export default OperationStatusPage;

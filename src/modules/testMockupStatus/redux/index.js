@@ -6,6 +6,16 @@ const testMockupStatusSlide = createSlice({
   initialState: {
     isLoading: false,
     total: 0,
+    dataCardOperation: {
+      azimuth_angle: 0,
+      color: '',
+      incidence_angle: 0,
+      power: 0,
+    },
+    dataBox: {},
+    listDataTableRaw: [],
+    dataChartOperation: {},
+    listDataTableRawOperation: [],
   },
 
   reducers: {
@@ -83,6 +93,81 @@ const testMockupStatusSlide = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getCardTestMKStatusOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getCardTestMKStatusOperationSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataCardOperation = data;
+    },
+    getCardTestMKStatusOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+
+    getDataTestMKChartStatusOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataTestMKChartStatusOperationSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChartOperation = data;
+    },
+    getDataTestMKChartStatusOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.dataChartOperation = {};
+    },
+
+    getDataTestMKRawTableOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataTestMKRawTableOperationSuccess: (state, action) => {
+      const { data, params } = action;
+      const listDataTableRaw =
+        data &&
+        data?.data.map((item, index) => ({
+          id: item.id,
+          rowId: `${
+            data?.total - (params?.page - 1) * params.per_page - index || ''
+          }`,
+          dm_datetime: item.dm_datetime || '',
+          com_name: item.com_name || '',
+          ds_azimuth_angle:
+            item?.ds_azimuth_angle &&
+            `${item?.ds_azimuth_angle.toLocaleString('en')}°`,
+          ds_incidence_angle:
+            item.ds_incidence_angle &&
+            `${item.ds_incidence_angle.toLocaleString('en') || 0}°`,
+          dm_ac_voltage:
+            item.dm_ac_voltage &&
+            `${item.dm_ac_voltage.toLocaleString('en') || 0}KW`,
+          dm_ac_power:
+            item.dm_ac_power &&
+            `${item.dm_ac_power.toLocaleString('en') || 0}A`,
+          dm_ac_current:
+            (item.dm_ac_current &&
+              `${item.dm_ac_current.toLocaleString('en') || 0}A`) ||
+            '0Hz',
+        }));
+      state.total = (data && data.total) || 0;
+      state.listDataTableRawOperation = listDataTableRaw;
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    getDataTestMKRawTableOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.total = 0;
+      state.listDataTableRawOperation = [];
+    },
   },
 });
 
@@ -100,6 +185,18 @@ export const {
   getDataTrendChartTestMk,
   getDataTrendChartTestMkSuccess,
   getDataTrendChartTestMkFailed,
+
+  getDataTestMKChartStatusOperation,
+  getDataTestMKChartStatusOperationSuccess,
+  getDataTestMKChartStatusOperationFailed,
+
+  getDataTestMKRawTableOperation,
+  getDataTestMKRawTableOperationSuccess,
+  getDataTestMKRawTableOperationFailed,
+
+  getCardTestMKStatusOperation,
+  getCardTestMKStatusOperationSuccess,
+  getCardTestMKStatusOperationFailed,
 } = actions;
 
 export default reducer;

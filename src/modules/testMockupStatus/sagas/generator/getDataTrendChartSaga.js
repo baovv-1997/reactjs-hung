@@ -6,7 +6,7 @@ import * as CompanyAction from '../../redux';
 function* getDataTrendChartTestMk(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.API_TEST_MOCKUP_STATISTICS_CHART, action.payload)
+      API.get(ROUTES.API_TEST_MOCKUP_STATUS_CHART, action.payload)
     );
 
     if (response.ok) {
