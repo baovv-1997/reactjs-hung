@@ -7,7 +7,6 @@ import Header from 'commons/components/Header';
 
 import SidebarMenu from '../Menu';
 
-
 type Props = {
   children: React.AbstractComponent<{}>,
   isSearch?: boolean,
@@ -21,7 +20,7 @@ export const MainLayout = ({
   isSearch = false,
   isSelect = false,
   isProcessing = false,
-  handleChangeSelect = () => { }
+  handleChangeSelect = () => {},
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const refMenu = useRef(null);
@@ -44,7 +43,8 @@ export const MainLayout = ({
 
   let showHeader;
   if (isSearch) showHeader = <Header isSearch />;
-  else if (isSelect) showHeader = <Header isSelect handleChangeSelect={handleChangeSelect} />;
+  else if (isSelect)
+    showHeader = <Header isSelect handleChangeSelect={handleChangeSelect} />;
   else showHeader = <Header />;
 
   return (
@@ -59,7 +59,7 @@ export const MainLayout = ({
             }}
             tabIndex={0}
             role="menuitem"
-            onKeyPress={() => { }}
+            onKeyPress={() => {}}
             ref={iconRef}
           >
             <span className="icon" />
@@ -83,7 +83,7 @@ MainLayout.defaultProps = {
   isSearch: false,
   isSelect: false,
   isProcessing: false,
-  handleChangeSelect: () => { },
+  handleChangeSelect: () => {},
 };
 
 export default MainLayout;
