@@ -65,21 +65,6 @@
   }
 }
 
-.header__select {
-  margin-left: pxToRem(40);
-  .css-4ljt47-MenuList {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    border-radius: 15px;
-  }
-}
-
 .modal__event {
   display: none;
   width: pxToRem(280);

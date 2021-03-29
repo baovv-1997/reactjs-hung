@@ -11,6 +11,23 @@
   margin-top: pxToRem(30);
   position: absolute;
   left: 50%;
-  width: 23px;
-  height: 29px;
+  width: pxToRem(23);
+  height: pxToRem(29);
+}
+.header__select {
+  position: fixed;
+  top: pxToRem(12);
+  z-index: 999;
+  margin-left: pxToRem(40);
+  .css-4ljt47-MenuList {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    border-radius: pxToRem(15);
+  }
 }
