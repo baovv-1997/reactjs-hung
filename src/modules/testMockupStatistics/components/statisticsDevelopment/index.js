@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import {
   dataTableTestMockupStatistics,
@@ -19,7 +19,7 @@ const OperationStatusPage = () => {
   const totalPage = 100;
   const perPage2 = 6;
   const totalPage2 = 100;
-  const { isProcessing, listStatusCompanySelect } = useSelector(
+  const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
   const { listInverter } = useSelector((state) => state?.account);
@@ -180,37 +180,37 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="테스트(목업) 발전 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
-            paramsSearch={paramsSearch}
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="테스트(목업) 발전 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listStatusCompanySelect}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            dataTableStatisticsCompany={dataTableTestMockupStatistics}
+            handleDownloadTrend={handleDownloadTrend}
+            dataContent={{}}
+            totalPage={totalPage}
+            perPage={perPage}
+            totalPage2={totalPage2}
+            perPage2={perPage2}
+            dataTableStatisticsOfModuleCompany={
+              dataTableTestMockupStatisticsOfModule
+            }
+            listInverter={listInverter}
             listStatusCompanySelect={listStatusCompanySelect}
+            paramsSearch={paramsSearch}
+            handleChangeSearch={handleChangeSearch}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              dataTableStatisticsCompany={dataTableTestMockupStatistics}
-              handleDownloadTrend={handleDownloadTrend}
-              dataContent={{}}
-              totalPage={totalPage}
-              perPage={perPage}
-              totalPage2={totalPage2}
-              perPage2={perPage2}
-              dataTableStatisticsOfModuleCompany={
-                dataTableTestMockupStatisticsOfModule
-              }
-              listInverter={listInverter}
-              listStatusCompanySelect={listStatusCompanySelect}
-              paramsSearch={paramsSearch}
-              handleChangeSearch={handleChangeSearch}
-            />
-          </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 
