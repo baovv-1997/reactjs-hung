@@ -7,7 +7,7 @@ type Props = {
 };
 
 const WeeklyElectric = (measure: Props) => {
-  const dataChart = measure?.measure?.prod_groupby_week;
+  const dataChart = measure?.measure;
   console.log('dataChart', dataChart);
   const chartRef = useRef(null);
 

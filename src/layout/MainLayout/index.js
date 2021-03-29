@@ -1,28 +1,17 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useRef } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
-// import Header from '../../components/Header';
 import Loading from 'commons/components/Loading';
 import Header from 'commons/components/Header';
 
 import SidebarMenu from '../Menu';
 
-
 type Props = {
   children: React.AbstractComponent<{}>,
-  isSearch?: boolean,
-  isSelect?: boolean,
   isProcessing?: boolean,
-  handleChangeSelect?: Function,
 };
 
-export const MainLayout = ({
-  children,
-  isSearch = false,
-  isSelect = false,
-  isProcessing = false,
-  handleChangeSelect = () => { }
-}: Props) => {
+export const MainLayout = ({ children, isProcessing = false }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const refMenu = useRef(null);
   const iconRef = useRef(null);
@@ -42,11 +31,6 @@ export const MainLayout = ({
     classHeight = 'heightMenu';
   }
 
-  let showHeader;
-  if (isSearch) showHeader = <Header isSearch />;
-  else if (isSelect) showHeader = <Header isSelect handleChangeSelect={handleChangeSelect} />;
-  else showHeader = <Header />;
-
   return (
     <>
       {isProcessing && <Loading />}
@@ -59,7 +43,7 @@ export const MainLayout = ({
             }}
             tabIndex={0}
             role="menuitem"
-            onKeyPress={() => { }}
+            onKeyPress={() => {}}
             ref={iconRef}
           >
             <span className="icon" />
@@ -69,7 +53,7 @@ export const MainLayout = ({
           <SidebarMenu innerRef={refMenu} />
         </div>
         <div className="main-content" ref={mainContent}>
-          {showHeader}
+          <Header />
           <div className="content">
             <div>{children}</div>
           </div>
@@ -80,10 +64,7 @@ export const MainLayout = ({
 };
 
 MainLayout.defaultProps = {
-  isSearch: false,
-  isSelect: false,
   isProcessing: false,
-  handleChangeSelect: () => { },
 };
 
 export default MainLayout;

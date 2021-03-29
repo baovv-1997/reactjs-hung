@@ -19,6 +19,7 @@ export const ROUTES = {
   GET_DASHBOARD_TEST_MOCKUP: `/data/test-mockup/cards`,
   GET_DASHBOARD_TEST_SOLAR: `/data/test-solar-monitoring/cards`,
   GET_DASHBOARD: `/data/solar-monitoring/cards`,
+  GET_TOTAL_METRIC: `/data/solar-monitoring/dashboard-metric`,
   GET_EVENT_LIST: '/event',
   DELETE_EVENT: (id) => `/event/${id}`,
   UPDATE_EVENT: (id) => `/event/${id}`,

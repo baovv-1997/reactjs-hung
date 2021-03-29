@@ -96,3 +96,8 @@
   position: absolute;
   transition: all 0.5s ease-out;
 }
+.main-search {
+  position: fixed;
+  z-index: 999;
+  top: pxToRem(16);
+}
