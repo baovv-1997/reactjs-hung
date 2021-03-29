@@ -7,7 +7,7 @@ import {
   getListCompany,
   getCardMeasureMain,
   setPositionId,
-  setCompanyId
+  setCompanyId,
 } from 'modules/main/redux';
 import { Card } from 'commons/components/Card';
 import { avenrageCard } from 'helpers';
@@ -52,16 +52,15 @@ const MainPage = () => {
         count.current = 1;
       }
       dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
-    }, 5000);
+    }, 30000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listPositions, cardPositionMain]);
 
   // when click title redirect dashboard area of area
   const handleTitleClick = (id) => {
-    // console.log(id);
     history.push(ROUTERS.DASHBOARD_COMPANY);
-    dispatch(setPositionId({ id }))
+    dispatch(setPositionId({ id }));
   };
 
   // when click logo redirect dashboard company of company
@@ -72,17 +71,17 @@ const MainPage = () => {
 
   const renderPositionActive = cardPositionMain.length
     ? cardPositionMain?.map((posItem) => (
-      <img
-        key={posItem.position?.id}
-        src={IMAGES.icon_location_on}
-        alt=""
-        className="location"
-        style={{
-          top: `${posItem.position?.pos_map_y}px`,
-          left: `${posItem.position?.pos_map_x}px`,
-        }}
-      />
-    ))
+        <img
+          key={posItem.position?.id}
+          src={IMAGES.icon_location_on}
+          alt=""
+          className="location"
+          style={{
+            top: `${posItem.position?.pos_map_y}px`,
+            left: `${posItem.position?.pos_map_x}px`,
+          }}
+        />
+      ))
     : '';
 
   return (
