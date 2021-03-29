@@ -210,7 +210,7 @@ const StatusByAreaCompany = () => {
           listStatusCompanySelect={comList.slice(1)}
           listMockupType={listMockupType}
         />
-        <div className="content-body-left">
+        <div className="content-body-left w-100">
           <div className="h-100">
             <Tabs
               defaultActiveKey={
