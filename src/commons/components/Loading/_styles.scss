@@ -74,6 +74,24 @@
   }
 }
 
+.loading-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: fixed;
+  top: 50%;
+  left: 55%;
+  z-index: 99999;
+  @include transform-translate(-50%, -50%);
+
+  .spinner-border {
+    width: pxToRem(80);
+    height: pxToRem(80);
+    color: #000 !important;
+  }
+}
+
 .loading-chart {
   display: flex;
   align-items: center;

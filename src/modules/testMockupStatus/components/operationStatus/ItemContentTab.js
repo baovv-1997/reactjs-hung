@@ -14,11 +14,9 @@ import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
-// import LineSeriesChart from '../chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
-import moment from 'moment';
 
 type Props = {
   listMockupDataCompany: any,
@@ -135,20 +133,8 @@ const ItemContentTab = ({
 
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={
-          (dataTableBottom &&
-            dataTableBottom.length > 0 &&
-            dataTableBottom.map((event) => ({
-              id: event?.id,
-              dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
-              comName: event?.com_name,
-              inverterID: event?.ds_id,
-              inverterName: event?.ds_name,
-              contents: event?.evt_content,
-            }))) ||
-          []
-        }
-        // isShowId
+        tableBody={dataTableBottom}
+        isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
@@ -169,7 +155,7 @@ const ItemContentTab = ({
         </Button>
       </div>
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

@@ -33,6 +33,7 @@ const initialState = {
   deviceList: [],
   eventList: [],
   optionFilters: [],
+  isProcessing: false,
 };
 
 const commonSilice = createSlice({

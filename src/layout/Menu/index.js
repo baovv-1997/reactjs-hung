@@ -82,13 +82,13 @@ const Menu = ({ location }: Props) => {
           </p>
         </div>
         <ul className="menu__list">{renderMenuList(SETUP)}</ul>
-        <div className="logout">
-          <div className="name-user">마스터님</div>
-          <Button customClass="btn-logout">
-            <img src={IMAGES.btn_logout} alt="" />
-            <div>로그아웃</div>
-          </Button>
-        </div>
+      </div>
+      <div className="logout">
+        <div className="name-user">마스터님</div>
+        <Button customClass="btn-logout">
+          <img src={IMAGES.btn_logout} alt="" />
+          <div>로그아웃</div>
+        </Button>
       </div>
     </div>
   );
