@@ -13,6 +13,7 @@ const mainSlice = createSlice({
     optionsCompany: [],
     cardPositionMain: [],
     cardMeasureArea: [],
+    totalMetric: {},
     positionId: null,
     companyId: null,
     type: '',
@@ -28,20 +29,22 @@ const mainSlice = createSlice({
     },
     getListCompanyInvertersSuccess: (state, action) => {
       const { data } = action;
-      const listCompanyInverters = data && data?.data.map(item => ({
-        id: item.ds_id,
-        name: item.ds_name,
-        amountElectricDay: item.prod_today,
-        amountElectricMonth: item.prod_inmonth,
-        electricRealtime: item.prod_realtime,
-        ratePower: item.performance_ratio,
-        cumulativeElectric: item.prod_sum,
-        comId: item.com_id,
-        posId: item.pos_id,
-        posName: item.pos_name,
-        comName: item.com_name,
-        event: item.event,
-      }))
+      const listCompanyInverters =
+        data &&
+        data?.data.map((item) => ({
+          id: item.ds_id,
+          name: item.ds_name,
+          amountElectricDay: item.prod_today,
+          amountElectricMonth: item.prod_inmonth,
+          electricRealtime: item.prod_realtime,
+          ratePower: item.performance_ratio,
+          cumulativeElectric: item.prod_sum,
+          comId: item.com_id,
+          posId: item.pos_id,
+          posName: item.pos_name,
+          comName: item.com_name,
+          event: item.event,
+        }));
 
       state.listCompanyInverters = listCompanyInverters || [];
       state.total = data?.total;
@@ -60,7 +63,7 @@ const mainSlice = createSlice({
     getListPositionSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      const listPositions = data?.data.map(item => ({
+      const listPositions = data?.data.map((item) => ({
         id: item.id,
         value: item.id,
         label: item.pos_name,
@@ -68,7 +71,7 @@ const mainSlice = createSlice({
         posX: item.pos_map_x,
         posY: item.pos_map_y,
         pos_map_path: item.pos_map_path,
-      }))
+      }));
       state.listPositions = listPositions;
       state.isLoading = false;
     },
@@ -83,12 +86,12 @@ const mainSlice = createSlice({
     getListCompanySuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      const listCompany = data?.data.map(item => ({
+      const listCompany = data?.data.map((item) => ({
         id: item.id,
         value: item.id,
         label: item.com_name,
         key: 'comId',
-      }))
+      }));
       state.listCompany = listCompany;
       state.isLoading = false;
     },
@@ -103,7 +106,7 @@ const mainSlice = createSlice({
     getPositionSearchMainSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      const listPosition = data?.data.map(item => ({
+      const listPosition = data?.data.map((item) => ({
         id: item.id,
         value: item.id,
         label: item.pos_name,
@@ -123,7 +126,7 @@ const mainSlice = createSlice({
     getCompanySearchMainSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      const listCompany = data?.data.map(item => ({
+      const listCompany = data?.data.map((item) => ({
         id: item.id,
         value: item.id,
         label: item.com_name,
@@ -197,6 +200,17 @@ const mainSlice = createSlice({
       state.type = action.type;
       state.companyId = action.payload.id;
     },
+    getTotalMetric: (state, action) => {
+      state.type = action.type;
+    },
+    getTotalMetricSuccess: (state, action) => {
+      const { data } = action;
+      state.type = action.type;
+      state.totalMetric = data;
+    },
+    getTotalMetricFailed: (state, action) => {
+      state.type = action.type;
+    },
   },
 });
 
@@ -231,7 +245,10 @@ export const {
   getCardMeasureAreaSuccess,
   getCardMeasureAreaFailed,
   setPositionId,
-  setCompanyId
+  setCompanyId,
+  getTotalMetric,
+  getTotalMetricSuccess,
+  getTotalMetricFailed,
 } = actions;
 
 export default reducer;
