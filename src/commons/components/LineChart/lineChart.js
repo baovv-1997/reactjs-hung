@@ -1,8 +1,7 @@
 // @flow
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo } from 'react';
 import {
   Chart,
-  Pane,
   Series,
   // CommonAxisSettings,
   ValueAxis,
@@ -15,19 +14,27 @@ import {
   ZoomAndPan,
   CommonSeriesSettings,
   ArgumentAxis,
+  LoadingIndicator,
 } from 'devextreme-react/chart';
+import Loading from '../Loading/LoadingSmall';
 
 type Props = {
   dataChart: any,
+  optionLine: Object,
+  unitLeft: string,
+  unitRight: string,
 };
 
-export const LineChart = ({ dataChart }: Props) => {
-  const [dataLineChart, setDataLineChart] = useState([dataChart]);
-  useEffect(() => {
-    setDataLineChart(dataChart);
-    // eslint-disable-next-line
-  }, [dataChart]);
-
+export const LineChart = ({
+  dataChart,
+  optionLine,
+  unitLeft = 'kWh',
+  unitRight = 'W/㎡',
+}: Props) => {
+  const lengthData =
+    dataChart[dataChart.length] &&
+    dataChart[dataChart.length].time &&
+    dataChart[dataChart.length].time - 3600;
   const customizeTooltip = (arg) => {
     let text = '';
     switch (arg.seriesName) {
@@ -44,7 +51,6 @@ export const LineChart = ({ dataChart }: Props) => {
         text = arg.value;
         break;
     }
-
     return {
       text: text,
     };
@@ -52,33 +58,44 @@ export const LineChart = ({ dataChart }: Props) => {
 
   return (
     <>
-      {dataChart && dataChart.length > 0 && (
-        <Chart id="chart" dataSource={dataLineChart} palette="Harmony Light">
+      {dataChart && dataChart.length === 0 ? (
+        <div className="loading-chart">
+          <Loading />
+        </div>
+      ) : (
+        <Chart id="chart" dataSource={dataChart} palette="Harmony Light">
+          <LoadingIndicator enabled={true} />
           <CommonSeriesSettings
             endOnTick={false}
             type="spline"
             argumentField="time"
           />
-          <Pane name="top" />
-          <Series
-            pane="top"
-            valueField="y1"
-            type="spline"
-            axis="frequency1"
-            color="#7c5caf"
-            width={4}
-          >
-            <Point visible={false} />
-          </Series>
-          <Series
-            pane="top"
-            valueField="y2"
-            type="spline"
-            color="#bc5200"
-            width={4}
-          >
-            <Point visible={false} />
-          </Series>
+
+          {!optionLine?.line1 && (
+            <Series
+              valueField="y1"
+              type="spline"
+              axis="frequency1"
+              color="#7c5caf"
+              width={4}
+            >
+              <Point visible={false} />
+            </Series>
+          )}
+          {!optionLine?.line2 && (
+            <Series valueField="y2" type="spline" color="#bc5200" width={4}>
+              <Point visible={false} />
+            </Series>
+          )}
+          {!optionLine?.line3 && (
+            <Series
+              valueField="y3"
+              type="spline"
+              axis="frequency2"
+              color="#ff7913"
+              width={4}
+            />
+          )}
           <ValueAxis
             title=""
             type="linear"
@@ -86,23 +103,15 @@ export const LineChart = ({ dataChart }: Props) => {
             name="frequency1"
             position="left"
           />
-          <Series
-            pane="top"
-            valueField="y3"
-            type="spline"
-            axis="frequency2"
-            color="#ff7913"
-            width={4}
-          />
           <ValueAxis
             name="frequency2"
             tickInterval={20}
-            showZero={false}
+            showZero={true}
             position="right"
             type="linear"
             pane="top"
             minorTickCount={20}
-            valueMarginsEnabled={false}
+            valueMarginsEnabled={true}
           />
           <Crosshair enabled={true} color="#949494" width={3} dashStyle="dot">
             <Label visible={true} backgroundColor="#949494"></Label>
@@ -110,14 +119,8 @@ export const LineChart = ({ dataChart }: Props) => {
           </Crosshair>
           <ArgumentAxis
             defaultVisualRange={{
-              startValue:
-                dataLineChart[dataLineChart.length] &&
-                dataLineChart[dataLineChart.length].time &&
-                dataLineChart[dataLineChart.length].time - 3600,
-              endValue:
-                dataLineChart[dataLineChart.length] &&
-                dataLineChart[dataLineChart.length].time &&
-                dataLineChart[dataLineChart.length].time,
+              startValue: lengthData,
+              endValue: lengthData,
               length: { seconds: 3600 },
             }}
             argumentType="datetime"
@@ -127,8 +130,18 @@ export const LineChart = ({ dataChart }: Props) => {
           <ZoomAndPan argumentAxis="both" />
         </Chart>
       )}
+
+      {dataChart && dataChart.length > 0 && (
+        <div className="unit-chart">
+          <div className="unit-left">{unitLeft}</div>
+          <div className="unit-right">{unitRight}</div>
+        </div>
+      )}
     </>
   );
 };
-
+LineChart.defaultProps = {
+  unitLeft: 'kWh',
+  unitRight: 'W/㎡',
+};
 export default memo<Props>(LineChart);

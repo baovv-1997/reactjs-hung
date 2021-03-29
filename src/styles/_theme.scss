@@ -278,3 +278,33 @@ button.h-32 {
     }
   }
 }
+
+.group-char-right {
+  position: relative;
+}
+
+.unit-chart {
+  position: absolute;
+  bottom: pxToRem(50);
+  display: flex;
+  justify-content: space-between;
+  width: 93%;
+
+  .unit-left,
+  .unit-right {
+    font-size: pxToRem(10);
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    text-align: left;
+    color: $bg-button;
+    margin-left: pxToRem(8);
+  }
+
+  .unit-right {
+    position: relative;
+    top: pxToRem(-12);
+  }
+}

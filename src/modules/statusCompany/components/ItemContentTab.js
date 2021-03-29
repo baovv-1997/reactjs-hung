@@ -78,7 +78,14 @@ const ItemContentTab = ({
         </div>
         <div className="group-char-right">
           {activeTab === id.toString() && chartData && (
-            <LineChart dataChart={chartData} />
+            <LineChart
+              dataChart={chartData}
+              optionLine={{
+                line1: paramsSearch?.power,
+                line2: paramsSearch?.insolation,
+                line3: paramsSearch?.performance,
+              }}
+            />
           )}
         </div>
       </div>

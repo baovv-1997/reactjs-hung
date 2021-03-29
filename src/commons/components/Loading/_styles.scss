@@ -73,3 +73,16 @@
     box-shadow: 0 2.5em 0 0;
   }
 }
+
+.loading-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .spinner-border {
+    width: pxToRem(80);
+    height: pxToRem(80);
+    color: #000 !important;
+  }
+}
