@@ -3,14 +3,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as SignInAction from 'modules/accounts/redux';
 import * as CommonAction from 'commons/redux';
-import * as ActionGenerator from '../../redux';
 import { getEventList } from 'modules/operationStatus/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
@@ -18,7 +18,7 @@ const OperationStatusPage = () => {
     (state) => state?.commons
   );
   const {
-    isProcessing,
+    // isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
@@ -329,37 +329,37 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 운영 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listInverterTest}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRawOperation}
+            handleDownloadTrend={handleDownloadTrend}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalEventPage}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={eventList}
+            isShowModalSorting={isShowModalSorting}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listInverter={listInverter}
+            dataChartOperation={dataChartOperation}
+            optionFilters={optionFilters}
+            handleChangeSearch={handleChangeSearch}
+            listStatusCompanySelect={comList && comList.slice(1)}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              listMockupDataCompany={listDataTableRawOperation}
-              handleDownloadTrend={handleDownloadTrend}
-              totalPage={total}
-              perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalEventPage}
-              perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={eventList}
-              isShowModalSorting={isShowModalSorting}
-              paramsSearch={paramsSearch}
-              listInverter={listInverter}
-              dataChartOperation={dataChartOperation}
-              optionFilters={optionFilters}
-              handleChangeSearch={handleChangeSearch}
-              listStatusCompanySelect={comList && comList.slice(1)}
-            />
-          </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 

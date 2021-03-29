@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from 'react-js-pagination';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 
 import {
@@ -22,7 +22,7 @@ const OperationStatusPage = () => {
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('bulk');
   console.log(menuTab, 'menuTab');
-  const { isProcessing, listStatusCompanySelect } = useSelector(
+  const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
   const { listInverter } = useSelector((state) => state?.account);
@@ -190,103 +190,103 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 운영 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
-            listParkingLot={listParkingLot}
-            paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
-            listMockupType={listMockupType}
-          />
-          <div className="content-body-left w-100">
-            <div className="h-100">
-              <Tabs
-                defaultActiveKey="all"
-                className="list-order tab-list"
-                onSelect={(eventKey) => onSelect(eventKey)}
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 운영 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          listParkingLot={listParkingLot}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listStatusCompanySelect}
+          listMockupType={listMockupType}
+        />
+        <div className="content-body-left w-100">
+          <div className="h-100">
+            <Tabs
+              defaultActiveKey="all"
+              className="list-order tab-list"
+              onSelect={(eventKey) => onSelect(eventKey)}
+            >
+              <Tab
+                eventKey="all"
+                title={
+                  <div className="tab-name">
+                    아반시스코리아<span>전체</span>
+                  </div>
+                }
               >
-                <Tab
-                  eventKey="all"
-                  title={
-                    <div className="tab-name">
-                      아반시스코리아<span>전체</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    listInverter={listInverter}
-                    paramsSearch={paramsSearch}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="coes"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID <span>본관 남측</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    listInverter={listInverter}
-                    paramsSearch={paramsSearch}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
-                <Tab
-                  eventKey="SK-Solar"
-                  title={
-                    <div className="tab-name">
-                      인버터 ID<span>본관 동측</span>
-                    </div>
-                  }
-                >
-                  <ItemContentTab
-                    dataBoxContent={dataBoxContent}
-                    listMockupDataCompany={listMockupDataCompany}
-                    handleDownloadTrend={handleDownloadTrend}
-                    dataContent={{}}
-                    listInverter={listInverter}
-                    paramsSearch={paramsSearch}
-                    handleChangeSearch={handleChangeSearch}
-                    listStatusCompanySelect={listStatusCompanySelect}
-                  />
-                </Tab>
+                <ItemContentTab
+                  dataBoxContent={dataBoxContent}
+                  listMockupDataCompany={listMockupDataCompany}
+                  handleDownloadTrend={handleDownloadTrend}
+                  dataContent={{}}
+                  listInverter={listInverter}
+                  paramsSearch={paramsSearch}
+                  handleChangeSearch={handleChangeSearch}
+                  listStatusCompanySelect={listStatusCompanySelect}
+                />
+              </Tab>
+              <Tab
+                eventKey="coes"
+                title={
+                  <div className="tab-name">
+                    인버터 ID <span>본관 남측</span>
+                  </div>
+                }
+              >
+                <ItemContentTab
+                  dataBoxContent={dataBoxContent}
+                  listMockupDataCompany={listMockupDataCompany}
+                  handleDownloadTrend={handleDownloadTrend}
+                  dataContent={{}}
+                  listInverter={listInverter}
+                  paramsSearch={paramsSearch}
+                  handleChangeSearch={handleChangeSearch}
+                  listStatusCompanySelect={listStatusCompanySelect}
+                />
+              </Tab>
+              <Tab
+                eventKey="SK-Solar"
+                title={
+                  <div className="tab-name">
+                    인버터 ID<span>본관 동측</span>
+                  </div>
+                }
+              >
+                <ItemContentTab
+                  dataBoxContent={dataBoxContent}
+                  listMockupDataCompany={listMockupDataCompany}
+                  handleDownloadTrend={handleDownloadTrend}
+                  dataContent={{}}
+                  listInverter={listInverter}
+                  paramsSearch={paramsSearch}
+                  handleChangeSearch={handleChangeSearch}
+                  listStatusCompanySelect={listStatusCompanySelect}
+                />
+              </Tab>
 
-                <div className="opacity d-block pagination mt-0 mb-3">
-                  {totalPage > perPage && (
-                    <div className="wrapper-device__pagination mt-0">
-                      <Pagination
-                        activePage={paramsSearch?.page}
-                        itemsCountPerPage={perPage}
-                        totalItemsCount={totalPage}
-                        pageRangeDisplayed={5}
-                        onChange={(e) => handleChangeSearch(e, 'page')}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
-                </div>
-              </Tabs>
-            </div>
+              <div className="opacity d-block pagination mt-0 mb-3">
+                {totalPage > perPage && (
+                  <div className="wrapper-device__pagination mt-0">
+                    <Pagination
+                      activePage={paramsSearch?.page}
+                      itemsCountPerPage={perPage}
+                      totalItemsCount={totalPage}
+                      pageRangeDisplayed={5}
+                      onChange={(e) => handleChangeSearch(e, 'page')}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+              </div>
+            </Tabs>
           </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 

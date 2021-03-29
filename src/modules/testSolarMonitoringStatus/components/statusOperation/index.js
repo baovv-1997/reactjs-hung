@@ -2,18 +2,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
-import * as ActionGenerator from '../../redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const { deviceList } = useSelector((state) => state?.commons);
   const {
-    isProcessing,
+    // isProcessing,
     total,
     dataChartOperation,
     listDataTableRaw,
@@ -229,33 +229,33 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 운영 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listInverterTest}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRaw}
+            handleDownloadTrend={handleDownloadTrend}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalMockup}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={listDataTableRawMockup}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            dataChartOperation={dataChartOperation}
+            handleChangeSearch={handleChangeSearch}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              listMockupDataCompany={listDataTableRaw}
-              handleDownloadTrend={handleDownloadTrend}
-              totalPage={total}
-              perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalMockup}
-              perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={listDataTableRawMockup}
-              paramsSearch={paramsSearch}
-              dataChartOperation={dataChartOperation}
-              handleChangeSearch={handleChangeSearch}
-            />
-          </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 

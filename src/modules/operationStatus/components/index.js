@@ -5,7 +5,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { TIME_REQUEST } from 'constants/index';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import {
   getCompanyList,
@@ -38,7 +38,7 @@ const OperationStatusPage = ({ location }: Props) => {
   const {
     eventList,
     comList,
-    isProcessing,
+    // isProcessing,
     deviceList,
     totalEventPage,
     optionFilters,
@@ -307,111 +307,109 @@ const OperationStatusPage = ({ location }: Props) => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 운영 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
-            listParkingLot={listParkingLot}
-            paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList.slice(1)}
-            listMockupType={listMockupType}
-          />
-          <div className="content-body-left w-100">
-            <div className="h-100">
-              <Tabs
-                // set active tab
-                defaultActiveKey={
-                  deviceList && deviceList.length > 1
-                    ? ''
-                    : deviceList && deviceList[0] && deviceList[0].id
-                }
-                className="list-order tab-list"
-                onSelect={(eventKey) => onSelect(eventKey)}
-              >
-                {deviceList &&
-                  deviceList.length > 0 &&
-                  deviceList.map((device) => (
-                    <Tab
-                      eventKey={device.id}
-                      title={
-                        <div className="tab-name">
-                          {device?.label}
-                          {device?.label !== '전체' && (
-                            <span>{device?.id}</span>
-                          )}
-                        </div>
-                      }
-                    >
-                      <ItemContentTab
-                        dataBoxContent={dataBoxContent}
-                        listMockupDataCompany={
-                          rawData &&
-                          rawData.map((rawItem, index) => ({
-                            rowId:
-                              `${
-                                totalRawData -
-                                (paramsSearch?.page - 1) *
-                                  paramsSearch.pagination.value -
-                                index
-                              }` || '',
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 운영 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          listParkingLot={listParkingLot}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={comList.slice(1)}
+          listMockupType={listMockupType}
+        />
+        <div className="content-body-left w-100">
+          <div className="h-100">
+            <Tabs
+              // set active tab
+              defaultActiveKey={
+                deviceList && deviceList.length > 1
+                  ? ''
+                  : deviceList && deviceList[0] && deviceList[0].id
+              }
+              className="list-order tab-list"
+              onSelect={(eventKey) => onSelect(eventKey)}
+            >
+              {deviceList &&
+                deviceList.length > 0 &&
+                deviceList.map((device) => (
+                  <Tab
+                    eventKey={device.id}
+                    title={
+                      <div className="tab-name">
+                        {device?.label}
+                        {device?.label !== '전체' && <span>{device?.id}</span>}
+                      </div>
+                    }
+                  >
+                    <ItemContentTab
+                      dataBoxContent={dataBoxContent}
+                      listMockupDataCompany={
+                        rawData &&
+                        rawData.map((rawItem, index) => ({
+                          rowId:
+                            `${
+                              totalRawData -
+                              (paramsSearch?.page - 1) *
+                                paramsSearch.pagination.value -
+                              index
+                            }` || '',
 
-                            dateTime: moment(rawItem?.dm_datetime).format(
-                              'YYYY-MM-DD hh:mm:ss'
-                            ),
-                            installer: rawItem?.com_name,
-                            inverterID: rawItem?.ds_id,
-                            installationLocation: rawItem?.pos_name,
-                            inverterName: rawItem?.ds_name,
-                            moduleTemperature: `${rawItem?.dm_pv_voltage}V`,
-                            outsideTemperature: `${rawItem?.dm_pv_current}A`,
-                            horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
-                            gradientInsolation: `${rawItem?.dm_o_current}A`,
-                            powerGeneration: `${rawItem?.dm_power}KW`,
-                            cumulativePowerGeneration: `${rawItem?.dm_power_eff}%`,
-                            rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
-                          }))
-                        }
-                        optionFilters={optionFilters}
-                        handleDownloadTrend={handleDownloadTrend}
-                        dataContent={{}}
-                        totalPage={totalRawData}
-                        perPage={paramsSearch?.pagination?.value}
-                        totalPage2={totalEventPage}
-                        perPage2={paramsSearch?.pagination?.value}
-                        tableOperationStatusByAreaCompany={
-                          eventList &&
-                          eventList.length > 0 &&
-                          eventList.map((event) => ({
-                            no: event?.no,
-                            dateTime: moment(event?.created_at).format(
-                              'YYYY-MM-DD hh:mm:ss'
-                            ),
-                            installer: event?.com_name,
-                            inverterID: event?.username,
-                            installationLocation: event?.pos_name,
-                            eventName: event?.evt_type_label,
-                            contents: event?.evt_content,
-                            id: event?.id,
-                          }))
-                        }
-                        activeTab={menuTab}
-                        isShowModalSorting={isShowModalSorting}
-                        paramsSearch={paramsSearch}
-                        handleClickDetail={handleClickDetail}
-                        handleChangeSearch={handleChangeSearch}
-                        id={device.id}
-                        dataChart={dataChart}
-                      />
-                    </Tab>
-                  ))}
-              </Tabs>
-            </div>
+                          dateTime: moment(rawItem?.dm_datetime).format(
+                            'YYYY-MM-DD hh:mm:ss'
+                          ),
+                          installer: rawItem?.com_name,
+                          inverterID: rawItem?.ds_id,
+                          installationLocation: rawItem?.pos_name,
+                          inverterName: rawItem?.ds_name,
+                          moduleTemperature: `${rawItem?.dm_pv_voltage}V`,
+                          outsideTemperature: `${rawItem?.dm_pv_current}A`,
+                          horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
+                          gradientInsolation: `${rawItem?.dm_o_current}A`,
+                          powerGeneration: `${rawItem?.dm_power}KW`,
+                          cumulativePowerGeneration: `${rawItem?.dm_power_eff}%`,
+                          rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
+                        }))
+                      }
+                      optionFilters={optionFilters}
+                      handleDownloadTrend={handleDownloadTrend}
+                      dataContent={{}}
+                      totalPage={totalRawData}
+                      perPage={paramsSearch?.pagination?.value}
+                      totalPage2={totalEventPage}
+                      perPage2={paramsSearch?.pagination?.value}
+                      tableOperationStatusByAreaCompany={
+                        eventList &&
+                        eventList.length > 0 &&
+                        eventList.map((event) => ({
+                          no: event?.no,
+                          dateTime: moment(event?.created_at).format(
+                            'YYYY-MM-DD hh:mm:ss'
+                          ),
+                          installer: event?.com_name,
+                          inverterID: event?.username,
+                          installationLocation: event?.pos_name,
+                          eventName: event?.evt_type_label,
+                          contents: event?.evt_content,
+                          id: event?.id,
+                        }))
+                      }
+                      activeTab={menuTab}
+                      isShowModalSorting={isShowModalSorting}
+                      paramsSearch={paramsSearch}
+                      handleClickDetail={handleClickDetail}
+                      handleChangeSearch={handleChangeSearch}
+                      id={device.id}
+                      dataChart={dataChart}
+                    />
+                  </Tab>
+                ))}
+            </Tabs>
           </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 

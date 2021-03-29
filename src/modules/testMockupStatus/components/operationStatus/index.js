@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import {
   listDataTestMockupOperationStatus,
@@ -20,7 +20,7 @@ const StatusByAreaCompany = () => {
   const totalPage = 100;
   const perPage2 = 6;
   const totalPage2 = 100;
-  const { isProcessing, listStatusCompanySelect } = useSelector(
+  const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
   const defaultOption = {
@@ -134,39 +134,39 @@ const StatusByAreaCompany = () => {
     history.push(`${ROUTERS.TEST_MOCKUP_OPERATION}/${item.id}`);
   };
   return (
-    <MainLayout isProcessing={isProcessing}>
-      <div className="content-wrap">
-        <TitleHeader title="테스트(목업) 운영 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
-            paramsSearch={paramsSearch}
-            listStatusCompanySelect={listStatusCompanySelect}
-          />
-          <div className="content-body-left border-pd-20">
-            <div className="h-100">
-              <ItemContentTab
-                listMockupDataCompany={listDataTestMockupOperationStatus}
-                dataContent={{}}
-                dataBoxContent={dataBoxContent}
-                handleDownloadTrend={handleDownloadTrend}
-                handleChangeSearch={handleChangeSearch}
-                tableOperationStatusByAreaCompany={
-                  tableOperationStatusByAreaCompany
-                }
-                isShowModalSorting={isShowModalSorting}
-                handleClickDetail={handleClickDetail}
-                paramsSearch={paramsSearch}
-                totalPage={totalPage}
-                perPage={perPage}
-                totalPage2={totalPage2}
-                perPage2={perPage2}
-              />
-            </div>
+    // <MainLayout isProcessing={isProcessing}>
+    <div className="content-wrap">
+      <TitleHeader title="테스트(목업) 운영 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={listStatusCompanySelect}
+        />
+        <div className="content-body-left border-pd-20">
+          <div className="h-100">
+            <ItemContentTab
+              listMockupDataCompany={listDataTestMockupOperationStatus}
+              dataContent={{}}
+              dataBoxContent={dataBoxContent}
+              handleDownloadTrend={handleDownloadTrend}
+              handleChangeSearch={handleChangeSearch}
+              tableOperationStatusByAreaCompany={
+                tableOperationStatusByAreaCompany
+              }
+              isShowModalSorting={isShowModalSorting}
+              handleClickDetail={handleClickDetail}
+              paramsSearch={paramsSearch}
+              totalPage={totalPage}
+              perPage={perPage}
+              totalPage2={totalPage2}
+              perPage2={perPage2}
+            />
           </div>
         </div>
       </div>
-    </MainLayout>
+    </div>
+    // </MainLayout>
   );
 };
 
