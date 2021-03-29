@@ -113,7 +113,7 @@ const ItemContentTab = ({
         <Table
           tableHeads={headTestMockupOperationStatus}
           tableBody={listMockupDataCompany}
-          // isShowId
+          isShowId
         />
         <div className="opacity d-block pagination">
           {totalPage > perPage && (

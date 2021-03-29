@@ -2,9 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import MainLayout from 'layout/MainLayout';
 import moment from 'moment';
-// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as SignInAction from 'modules/accounts/redux';
@@ -13,6 +11,7 @@ import { getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
+import Loading from 'commons/components/Loading';
 
 const OperationStatusPage = () => {
   const {
@@ -23,16 +22,17 @@ const OperationStatusPage = () => {
     totalEventPage,
   } = useSelector((state) => state?.commons);
   const {
-    // isProcessing,
+    isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
   } = useSelector((state) => state?.testMockupStatistics);
   const { listInverter } = useSelector((state) => state?.account);
+  const isLoading = useSelector((state) => state?.commons?.isProcessing);
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
+    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
 
   const defaultOption = {
     id: 1,
@@ -46,9 +46,9 @@ const OperationStatusPage = () => {
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
     page2: 1,
-    ACVoltage: false,
-    ACCurrent: false,
-    ACPower: false,
+    ACVoltage: true,
+    ACCurrent: true,
+    ACPower: true,
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
@@ -319,37 +319,38 @@ const OperationStatusPage = () => {
   };
 
   return (
-    // <MainLayout isProcessing={isProcessing}>
-    <div className="content-wrap">
-      <TitleHeader title="테스트(실증단지) 운영 통계" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={listInverterTest}
-        />
-        <div className="content-body-left w-100 border-pd-20">
-          <ItemContentTab
-            dataBoxContent={dataBoxContent}
-            listMockupDataCompany={listDataTableRawOperation}
-            handleDownloadTrend={handleDownloadTrend}
-            totalPage={total}
-            perPage={paramsSearch?.pagination?.value}
-            totalPage2={totalEventPage}
-            perPage2={paramsSearch?.pagination2?.value}
-            dataTableBottom={eventList}
-            isShowModalSorting={isShowModalSorting}
-            paramsSearch={paramsSearch}
-            listInverter={listInverter}
-            dataChartOperation={dataChartOperation}
-            optionFilters={optionFilters}
+    <>
+      {(isProcessing || isLoading) && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="테스트(실증단지) 운영 통계" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
-            listStatusCompanySelect={comList && comList.slice(1)}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listInverterTest}
           />
+          <div className="content-body-left w-100 border-pd-20">
+            <ItemContentTab
+              dataBoxContent={dataBoxContent}
+              listMockupDataCompany={listDataTableRawOperation}
+              handleDownloadTrend={handleDownloadTrend}
+              totalPage={total}
+              perPage={paramsSearch?.pagination?.value}
+              totalPage2={totalEventPage}
+              perPage2={paramsSearch?.pagination2?.value}
+              dataTableBottom={eventList}
+              isShowModalSorting={isShowModalSorting}
+              paramsSearch={paramsSearch}
+              listInverter={listInverter}
+              dataChartOperation={dataChartOperation}
+              optionFilters={optionFilters}
+              handleChangeSearch={handleChangeSearch}
+              listStatusCompanySelect={comList && comList.slice(1)}
+            />
+          </div>
         </div>
       </div>
-    </div>
-    // </MainLayout>
+    </>
   );
 };
 

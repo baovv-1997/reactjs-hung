@@ -17,8 +17,8 @@ const testMockupStatisticsSlide = createSlice({
       incidence_angle: 0,
       power: 0,
     },
-    dataChart: {},
-    dataChartOperation: {},
+    dataChart: [],
+    dataChartOperation: [],
     listDataTableRaw: [],
     listDataTableRawOperation: [],
     listDataTableRawMockup: [],
@@ -54,7 +54,7 @@ const testMockupStatisticsSlide = createSlice({
     getTrendChartTestMKStatisticsGeneratorFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChart = {};
+      state.dataChart = [];
     },
 
     getDataTestMKRawTableGenerator: (state, action) => {
@@ -125,18 +125,12 @@ const testMockupStatisticsSlide = createSlice({
       const { data } = action;
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChartOperation = {
-        dmOCurrent: (data && data.dm_o_current) || [],
-        dmOVoltage: (data && data.dm_o_voltage) || [],
-        dmPower: (data && data.dm_power) || [],
-        dmPvCurrent: (data && data.dm_pv_current) || [],
-        dmPvVoltage: (data && data.dm_pv_voltage) || [],
-      };
+      state.dataChartOperation = data;
     },
     getDataChartTestMKStatisticsOperationFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChartOperation = {};
+      state.dataChartOperation = [];
     },
 
     getDataRawTestMKStatisticOperation: (state, action) => {
@@ -204,14 +198,14 @@ const testMockupStatisticsSlide = createSlice({
           inverterId: item.ds_id || '',
           inverterName: item.ds_name || '',
 
-          dm_module_temp: `${item.dm_module_temp || 0}℃`, // TODO
-          outsideTemperature: `${item.dm_env_temp || 0}℃`, // TODO
+          dm_module_temp: `${item.dm_module_temp || 0}℃`,
+          outsideTemperature: `${item.dm_env_temp || 0}℃`,
           dm_rad:
             item?.dm_rad &&
-            `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`, // TODO
+            `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`,
           dm_rad_Max:
-            item?.dm_rad &&
-            `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`, // TODO
+            item?.ds_max_power &&
+            `${item?.ds_max_power.toLocaleString('en') || 0}kWh/㎡·10초`,
         }));
       state.type = action.type;
       state.isProcessing = false;

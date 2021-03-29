@@ -2,28 +2,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
-import { getEventList, addEventFilter } from 'commons/redux';
+import { addEventFilter } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import ItemContentTab from './ItemContentTab';
 import * as ActionGenerator from '../../redux';
+import Loading from 'commons/components/Loading';
 
 const OperationStatusPage = () => {
   const history = useHistory();
-  const { deviceList, optionFilters, eventList, totalEventPage } = useSelector(
-    (state) => state?.commons
-  );
+  const { deviceList, optionFilters } = useSelector((state) => state?.commons);
   const {
-    // isProcessing,
+    isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
+    listDataTableRawEventOperation,
+    totalEvent,
   } = useSelector((state) => state?.testMockupStatus);
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
@@ -41,9 +41,9 @@ const OperationStatusPage = () => {
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
     page2: 1,
-    ACVoltage: false,
-    ACCurrent: false,
-    ACPower: false,
+    ACVoltage: true,
+    ACCurrent: true,
+    ACPower: true,
     pagination: defaultOption,
     pagination2: defaultOption,
     isSubmitSearch: false,
@@ -141,7 +141,7 @@ const OperationStatusPage = () => {
   // get event list when inverter, page, perpage have change
   useEffect(() => {
     dispatch(
-      getEventList({
+      ActionGenerator.getDataTestMKRawEventTableOperation({
         inverter_id: paramsSearch?.company || null,
         per_page: paramsSearch?.pagination2?.value,
         page: paramsSearch?.page2,
@@ -236,37 +236,37 @@ const OperationStatusPage = () => {
     history.push(`${ROUTERS.TEST_MOCKUP_OPERATION}/${item.id}`);
   };
   return (
-    // <MainLayout isProcessing={isProcessing}>
-    <div className="content-wrap">
-      <TitleHeader title="테스트(실증단지) 운영 통계" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={listInverterTest}
-        />
-        <div className="content-body-left w-100 border-pd-20">
-          <ItemContentTab
-            dataBoxContent={dataBoxContent}
-            listMockupDataCompany={listDataTableRawOperation}
-            handleDownloadTrend={handleDownloadTrend}
-            totalPage={total}
-            perPage={paramsSearch?.pagination?.value}
-            totalPage2={totalEventPage}
-            perPage2={paramsSearch?.pagination2?.value}
-            dataTableBottom={eventList}
-            isShowModalSorting={isShowModalSorting}
-            paramsSearch={paramsSearch}
-            dataChartOperation={dataChartOperation}
-            optionFilters={optionFilters}
+    <>
+      {isProcessing && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="테스트(실증단지) 운영 통계" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
-            handleClickDetail={handleClickDetail}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listInverterTest}
           />
+          <div className="content-body-left w-100 border-pd-20">
+            <ItemContentTab
+              dataBoxContent={dataBoxContent}
+              listMockupDataCompany={listDataTableRawOperation}
+              handleDownloadTrend={handleDownloadTrend}
+              totalPage={total}
+              perPage={paramsSearch?.pagination?.value}
+              totalPage2={totalEvent}
+              perPage2={paramsSearch?.pagination2?.value}
+              dataTableBottom={listDataTableRawEventOperation}
+              isShowModalSorting={isShowModalSorting}
+              paramsSearch={paramsSearch}
+              dataChartOperation={dataChartOperation}
+              optionFilters={optionFilters}
+              handleChangeSearch={handleChangeSearch}
+              handleClickDetail={handleClickDetail}
+            />
+          </div>
         </div>
       </div>
-    </div>
-
-    // </MainLayout>
+    </>
   );
 };
 

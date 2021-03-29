@@ -71,6 +71,7 @@ import getDataRawTableMockupOperationSaga from 'modules/testSolarMonitoringStatu
 import getCardTestMKStatusOperationSaga from 'modules/testMockupStatus/sagas/operation/getCardInformationSaga';
 import getDataTestMKRawTableOperationSaga from 'modules/testMockupStatus/sagas/operation/getDataRawTableSaga';
 import getDataTestMKChartStatusOperationSaga from 'modules/testMockupStatus/sagas/operation/getDataTrendChartSaga';
+import getDataTestMKRawEventTableOperation from 'modules/testMockupStatus/sagas/operation/getDataRawTableEventSaga';
 
 import getCardTestMKStatisticsGeneratorSaga from 'modules/testMockupStatistics/sagas/generator/getCardInformationSaga';
 import getTrendChartTestMKStatisticsGeneratorSaga from 'modules/testMockupStatistics/sagas/generator/getTrendChartSaga';
@@ -172,6 +173,7 @@ export default function* RootSagas() {
     getCardTestMKStatusOperationSaga(),
     getDataTestMKRawTableOperationSaga(),
     getDataTestMKChartStatusOperationSaga(),
+    getDataTestMKRawEventTableOperation(),
 
     /* Test mockup 
         + Status of generator

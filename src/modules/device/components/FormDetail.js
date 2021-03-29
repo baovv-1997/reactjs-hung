@@ -42,6 +42,7 @@ const FormDetail = ({ data, history }: Props) => {
   const [incidenceAngle, setIncidenceAngle] = useState(
     data?.ds_incidence_angle
   );
+
   const [phoneManager, setPhoneManager] = useState(data?.ds_manager_phone);
   const [azimuthAngle, setAzimuthAngle] = useState(data?.ds_azimuth_angle);
   const [isCancel, setIsCancel] = useState(false);
