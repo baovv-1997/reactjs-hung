@@ -1,6 +1,8 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
+import Loading from 'commons/components/Loading';
+
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -15,7 +17,9 @@ import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { posList, comList } = useSelector((state) => state?.commons);
+  const { posList, comList, isProcessing } = useSelector(
+    (state) => state?.commons
+  );
   const { rawData, totalRawData, cardInfo, dataChart } = useSelector(
     (operator) => operator.operationStatus
   );
@@ -127,7 +131,6 @@ const OperationStatusPage = () => {
     });
   }, [getDataChartCallback, paramsSearch?.posSelected, menuTab]);
 
-  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -207,79 +210,81 @@ const OperationStatusPage = () => {
   };
 
   return (
-    // <MainLayout isProcessing={isProcessing}>
-    <div className="content-wrap">
-      <TitleHeader title="실증단지 발전 현황" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          listParkingLot={listParkingLot}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={posList.slice(1)}
-          listMockupType={listMockupType}
-        />
-        <div className="content-body-left w-100">
-          <div className="h-100">
-            <Tabs
-              defaultActiveKey={
-                comList && comList.length > 1
-                  ? ''
-                  : comList && comList[0] && comList[0].id
-              }
-              className="list-order tab-list"
-              onSelect={(eventKey) => onSelect(eventKey)}
-            >
-              {comList.map((item) => (
-                <Tab
-                  eventKey={item.id}
-                  title={<div className="tab-name">{item?.label}</div>}
-                >
-                  <ItemContentTab
-                    rawData={rawData.map((rawItem, index) => ({
-                      rowId:
-                        `${
-                          totalRawData -
-                          (paramsSearch?.page - 1) *
-                            paramsSearch.pagination.value -
-                          index
-                        }` || '',
+    <>
+      {isProcessing && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="실증단지 발전 현황" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={posList.slice(1)}
+            listMockupType={listMockupType}
+          />
+          <div className="content-body-left w-100">
+            <div className="h-100">
+              <Tabs
+                defaultActiveKey={
+                  comList && comList.length > 1
+                    ? ''
+                    : comList && comList[0] && comList[0].id
+                }
+                className="list-order tab-list"
+                onSelect={(eventKey) => onSelect(eventKey)}
+              >
+                {comList.map((item) => (
+                  <Tab
+                    eventKey={item.id}
+                    title={<div className="tab-name">{item?.label}</div>}
+                  >
+                    <ItemContentTab
+                      rawData={rawData.map((rawItem, index) => ({
+                        rowId:
+                          `${
+                            totalRawData -
+                            (paramsSearch?.page - 1) *
+                              paramsSearch.pagination.value -
+                            index
+                          }` || '',
 
-                      dateTime: moment(rawItem?.dm_datetime).format(
-                        'YYYY-MM-DD hh:mm:ss'
-                      ),
-                      installer: rawItem?.com_name,
-                      inverterID: rawItem?.ds_id,
-                      installationLocation: rawItem?.pos_name,
-                      inverterName: rawItem?.ds_name,
-                      moduleTemperature: `${rawItem?.dm_pv_voltage}V`,
-                      outsideTemperature: `${rawItem?.dm_pv_current}A`,
-                      horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
-                      gradientInsolation: `${rawItem?.dm_o_current}A`,
-                      powerGeneration: `${rawItem?.dm_power}KW`,
-                      cumulativePowerGeneration: `${rawItem?.dm_performance_ratio}%`,
-                      rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
-                    }))}
-                    dataBoxContent={{
-                      angleOfIncidence: cardInfo?.ds_incidence_angle || null,
-                      azimuth: cardInfo?.ds_azimuth_angle || null,
-                      moduleOutput: cardInfo?.dm_power || null,
-                      moduleColor: cardInfo?.ds_color || null,
-                    }}
-                    handleDownloadTrend={handleDownloadTrend}
-                    handleChangeSearch={handleChangeSearch}
-                    paramsSearch={paramsSearch}
-                    activeTab={menuTab}
-                    id={item.id}
-                    totalPage={totalRawData}
-                    dataChart={dataChart}
-                  />
-                </Tab>
-              ))}
-            </Tabs>
+                        dateTime: moment(rawItem?.dm_datetime).format(
+                          'YYYY-MM-DD hh:mm:ss'
+                        ),
+                        installer: rawItem?.com_name,
+                        inverterID: rawItem?.ds_id,
+                        installationLocation: rawItem?.pos_name,
+                        inverterName: rawItem?.ds_name,
+                        moduleTemperature: `${rawItem?.dm_pv_voltage}V`,
+                        outsideTemperature: `${rawItem?.dm_pv_current}A`,
+                        horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
+                        gradientInsolation: `${rawItem?.dm_o_current}A`,
+                        powerGeneration: `${rawItem?.dm_power}KW`,
+                        cumulativePowerGeneration: `${rawItem?.dm_performance_ratio}%`,
+                        rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
+                      }))}
+                      dataBoxContent={{
+                        angleOfIncidence: cardInfo?.ds_incidence_angle || null,
+                        azimuth: cardInfo?.ds_azimuth_angle || null,
+                        moduleOutput: cardInfo?.dm_power || null,
+                        moduleColor: cardInfo?.ds_color || null,
+                      }}
+                      handleDownloadTrend={handleDownloadTrend}
+                      handleChangeSearch={handleChangeSearch}
+                      paramsSearch={paramsSearch}
+                      activeTab={menuTab}
+                      id={item.id}
+                      totalPage={totalRawData}
+                      dataChart={dataChart}
+                    />
+                  </Tab>
+                ))}
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
     // </MainLayout>
   );
 };
