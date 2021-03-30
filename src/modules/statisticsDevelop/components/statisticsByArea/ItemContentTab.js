@@ -1,6 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatisticsCompany } from '../constant';
@@ -10,7 +11,7 @@ import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
-  dataTableStatisticsCompany: any,
+  rawData: any,
   dataBoxContent: Object,
   handleChangeSearch: Function,
   paramsSearch: Object,
@@ -24,15 +25,25 @@ type Props = {
     value: any,
     label: string,
   }>,
+  totalPage: number,
+  perPage: number,
+  handleSubmitSearch: Function,
+  activeTab: boolean,
+  dateTime: Object,
 };
 
 const ItemContentTab = ({
-  dataTableStatisticsCompany,
+  rawData,
   dataBoxContent,
   handleChangeSearch,
   paramsSearch,
+  totalPage,
+  perPage,
   listStatusCompanySelect,
   listInverter,
+  handleSubmitSearch,
+  activeTab,
+  dateTime,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -59,6 +70,10 @@ const ItemContentTab = ({
         listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
+        listInverter1={listInverter}
+        isShowDupInverter
+        handleSubmitSearch={handleSubmitSearch}
+        activeTab={activeTab}
       />
 
       <div className="group-char" id="groupChart">
@@ -77,14 +92,29 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`generator/statistic?com_id=""&inverter_id=`} // TODO
+        linkDownTable={`generator/statistic?inverter_id=${activeTab}&pos_id=${paramsSearch?.posSelected}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
       />
       <div>
         <Table
           tableHeads={headStatisticsCompany}
-          tableBody={dataTableStatisticsCompany}
+          tableBody={rawData}
           // isShowId
         />
+        <div className="opacity d-block pagination mt-0">
+          {totalPage > perPage && (
+            <div className="wrapper-device__pagination mt-0">
+              <Pagination
+                activePage={paramsSearch?.page}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={(e) => handleChangeSearch(e, 'page')}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

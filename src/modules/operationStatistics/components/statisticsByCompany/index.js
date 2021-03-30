@@ -345,10 +345,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
   const handleSubmitSearch = () => {
     let from;
     let to;
@@ -455,7 +451,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                           rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
                         }))
                       }
-                      handleDownloadTrend={handleDownloadTrend}
                       dataContent={{}}
                       totalPage={totalPage}
                       perPage={perPage}

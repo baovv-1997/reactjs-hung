@@ -35,6 +35,7 @@ const ItemContentTab = ({
   id,
   chartData,
 }: Props) => {
+  console.log('chartData', chartData);
   const dataLengthChart = [
     {
       id: 1,

@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -24,7 +25,6 @@ type Props = {
   rawData: any,
   dataContent: Object,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
@@ -49,13 +49,13 @@ type Props = {
   optionFilters: Array,
   handleSubmitSearch: Function,
   tabActive: any,
+  dateTime: Object,
 };
 
 const ItemContentTab = ({
   rawData,
   dataContent,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
@@ -70,6 +70,7 @@ const ItemContentTab = ({
   optionFilters,
   handleSubmitSearch,
   tabActive,
+  dateTime,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const history = useHistory();
@@ -130,10 +131,9 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="실시간 계측정보 통계" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`generator?com_id=${paramsSearch?.company}&inverter_id=${tabActive}`} // TODO
+        linkDownTable={`operator/statistic/?inverter_id=${tabActive}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
       />
       <div>
         <Table
@@ -169,8 +169,16 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
-            Raw Date 다운
+          <Button onClick={() => {}}>
+            <a
+              href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
+                `operator/statistic/event?inverter_id=${tabActive}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Raw Date 다운
+            </a>
           </Button>
         </div>
       </div>

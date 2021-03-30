@@ -41,6 +41,7 @@ type Props = {
   }>,
   activeTab: string,
   handleSubmitSearch: Function,
+  dateTime: Object,
 };
 
 const ItemContentTab = ({
@@ -57,6 +58,7 @@ const ItemContentTab = ({
   listInverter,
   activeTab,
   handleSubmitSearch,
+  dateTime,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -106,7 +108,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`generator/statistic?com_id=${paramsSearch?.company}&inverter_id=${activeTab}`}
+        linkDownTable={`generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
       />
       <div>
         <Table
@@ -144,7 +146,7 @@ const ItemContentTab = ({
         <Button onClick={() => {}}>
           <a
             href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
-              `generator/statistic/event?com_id="${paramsSearch?.company}"&inverter_id=${activeTab}`
+              `generator/statistic/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
