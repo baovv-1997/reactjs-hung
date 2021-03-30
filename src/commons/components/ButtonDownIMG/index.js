@@ -5,6 +5,7 @@ import domtoimage from 'dom-to-image';
 import fileDownload from 'js-file-download';
 import ModalPopup from 'commons/components/Modal';
 import Button from 'commons/components/Button';
+import moment from 'moment';
 
 type Props = {
   text?: string,
@@ -15,6 +16,9 @@ export const ButtonDownIMG = ({
   text = 'Trend 이미지 다운',
   idWrapElement = 'groupChart',
 }: Props) => {
+  const nameImage = `graph_${moment(new Date()).format(
+    'YYYY_MM_DD_HH_mm_ss'
+  )}.png`;
   const [showModalConfirm, setShowModalConfirm] = useState({
     isShow: false,
     content: '',
@@ -31,7 +35,7 @@ export const ButtonDownIMG = ({
       domtoimage
         .toBlob(document.getElementById(idWrapElement))
         .then(function (blob) {
-          fileDownload(blob, 'graph.png');
+          fileDownload(blob, nameImage);
         })
         .catch(function (error) {
           setShowModalConfirm({
