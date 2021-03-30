@@ -85,6 +85,12 @@ import getStatisticOperatorCardSaga from 'modules/operationStatistics/saga/getSt
 import getStatisticOperatorChartDataSaga from 'modules/operationStatistics/saga/getStatisticOperatorChartDataSaga';
 import getTotalMetricSaga from 'modules/main/saga/getTotalMetricSaga';
 
+// statistics develop
+import getStatisticsDevelopRawSaga from 'modules/statisticsDevelop/saga/getStatisticsDevelopRawSaga';
+import getRadiationRawSaga from 'modules/statisticsDevelop/saga/getRadiationRawSaga';
+import getStatisticDevelopChartDataSaga from 'modules/statisticsDevelop/saga/getStatisticDevelopChartDataSaga';
+import getStatisticDevelopCardSaga from 'modules/statisticsDevelop/saga/getStatisticDevelopCardSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -194,5 +200,11 @@ export default function* RootSagas() {
 
     getStatisticOperatorCardSaga(),
     getStatisticOperatorChartDataSaga(),
+
+    // statistics develop
+    getStatisticsDevelopRawSaga(),
+    getRadiationRawSaga(),
+    getStatisticDevelopChartDataSaga(),
+    getStatisticDevelopCardSaga(),
   ]);
 }

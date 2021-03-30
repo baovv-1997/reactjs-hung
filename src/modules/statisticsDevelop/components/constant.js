@@ -77,10 +77,6 @@ export const headStatisticsOfModuleCompany = [
     id: 8,
     name: '현재 일사량',
   },
-  {
-    id: 9,
-    name: '최고 일사량',
-  },
 ];
 
 export default {

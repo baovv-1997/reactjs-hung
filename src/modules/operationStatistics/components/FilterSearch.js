@@ -2,6 +2,7 @@
 // libs
 import React, { memo } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import moment from 'moment';
 import IMAGES from 'themes/images';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
@@ -125,8 +126,15 @@ export const FilterSearch = ({
                   dateFormat={
                     CONTRACT_FORMAT_DATE[paramsSearch?.classification]
                   }
-                  maxDate={new Date()}
-                  locale="ko"
+                  minDate={
+                    new Date(
+                      moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
+                        30,
+                        'days'
+                      )
+                    )
+                  }
+                  maxDate={paramsSearch?.endDate}
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
@@ -150,7 +158,14 @@ export const FilterSearch = ({
                         }
                         locale="ko"
                         minDate={paramsSearch?.startDate}
-                        maxDate={new Date()}
+                        maxDate={
+                          new Date(
+                            moment(paramsSearch?.startDate, 'YYYY-MM-DD').add(
+                              30,
+                              'days'
+                            )
+                          )
+                        }
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown
