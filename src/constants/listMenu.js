@@ -163,14 +163,22 @@ export const SETUP = {
   label: '기기 관리',
   icon: IMAGES.setup,
   key: 'setup',
+  childRoute: [ROUTERS.ACCOUNT_MANAGEMENT, ROUTERS.DEVICE],
   items: [
     {
       id: 1,
       name: '계정 관리',
       to: ROUTERS.ACCOUNT_MANAGEMENT,
       key: 'setup-account',
+      childRoute: [ROUTERS.ACCOUNT_MANAGEMENT],
     },
-    { id: 2, name: '기기 관리', to: ROUTERS.DEVICE, key: 'setup-device' },
+    {
+      id: 2,
+      name: '기기 관리',
+      to: ROUTERS.DEVICE,
+      key: 'setup-device',
+      childRoute: [ROUTERS.DEVICE],
+    },
   ],
 };
 
