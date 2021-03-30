@@ -43,8 +43,14 @@ export const LineChart = ({
   unitLine4,
   unitLine5,
 }: Props) => {
+  // const lengthData =
+  //   dataChart[dataChart.length] &&
+  //   dataChart[dataChart.length].time &&
+  //   dataChart[dataChart.length].time - 3600;
+
   const customizeText = (arg) => {
     const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
+
     return `${labelText}`;
   };
 

@@ -98,6 +98,29 @@
     align-items: center;
     margin-top: pxToRem(15);
     overflow: hidden;
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.3);
+      background-color: $white;
+    }
+
+    &::-webkit-scrollbar {
+      width: pxToRem(5);
+      background-color: $white;
+      height: pxToRem(5);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-light13;
+      border: pxToRem(5) solid $color-light13;
+      border-radius: pxToRem(5);
+    }
+
+    &:hover {
+      overflow-x: overlay;
+      overflow-y: hidden;
+    }
+
     &__item {
       width: pxToRem(45);
       height: pxToRem(30);

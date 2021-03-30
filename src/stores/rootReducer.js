@@ -6,7 +6,7 @@ import deviceReducer from 'modules/device/redux';
 import operationStatusSlide from 'modules/operationStatus/redux';
 import testDashboardSlice from 'modules/testDashboard/redux';
 import solarDashboardSlice from 'modules/solarDashboard/redux';
-import statisticsDevelopSlide from 'modules/statisticsDevelop/redux';
+import statisticsDevelop from 'modules/statisticsDevelop/redux';
 import testMockupStatusSlide from 'modules/testMockupStatus/redux';
 import commonSilice from 'commons/redux';
 import operationStatistics from 'modules/operationStatistics/redux';
@@ -24,7 +24,7 @@ const appReducer = combineReducers({
   operationStatus: operationStatusSlide,
   testDashboard: testDashboardSlice,
   solarDashboard: solarDashboardSlice,
-  statisticsDevelop: statisticsDevelopSlide,
+  statisticsDevelop,
   testMockupStatus: testMockupStatusSlide,
   commons: commonSilice,
   testSolarMonitoringStatus: testSolarMonitoringStatusSlide,

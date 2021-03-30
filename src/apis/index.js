@@ -39,7 +39,7 @@ export const ROUTES = {
   GENERATOR_STATISTICS_RAW:
     '/data/solar-monitoring/statistic/generator/raw-measure',
   OPERATOR_STATISTICS_CARD: `/data/solar-monitoring/statistic/operation/cards`,
-  OPERATOR_STATISTICS_RAW: `/solar-monitoring/statistic/generator/raw-measure`,
+  OPERATOR_STATISTICS_RAW: `data/solar-monitoring/statistic/generator/raw-measure`,
   OPERATOR_STATISTICS_CHART: `/data/solar-monitoring/statistic/operation/chart`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_CARD: `/data/test-solar-monitoring/status-operation/status-cards`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_RAW: `/data/test-solar-monitoring/status-operation/raw-data`,
@@ -73,6 +73,10 @@ export const ROUTES = {
 
   API_DOWNLOAD_FILE_EXCEL: (name) =>
     `/data/export/test-solar-monitoring/operator/${name}`,
+  // statistics develop
+  STATISTICS_DEVELOP_RAW: `/data/test-mockup/statistic/generator/raw-measure`,
+  STATISTICS_DEVELOP_CHART: `/data/solar-monitoring/statistic/generator/chart`,
+  STATISTICS_DEVELOP_CARD: `/data/solar-monitoring/statistic/generator/cards`,
 };
 
 export const API = create({

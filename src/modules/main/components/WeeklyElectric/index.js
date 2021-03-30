@@ -1,13 +1,13 @@
 import React from 'react';
+
 import {
   Chart,
   Series,
-  ValueAxis,
   Label,
   Legend,
   ArgumentAxis,
-  Aggregation,
 } from 'devextreme-react/chart';
+
 type Props = {
   measure?: [],
 };
@@ -26,13 +26,11 @@ const WeeklyElectric = (measure: Props) => {
 
       <div className="weekly-electric__body main-card__body">
         <Chart id="chart" dataSource={dataChart}>
-          <Series argumentField="time">
-            <Aggregation
-              enabled={true}
-              // calculate={calculateRangeArea}
-              method="custom"
-            />
-          </Series>
+          <Series argumentField="time" type="bar" />
+          <ArgumentAxis>
+            <Label wordWrap="none" overlappingBehavior={'none'} />
+          </ArgumentAxis>
+
           <Legend visible={false} />
         </Chart>
       </div>

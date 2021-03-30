@@ -46,6 +46,8 @@ const MainPage = () => {
     id: '',
   });
   const [modal, setModal] = useState({ isShow: false, content: '' });
+  const [typeSearch, setTypeSearch] = useState({ type: '', id: null });
+  const [labelMatric, setLabelMatric] = useState('전체');
 
   const debouncedSearchTerm = useDebounce(searchTerm.label, 500);
 
@@ -72,22 +74,36 @@ const MainPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(getTotalMetric());
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [totalMetric]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
       count.current += 1;
       if (count.current > listPositions.length) {
         count.current = 1;
       }
-      dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
+      if (!typeSearch.type) {
+        dispatch(
+          getCardMeasureMain({ type: 'summary', pos_id: count.current })
+        );
+      }
     }, 30000);
     return () => clearInterval(interval);
-  }, [listPositions, cardPositionMain]);
+  }, [listPositions, typeSearch]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      switch (typeSearch.type) {
+        case 'posId':
+          dispatch(getTotalMetric({ pos_id: typeSearch.id }));
+          break;
+        case 'comId':
+          dispatch(getTotalMetric({ com_id: typeSearch.id }));
+          break;
+        default:
+          dispatch(getTotalMetric());
+          break;
+      }
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [totalMetric, typeSearch]);
 
   // when click title redirect dashboard area of area
   const handleTitleClick = (id) => {
@@ -118,6 +134,8 @@ const MainPage = () => {
           })
         );
         dispatch(getTotalMetric({ pos_id: searchTerm.id }));
+        setTypeSearch({ type: 'posId', id: searchTerm.id });
+        setLabelMatric(searchTerm.label);
         break;
       case 'comId':
         dispatch(
@@ -127,6 +145,8 @@ const MainPage = () => {
           })
         );
         dispatch(getTotalMetric({ com_id: searchTerm.id }));
+        setTypeSearch({ type: 'comId', id: searchTerm.id });
+        setLabelMatric(searchTerm.label);
         break;
       default:
         setModal({
@@ -184,7 +204,7 @@ const MainPage = () => {
         <div className="current-electric">
           <div className="current-electric__title">
             <img src={IMAGES.icon_title} alt="Title" className="icon-title" />
-            <p className="title">전체</p>
+            <p className="title">{labelMatric}</p>
             <div className="line" />
           </div>
           <TotalPower

@@ -353,8 +353,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     let from;
     let to;
     if (paramsSearch?.startDate && paramsSearch?.endDate) {
-      from = moment(new Date()).format('YYYY-MM-DD');
-      to = new Date();
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
     } else if (
       paramsSearch?.startDate &&
       !paramsSearch?.endDate &&
