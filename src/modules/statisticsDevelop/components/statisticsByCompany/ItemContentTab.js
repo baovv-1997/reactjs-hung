@@ -17,7 +17,7 @@ import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
-  dataTableStatisticsCompany: any,
+  rawData: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
@@ -40,10 +40,12 @@ type Props = {
     value: any,
     label: string,
   }>,
+  activeTab: string,
+  handleSubmitSearch: Function,
 };
 
 const ItemContentTab = ({
-  dataTableStatisticsCompany,
+  rawData,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
@@ -56,6 +58,8 @@ const ItemContentTab = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  activeTab,
+  handleSubmitSearch,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const dataLengthChart = [
@@ -75,14 +79,19 @@ const ItemContentTab = ({
       color: '#fe8224',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
+        listInverter1={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
+        isShowDupInverter
+        handleSubmitSearch={handleSubmitSearch}
+        activeTab={activeTab}
       />
 
       <div className="group-char">
@@ -106,7 +115,7 @@ const ItemContentTab = ({
       <div>
         <Table
           tableHeads={headStatisticsCompany}
-          tableBody={dataTableStatisticsCompany}
+          tableBody={rawData}
           // isShowId
         />
         <div className="opacity d-block pagination mt-0">
