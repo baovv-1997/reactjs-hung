@@ -76,7 +76,7 @@ const Submenu = ({
     });
 
   const { to, name, sub } = itemSub;
-  console.log('isActiveNestSub', isActiveNestSub);
+
   return (
     <li
       className="item"
