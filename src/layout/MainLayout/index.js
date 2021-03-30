@@ -3,15 +3,24 @@ import React, { useState, useRef } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
 import Loading from 'commons/components/Loading';
 import Header from 'commons/components/Header';
+import { withRouter } from 'react-router-dom';
+import ROUTERS from 'constants/routers';
 
 import SidebarMenu from '../Menu';
 
 type Props = {
   children: React.AbstractComponent<{}>,
   isProcessing?: boolean,
+  location: {
+    pathname: string,
+  },
 };
 
-export const MainLayout = ({ children, isProcessing = false }: Props) => {
+export const MainLayout = ({
+  children,
+  isProcessing = false,
+  location,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const refMenu = useRef(null);
   const iconRef = useRef(null);
@@ -49,11 +58,19 @@ export const MainLayout = ({ children, isProcessing = false }: Props) => {
             <span className="icon" />
           </div>
         </div>
-        <div className={`sidebar ${isOpen ? 'show' : ''} ${classHeight}`}>
-          <SidebarMenu innerRef={refMenu} />
-        </div>
-        <div className="main-content" ref={mainContent}>
-          <Header />
+
+        {location.pathname !== ROUTERS.LOGIN && (
+          <div className={`sidebar ${isOpen ? 'show' : ''} ${classHeight}`}>
+            <SidebarMenu innerRef={refMenu} />
+          </div>
+        )}
+        <div
+          className={`${
+            location.pathname !== ROUTERS.LOGIN ? 'main-content' : 'no-content'
+          }`}
+          ref={mainContent}
+        >
+          {location.pathname !== ROUTERS.LOGIN && <Header />}
           <div className="content">
             <div>{children}</div>
           </div>
@@ -67,4 +84,4 @@ MainLayout.defaultProps = {
   isProcessing: false,
 };
 
-export default MainLayout;
+export default withRouter(MainLayout);
