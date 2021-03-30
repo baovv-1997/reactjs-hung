@@ -205,9 +205,6 @@ const OperationStatusPage = () => {
     setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
-  };
 
   return (
     <>
@@ -269,7 +266,6 @@ const OperationStatusPage = () => {
                         moduleOutput: cardInfo?.dm_power || null,
                         moduleColor: cardInfo?.ds_color || null,
                       }}
-                      handleDownloadTrend={handleDownloadTrend}
                       handleChangeSearch={handleChangeSearch}
                       paramsSearch={paramsSearch}
                       activeTab={menuTab}

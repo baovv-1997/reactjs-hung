@@ -48,6 +48,7 @@ type Props = {
   }>,
   optionFilters: Array,
   handleSubmitSearch: Function,
+  tabActive: any,
 };
 
 const ItemContentTab = ({
@@ -68,6 +69,7 @@ const ItemContentTab = ({
   listInverter,
   optionFilters,
   handleSubmitSearch,
+  tabActive,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const history = useHistory();
@@ -131,6 +133,7 @@ const ItemContentTab = ({
         handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        linkDownTable={`generator?com_id=${paramsSearch?.company}&inverter_id=${tabActive}`} // TODO
       />
       <div>
         <Table

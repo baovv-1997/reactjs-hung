@@ -92,6 +92,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        linkDownTable={`generator?com_id=${paramsSearch?.company}&inverter_id=${activeTab}`}
       />
       <div>
         <Table

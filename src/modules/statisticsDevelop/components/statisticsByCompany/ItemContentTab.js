@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -18,9 +19,7 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   rawData: any,
-  // dataContent: Object,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
@@ -46,9 +45,7 @@ type Props = {
 
 const ItemContentTab = ({
   rawData,
-  // dataContent,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
@@ -109,7 +106,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`generator/statistic?com_id=${paramsSearch?.company}&inverter_id=${activeTab}`}
       />
       <div>
         <Table
@@ -144,11 +141,17 @@ const ItemContentTab = ({
           option={paramsSearch?.pagination2 || null}
           noOptionsMessage={() => '옵션 없음'}
         />
-        <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
+        <Button onClick={() => {}}>
+          <a
+            href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
+              `generator/statistic/event?com_id="${paramsSearch?.company}"&inverter_id=${activeTab}`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Raw Date 다운
-          </Button>
-        </div>
+          </a>
+        </Button>
       </div>
       <Table
         tableHeads={headStatisticsOfModuleCompany}

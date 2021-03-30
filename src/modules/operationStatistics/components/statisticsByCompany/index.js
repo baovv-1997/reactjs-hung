@@ -485,6 +485,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                       optionFilters={optionFilters}
                       listStatusCompanySelect={listInverter}
                       handleSubmitSearch={handleSubmitSearch}
+                      tabActive={menuTab}
                     />
                   </Tab>
                 ))}

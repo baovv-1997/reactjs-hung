@@ -11,9 +11,7 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   dataTableStatisticsCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -30,15 +28,12 @@ type Props = {
 
 const ItemContentTab = ({
   dataTableStatisticsCompany,
-  dataContent,
   dataBoxContent,
-  handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -82,7 +77,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`generator/statistic?com_id=""&inverter_id=`} // TODO
       />
       <div>
         <Table

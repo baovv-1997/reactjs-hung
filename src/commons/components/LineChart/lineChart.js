@@ -151,8 +151,8 @@ export const LineChart = ({
           >
             {/* <Label format="S" /> */}
             <Label
-              wordWrap="none"
-              overlappingBehavior={'none'}
+              // wordWrap="none"
+              // overlappingBehavior={'none'}
               customizeText={customizeText}
             />
           </ArgumentAxis>

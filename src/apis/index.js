@@ -3,7 +3,6 @@
 import { create } from 'apisauce';
 
 const API_URI = process.env.REACT_APP_API_URL;
-
 export const ROUTES = {
   // Auths
   SIGN_IN: `/auth/login`,
@@ -71,12 +70,14 @@ export const ROUTES = {
   API_TEST_MOCKUP_STATISTIC_OPERATION_CHART: `/data/test-mockup/statistic/operation/chart`,
   API_TEST_MOCKUP_STATISTIC_OPERATION_RAM: `/data/test-mockup/statistic/generator/raw-measure`,
 
-  API_DOWNLOAD_FILE_EXCEL: (name) =>
-    `/data/export/test-solar-monitoring/operator/${name}`,
   // statistics develop
   STATISTICS_DEVELOP_RAW: `/data/test-mockup/statistic/generator/raw-measure`,
   STATISTICS_DEVELOP_CHART: `/data/solar-monitoring/statistic/generator/chart`,
   STATISTICS_DEVELOP_CARD: `/data/solar-monitoring/statistic/generator/cards`,
+
+  //  Download CSV solar-monitoring
+  API_DOWN_EXCEL_SOLAR_MONITORING: (name) =>
+    `${API_URI}/data/export/solar-monitoring/${name}`,
 };
 
 export const API = create({

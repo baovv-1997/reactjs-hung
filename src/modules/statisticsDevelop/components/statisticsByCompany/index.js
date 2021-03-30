@@ -279,10 +279,6 @@ const OperationStatusPage = () => {
     setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
   /**
    * get chart List data
    */
@@ -421,7 +417,6 @@ const OperationStatusPage = () => {
                             dmPerformanceRatio: `${raw?.dm_performance_ratio}%`,
                           }))
                         }
-                        handleDownloadTrend={handleDownloadTrend}
                         dataContent={{}}
                         totalPage={totalRawData}
                         perPage={paramsSearch?.pagination?.value}
