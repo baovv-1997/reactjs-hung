@@ -33,15 +33,15 @@ export const LineChart = ({
   unitLeft = 'kWh',
   unitRight = 'W/㎡',
 }: Props) => {
-  const lengthData =
-    dataChart[dataChart.length] &&
-    dataChart[dataChart.length].time &&
-    dataChart[dataChart.length].time - 3600;
+  // const lengthData =
+  //   dataChart[dataChart.length] &&
+  //   dataChart[dataChart.length].time &&
+  //   dataChart[dataChart.length].time - 3600;
 
-  // const customizeText = (arg) => {
-  //   const labelText = arg.valueText.substring(0, arg.valueText.length - 2);
-  //   return `${labelText}`;
-  // };
+  const customizeText = (arg) => {
+    const labelText = arg.valueText.substring(0, arg.valueText.length - 2);
+    return `${labelText}`;
+  };
 
   const date = moment(new Date()).format('YYYY-MM-DD');
   const dateTime = moment(new Date()).format('HH');
@@ -141,9 +141,8 @@ export const LineChart = ({
               startValue: `${date} ${dateTime}:00:00`,
               endValue: `${date} ${dateTime}:59:59`,
             }}
-            argumentType="datetime"
           >
-            <Label format="S" />
+            <Label customizeText={customizeText} />
           </ArgumentAxis>
           <Tooltip enabled={true} customizeTooltip={customizeTooltip} />
           <Legend visible={false} />
