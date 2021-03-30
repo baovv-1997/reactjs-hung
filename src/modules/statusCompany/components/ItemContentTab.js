@@ -43,17 +43,17 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량 kWh',
+      name: '발전량(kWh)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: '일사량 ℃',
+      name: '일사량(W/㎡)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '성능비 kWh/㎡·10초',
+      name: '성능비(%)',
       color: '#fe8224',
     },
   ];
@@ -80,6 +80,9 @@ const ItemContentTab = ({
           {activeTab === id.toString() && chartData && (
             <LineChart
               dataChart={chartData}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
               optionLine={{
                 line1: paramsSearch?.power,
                 line2: paramsSearch?.insolation,
