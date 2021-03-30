@@ -84,14 +84,14 @@ export const FilterSearch = ({
               >
                 월별
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => handleChangeSearch('year', 'classification')}
                 customClass={`${
                   paramsSearch?.classification === 'year' ? 'active' : ''
                 }`}
               >
                 연별
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

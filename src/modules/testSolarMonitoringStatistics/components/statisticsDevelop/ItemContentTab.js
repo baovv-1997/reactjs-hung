@@ -9,6 +9,7 @@ import FilterSearch from '../FilterSearch';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
+import LineChart from 'commons/components/LineChart/lineChart';
 
 type Props = {
   dataTableStatisticsCompany: any,
@@ -60,6 +61,7 @@ const ItemContentTab = ({
       color: '#fe8224',
     },
   ];
+  console.log('paramsSearch', paramsSearch);
   return (
     <div className="content-wrap-tab">
       <BoxGroup dataBoxContent={dataBoxContent} />
@@ -79,7 +81,22 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          {dataChart && (
+            <LineChart
+              dataChart={dataChart}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
+              optionLine={{
+                line1: paramsSearch?.generation,
+                line2: paramsSearch?.insolation,
+                line3: paramsSearch?.performance,
+              }}
+              type={paramsSearch?.classification}
+            />
+          )}
+        </div>
       </div>
       <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
