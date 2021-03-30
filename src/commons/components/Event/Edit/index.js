@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-// import MainLayout from 'layout/MainLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from 'commons/components/LineChart';
 import TitleHeader from 'commons/components/TitleHeader';
@@ -14,7 +13,6 @@ import Button from 'commons/components/Button';
 import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
-import ROUTERS from 'constants/routers';
 import { getEventList, updateEvent } from 'commons/redux';
 
 type Props = {
@@ -36,10 +34,12 @@ const EditEvent = ({ match, location }: Props) => {
   const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
-
-  const { eventList, type, isProcessing } = useSelector(
+  const { eventList, type, isProcessing, deviceList } = useSelector(
     (state) => state.commons
   );
+
+  const listInverterTest =
+    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
 
   const [modalConform, setModalConform] = useState({
     isShow: false,
@@ -69,7 +69,6 @@ const EditEvent = ({ match, location }: Props) => {
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const { id } = match.params;
-
   const handleSubmit = () => {
     let validation = {};
     const rules = {
@@ -81,8 +80,6 @@ const EditEvent = ({ match, location }: Props) => {
 
     const dataValidate = {
       content,
-      // company: company && company.label,
-      // area: area && area.label,
       inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
@@ -250,32 +247,41 @@ const EditEvent = ({ match, location }: Props) => {
             <div className="colum-right">
               <div className="item-role">
                 <div className="group-select">
+                  {eventList?.ds_type !== '3' && (
+                    <div className="group-item">
+                      <SelectDropdown
+                        placeholder="모듈 선택"
+                        listItem={listCompany}
+                        onChange={(option) => handleChange(option, 'company')}
+                        option={company || null}
+                        noOptionsMessage={() => '옵션 없음'}
+                        errorMsg={error?.company}
+                      />
+                      <img src={images.icon_next} alt="" />
+                    </div>
+                  )}
+                  {eventList?.ds_type !== '3' && (
+                    <div className="group-item">
+                      <SelectDropdown
+                        placeholder="모듈 선택"
+                        listItem={listArea}
+                        onChange={(option) => handleChange(option, 'area')}
+                        option={area || null}
+                        noOptionsMessage={() => '옵션 없음'}
+                        errorMsg={error?.area}
+                      />
+                      <img src={images.icon_next} alt="" />
+                    </div>
+                  )}
+
                   <div className="group-item">
                     <SelectDropdown
                       placeholder="모듈 선택"
-                      listItem={listCompany}
-                      onChange={(option) => handleChange(option, 'company')}
-                      option={company || null}
-                      noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.company}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={listArea}
-                      onChange={(option) => handleChange(option, 'area')}
-                      option={area || null}
-                      noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.area}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={listInverter}
+                      listItem={
+                        eventList?.ds_type !== '3'
+                          ? listInverter
+                          : listInverterTest
+                      }
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
@@ -315,9 +321,7 @@ const EditEvent = ({ match, location }: Props) => {
           >
             수정 완료
           </Button>
-          <Button
-            onClick={() => history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)}
-          >
+          <Button onClick={() => history.push(location?.state?.prevRoute)}>
             취소
           </Button>
         </div>

@@ -112,7 +112,7 @@ const EventDetail = ({ match, location }: Props) => {
                   className="mx-2 position-top-1"
                 />
               )}
-              <span>{eventList?.pos_name}</span>
+              <span>{eventList?.ds_name}</span>
             </div>
           </div>
           <div className="item-row d-flex mh-300">
