@@ -55,9 +55,9 @@ const MenuItem = ({
     listSub &&
     listSub.length > 0 &&
     listSub.map((itemSub) => {
+      console.log('nestSubClicking', nestSubClicking);
       const isActiveNestSub =
-        nestSubClicking.name === itemSub.name ||
-        location.pathname.includes(item.to) ||
+        nestSubClicking.key === itemSub.key ||
         itemSub?.childRoute?.includes(location.pathname);
       return (
         <Submenu

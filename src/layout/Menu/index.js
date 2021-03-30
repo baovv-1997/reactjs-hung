@@ -19,11 +19,6 @@ type Props = {
 const Menu = ({ location }: Props) => {
   const [menuClicking, setMenuClicking] = useState({});
 
-  // useEffect(() => {
-  //   setMenuClicking(menuActived);
-  //   setListSub(menuActived?.sub);
-  // }, [menuActived]);
-
   const handleClickItem = (item, active) => {
     setMenuClicking(item);
     if (item.name === menuClicking.name && active) {
@@ -34,7 +29,7 @@ const Menu = ({ location }: Props) => {
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
       const isActive =
-        menuClicking?.name === item.name ||
+        menuClicking?.key === item.key ||
         item?.childRoute?.includes(location.pathname);
 
       return (

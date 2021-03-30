@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @flow
 // libs
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -37,13 +38,19 @@ const Submenu = ({
     setNestSubClicking(item);
   };
 
+  useEffect(() => {
+    const activeNestSub =
+      listNestSub && listNestSub.find((item) => item.to === location.pathname);
+    setNestSubClicking(activeNestSub);
+  }, []);
+
+  console.log('nestSubClicking', nestSubClicking);
   const renderNestedSub =
     listNestSub &&
     listNestSub.length > 0 &&
     listNestSub.map((item) => {
       const activeNestItem =
-        item.name === nestSubClicking.name ||
-        location.pathname.includes(item.to);
+        item?.key === nestSubClicking?.key && location.pathname === item.to;
 
       return (
         <li

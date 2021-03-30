@@ -5,9 +5,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
+import MainLayout from 'layout/MainLayout';
 import { API } from '../apis';
 import PrivateRoute from './PrivateRoute';
-import MainLayout from 'layout/MainLayout';
+
 const eventDetail = lazy(() => import('commons/components/Event/Detail'));
 const eventEdit = lazy(() => import('commons/components/Event/Edit'));
 const EventRegister = lazy(() => import('commons/components/Event/Register'));
