@@ -246,3 +246,10 @@
     width: pxToRem(140);
   }
 }
+
+.group-btn-download,
+.group-option-table {
+  a {
+    color: $white !important;
+  }
+}

@@ -180,10 +180,6 @@ const StatusByAreaCompany = () => {
     setParamsSearch({ ...defaultSearch });
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
-  };
-
   return (
     // <MainLayout isProcessing={isProcessing}>
     <div className="content-wrap">
@@ -258,7 +254,6 @@ const StatusByAreaCompany = () => {
                         ],
                       }}
                       dataContent={{}}
-                      handleDownloadTrend={handleDownloadTrend}
                       handleChangeSearch={handleChangeSearch}
                       performanceData={{
                         type: 'performance',

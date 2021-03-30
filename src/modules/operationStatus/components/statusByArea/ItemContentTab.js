@@ -13,7 +13,6 @@ import GroupActionDownload from '../GroupActionDownload';
 type Props = {
   rawData: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   activeTab: string,
@@ -25,7 +24,6 @@ type Props = {
 const ItemContentTab = ({
   rawData,
   dataBoxContent,
-  handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
   activeTab,
@@ -60,7 +58,7 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
-  
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -92,7 +90,7 @@ const ItemContentTab = ({
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`operator/status?pos_id=${paramsSearch?.posSelected}&com_id=${activeTab}`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />

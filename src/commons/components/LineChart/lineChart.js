@@ -23,14 +23,18 @@ import Loading from '../Loading/LoadingSmall';
 type Props = {
   dataChart: any,
   optionLine: Object,
-  unitLeft: string,
-  unitRight: string,
+  unitLeft?: string,
+  unitRight?: string,
   unitLine1: string,
   unitLine2: string,
   unitLine3: string,
+
   unitLine4: string,
   unitLine5: string,
   type: string,
+
+  // unitLine4: string,
+  // unitLine5: string,
 };
 
 export const LineChart = ({
@@ -41,8 +45,9 @@ export const LineChart = ({
   unitLine1,
   unitLine2,
   unitLine3,
-  unitLine4,
-  unitLine5,
+
+  // unitLine4,
+  // unitLine5,
   type,
 }: Props) => {
   const customizeText = (arg) => {
@@ -55,11 +60,11 @@ export const LineChart = ({
   const dateTime = moment(new Date()).format('HH');
 
   const customizeTooltip = (arg) => {
-    let text = `${arg.value.toLocaleString('en', {
+    const text = `${arg.value.toLocaleString('en', {
       maximumFractionDigits: 2,
     })}${arg.seriesName}`;
     return {
-      text: text,
+      text,
     };
   };
 
@@ -71,7 +76,7 @@ export const LineChart = ({
         </div>
       ) : (
         <Chart id="chart" dataSource={dataChart} palette="Harmony Light">
-          <LoadingIndicator enabled={true} />
+          <LoadingIndicator enabled />
           <CommonSeriesSettings
             endOnTick={false}
             type="spline"
@@ -117,24 +122,24 @@ export const LineChart = ({
             pane="top"
             name="frequency1"
             position="left"
-            showZero={true}
+            showZero
           />
           {optionLine?.line2 && (
             <ValueAxis
               name="frequency2"
               tickInterval={20}
-              showZero={true}
+              showZero
               position="right"
               type="linear"
               pane="top"
               minorTickCount={20}
-              valueMarginsEnabled={true}
+              valueMarginsEnabled
             />
           )}
-          <Crosshair enabled={true} color="#949494" width={3} dashStyle="dot">
-            <Label visible={true} backgroundColor="#000000" />
-            <VerticalLine visible={true} />
-            <HorizontalLine visible={true} />
+          <Crosshair enabled color="#949494" width={3} dashStyle="dot">
+            <Label visible backgroundColor="#000000" />
+            <VerticalLine visible />
+            <HorizontalLine visible />
           </Crosshair>
           <ArgumentAxis
             defaultVisualRange={{
@@ -142,13 +147,18 @@ export const LineChart = ({
               endValue: `${date} ${dateTime}:05:00`,
             }}
             argumentType="datetime"
-            aggregationInterval={'second'}
-            tickInterval={'second'}
-            minorTickInterval={'second'}
+            aggregationInterval="second"
+            tickInterval="second"
+            minorTickInterval="second"
           >
-            <Label customizeText={customizeText} />
+            {/* <Label format="S" /> */}
+            <Label
+              // wordWrap="none"
+              // overlappingBehavior={'none'}
+              customizeText={customizeText}
+            />
           </ArgumentAxis>
-          <Tooltip enabled={true} customizeTooltip={customizeTooltip} />
+          <Tooltip enabled customizeTooltip={customizeTooltip} />
           <Legend visible={false} />
           <ZoomAndPan argumentAxis="both" />
         </Chart>

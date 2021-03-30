@@ -345,40 +345,36 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
+  let from;
+  let to;
+  if (paramsSearch?.startDate && paramsSearch?.endDate) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+  } else if (
+    paramsSearch?.startDate &&
+    !paramsSearch?.endDate &&
+    (paramsSearch?.classification === 'minutes' ||
+      paramsSearch?.classification === 'hours')
+  ) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+  } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
+    from = moment(new Date()).format('YYYY-MM-DD');
+    to = moment(new Date()).format('YYYY-MM-DD');
+  } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+  } else if (
+    paramsSearch?.startDate &&
+    !paramsSearch?.endDate &&
+    (paramsSearch?.classification === 'day' ||
+      paramsSearch?.classification === 'month' ||
+      paramsSearch?.classification === 'year')
+  ) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(new Date()).format('YYYY-MM-DD');
+  }
   const handleSubmitSearch = () => {
-    let from;
-    let to;
-    if (paramsSearch?.startDate && paramsSearch?.endDate) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-    } else if (
-      paramsSearch?.startDate &&
-      !paramsSearch?.endDate &&
-      (paramsSearch?.classification === 'minutes' ||
-        paramsSearch?.classification === 'hours')
-    ) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
-      from = moment(new Date()).format('YYYY-MM-DD');
-      to = moment(new Date()).format('YYYY-MM-DD');
-    } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-    } else if (
-      paramsSearch?.startDate &&
-      !paramsSearch?.endDate &&
-      (paramsSearch?.classification === 'day' ||
-        paramsSearch?.classification === 'month' ||
-        paramsSearch?.classification === 'year')
-    ) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(new Date()).format('YYYY-MM-DD');
-    }
     dispatch(
       getStatisticOperatorChartData({
         com_id: paramsSearch?.company,
@@ -455,7 +451,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                           rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
                         }))
                       }
-                      handleDownloadTrend={handleDownloadTrend}
                       dataContent={{}}
                       totalPage={totalPage}
                       perPage={perPage}
@@ -485,6 +480,11 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                       optionFilters={optionFilters}
                       listStatusCompanySelect={listInverter}
                       handleSubmitSearch={handleSubmitSearch}
+                      tabActive={menuTab}
+                      dateTime={{
+                        from,
+                        to,
+                      }}
                     />
                   </Tab>
                 ))}

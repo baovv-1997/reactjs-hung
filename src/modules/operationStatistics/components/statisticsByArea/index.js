@@ -271,10 +271,6 @@ const OperationStatusPage = () => {
     setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
   return (
     // <MainLayout isProcessing={isProcessing}>
     <div className="content-wrap">
@@ -339,7 +335,6 @@ const OperationStatusPage = () => {
                           rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
                         }))
                       }
-                      handleDownloadTrend={handleDownloadTrend}
                       dataContent={{}}
                       listInverter={listInverter}
                       paramsSearch={paramsSearch}
@@ -347,6 +342,7 @@ const OperationStatusPage = () => {
                       listStatusCompanySelect={comList.slice(1)}
                       totalPage={totalRawData}
                       perPage={paramsSearch?.pagination?.value}
+                      tabActive={menuTab}
                     />
                   </Tab>
                 ))}

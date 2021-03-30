@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -18,9 +19,7 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   rawData: any,
-  // dataContent: Object,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
@@ -42,13 +41,12 @@ type Props = {
   }>,
   activeTab: string,
   handleSubmitSearch: Function,
+  dateTime: Object,
 };
 
 const ItemContentTab = ({
   rawData,
-  // dataContent,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
@@ -60,6 +58,7 @@ const ItemContentTab = ({
   listInverter,
   activeTab,
   handleSubmitSearch,
+  dateTime,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -109,7 +108,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
       />
       <div>
         <Table
@@ -144,11 +143,17 @@ const ItemContentTab = ({
           option={paramsSearch?.pagination2 || null}
           noOptionsMessage={() => '옵션 없음'}
         />
-        <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
+        <Button onClick={() => {}}>
+          <a
+            href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
+              `generator/statistic/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Raw Date 다운
-          </Button>
-        </div>
+          </a>
+        </Button>
       </div>
       <Table
         tableHeads={headStatisticsOfModuleCompany}
