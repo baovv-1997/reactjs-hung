@@ -22,8 +22,7 @@ const OperationStatusPage = () => {
   const totalPage = 100;
   const perPage2 = 6;
   const totalPage2 = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
+  // const [menuTab, setMenuTab] = useState('bulk');
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
@@ -196,7 +195,6 @@ const OperationStatusPage = () => {
 
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
-    setMenuTab(eventKey);
     setParamsSearch(defaultSearch);
   };
 

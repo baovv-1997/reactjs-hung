@@ -62,7 +62,6 @@ const statusCompanySlide = createSlice({
     },
     getStatusGeneratorCardSuccess: (state, action) => {
       const { data } = action;
-      console.log('action', action);
       state.type = action.type;
       state.cardInfo = data;
     },

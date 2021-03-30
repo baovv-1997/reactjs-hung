@@ -12,7 +12,6 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   rawData: any,
-  dataContent: Object,
   powerData: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -25,7 +24,6 @@ type Props = {
 const ItemContentTab = ({
   rawData,
   powerData,
-  dataContent,
   handleDownloadTrend,
   handleChangeSearch,
   performanceData,
@@ -33,7 +31,6 @@ const ItemContentTab = ({
   paramsSearch,
   totalRawData,
 }: Props) => {
-  console.log(dataContent);
   const dataLengthChart = [
     {
       id: 1,
@@ -60,7 +57,7 @@ const ItemContentTab = ({
         insolationData={insolationData}
       />
 
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}

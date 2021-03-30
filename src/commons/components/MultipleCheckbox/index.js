@@ -32,7 +32,6 @@ export const MutipleCheckbox = ({
       submitValue(checkedItems.filter((item) => item !== id));
     }
   };
-  console.log('checkedItems', checkedItems);
   return (
     <>
       <div>{label}</div>

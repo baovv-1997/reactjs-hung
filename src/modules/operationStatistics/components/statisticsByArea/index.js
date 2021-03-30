@@ -165,7 +165,6 @@ const OperationStatusPage = () => {
     paramsSearch?.page,
   ]);
 
-  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -275,8 +274,6 @@ const OperationStatusPage = () => {
   const handleDownloadTrend = (name) => {
     console.log(name, 'download Trend');
   };
-
-  console.log('raw data', rawData);
 
   return (
     // <MainLayout isProcessing={isProcessing}>

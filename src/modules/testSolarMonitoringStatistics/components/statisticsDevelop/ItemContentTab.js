@@ -69,7 +69,7 @@ const ItemContentTab = ({
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
       />
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}
