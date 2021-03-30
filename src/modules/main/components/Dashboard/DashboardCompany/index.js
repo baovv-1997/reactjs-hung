@@ -48,7 +48,7 @@ const DashboardCompany = () => {
 
   // render list inverter Company
   const renderInverter =
-    newlistCompanyInverters.length &&
+    newlistCompanyInverters &&
     newlistCompanyInverters.map((item, index) => {
       // get prev item
       const prevInverter = newlistCompanyInverters[index - 1];

@@ -62,8 +62,8 @@ const SolarDashboard = () => {
     // <MainLayout isProcessing={isLoading}>
     <div className="content-wrap">
       <TitleHeader
-        title="설치 업체"
-        descSub="실증단지 내 설치된 업체들의 발전 데이터를 확인하실 수 있습니다."
+        title="테스트(실증단지)"
+        descSub="설치된 목업들에 데이터를 확인하실 수 있습니다."
       />
 
       <div className="list-company test-dashboard">{renderInverter}</div>
