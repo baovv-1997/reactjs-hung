@@ -1,8 +1,9 @@
 // @flow
 // libs
 import React, { useState, memo } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { setMenuItemClicking } from 'commons/redux';
+import { logOut } from 'modules/accounts/redux';
 
 import { withRouter } from 'react-router-dom';
 import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const Menu = ({ location }: Props) => {
+  const dispatch = useDispatch();
   const [menuClicking, setMenuClicking] = useState({});
 
   const handleClickItem = (item, active) => {
@@ -76,7 +78,12 @@ const Menu = ({ location }: Props) => {
       </div>
       <div className="logout">
         <div className="name-user">마스터님</div>
-        <Button customClass="btn-logout">
+        <Button
+          customClass="btn-logout"
+          onClick={() => {
+            dispatch(logOut());
+          }}
+        >
           <img src={IMAGES.btn_logout} alt="" />
           <div>로그아웃</div>
         </Button>

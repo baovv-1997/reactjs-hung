@@ -185,6 +185,21 @@ const accountSlice = createSlice({
     resetAccountType: (state) => {
       state.type = '';
     },
+
+    logOut: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    logOutSuccess: (state) => {
+      state.type = '';
+      state.token = '';
+      state.userInfo = '';
+      state.isProcessing = false;
+    },
+    logOutFalied: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+    },
   },
 });
 
@@ -216,6 +231,9 @@ export const {
   deleteAccount,
   deleteAccountFailed,
   deleteAccountSuccess,
+  logOut,
+  logOutSuccess,
+  logOutFalied,
 } = actions;
 
 export default reducer;
