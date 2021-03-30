@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -96,7 +97,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}`} // TODO
       />
       <div>
         <Table
@@ -132,8 +133,16 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
-            Raw Date 다운
+          <Button onClick={() => {}}>
+            <a
+              href={`${ROUTES.API_DOWN_EXCEL_MOCKUP(
+                `operator/statistic?inverter_id=${paramsSearch?.company}`
+              )}`} // TODO
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Raw Date 다운
+            </a>
           </Button>
         </div>
       </div>

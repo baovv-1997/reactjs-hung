@@ -234,9 +234,6 @@ const OperationStatusPage = ({ location }: Props) => {
     }
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
     history.push({
@@ -259,7 +256,6 @@ const OperationStatusPage = ({ location }: Props) => {
             <ItemContentTab
               dataBoxContent={dataBoxContent}
               listMockupDataCompany={listDataTableRawOperation}
-              handleDownloadTrend={handleDownloadTrend}
               totalPage={total}
               perPage={paramsSearch?.pagination?.value}
               totalPage2={totalEventPage}

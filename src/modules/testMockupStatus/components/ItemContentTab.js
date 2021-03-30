@@ -12,7 +12,6 @@ import GroupActionDownload from './GroupActionDownload';
 type Props = {
   listMockupDataCompany: any,
   powerData: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   performanceData: Object,
@@ -22,7 +21,6 @@ type Props = {
 const ItemContentTab = ({
   listMockupDataCompany,
   powerData,
-  handleDownloadTrend,
   handleChangeSearch,
   performanceData,
   insolationData,
@@ -69,7 +67,7 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="발전 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`generator/status?inverter_id=${paramsSearch?.company}`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />

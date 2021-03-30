@@ -78,6 +78,8 @@ export const ROUTES = {
   //  Download CSV solar-monitoring
   API_DOWN_EXCEL_SOLAR_MONITORING: (name) =>
     `${API_URI}/data/export/solar-monitoring/${name}`,
+  //  Download CSV Mockup
+  API_DOWN_EXCEL_MOCKUP: (name) => `${API_URI}/data/export/test-mockup/${name}`,
   LOG_OUT: '/auth/logout',
 };
 
