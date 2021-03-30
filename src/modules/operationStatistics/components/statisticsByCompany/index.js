@@ -73,6 +73,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     endDate: null,
     vendorCompany: null,
     inverter: null,
+    inverter1: menuTab === '' ? null : [deviceList[1]],
   };
 
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
@@ -326,6 +327,12 @@ const OperatorStatisticCompany = ({ location }: Props) => {
           endDate: item,
         });
         break;
+      case 'inverter1':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter1: item,
+        });
+        break;
       default:
         break;
     }
@@ -342,7 +349,14 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    const inverter1Selected = deviceList.find(
+      (item) => item.id === parseInt(eventKey, 10)
+    );
+
+    if (eventKey === '') {
+      setParamsSearch({ ...defaultSearch, inverter1: null });
+    }
+    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
   };
 
   let from;
@@ -353,8 +367,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   } else if (
     paramsSearch?.startDate &&
     !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'minutes' ||
-      paramsSearch?.classification === 'hours')
+    (paramsSearch?.classification === 'minute' ||
+      paramsSearch?.classification === 'hour')
   ) {
     from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
     to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
@@ -382,7 +396,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         from,
         to,
         type: paramsSearch?.classification,
-        inverter_ids: menuTab,
+        inverter_ids: paramsSearch?.inverter1?.id,
       })
     );
   };
@@ -474,7 +488,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                       }
                       isShowModalSorting={isShowModalSorting}
                       paramsSearch={paramsSearch}
-                      listInverter={deviceList.slice(1)}
+                      listInverter={listInverter}
                       handleClickDetail={handleClickDetail}
                       handleChangeSearch={handleChangeSearch}
                       optionFilters={optionFilters}

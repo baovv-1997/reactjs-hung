@@ -4,11 +4,11 @@ import Pagination from 'react-js-pagination';
 import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import LineChart from 'commons/components/LineChart/lineChart';
 import { headStatusByCompany } from './constants';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
-import LineChart from 'commons/components/LineChart/lineChart';
 
 type Props = {
   rawData: any,
@@ -35,7 +35,6 @@ const ItemContentTab = ({
   id,
   chartData,
 }: Props) => {
-  console.log('chartData', chartData);
   const dataLengthChart = [
     {
       id: 1,
@@ -84,6 +83,7 @@ const ItemContentTab = ({
                 line2: paramsSearch?.insolation,
                 line3: paramsSearch?.performance,
               }}
+              type="minute"
             />
           )}
         </div>
