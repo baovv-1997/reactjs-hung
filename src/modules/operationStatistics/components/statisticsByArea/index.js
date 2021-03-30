@@ -1,31 +1,33 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
+import moment from 'moment';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-js-pagination';
-// import MainLayout from 'layout/MainLayout';
-import TitleHeader from 'commons/components/TitleHeader';
 
-import {
-  listMockupType,
-  listMockupDataCompany,
-  listParkingLot,
-} from 'mockData/listCompany';
-import * as StatusCompanyAction from 'modules/statusCompany/redux';
-import * as SignInAction from 'modules/accounts/redux';
+import TitleHeader from 'commons/components/TitleHeader';
+import { getPosList, getListDevice, getCompanyList } from 'commons/redux';
+import { listMockupType, listParkingLot } from 'mockData/listCompany';
+import { getListInverter } from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import {
+  getStatisticOperatorRawData,
+  getStatisticOperatorCard,
+} from '../../redux';
+
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const perPage = 6;
-  const totalPage = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
-  const { listStatusCompanySelect } = useSelector(
-    (state) => state?.statusCompany
-  );
+  const [menuTab, setMenuTab] = useState('');
+
   const { listInverter } = useSelector((state) => state?.account);
+  const { posList, deviceList, comList } = useSelector(
+    (state) => state.commons
+  );
+  const { rawData, totalRawData, cardInfo } = useSelector(
+    (state) => state.operationStatistics
+  );
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -34,7 +36,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    company: null,
+    posSelected: posList && posList[1] && posList[1].id,
     mockupType: null,
     parkingLot: null,
     PVVoltage: false,
@@ -52,16 +54,40 @@ const OperationStatusPage = () => {
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    angleOfIncidence: cardInfo?.ds_azimuth_angle,
+    azimuth: cardInfo?.ds_incidence_angle,
+    moduleOutput: cardInfo?.dm_power,
+    moduleColor: cardInfo?.ds_color,
   };
 
   const dispatch = useDispatch();
+
+  /**
+   * get company list
+   */
+  const getPosListCallback = useCallback(() => {
+    dispatch(getPosList());
+  }, [dispatch]);
+
   useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
-  }, []);
+    getPosListCallback();
+  }, [getPosListCallback]);
+
+  /**
+   * get card info data
+   */
+  const getCardInfoCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticOperatorCard(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getCardInfoCallback({
+      inverter_ids: menuTab,
+    });
+  }, [getCardInfoCallback, menuTab]);
 
   // call api get list all video
   const getDataListStatusCompany = useCallback(() => {
@@ -71,6 +97,73 @@ const OperationStatusPage = () => {
   useEffect(() => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
+
+  /**
+   * get Device list
+   */
+  const getDevicesCallback = useCallback(
+    (params) => {
+      dispatch(getListDevice(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getDevicesCallback({ pos_id: paramsSearch?.posSelected });
+  }, [getDevicesCallback, paramsSearch?.posSelected]);
+
+  /**
+   * get company list
+   */
+  const getListCompanyCallback = useCallback(() => {
+    dispatch(getCompanyList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    getListCompanyCallback();
+  }, [getListCompanyCallback]);
+
+  /**
+   * get Event List data
+   */
+  const getListInverterCallback = useCallback(
+    (params) => {
+      dispatch(getListInverter(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getListInverterCallback({
+      com_id: paramsSearch?.vendorCompany?.id,
+      per_page: 9999,
+    });
+  }, [paramsSearch?.vendorCompany, getListInverterCallback]);
+
+  /**
+   * get raw data list
+   */
+  const getStatisticOperatorRawDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticOperatorRawData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatisticOperatorRawDataCallback({
+      pos_id: paramsSearch?.posSelected,
+      inverter_ids: menuTab,
+      page: paramsSearch?.page,
+      per_page: paramsSearch?.pagination?.value,
+    });
+  }, [
+    getStatisticOperatorRawDataCallback,
+    paramsSearch?.posSelected,
+    menuTab,
+    paramsSearch?.pagination,
+    paramsSearch?.page,
+  ]);
 
   // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
@@ -154,12 +247,6 @@ const OperationStatusPage = () => {
           vendorCompany: item,
           inverter: null,
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: item?.value,
-          })
-        );
 
         break;
       case 'startDate':
@@ -189,6 +276,8 @@ const OperationStatusPage = () => {
     console.log(name, 'download Trend');
   };
 
+  console.log('raw data', rawData);
+
   return (
     // <MainLayout isProcessing={isProcessing}>
     <div className="content-wrap">
@@ -198,89 +287,72 @@ const OperationStatusPage = () => {
           handleChangeSearch={handleChangeSearch}
           listParkingLot={listParkingLot}
           paramsSearch={paramsSearch}
-          listStatusCompanySelect={listStatusCompanySelect}
+          listStatusCompanySelect={posList.slice(1)}
           listMockupType={listMockupType}
         />
         <div className="content-body-left w-100">
           <div className="h-100">
             <Tabs
-              defaultActiveKey="all"
+              defaultActiveKey={
+                deviceList && deviceList.length > 1
+                  ? ''
+                  : deviceList && deviceList[0] && deviceList[0].id
+              }
               className="list-order tab-list"
               onSelect={(eventKey) => onSelect(eventKey)}
             >
-              <Tab
-                eventKey="all"
-                title={
-                  <div className="tab-name">
-                    아반시스코리아<span>전체</span>
-                  </div>
-                }
-              >
-                <ItemContentTab
-                  dataBoxContent={dataBoxContent}
-                  listMockupDataCompany={listMockupDataCompany}
-                  handleDownloadTrend={handleDownloadTrend}
-                  dataContent={{}}
-                  listInverter={listInverter}
-                  paramsSearch={paramsSearch}
-                  handleChangeSearch={handleChangeSearch}
-                  listStatusCompanySelect={listStatusCompanySelect}
-                />
-              </Tab>
-              <Tab
-                eventKey="coes"
-                title={
-                  <div className="tab-name">
-                    인버터 ID <span>본관 남측</span>
-                  </div>
-                }
-              >
-                <ItemContentTab
-                  dataBoxContent={dataBoxContent}
-                  listMockupDataCompany={listMockupDataCompany}
-                  handleDownloadTrend={handleDownloadTrend}
-                  dataContent={{}}
-                  listInverter={listInverter}
-                  paramsSearch={paramsSearch}
-                  handleChangeSearch={handleChangeSearch}
-                  listStatusCompanySelect={listStatusCompanySelect}
-                />
-              </Tab>
-              <Tab
-                eventKey="SK-Solar"
-                title={
-                  <div className="tab-name">
-                    인버터 ID<span>본관 동측</span>
-                  </div>
-                }
-              >
-                <ItemContentTab
-                  dataBoxContent={dataBoxContent}
-                  listMockupDataCompany={listMockupDataCompany}
-                  handleDownloadTrend={handleDownloadTrend}
-                  dataContent={{}}
-                  listInverter={listInverter}
-                  paramsSearch={paramsSearch}
-                  handleChangeSearch={handleChangeSearch}
-                  listStatusCompanySelect={listStatusCompanySelect}
-                />
-              </Tab>
-
-              <div className="opacity d-block pagination mt-0 mb-3">
-                {totalPage > perPage && (
-                  <div className="wrapper-device__pagination mt-0">
-                    <Pagination
-                      activePage={paramsSearch?.page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={totalPage}
-                      pageRangeDisplayed={5}
-                      onChange={(e) => handleChangeSearch(e, 'page')}
-                      itemClass="page-item"
-                      linkClass="page-link"
+              {deviceList &&
+                deviceList.map((dev) => (
+                  <Tab
+                    eventKey={dev.id}
+                    title={
+                      <div className="tab-name">
+                        {dev?.label}
+                        {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                      </div>
+                    }
+                  >
+                    <ItemContentTab
+                      dataBoxContent={dataBoxContent}
+                      rawData={
+                        rawData &&
+                        rawData.map((raw, index) => ({
+                          rowId:
+                            `${
+                              totalRawData -
+                              (paramsSearch?.page - 1) *
+                                paramsSearch.pagination.value -
+                              index
+                            }` || '',
+                          dateTime: moment(raw.dm_datetime).format(
+                            'YYYY-MM-DD hh:mm:ss'
+                          ),
+                          companyName: raw?.com_name || '',
+                          inverterID: raw?.ds_id || '',
+                          inverterName: raw?.ds_name || '',
+                          installationLocation: raw?.pos_name || '',
+                          moduleTemperature: `${raw?.dm_pv_voltage}V`,
+                          outsideTemperature: `${raw?.dm_pv_current}A`,
+                          horizontalInsolation: `${raw?.dm_o_voltage}V`,
+                          gradientInsolation: `${raw?.dm_o_current}A`,
+                          powerGeneration: `${raw?.dm_power}KW`,
+                          cumulativePowerGeneration: `${
+                            raw?.dm_power_eff ? raw?.dm_power_eff : 0
+                          }%`,
+                          rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                        }))
+                      }
+                      handleDownloadTrend={handleDownloadTrend}
+                      dataContent={{}}
+                      listInverter={listInverter}
+                      paramsSearch={paramsSearch}
+                      handleChangeSearch={handleChangeSearch}
+                      listStatusCompanySelect={comList.slice(1)}
+                      totalPage={totalRawData}
+                      perPage={paramsSearch?.pagination?.value}
                     />
-                  </div>
-                )}
-              </div>
+                  </Tab>
+                ))}
             </Tabs>
           </div>
         </div>

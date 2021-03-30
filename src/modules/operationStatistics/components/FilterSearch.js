@@ -22,6 +22,7 @@ type Props = {
     value: any,
     label: string,
   }>,
+  handleSubmitSearch: Function,
 };
 
 export const FilterSearch = ({
@@ -29,6 +30,7 @@ export const FilterSearch = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  handleSubmitSearch,
 }: Props) => {
   const CONTRACT_FORMAT_DATE = {
     minute: 'yyyy-MM-dd',
@@ -131,6 +133,7 @@ export const FilterSearch = ({
                   dropdownMode="select"
                   showMonthYearPicker={paramsSearch?.classification === 'month'}
                   showYearPicker={paramsSearch?.classification === 'year'}
+                  placeholderText="시간 선택"
                 />
                 <img src={IMAGES.iconCalendar} alt="icon-calendar" />
               </div>
@@ -156,15 +159,13 @@ export const FilterSearch = ({
                         }
                         showYearPicker={paramsSearch?.classification === 'year'}
                         dropdownMode="select"
+                        placeholderText="시간 선택"
                       />
                       <img src={IMAGES.iconCalendar} alt="icon-calendar" />
                     </div>
                   </>
                 )}
-              <Button
-                onClick={() => handleChangeSearch('', 'submitSearch')}
-                customClass="h-32"
-              >
+              <Button onClick={handleSubmitSearch} customClass="h-32">
                 검색
               </Button>
             </div>

@@ -1,8 +1,9 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from 'commons/components/LineChart';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
@@ -22,16 +23,21 @@ type Props = {
       id: any,
     },
   },
+  location: {
+    state: {
+      prevRoute: string,
+    },
+  },
 };
 
-const EditEvent = ({ match }: Props) => {
+const EditEvent = ({ match, location }: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
 
-  const { eventList, isProcessing, type } = useSelector(
+  const { eventList, type, isProcessing } = useSelector(
     (state) => state.commons
   );
 
@@ -111,7 +117,7 @@ const EditEvent = ({ match }: Props) => {
   useEffect(() => {
     switch (type) {
       case 'commons/updateEventSuccess':
-        history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY);
+        history.push(location.state.prevRoute);
         break;
       default:
         break;
@@ -199,7 +205,8 @@ const EditEvent = ({ match }: Props) => {
   }, [eventList]);
 
   return (
-    <MainLayout isProcessing={isProcessing}>
+    <>
+      {isProcessing && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 운영 현황"
@@ -342,7 +349,7 @@ const EditEvent = ({ match }: Props) => {
       >
         {modalConform?.content}
       </ModalPopup>
-    </MainLayout>
+    </>
   );
 };
 
