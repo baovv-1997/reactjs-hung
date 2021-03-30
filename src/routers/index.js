@@ -80,16 +80,6 @@ const testMockupOperationStatus = lazy(() =>
   import('modules/testMockupStatus/components/operationStatus/index')
 );
 
-const testMockupOperationStatusDetail = lazy(() =>
-  import('modules/testMockupStatus/components/operationStatus/detail')
-);
-const testMockupOperationStatusRegister = lazy(() =>
-  import('modules/testMockupStatus/components/operationStatus/register')
-);
-const testMockupOperationStatusEdit = lazy(() =>
-  import('modules/testMockupStatus/components/operationStatus/edit')
-);
-
 const testMockupOperationStatics = lazy(() =>
   import('modules/testMockupStatistics/components/statisticsOperation')
 );
@@ -279,24 +269,6 @@ const Router = () => {
               exact
               path={ROUTERS.TEST_MOCKUP_OPERATION}
               component={testMockupOperationStatus}
-              isAuthenticated={isAuthenticated}
-            />
-            <PrivateRoute
-              exact
-              path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_REGISTER}
-              component={testMockupOperationStatusRegister}
-              isAuthenticated={isAuthenticated}
-            />
-            <PrivateRoute
-              exact
-              path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_DETAIL}
-              component={testMockupOperationStatusDetail}
-              isAuthenticated={isAuthenticated}
-            />
-            <PrivateRoute
-              exact
-              path={ROUTERS.TEST_MOCKUP_OPERATION_STATUS_EDIT}
-              component={testMockupOperationStatusEdit}
               isAuthenticated={isAuthenticated}
             />
 

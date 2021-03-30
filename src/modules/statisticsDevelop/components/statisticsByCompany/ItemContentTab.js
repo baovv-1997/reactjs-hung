@@ -146,7 +146,7 @@ const ItemContentTab = ({
         <Button onClick={() => {}}>
           <a
             href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
-              `generator/statistic/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`
+              `generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`
             )}`}
             target="_blank"
             rel="noopener noreferrer"

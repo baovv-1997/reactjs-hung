@@ -1,6 +1,7 @@
 // @flow
 // libs
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
@@ -9,13 +10,13 @@ import { ButtonDownIMG } from 'commons/components/ButtonDownIMG';
 type Props = {
   paramsSearch: Object,
   handleChangeSearch: Function,
-  handleDownloadTrend: Function,
+  linkDownTable: string,
 };
 
 export const GroupActionDownload = ({
   paramsSearch,
   handleChangeSearch,
-  handleDownloadTrend,
+  linkDownTable,
 }: Props) => (
   <div className="group-option-table d-flex  justify-content-between mb-3">
     <SelectDropdown
@@ -27,7 +28,15 @@ export const GroupActionDownload = ({
     />
     <div className="group-btn-download">
       <ButtonDownIMG />
-      <Button onClick={() => handleDownloadTrend('raw')}>Raw Date 다운</Button>
+      <Button onClick={() => {}}>
+        <a
+          href={`${ROUTES.API_DOWN_EXCEL_MOCKUP(linkDownTable)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Raw Date 다운
+        </a>
+      </Button>
     </div>
   </div>
 );

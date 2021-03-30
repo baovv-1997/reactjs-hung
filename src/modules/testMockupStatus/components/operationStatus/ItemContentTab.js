@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
@@ -16,7 +17,7 @@ import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from './GroupActionDownload';
+import GroupActionDownload from '../GroupActionDownload';
 import moment from 'moment';
 
 type Props = {
@@ -90,9 +91,9 @@ const ItemContentTab = ({
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        linkDownTable={`generator/status?inverter_id=${paramsSearch?.company}`}
       />
       <div className="mb-4">
         <Table
@@ -126,8 +127,16 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
-            Raw Date 다운
+          <Button onClick={() => {}}>
+            <a
+              href={`${ROUTES.API_DOWN_EXCEL_MOCKUP(
+                `generator/status/event?inverter_id=${paramsSearch?.company}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Raw Date 다운
+            </a>
           </Button>
         </div>
       </div>

@@ -219,10 +219,6 @@ const StatusByAreaCompany = () => {
     }
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log('download Trend', name);
-  };
-
   return (
     <>
       {isProcessing && <Loading />}
@@ -238,7 +234,6 @@ const StatusByAreaCompany = () => {
             <ItemContentTab
               listMockupDataCompany={listDataTableRaw}
               powerData={powerData}
-              handleDownloadTrend={handleDownloadTrend}
               handleChangeSearch={handleChangeSearch}
               performanceData={performanceData}
               insolationData={insolationData}
