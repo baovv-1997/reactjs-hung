@@ -47,7 +47,6 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     accountDetail.devices &&
     accountDetail.devices.length > 0 &&
     accountDetail.devices.map((item) => {
-      console.log(item?.company);
       return (
         <p className="item-device-maintain">
           <span>{item?.company?.com_name}</span>

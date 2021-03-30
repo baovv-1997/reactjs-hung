@@ -136,7 +136,7 @@ const OperationStatusPage = () => {
       type: paramsSearch?.classification || null,
       from: fromDate,
       to: toDate,
-      ds_id: paramsSearch?.inverter?.id,
+      compare_inverter_id: paramsSearch?.inverter?.id,
     });
   }, [
     handleGetDataTrendChart,

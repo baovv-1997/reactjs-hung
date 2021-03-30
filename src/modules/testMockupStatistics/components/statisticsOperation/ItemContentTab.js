@@ -91,7 +91,7 @@ const ItemContentTab = ({
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
       />
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}
@@ -152,8 +152,11 @@ const ItemContentTab = ({
         tableBody={
           (dataTableBottom &&
             dataTableBottom.length > 0 &&
-            dataTableBottom.map((event) => ({
+            dataTableBottom.map((event, index) => ({
               id: event?.id,
+              rowId: `${
+                totalPage2 - (paramsSearch?.page2 - 1) * perPage2 - index || ''
+              }`,
               dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
               comName: event?.com_name,
               inverterID: event?.ds_id,
@@ -162,7 +165,7 @@ const ItemContentTab = ({
             }))) ||
           []
         }
-        // isShowId
+        isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{

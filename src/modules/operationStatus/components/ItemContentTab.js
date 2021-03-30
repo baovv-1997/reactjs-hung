@@ -99,7 +99,7 @@ const ItemContentTab = ({
         handleChangeSearch={handleChangeSearch}
       />
 
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}
@@ -170,7 +170,7 @@ const ItemContentTab = ({
       <Table
         tableHeads={headOperationStatusByAreaCompany}
         tableBody={tableOperationStatusByAreaCompany}
-        // isShowId
+        isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{

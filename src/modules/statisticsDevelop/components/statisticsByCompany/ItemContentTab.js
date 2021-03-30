@@ -18,7 +18,6 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   dataTableStatisticsCompany: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   totalPage: number,
@@ -44,7 +43,6 @@ type Props = {
 
 const ItemContentTab = ({
   dataTableStatisticsCompany,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   totalPage,
@@ -57,7 +55,6 @@ const ItemContentTab = ({
   listStatusCompanySelect,
   listInverter,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -85,7 +82,7 @@ const ItemContentTab = ({
         paramsSearch={paramsSearch}
       />
 
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}
