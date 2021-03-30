@@ -1,30 +1,36 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
+import moment from 'moment';
+import Loading from 'commons/components/Loading';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 // import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
-import Pagination from 'react-js-pagination';
-import {
-  listMockupType,
-  dataTableStatisticsCompany,
-  listParkingLot,
-} from 'mockData/listCompany';
-import * as StatusCompanyAction from 'modules/statusCompany/redux';
+import { listParkingLot } from 'mockData/listCompany';
+import { getPosList, getListDevice } from 'commons/redux';
+
 import * as SignInAction from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import {
+  getStatisticsDevelopRaw,
+  getStatisticDevelopChartData,
+  getStatisticDevelopCard,
+} from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const perPage = 6;
-  const totalPage = 100;
-  // const [menuTab, setMenuTab] = useState('bulk');
+  const [menuTab, setMenuTab] = useState('');
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
   const { listInverter } = useSelector((state) => state?.account);
-
+  const { posList, isProcessing, deviceList } = useSelector(
+    (state) => state?.commons
+  );
+  const { rawData, totalRawData, cardInfo } = useSelector(
+    (state) => state.statisticsDevelop
+  );
   const defaultOption = {
     id: 1,
     value: 6,
@@ -32,6 +38,7 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
+    posSelected: posList && posList[1] && posList[1].id,
     page: 1,
     classification: 'minute',
     startDate: new Date() || null,
@@ -45,38 +52,68 @@ const OperationStatusPage = () => {
     performance: false,
     generation: false,
     pagination: defaultOption,
+    inverter1: menuTab === '' ? null : [deviceList[1]],
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
+
   const dataBoxContent = {
-    day: '300',
-    month: '9,000',
-    year: '300',
+    day: cardInfo?.prod_day,
+    month: cardInfo?.prod_month,
+    year: cardInfo?.prod_sum,
   };
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(StatusCompanyAction.getListStatusCompany());
-  }, []);
+  /**
+   * get company list
+   */
+  const getListCompanyCallback = useCallback(() => {
+    dispatch(getPosList());
+  }, [dispatch]);
 
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    console.log('Call api on page');
+  useEffect(() => {
+    getListCompanyCallback();
+  }, [getListCompanyCallback]);
+
+  /**
+   * get Device list
+   */
+  const getDevicesCallback = useCallback(
+    (params) => {
+      dispatch(getListDevice(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getDevicesCallback({ pos_id: paramsSearch?.posSelected });
+  }, [getDevicesCallback, paramsSearch?.posSelected]);
+
+  /**
+   * get statistics generator data
+   */
+  const getStatisticsDevelopRawCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticsDevelopRaw(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatisticsDevelopRawCallback({
+      inverter_id: menuTab,
+      page: paramsSearch?.page,
+      per_page: paramsSearch?.pagination?.value,
+      pos_id: paramsSearch?.posSelected,
+    });
   }, [
+    getStatisticsDevelopRawCallback,
+    menuTab,
     paramsSearch?.page,
-    paramsSearch?.company,
-    paramsSearch?.mockupType,
-    paramsSearch?.parkingLot,
-    paramsSearch?.insolation,
-    paramsSearch?.generation,
-    paramsSearch?.pagination,
-    dispatch,
+    paramsSearch?.pagination?.value,
+    paramsSearch?.posSelected,
   ]);
-
-  useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
@@ -135,6 +172,12 @@ const OperationStatusPage = () => {
           inverter: item,
         });
         break;
+      case 'inverter1':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter1: item,
+        });
+        break;
       case 'vendorCompany':
         setParamsSearch({
           ...paramsSearch,
@@ -177,104 +220,181 @@ const OperationStatusPage = () => {
 
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
-    // setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    setMenuTab(eventKey);
+    const inverter1Selected = deviceList.find(
+      (item) => item.id === parseInt(eventKey, 10)
+    );
+
+    if (eventKey === '') {
+      setParamsSearch({ ...defaultSearch, inverter1: null });
+    }
+    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
   };
 
   const handleDownloadTrend = (name) => {
     console.log(name, 'download Trend');
   };
 
+  const handleSubmitSearch = () => {
+    let from;
+    let to;
+    if (paramsSearch?.startDate && paramsSearch?.endDate) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+    } else if (
+      paramsSearch?.startDate &&
+      !paramsSearch?.endDate &&
+      (paramsSearch?.classification === 'minute' ||
+        paramsSearch?.classification === 'hour')
+    ) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
+      from = moment(new Date()).format('YYYY-MM-DD');
+      to = moment(new Date()).format('YYYY-MM-DD');
+    } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+    } else if (
+      paramsSearch?.startDate &&
+      !paramsSearch?.endDate &&
+      (paramsSearch?.classification === 'day' ||
+        paramsSearch?.classification === 'month' ||
+        paramsSearch?.classification === 'year')
+    ) {
+      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+      to = moment(new Date()).format('YYYY-MM-DD');
+    }
+
+    dispatch(
+      getStatisticDevelopChartData({
+        pos_id: paramsSearch?.posSelected,
+        ds_id: paramsSearch?.inverter?.id,
+        from,
+        to,
+        type: paramsSearch?.classification,
+        inverter_ids: menuTab === '' ? paramsSearch?.inverter1?.id : menuTab,
+        compare_inverter_id: paramsSearch?.inverter?.id,
+      })
+    );
+  };
+
+  /**
+   * get chart List data
+   */
+  const getStatisticDevelopChartDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticDevelopChartData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatisticDevelopChartDataCallback({
+      pos_id: paramsSearch?.posSelected,
+      inverter_ids: menuTab,
+    });
+  }, [
+    getStatisticDevelopChartDataCallback,
+    paramsSearch?.posSelected,
+    menuTab,
+  ]);
+
+  /**
+   * get chart List data
+   */
+  const getStatisticDevelopCardCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticDevelopCard(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getStatisticDevelopCardCallback({
+      pos_id: paramsSearch?.posSelected,
+      inverter_ids: menuTab,
+    });
+  }, [getStatisticDevelopCardCallback, paramsSearch?.posSelected, menuTab]);
+
   return (
-    // <MainLayout isProcessing={isProcessing}>
-    <div className="content-wrap">
-      <TitleHeader title="실증단지 발전 통계" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          listParkingLot={listParkingLot}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={listStatusCompanySelect}
-          listMockupType={listMockupType}
-        />
-        <div className="content-body-left w-100">
-          <div className="h-100">
-            <Tabs
-              defaultActiveKey="all"
-              className="list-order tab-list"
-              onSelect={(eventKey) => onSelect(eventKey)}
-            >
-              <Tab eventKey="all" title={<div className="tab-name">전체</div>}>
-                <ItemContentTab
-                  dataBoxContent={dataBoxContent}
-                  dataTableStatisticsCompany={dataTableStatisticsCompany}
-                  handleDownloadTrend={handleDownloadTrend}
-                  dataContent={{}}
-                  listInverter={listInverter}
-                  listStatusCompanySelect={listStatusCompanySelect}
-                  paramsSearch={paramsSearch}
-                  handleChangeSearch={handleChangeSearch}
-                />
-              </Tab>
-              <Tab
-                eventKey="coes"
-                title={
-                  <div className="tab-name">
-                    코에스<span>인버터 ID</span>
-                  </div>
+    <>
+      {isProcessing && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="실증단지 발전 통계" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={posList.slice(1)}
+          />
+          <div className="content-body-left w-100">
+            <div className="h-100">
+              <Tabs
+                defaultActiveKey={
+                  deviceList && deviceList.length > 1
+                    ? ''
+                    : deviceList && deviceList[0] && deviceList[0].id
                 }
+                className="list-order tab-list"
+                onSelect={(eventKey) => onSelect(eventKey)}
               >
-                <ItemContentTab
-                  dataBoxContent={dataBoxContent}
-                  dataTableStatisticsCompany={dataTableStatisticsCompany}
-                  handleDownloadTrend={handleDownloadTrend}
-                  dataContent={{}}
-                  listInverter={listInverter}
-                  listStatusCompanySelect={listStatusCompanySelect}
-                  paramsSearch={paramsSearch}
-                  handleChangeSearch={handleChangeSearch}
-                />
-              </Tab>
-              <Tab
-                eventKey="SK-Solar"
-                title={
-                  <div className="tab-name">
-                    에스케이솔라<span>인버터 ID </span>
-                  </div>
-                }
-              >
-                <ItemContentTab
-                  dataBoxContent={dataBoxContent}
-                  dataTableStatisticsCompany={dataTableStatisticsCompany}
-                  handleDownloadTrend={handleDownloadTrend}
-                  dataContent={{}}
-                  listInverter={listInverter}
-                  listStatusCompanySelect={listStatusCompanySelect}
-                  paramsSearch={paramsSearch}
-                  handleChangeSearch={handleChangeSearch}
-                />
-              </Tab>
-              <div className="opacity d-block pagination mt-0">
-                {totalPage > perPage && (
-                  <div className="wrapper-device__pagination mt-0">
-                    <Pagination
-                      activePage={paramsSearch?.page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={totalPage}
-                      pageRangeDisplayed={5}
-                      onChange={(e) => handleChangeSearch(e, 'page')}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                )}
-              </div>
-            </Tabs>
+                {deviceList &&
+                  deviceList.map((dev) => (
+                    <Tab
+                      eventKey={dev.id}
+                      title={
+                        <div className="tab-name">
+                          {dev?.label}
+                          {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                        </div>
+                      }
+                    >
+                      <ItemContentTab
+                        dataBoxContent={dataBoxContent}
+                        rawData={
+                          rawData &&
+                          rawData.map((raw, index) => ({
+                            rowId:
+                              `${
+                                totalRawData -
+                                (paramsSearch?.page - 1) *
+                                  paramsSearch.pagination.value -
+                                index
+                              }` || '',
+                            dateTime: moment(raw.dm_datetime).format(
+                              'YYYY-MM-DD hh:mm:ss'
+                            ),
+                            companyName: raw?.com_name || '',
+                            inverterID: raw?.ds_id || '',
+                            inverterName: raw?.ds_name || '',
+                            installationLocation: raw?.pos_name || '',
+                            dmProddDay: `${raw?.dm_prod_day}KWH`,
+                            dmProddMonth: `${raw?.dm_prod_month}KWH`,
+                            dmProdSum: `${raw?.dm_prod_sum}MW`,
+                            dmPerformanceRatio: `${raw?.dm_performance_ratio}%`,
+                          }))
+                        }
+                        handleDownloadTrend={handleDownloadTrend}
+                        dataContent={{}}
+                        totalPage={totalRawData}
+                        perPage={paramsSearch?.pagination?.value}
+                        listInverter={listInverter}
+                        listStatusCompanySelect={listStatusCompanySelect}
+                        paramsSearch={paramsSearch}
+                        handleChangeSearch={handleChangeSearch}
+                        activeTab={menuTab}
+                        handleSubmitSearch={handleSubmitSearch}
+                      />
+                    </Tab>
+                  ))}
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    // </MainLayout>
+    </>
   );
 };
 

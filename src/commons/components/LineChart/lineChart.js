@@ -69,7 +69,7 @@ export const LineChart = ({
         break;
     }
     return {
-      text: text,
+      text,
     };
   };
 
@@ -81,7 +81,7 @@ export const LineChart = ({
         </div>
       ) : (
         <Chart id="chart" dataSource={dataChart} palette="Harmony Light">
-          <LoadingIndicator enabled={true} />
+          <LoadingIndicator enabled />
           <CommonSeriesSettings
             endOnTick={false}
             type="spline"
@@ -119,22 +119,22 @@ export const LineChart = ({
             pane="top"
             name="frequency1"
             position="left"
-            showZero={true}
+            showZero
           />
           <ValueAxis
             name="frequency2"
             tickInterval={20}
-            showZero={true}
+            showZero
             position="right"
             type="linear"
             pane="top"
             minorTickCount={20}
-            valueMarginsEnabled={true}
+            valueMarginsEnabled
           />
-          <Crosshair enabled={true} color="#949494" width={3} dashStyle="dot">
-            <Label visible={true} backgroundColor="#000000" />
-            <VerticalLine visible={true} />
-            <HorizontalLine visible={true} />
+          <Crosshair enabled color="#949494" width={3} dashStyle="dot">
+            <Label visible backgroundColor="#000000" />
+            <VerticalLine visible />
+            <HorizontalLine visible />
           </Crosshair>
           <ArgumentAxis
             defaultVisualRange={{
@@ -145,7 +145,7 @@ export const LineChart = ({
           >
             <Label format="S" />
           </ArgumentAxis>
-          <Tooltip enabled={true} customizeTooltip={customizeTooltip} />
+          <Tooltip enabled customizeTooltip={customizeTooltip} />
           <Legend visible={false} />
           <ZoomAndPan argumentAxis="both" />
         </Chart>

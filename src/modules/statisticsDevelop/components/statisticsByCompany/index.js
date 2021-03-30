@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
 import moment from 'moment';
+import Loading from 'commons/components/Loading';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 // import MainLayout from 'layout/MainLayout';
@@ -17,16 +18,14 @@ import {
   getStatisticDevelopChartData,
   getStatisticDevelopCard,
 } from '../../redux';
+
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
-  console.log(menuTab, 'menuTab');
-  const {
-    comList,
-    // isProcessing,
-    deviceList,
-  } = useSelector((state) => state?.commons);
+  const { comList, isProcessing, deviceList } = useSelector(
+    (state) => state?.commons
+  );
 
   const {
     rawData,
@@ -150,7 +149,6 @@ const OperationStatusPage = () => {
     paramsSearch?.company,
   ]);
 
-  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -347,7 +345,6 @@ const OperationStatusPage = () => {
       from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
       to = moment(new Date()).format('YYYY-MM-DD');
     }
-    console.log('from', from);
 
     dispatch(
       getStatisticDevelopChartData({
@@ -361,109 +358,112 @@ const OperationStatusPage = () => {
       })
     );
   };
-  console.log('paramSearch', paramsSearch);
+
   return (
-    <div className="content-wrap">
-      <TitleHeader title="실증단지 발전 통계" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          listParkingLot={listParkingLot}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={comList.slice(1)}
-          listMockupType={listMockupType}
-        />
-        <div className="content-body-left w-100">
-          <div className="h-100">
+    <>
+      {isProcessing && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="실증단지 발전 통계" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={comList.slice(1)}
+            listMockupType={listMockupType}
+          />
+          <div className="content-body-left w-100">
             <div className="h-100">
-              <Tabs
-                defaultActiveKey={
-                  deviceList && deviceList.length > 1
-                    ? ''
-                    : deviceList && deviceList[0] && deviceList[0].id
-                }
-                className="list-order tab-list"
-                onSelect={(eventKey) => onSelect(eventKey)}
-              >
-                {deviceList &&
-                  deviceList.map((dev) => (
-                    <Tab
-                      eventKey={dev.id}
-                      title={
-                        <div className="tab-name">
-                          {dev?.label}
-                          {dev?.label !== '전체' && <span>{dev?.id}</span>}
-                        </div>
-                      }
-                    >
-                      <ItemContentTab
-                        dataBoxContent={dataBoxContent}
-                        rawData={
-                          rawData &&
-                          rawData.map((raw, index) => ({
-                            rowId:
-                              `${
-                                totalRawData -
-                                (paramsSearch?.page - 1) *
-                                  paramsSearch.pagination.value -
-                                index
-                              }` || '',
-                            dateTime: moment(raw.dm_datetime).format(
-                              'YYYY-MM-DD hh:mm:ss'
-                            ),
-                            companyName: raw?.com_name || '',
-                            inverterID: raw?.ds_id || '',
-                            inverterName: raw?.ds_name || '',
-                            installationLocation: raw?.pos_name || '',
-                            dmProddDay: `${raw?.dm_prod_day}KWH`,
-                            dmProddMonth: `${raw?.dm_prod_month}KWH`,
-                            dmProdSum: `${raw?.dm_prod_sum}MW`,
-                            dmPerformanceRatio: `${raw?.dm_performance_ratio}%`,
-                          }))
+              <div className="h-100">
+                <Tabs
+                  defaultActiveKey={
+                    deviceList && deviceList.length > 1
+                      ? ''
+                      : deviceList && deviceList[0] && deviceList[0].id
+                  }
+                  className="list-order tab-list"
+                  onSelect={(eventKey) => onSelect(eventKey)}
+                >
+                  {deviceList &&
+                    deviceList.map((dev) => (
+                      <Tab
+                        eventKey={dev.id}
+                        title={
+                          <div className="tab-name">
+                            {dev?.label}
+                            {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                          </div>
                         }
-                        handleDownloadTrend={handleDownloadTrend}
-                        dataContent={{}}
-                        totalPage={totalRawData}
-                        perPage={paramsSearch?.pagination?.value}
-                        totalPage2={totalRadiationRawData}
-                        perPage2={paramsSearch?.pagination2?.value}
-                        dataTableStatisticsOfModuleCompany={
-                          radiationList &&
-                          radiationList.map((radiation, index) => ({
-                            rowId:
-                              `${
-                                totalRadiationRawData -
-                                (paramsSearch?.page2 - 1) *
-                                  paramsSearch.pagination2.value -
-                                index
-                              }` || '',
-                            dateTime: moment(radiation.dm_datetime).format(
-                              'YYYY-MM-DD hh:mm:ss'
-                            ),
-                            companyName: radiation?.com_name || '',
-                            inverterID: radiation?.ds_id || '',
-                            inverterName: radiation?.ds_name || '',
-                            installationLocation: radiation?.pos_name || '',
-                            dmModuleTemp: `${radiation?.dm_module_temp}℃`,
-                            dmEnvTemp: `${radiation?.dm_env_temp}℃`,
-                            dmRad: `${radiation?.dm_rad}W/㎡`,
-                          }))
-                        }
-                        listInverter={listInverter}
-                        listStatusCompanySelect={listStatusCompanySelect}
-                        paramsSearch={paramsSearch}
-                        handleChangeSearch={handleChangeSearch}
-                        activeTab={menuTab}
-                        handleSubmitSearch={handleSubmitSearch}
-                      />
-                    </Tab>
-                  ))}
-              </Tabs>
+                      >
+                        <ItemContentTab
+                          dataBoxContent={dataBoxContent}
+                          rawData={
+                            rawData &&
+                            rawData.map((raw, index) => ({
+                              rowId:
+                                `${
+                                  totalRawData -
+                                  (paramsSearch?.page - 1) *
+                                    paramsSearch.pagination.value -
+                                  index
+                                }` || '',
+                              dateTime: moment(raw.dm_datetime).format(
+                                'YYYY-MM-DD hh:mm:ss'
+                              ),
+                              companyName: raw?.com_name || '',
+                              inverterID: raw?.ds_id || '',
+                              inverterName: raw?.ds_name || '',
+                              installationLocation: raw?.pos_name || '',
+                              dmProddDay: `${raw?.dm_prod_day}KWH`,
+                              dmProddMonth: `${raw?.dm_prod_month}KWH`,
+                              dmProdSum: `${raw?.dm_prod_sum}MW`,
+                              dmPerformanceRatio: `${raw?.dm_performance_ratio}%`,
+                            }))
+                          }
+                          handleDownloadTrend={handleDownloadTrend}
+                          dataContent={{}}
+                          totalPage={totalRawData}
+                          perPage={paramsSearch?.pagination?.value}
+                          totalPage2={totalRadiationRawData}
+                          perPage2={paramsSearch?.pagination2?.value}
+                          dataTableStatisticsOfModuleCompany={
+                            radiationList &&
+                            radiationList.map((radiation, index) => ({
+                              rowId:
+                                `${
+                                  totalRadiationRawData -
+                                  (paramsSearch?.page2 - 1) *
+                                    paramsSearch.pagination2.value -
+                                  index
+                                }` || '',
+                              dateTime: moment(radiation.dm_datetime).format(
+                                'YYYY-MM-DD hh:mm:ss'
+                              ),
+                              companyName: radiation?.com_name || '',
+                              inverterID: radiation?.ds_id || '',
+                              inverterName: radiation?.ds_name || '',
+                              installationLocation: radiation?.pos_name || '',
+                              dmModuleTemp: `${radiation?.dm_module_temp}℃`,
+                              dmEnvTemp: `${radiation?.dm_env_temp}℃`,
+                              dmRad: `${radiation?.dm_rad}W/㎡`,
+                            }))
+                          }
+                          listInverter={listInverter}
+                          listStatusCompanySelect={listStatusCompanySelect}
+                          paramsSearch={paramsSearch}
+                          handleChangeSearch={handleChangeSearch}
+                          activeTab={menuTab}
+                          handleSubmitSearch={handleSubmitSearch}
+                        />
+                      </Tab>
+                    ))}
+                </Tabs>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
