@@ -23,7 +23,6 @@ import { FilterSearch } from '../FilterSearch';
 
 type Props = {
   rawData: any,
-  dataContent: Object,
   dataBoxContent: Object,
   totalPage: number,
   perPage: number,
@@ -54,7 +53,6 @@ type Props = {
 
 const ItemContentTab = ({
   rawData,
-  dataContent,
   dataBoxContent,
   totalPage,
   perPage,
@@ -72,7 +70,6 @@ const ItemContentTab = ({
   tabActive,
   dateTime,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const history = useHistory();
   const dataLengthChart = [
     {
