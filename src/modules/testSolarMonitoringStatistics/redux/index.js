@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { any } from 'prop-types';
 // import moment from 'moment';
 
 const testSMStatisticsGeneratorSlide = createSlice({
@@ -17,14 +18,7 @@ const testSMStatisticsGeneratorSlide = createSlice({
       incidence_angle: 0,
       power: 0,
     },
-    dataChart: {
-      dmRad: [],
-      dmProd: [],
-      dmPerformanceRatio: [],
-      dmPerformanceRatioCompare: [],
-      dmProdCompare: [],
-      dmRadCompare: [],
-    },
+    dataChart: any,
     dataChartOperation: {
       dmOCurrent: [],
       dmOVoltage: [],
@@ -60,26 +54,12 @@ const testSMStatisticsGeneratorSlide = createSlice({
       const { data } = action;
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChart = {
-        dmRad: data?.dm_rad || [],
-        dmProd: data?.dm_prod || [],
-        dmPerformanceRatio: data?.dm_performance_ratio || [],
-        dmPerformanceRatioCompare: data?.dm_performance_ratio_compare || [],
-        dmProdCompare: data?.dm_prod_compare || [],
-        dmRadCompare: data?.dm_rad_compare || [],
-      };
+      state.dataChart = data;
     },
     getDataTrendChartStatisticsGeneratorFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChart = {
-        dmRad: [],
-        dmProd: [],
-        dmPerformanceRatio: [],
-        dmPerformanceRatioCompare: [],
-        dmProdCompare: [],
-        dmRadCompare: [],
-      };
+      state.dataChart = {};
     },
 
     getDataRawTableGenerator: (state, action) => {

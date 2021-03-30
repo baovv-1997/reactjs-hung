@@ -495,6 +495,10 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                       listStatusCompanySelect={listInverter}
                       handleSubmitSearch={handleSubmitSearch}
                       tabActive={menuTab}
+                      dateTime={{
+                        from,
+                        to,
+                      }}
                     />
                   </Tab>
                 ))}
