@@ -21,6 +21,7 @@ const OperationStatusPage = () => {
     listDataTableRaw,
     total,
   } = useSelector((state) => state?.testSMStatisticsGenerator);
+
   const { listInverter } = useSelector((state) => state?.account);
   const [randomNumber, setRandomNumber] = useState(null);
   const defaultOption = {
@@ -41,9 +42,9 @@ const OperationStatusPage = () => {
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
-    insolation: false,
-    performance: false,
-    generation: false,
+    insolation: true,
+    performance: true,
+    generation: true,
     pagination: defaultOption,
     isSubmitSearch: false,
   };

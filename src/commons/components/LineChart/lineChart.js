@@ -30,6 +30,7 @@ type Props = {
   unitLine3: string,
   unitLine4: string,
   unitLine5: string,
+  type: string,
 };
 
 export const LineChart = ({
@@ -42,6 +43,7 @@ export const LineChart = ({
   unitLine3,
   unitLine4,
   unitLine5,
+  type,
 }: Props) => {
   const customizeText = (arg) => {
     const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
