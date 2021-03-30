@@ -36,7 +36,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   const perPage = 6;
   const totalPage = 100;
   const [menuTab, setMenuTab] = useState('');
-  console.log(menuTab, 'menuTab');
   const {
     comList,
     // isProcessing,
@@ -331,8 +330,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         break;
     }
   };
-
-  console.log('paramsSearch', paramsSearch);
 
   // click to event detail
   const handleClickDetail = (item) => {

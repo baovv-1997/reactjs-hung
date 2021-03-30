@@ -12,7 +12,6 @@ import { FilterSearch } from '../FilterSearch';
 
 type Props = {
   rawData: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -33,7 +32,6 @@ type Props = {
 
 const ItemContentTab = ({
   rawData,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   handleChangeSearch,
@@ -43,7 +41,6 @@ const ItemContentTab = ({
   totalPage,
   perPage,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -85,7 +82,7 @@ const ItemContentTab = ({
         paramsSearch={paramsSearch}
       />
 
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}

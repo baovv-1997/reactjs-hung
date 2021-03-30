@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
+import { ButtonDownIMG } from 'commons/components/ButtonDownIMG';
 
 type Props = {
   paramsSearch: Object,
@@ -25,9 +26,7 @@ export const GroupActionDownload = ({
       noOptionsMessage={() => '옵션 없음'}
     />
     <div className="group-btn-download">
-      <Button onClick={() => handleDownloadTrend('trend')} customClass="mr-2">
-        Trend 이미지 다운
-      </Button>
+      <ButtonDownIMG />
       <Button onClick={() => handleDownloadTrend('raw')}>Raw Date 다운</Button>
     </div>
   </div>

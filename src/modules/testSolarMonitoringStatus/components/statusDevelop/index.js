@@ -164,7 +164,6 @@ const StatusByAreaCompany = () => {
     randomNumber,
   ]);
 
-  // console.log('type', paramsSearch);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':

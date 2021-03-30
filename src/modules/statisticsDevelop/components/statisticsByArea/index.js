@@ -19,8 +19,7 @@ import ItemContentTab from './ItemContentTab';
 const OperationStatusPage = () => {
   const perPage = 6;
   const totalPage = 100;
-  const [menuTab, setMenuTab] = useState('bulk');
-  console.log(menuTab, 'menuTab');
+  // const [menuTab, setMenuTab] = useState('bulk');
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
@@ -79,7 +78,6 @@ const OperationStatusPage = () => {
     getDataListStatusCompany();
   }, [getDataListStatusCompany]);
 
-  // console.log(type, 'type', isProcessing);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -179,7 +177,7 @@ const OperationStatusPage = () => {
 
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
-    setMenuTab(eventKey);
+    // setMenuTab(eventKey);
     setParamsSearch(defaultSearch);
   };
 
