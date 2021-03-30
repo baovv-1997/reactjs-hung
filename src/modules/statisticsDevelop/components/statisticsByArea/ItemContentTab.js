@@ -1,6 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatisticsCompany } from '../constant';
@@ -10,7 +11,7 @@ import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
-  dataTableStatisticsCompany: any,
+  rawData: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
@@ -26,19 +27,26 @@ type Props = {
     value: any,
     label: string,
   }>,
+  totalPage: number,
+  perPage: number,
+  handleSubmitSearch: Function,
+  activeTab: boolean,
 };
 
 const ItemContentTab = ({
-  dataTableStatisticsCompany,
+  rawData,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
+  totalPage,
+  perPage,
   listStatusCompanySelect,
   listInverter,
+  handleSubmitSearch,
+  activeTab,
 }: Props) => {
-  console.log(dataContent, 'dataContent');
   const dataLengthChart = [
     {
       id: 1,
@@ -64,6 +72,10 @@ const ItemContentTab = ({
         listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
+        listInverter1={listInverter}
+        isShowDupInverter
+        handleSubmitSearch={handleSubmitSearch}
+        activeTab={activeTab}
       />
 
       <div className="group-char" id="groupChart">
@@ -87,9 +99,24 @@ const ItemContentTab = ({
       <div>
         <Table
           tableHeads={headStatisticsCompany}
-          tableBody={dataTableStatisticsCompany}
+          tableBody={rawData}
           // isShowId
         />
+        <div className="opacity d-block pagination mt-0">
+          {totalPage > perPage && (
+            <div className="wrapper-device__pagination mt-0">
+              <Pagination
+                activePage={paramsSearch?.page}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={(e) => handleChangeSearch(e, 'page')}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
