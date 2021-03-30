@@ -91,6 +91,8 @@ import getRadiationRawSaga from 'modules/statisticsDevelop/saga/getRadiationRawS
 import getStatisticDevelopChartDataSaga from 'modules/statisticsDevelop/saga/getStatisticDevelopChartDataSaga';
 import getStatisticDevelopCardSaga from 'modules/statisticsDevelop/saga/getStatisticDevelopCardSaga';
 
+import logOutSaga from 'modules/accounts/sagas/logOutSaga';
+
 export default function* RootSagas() {
   yield all([
     singInSaga(),
@@ -206,5 +208,6 @@ export default function* RootSagas() {
     getRadiationRawSaga(),
     getStatisticDevelopChartDataSaga(),
     getStatisticDevelopCardSaga(),
+    logOutSaga(),
   ]);
 }

@@ -77,6 +77,8 @@ export const ROUTES = {
   STATISTICS_DEVELOP_RAW: `/data/test-mockup/statistic/generator/raw-measure`,
   STATISTICS_DEVELOP_CHART: `/data/solar-monitoring/statistic/generator/chart`,
   STATISTICS_DEVELOP_CARD: `/data/solar-monitoring/statistic/generator/cards`,
+
+  LOG_OUT: '/auth/logout',
 };
 
 export const API = create({
