@@ -13,6 +13,7 @@ import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import {
   getStatisticOperatorRawData,
   getStatisticOperatorCard,
+  getStatisticOperatorChartData,
 } from '../../redux';
 
 import ItemContentTab from './ItemContentTab';
@@ -46,10 +47,11 @@ const OperationStatusPage = () => {
     print: false,
     pagination: defaultOption,
     classification: 'minute',
-    startDate: new Date() || null,
-    endDate: new Date() || null,
+    startDate: null,
+    endDate: null,
     vendorCompany: null,
     inverter: null,
+    inverter1: menuTab === '' ? null : [deviceList[1]],
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -246,7 +248,12 @@ const OperationStatusPage = () => {
           vendorCompany: item,
           inverter: null,
         });
-
+        break;
+      case 'inverter1':
+        setParamsSearch({
+          ...paramsSearch,
+          inverter1: item,
+        });
         break;
       case 'startDate':
         setParamsSearch({
@@ -268,7 +275,58 @@ const OperationStatusPage = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    const inverter1Selected = deviceList.find(
+      (item) => item.id === parseInt(eventKey, 10)
+    );
+
+    if (eventKey === '') {
+      setParamsSearch({ ...defaultSearch, inverter1: null });
+    }
+    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
+  };
+
+  let from;
+  let to;
+  if (paramsSearch?.startDate && paramsSearch?.endDate) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+  } else if (
+    paramsSearch?.startDate &&
+    !paramsSearch?.endDate &&
+    (paramsSearch?.classification === 'minute' ||
+      paramsSearch?.classification === 'hour')
+  ) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+  } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
+    from = moment(new Date()).format('YYYY-MM-DD');
+    to = moment(new Date()).format('YYYY-MM-DD');
+  } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+  } else if (
+    paramsSearch?.startDate &&
+    !paramsSearch?.endDate &&
+    (paramsSearch?.classification === 'day' ||
+      paramsSearch?.classification === 'month' ||
+      paramsSearch?.classification === 'year')
+  ) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(new Date()).format('YYYY-MM-DD');
+  }
+
+  const handleSubmitSearch = () => {
+    dispatch(
+      getStatisticOperatorChartData({
+        pos_id: paramsSearch?.posSelected,
+        ds_id: paramsSearch?.inverter?.id,
+        from,
+        to,
+        type: paramsSearch?.classification,
+        inverter_ids: menuTab === '' ? paramsSearch?.inverter1?.id : menuTab,
+        compare_inverter_id: paramsSearch?.inverter?.id,
+      })
+    );
   };
 
   return (
@@ -343,6 +401,7 @@ const OperationStatusPage = () => {
                       totalPage={totalRawData}
                       perPage={paramsSearch?.pagination?.value}
                       tabActive={menuTab}
+                      handleSubmitSearch={handleSubmitSearch}
                     />
                   </Tab>
                 ))}

@@ -13,7 +13,7 @@ registerLocale('ko', ko);
 type Props = {
   handleChangeSearch: Function,
   paramsSearch: Object,
-  listStatusCompanySelect: Array<{
+  listInverter1: Array<{
     id: number,
     value: any,
     label: string,
@@ -24,14 +24,16 @@ type Props = {
     label: string,
   }>,
   handleSubmitSearch: Function,
+  activeTab: boolean,
 };
 
 export const FilterSearch = ({
   handleChangeSearch,
   paramsSearch,
-  listStatusCompanySelect,
+  listInverter1,
   listInverter,
   handleSubmitSearch,
+  activeTab,
 }: Props) => {
   const CONTRACT_FORMAT_DATE = {
     minute: 'yyyy-MM-dd',
@@ -91,12 +93,13 @@ export const FilterSearch = ({
                 <div className="title-label">업체 선택</div>
                 <SelectDropdown
                   placeholder="업체 선택"
-                  listItem={listStatusCompanySelect}
-                  onChange={(option) =>
-                    handleChangeSearch(option, 'vendorCompany')
-                  }
-                  option={paramsSearch?.vendorCompany || null}
+                  listItem={listInverter1}
+                  onChange={(option) => handleChangeSearch(option, 'inverter1')}
+                  option={paramsSearch?.inverter1 || null}
                   noOptionsMessage={() => '옵션 없음'}
+                  disabled={
+                    paramsSearch?.inverter1 !== null && activeTab !== ''
+                  }
                 />
               </div>
               <img src={IMAGES.arrow_right} alt="" className="mx-2" />
