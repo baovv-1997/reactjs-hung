@@ -29,6 +29,7 @@ type Props = {
   }>,
   tabActive: any,
   dateTime: Object,
+  handleSubmitSearch: Function,
 };
 
 const ItemContentTab = ({
@@ -42,6 +43,7 @@ const ItemContentTab = ({
   perPage,
   tabActive,
   dateTime,
+  handleSubmitSearch,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -82,6 +84,9 @@ const ItemContentTab = ({
         listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
+        handleSubmitSearch={handleSubmitSearch}
+        listInverter1={listInverter}
+        activeTab={tabActive}
       />
 
       <div className="group-char" id="groupChart">

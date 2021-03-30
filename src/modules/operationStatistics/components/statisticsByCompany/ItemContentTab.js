@@ -108,9 +108,11 @@ const ItemContentTab = ({
       <FilterSearch
         listStatusCompanySelect={listStatusCompanySelect}
         listInverter={listInverter}
+        listInverter1={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
         handleSubmitSearch={handleSubmitSearch}
+        activeTab={tabActive}
       />
 
       <div className="group-char" id="groupChart">
