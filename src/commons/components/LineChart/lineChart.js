@@ -33,8 +33,19 @@ export const LineChart = ({
   unitLeft = 'kWh',
   unitRight = 'W/㎡',
 }: Props) => {
+  const lengthData =
+    dataChart[dataChart.length] &&
+    dataChart[dataChart.length].time &&
+    dataChart[dataChart.length].time - 3600;
+
+  // const customizeText = (arg) => {
+  //   const labelText = arg.valueText.substring(0, arg.valueText.length - 2);
+  //   return `${labelText}`;
+  // };
+
   const date = moment(new Date()).format('YYYY-MM-DD');
   const dateTime = moment(new Date()).format('HH');
+
   const customizeTooltip = (arg) => {
     let text = '';
     switch (arg.seriesName) {
@@ -108,6 +119,7 @@ export const LineChart = ({
             pane="top"
             name="frequency1"
             position="left"
+            showZero={true}
           />
           <ValueAxis
             name="frequency2"
@@ -130,7 +142,9 @@ export const LineChart = ({
               endValue: `${date} ${dateTime}:59:59`,
             }}
             argumentType="datetime"
-          />
+          >
+            <Label format="S" />
+          </ArgumentAxis>
           <Tooltip enabled={true} customizeTooltip={customizeTooltip} />
           <Legend visible={false} />
           <ZoomAndPan argumentAxis="both" />
