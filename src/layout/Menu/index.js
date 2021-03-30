@@ -1,10 +1,11 @@
 // @flow
 // libs
-import React, { memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, memo } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { setMenuItemClicking } from 'commons/redux';
+
 import { withRouter } from 'react-router-dom';
 import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
-import { setMenuClicking, setNestSubClicking } from 'commons/redux';
 import IMAGES from 'themes/images';
 import { Button } from 'commons/components/Button';
 import MenuItem from './MenuItem';
@@ -16,25 +17,21 @@ type Props = {
 };
 
 const Menu = ({ location }: Props) => {
-  const dispatch = useDispatch();
-  const menuClicking = useSelector((state) => state?.commons?.menuClicking);
+  const [menuClicking, setMenuClicking] = useState({});
 
   const handleClickItem = (item, active) => {
-    dispatch(setMenuClicking(item));
-
+    setMenuClicking(item);
     if (item.name === menuClicking.name && active) {
-      dispatch(setMenuClicking({}));
-    }
-
-    if (item.id !== menuClicking?.id) {
-      dispatch(setNestSubClicking({}));
+      setMenuClicking({});
     }
   };
 
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
       const isActive =
-        menuClicking.name === item.name || location.pathname.includes(item.to);
+        menuClicking?.key === item.key ||
+        item?.childRoute?.includes(location.pathname);
+
       return (
         <MenuItem
           key={item.id}

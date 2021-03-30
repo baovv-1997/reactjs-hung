@@ -1,11 +1,11 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
-import { addEventFilter } from 'commons/redux';
+import { addEventFilter, getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
@@ -13,17 +13,23 @@ import ItemContentTab from './ItemContentTab';
 import * as ActionGenerator from '../../redux';
 import Loading from 'commons/components/Loading';
 
-const OperationStatusPage = () => {
+type Props = {
+  location: {
+    pathname: string,
+  },
+};
+
+const OperationStatusPage = ({ location }: Props) => {
   const history = useHistory();
-  const { deviceList, optionFilters } = useSelector((state) => state?.commons);
+  const { deviceList, optionFilters, eventList, totalEventPage } = useSelector(
+    (state) => state?.commons
+  );
   const {
     isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
-    listDataTableRawEventOperation,
-    totalEvent,
   } = useSelector((state) => state?.testMockupStatus);
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
@@ -141,7 +147,7 @@ const OperationStatusPage = () => {
   // get event list when inverter, page, perpage have change
   useEffect(() => {
     dispatch(
-      ActionGenerator.getDataTestMKRawEventTableOperation({
+      getEventList({
         inverter_id: paramsSearch?.company || null,
         per_page: paramsSearch?.pagination2?.value,
         page: paramsSearch?.page2,
@@ -233,7 +239,10 @@ const OperationStatusPage = () => {
   };
   //  click vào table bên dưới đến trang chi tiết
   const handleClickDetail = (item) => {
-    history.push(`${ROUTERS.TEST_MOCKUP_OPERATION}/${item.id}`);
+    history.push({
+      pathname: `${ROUTERS.EVENT}/detail/${item.id}`,
+      state: { prevRoute: location.pathname },
+    });
   };
   return (
     <>
@@ -253,9 +262,9 @@ const OperationStatusPage = () => {
               handleDownloadTrend={handleDownloadTrend}
               totalPage={total}
               perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalEvent}
+              totalPage2={totalEventPage}
               perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={listDataTableRawEventOperation}
+              dataTableBottom={eventList}
               isShowModalSorting={isShowModalSorting}
               paramsSearch={paramsSearch}
               dataChartOperation={dataChartOperation}
@@ -270,4 +279,4 @@ const OperationStatusPage = () => {
   );
 };
 
-export default OperationStatusPage;
+export default memo<Props>(OperationStatusPage);

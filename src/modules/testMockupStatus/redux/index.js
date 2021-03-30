@@ -185,7 +185,7 @@ const testMockupStatusSlide = createSlice({
           dm_datetime: item.created_at || '',
           com_name: item.com_name || '',
           eventId: item?.id,
-          eventName: item.evt_content || '', // TODO
+          eventName: item.evt_type || '',
           evtContent: item.evt_content,
         }));
       state.totalEvent = (data && data.total) || 0;

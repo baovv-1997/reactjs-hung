@@ -17,6 +17,7 @@ import { useHistory } from 'react-router-dom';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import moment from 'moment';
 
 type Props = {
   listMockupDataCompany: any,
@@ -130,10 +131,24 @@ const ItemContentTab = ({
           </Button>
         </div>
       </div>
-
       <Table
         tableHeads={headOperationStatusByAreaCompany}
-        tableBody={dataTableBottom}
+        tableBody={
+          (dataTableBottom &&
+            dataTableBottom.length > 0 &&
+            dataTableBottom.map((event, index) => ({
+              id: event?.id,
+              rowId: `${
+                totalPage2 - (paramsSearch?.page2 - 1) * perPage2 - index || ''
+              }`,
+              dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
+              comName: event?.com_name,
+              inverterID: event?.ds_id,
+              inverterName: event?.ds_name,
+              contents: event?.evt_content,
+            }))) ||
+          []
+        }
         isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
@@ -148,7 +163,10 @@ const ItemContentTab = ({
       <div className="group-btn-register text-right">
         <Button
           onClick={() =>
-            history.push(ROUTERS.TEST_MOCKUP_OPERATION_STATUS_REGISTER)
+            history.push({
+              pathname: `${ROUTERS.EVENT}/register`,
+              state: { typeEvent: 'mockup' },
+            })
           }
         >
           등록

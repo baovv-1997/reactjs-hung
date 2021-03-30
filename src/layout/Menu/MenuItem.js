@@ -1,8 +1,8 @@
 // @flow
 // libs
 import React, { memo, useState } from 'react';
-import { setNestSubClicking } from 'commons/redux';
-import { useSelector, useDispatch } from 'react-redux';
+// import { setSubMenuItemActived } from 'commons/redux';
+// import { useSelector, useDispatch } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -36,19 +36,17 @@ const MenuItem = ({
   isActive,
   location,
 }: Props) => {
-  const dispatch = useDispatch();
-
-  const subMenuClicking = useSelector((state) => state.commons.subMenuClicking);
   const { to, name, sub } = item;
-  const [listNestSub, setListNestSub] = useState(subMenuClicking?.sub);
+
   const [activeSub, setActiveSub] = useState(false);
+  const [nestSubClicking, setNestSubClicking] = useState({});
 
   const handleClickItemSub = (e, itemSub, active) => {
     e.stopPropagation();
     setActiveSub(active);
-    dispatch(setNestSubClicking(itemSub));
-    setListNestSub(itemSub.sub);
-    if (itemSub.name === subMenuClicking.name && active) {
+    setNestSubClicking(itemSub);
+
+    if (itemSub.name === nestSubClicking.name && active) {
       setNestSubClicking({});
     }
   };
@@ -57,17 +55,17 @@ const MenuItem = ({
     listSub &&
     listSub.length > 0 &&
     listSub.map((itemSub) => {
+      console.log('nestSubClicking', nestSubClicking);
       const isActiveNestSub =
-        subMenuClicking.name === itemSub.name ||
-        location.pathname.includes(item.to);
-
+        nestSubClicking.key === itemSub.key ||
+        itemSub?.childRoute?.includes(location.pathname);
       return (
         <Submenu
           key={itemSub.id}
           itemSub={itemSub}
           nestSub={itemSub.sub}
           handleClickItemSub={handleClickItemSub}
-          listNestSub={listNestSub}
+          listNestSub={itemSub?.sub}
           isActiveNestSub={isActiveNestSub}
           location={location}
         />

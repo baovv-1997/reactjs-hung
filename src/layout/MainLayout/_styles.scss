@@ -21,6 +21,10 @@
     }
   }
 }
+.no-content {
+  width: 100%;
+  margin-left: 0;
+}
 
 .main-content-children {
   margin-top: pxToRem(68);
@@ -62,6 +66,7 @@
       margin-left: 0;
       padding-top: pxToRem(80);
     }
+    
   }
 
   .btn-menu {

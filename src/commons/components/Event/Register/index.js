@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-// import MainLayout from 'layout/MainLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from 'commons/components/Loading';
 import TitleHeader from 'commons/components/TitleHeader';
@@ -17,15 +16,28 @@ import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import { addNewEvent } from 'commons/redux';
 
-const EventRegister = () => {
+type Props = {
+  location: {
+    pathname: string,
+    state: {
+      prevRoute: string,
+    },
+  },
+};
+
+const EventRegister = ({ location }: Props) => {
+  const stateTypeEvent = location?.state && location?.state.typeEvent;
   const history = useHistory();
   const dispatch = useDispatch();
   const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
 
-  const { isProcessing, type } = useSelector((state) => state.commons);
-
+  const { isProcessing, type, deviceList } = useSelector(
+    (state) => state.commons
+  );
+  const listInverterTest =
+    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -83,8 +95,6 @@ const EventRegister = () => {
 
     const dataValidate = {
       content,
-      // company: company && company.label,
-      // area: area && area.label,
       inverter: inverter && inverter.label,
     };
     validation = Validator(dataValidate, rules);
@@ -209,32 +219,40 @@ const EventRegister = () => {
             <div className="colum-right">
               <div className="item-role">
                 <div className="group-select">
+                  {stateTypeEvent !== 'mockup' && (
+                    <div className="group-item">
+                      <SelectDropdown
+                        placeholder="모듈 선택"
+                        listItem={listCompany}
+                        onChange={(option) => handleChange(option, 'company')}
+                        option={company || null}
+                        noOptionsMessage={() => '옵션 없음'}
+                        errorMsg={error?.company}
+                      />
+                      <img src={images.icon_next} alt="" />
+                    </div>
+                  )}
+                  {stateTypeEvent !== 'mockup' && (
+                    <div className="group-item">
+                      <SelectDropdown
+                        placeholder="모듈 선택"
+                        listItem={listArea}
+                        onChange={(option) => handleChange(option, 'area')}
+                        option={area || null}
+                        noOptionsMessage={() => '옵션 없음'}
+                        errorMsg={error?.area}
+                      />
+                      <img src={images.icon_next} alt="" />
+                    </div>
+                  )}
                   <div className="group-item">
                     <SelectDropdown
                       placeholder="모듈 선택"
-                      listItem={listCompany}
-                      onChange={(option) => handleChange(option, 'company')}
-                      option={company || null}
-                      noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.company}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={listArea}
-                      onChange={(option) => handleChange(option, 'area')}
-                      option={area || null}
-                      noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.area}
-                    />
-                    <img src={images.icon_next} alt="" />
-                  </div>
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={listInverter}
+                      listItem={
+                        stateTypeEvent === 'mockup'
+                          ? listInverterTest
+                          : listInverter
+                      }
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
