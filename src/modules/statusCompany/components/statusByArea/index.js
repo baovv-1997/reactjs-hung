@@ -25,6 +25,7 @@ const StatusByAreaCompany = () => {
   const { totalRawData, rawData, cardInfo, chartData } = useSelector(
     (state) => state.statusCompany
   );
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -34,9 +35,9 @@ const StatusByAreaCompany = () => {
   const defaultSearch = {
     page: 1,
     posSelected: posList && posList[1] && posList[1].id,
-    power: false,
-    performance: false,
-    insolation: false,
+    power: true,
+    performance: true,
+    insolation: true,
     pagination: defaultOption,
   };
 

@@ -9,6 +9,7 @@ import { headStatusByCompany } from '../constants';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
+import LineChart from 'commons/components/LineChart/lineChart';
 
 type Props = {
   rawData: any,
@@ -19,6 +20,7 @@ type Props = {
   performanceData: Object,
   insolationData: Object,
   totalRawData: number,
+  chartData: any,
 };
 
 const ItemContentTab = ({
@@ -30,6 +32,7 @@ const ItemContentTab = ({
   insolationData,
   paramsSearch,
   totalRawData,
+  chartData,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -67,7 +70,21 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
+        <div className="group-char-right">
+          {chartData && (
+            <LineChart
+              dataChart={chartData}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
+              optionLine={{
+                line1: paramsSearch?.power,
+                line2: paramsSearch?.insolation,
+                line3: paramsSearch?.performance,
+              }}
+            />
+          )}
+        </div>
       </div>
 
       <TitleSubHeader title="발전 현황" />

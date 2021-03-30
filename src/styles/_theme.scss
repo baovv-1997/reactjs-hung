@@ -275,6 +275,12 @@ button.h-32 {
           fill: #1d2b36 !important;
         }
       }
+
+      .dxc-arg-axis {
+        text {
+          font-size: pxToRem(14) !important;
+        }
+      }
     }
   }
 }

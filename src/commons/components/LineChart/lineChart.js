@@ -23,8 +23,13 @@ import Loading from '../Loading/LoadingSmall';
 type Props = {
   dataChart: any,
   optionLine: Object,
-  unitLeft: string,
-  unitRight: string,
+  unitLeft?: string,
+  unitRight?: string,
+  unitLine1: string,
+  unitLine2: string,
+  unitLine3: string,
+  // unitLine4: string,
+  // unitLine5: string,
 };
 
 export const LineChart = ({
@@ -32,42 +37,25 @@ export const LineChart = ({
   optionLine,
   unitLeft = 'kWh',
   unitRight = 'W/㎡',
-}: Props) => {
-  const lengthData =
-    dataChart[dataChart.length] &&
-    dataChart[dataChart.length].time &&
-    dataChart[dataChart.length].time - 3600;
+  unitLine1,
+  unitLine2,
+  unitLine3,
+}: // unitLine4,
+// unitLine5,
+Props) => {
+  const customizeText = (arg) => {
+    const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
 
-  // const customizeText = (arg) => {
-  //   const labelText = arg.valueText.substring(0, arg.valueText.length - 2);
-  //   return `${labelText}`;
-  // };
+    return `${labelText}`;
+  };
 
   const date = moment(new Date()).format('YYYY-MM-DD');
   const dateTime = moment(new Date()).format('HH');
 
   const customizeTooltip = (arg) => {
-    let text = '';
-    switch (arg.seriesName) {
-      case 'Series 1':
-        text = `${arg.value.toLocaleString('en', {
-          maximumFractionDigits: 2,
-        })}kWh`;
-        break;
-      case 'Series 2':
-        text = `${arg.value.toLocaleString('en', {
-          maximumFractionDigits: 2,
-        })}%`;
-        break;
-      case 'Series 3':
-        text = `${arg.value.toLocaleString('en', {
-          maximumFractionDigits: 2,
-        })}W/㎡`;
-        break;
-      default:
-        text = arg.value;
-        break;
-    }
+    const text = `${arg.value.toLocaleString('en', {
+      maximumFractionDigits: 2,
+    })}${arg.seriesName}`;
     return {
       text,
     };
@@ -95,12 +83,20 @@ export const LineChart = ({
               axis="frequency1"
               color="#7c5caf"
               width={4}
+              name={unitLine1}
             >
               <Point visible={false} />
             </Series>
           )}
           {optionLine?.line2 && (
-            <Series valueField="y2" type="spline" color="#bc5200" width={4}>
+            <Series
+              valueField="y2"
+              type="spline"
+              color="#bc5200"
+              axis="frequency2"
+              width={4}
+              name={unitLine2}
+            >
               <Point visible={false} />
             </Series>
           )}
@@ -108,9 +104,9 @@ export const LineChart = ({
             <Series
               valueField="y3"
               type="spline"
-              axis="frequency2"
               color="#ff7913"
               width={4}
+              name={unitLine3}
             />
           )}
           <ValueAxis
@@ -121,16 +117,18 @@ export const LineChart = ({
             position="left"
             showZero
           />
-          <ValueAxis
-            name="frequency2"
-            tickInterval={20}
-            showZero
-            position="right"
-            type="linear"
-            pane="top"
-            minorTickCount={20}
-            valueMarginsEnabled
-          />
+          {optionLine?.line2 && (
+            <ValueAxis
+              name="frequency2"
+              tickInterval={20}
+              showZero
+              position="right"
+              type="linear"
+              pane="top"
+              minorTickCount={20}
+              valueMarginsEnabled
+            />
+          )}
           <Crosshair enabled color="#949494" width={3} dashStyle="dot">
             <Label visible backgroundColor="#000000" />
             <VerticalLine visible />
@@ -139,11 +137,14 @@ export const LineChart = ({
           <ArgumentAxis
             defaultVisualRange={{
               startValue: `${date} ${dateTime}:00:00`,
-              endValue: `${date} ${dateTime}:59:59`,
+              endValue: `${date} ${dateTime}:05:00`,
             }}
             argumentType="datetime"
+            aggregationInterval="second"
+            tickInterval="second"
+            minorTickInterval="second"
           >
-            <Label format="S" />
+            <Label customizeText={customizeText} />
           </ArgumentAxis>
           <Tooltip enabled customizeTooltip={customizeTooltip} />
           <Legend visible={false} />
@@ -153,8 +154,8 @@ export const LineChart = ({
 
       {dataChart && dataChart.length > 0 && (
         <div className="unit-chart">
-          <div className="unit-left">{unitLeft}</div>
-          <div className="unit-right">{unitRight}</div>
+          {optionLine?.line2 && <div className="unit-left">{unitLeft}</div>}
+          {optionLine?.line2 && <div className="unit-right">{unitRight}</div>}
         </div>
       )}
     </>

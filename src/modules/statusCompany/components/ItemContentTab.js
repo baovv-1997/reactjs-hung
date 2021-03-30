@@ -5,7 +5,6 @@ import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatusByCompany } from './constants';
-// import LineSeriesChart from './chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
@@ -13,9 +12,7 @@ import LineChart from 'commons/components/LineChart/lineChart';
 
 type Props = {
   rawData: any,
-  // dataContent: Object,
   powerData: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   performanceData: Object,
@@ -29,8 +26,6 @@ type Props = {
 const ItemContentTab = ({
   rawData,
   powerData,
-  // dataContent,
-  handleDownloadTrend,
   handleChangeSearch,
   performanceData,
   insolationData,
@@ -40,20 +35,21 @@ const ItemContentTab = ({
   id,
   chartData,
 }: Props) => {
+  console.log('chartData', chartData);
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량 kWh',
+      name: '발전량(kWh)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: '일사량 ℃',
+      name: '일사량(W/㎡)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '성능비 kWh/㎡·10초',
+      name: '성능비(%)',
       color: '#fe8224',
     },
   ];
@@ -80,6 +76,9 @@ const ItemContentTab = ({
           {activeTab === id.toString() && chartData && (
             <LineChart
               dataChart={chartData}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
               optionLine={{
                 line1: paramsSearch?.power,
                 line2: paramsSearch?.insolation,
@@ -92,7 +91,6 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="발전 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
