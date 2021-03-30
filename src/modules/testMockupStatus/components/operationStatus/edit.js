@@ -40,7 +40,6 @@ const StatusByAreaCompanyEdit = () => {
 
   const { typeEvent, content, company } = dataSubmit;
   const handleSubmit = () => {
-    console.log('REGISTER');
     let validation = {};
     const rules = {
       content: ['required'],

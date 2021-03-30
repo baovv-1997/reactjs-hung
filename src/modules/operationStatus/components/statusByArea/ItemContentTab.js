@@ -12,7 +12,6 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   rawData: any,
-  dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
@@ -25,7 +24,6 @@ type Props = {
 
 const ItemContentTab = ({
   rawData,
-  dataContent,
   dataBoxContent,
   handleDownloadTrend,
   handleChangeSearch,
@@ -35,7 +33,6 @@ const ItemContentTab = ({
   totalPage,
   dataChart,
 }: Props) => {
-  console.log(dataContent);
   const dataLengthChart = [
     {
       id: 1,
@@ -63,8 +60,7 @@ const ItemContentTab = ({
       color: '#102a82',
     },
   ];
-
-  console.log('totalPage', totalPage);
+  
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -73,7 +69,7 @@ const ItemContentTab = ({
         handleChangeSearch={handleChangeSearch}
       />
 
-      <div className="group-char">
+      <div className="group-char" id="groupChart">
         <div className="group-char-left">
           <GroupCompareChart
             paramsSearch={paramsSearch}

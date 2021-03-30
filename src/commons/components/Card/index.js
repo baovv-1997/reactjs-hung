@@ -19,7 +19,6 @@ type Props = {
   electricRealtime?: number,
   ratePower?: number,
   cumulativeElectric?: number,
-
 };
 
 export const Card = ({
@@ -39,7 +38,11 @@ export const Card = ({
   cumulativeElectric = 0,
 }: Props) => {
   return (
-    <div className={`card ${customClass}`} onClick={onClick} role="presentation">
+    <div
+      className={`card ${customClass}`}
+      onClick={onClick}
+      role="presentation"
+    >
       {isLogoTop && (
         <div className="card__company card__company--top">
           <img
@@ -82,7 +85,7 @@ export const Card = ({
           <CardItem
             name="금월"
             specifications={amountElectricMonth}
-            unit="mWh"
+            unit="kWh"
           />
           <CardItem
             name="누적발전량"
@@ -97,6 +100,7 @@ export const Card = ({
             {listCompany.map((item) => (
               <img
                 key={item.id}
+                // src={IMAGES.default_logo}
                 src={item?.com_logo_path?.thumbnail}
                 alt="logocompany"
                 className="card__company__item"
@@ -125,4 +129,4 @@ Card.defaultProps = {
   cumulativeElectric: 0,
 };
 
-export default memo < Props > (Card);
+export default memo<Props>(Card);

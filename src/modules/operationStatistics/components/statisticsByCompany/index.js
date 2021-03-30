@@ -331,8 +331,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     }
   };
 
-  console.log('paramsSearch', paramsSearch);
-
   // click to event detail
   const handleClickDetail = (item) => {
     history.push({
