@@ -300,9 +300,6 @@ const OperationStatusPage = ({ location }: Props) => {
     setParamsSearch(defaultSearch);
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
   return (
     <div>
       {isProcessing && <Loading />}
@@ -372,7 +369,6 @@ const OperationStatusPage = ({ location }: Props) => {
                           }))
                         }
                         optionFilters={optionFilters}
-                        handleDownloadTrend={handleDownloadTrend}
                         dataContent={{}}
                         totalPage={totalRawData}
                         perPage={paramsSearch?.pagination?.value}

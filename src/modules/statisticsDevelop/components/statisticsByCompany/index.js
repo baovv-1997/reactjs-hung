@@ -67,9 +67,12 @@ const OperationStatusPage = () => {
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    day: cardInfo?.prod_day,
-    month: cardInfo?.prod_month,
-    year: cardInfo?.prod_sum,
+    day: (cardInfo?.prod_day && cardInfo?.prod_day.toLocaleString('en')) || '0',
+    month:
+      (cardInfo?.prod_month && cardInfo?.prod_month.toLocaleString('en')) ||
+      '0',
+    year:
+      (cardInfo?.prod_sum && cardInfo?.prod_sum.toLocaleString('en')) || '0',
   };
 
   const dispatch = useDispatch();
@@ -277,10 +280,6 @@ const OperationStatusPage = () => {
     setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
   /**
    * get chart List data
    */
@@ -315,37 +314,36 @@ const OperationStatusPage = () => {
     });
   }, [getStatisticDevelopCardCallback, paramsSearch?.company, menuTab]);
 
+  let from;
+  let to;
+  if (paramsSearch?.startDate && paramsSearch?.endDate) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+  } else if (
+    paramsSearch?.startDate &&
+    !paramsSearch?.endDate &&
+    (paramsSearch?.classification === 'minute' ||
+      paramsSearch?.classification === 'hour')
+  ) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+  } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
+    from = moment(new Date()).format('YYYY-MM-DD');
+    to = moment(new Date()).format('YYYY-MM-DD');
+  } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
+  } else if (
+    paramsSearch?.startDate &&
+    !paramsSearch?.endDate &&
+    (paramsSearch?.classification === 'day' ||
+      paramsSearch?.classification === 'month' ||
+      paramsSearch?.classification === 'year')
+  ) {
+    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
+    to = moment(new Date()).format('YYYY-MM-DD');
+  }
   const handleSubmitSearch = () => {
-    let from;
-    let to;
-    if (paramsSearch?.startDate && paramsSearch?.endDate) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-    } else if (
-      paramsSearch?.startDate &&
-      !paramsSearch?.endDate &&
-      (paramsSearch?.classification === 'minute' ||
-        paramsSearch?.classification === 'hour')
-    ) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
-      from = moment(new Date()).format('YYYY-MM-DD');
-      to = moment(new Date()).format('YYYY-MM-DD');
-    } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-    } else if (
-      paramsSearch?.startDate &&
-      !paramsSearch?.endDate &&
-      (paramsSearch?.classification === 'day' ||
-        paramsSearch?.classification === 'month' ||
-        paramsSearch?.classification === 'year')
-    ) {
-      from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-      to = moment(new Date()).format('YYYY-MM-DD');
-    }
-
     dispatch(
       getStatisticDevelopChartData({
         com_id: paramsSearch?.company,
@@ -394,6 +392,7 @@ const OperationStatusPage = () => {
                             {dev?.label !== '전체' && <span>{dev?.id}</span>}
                           </div>
                         }
+                        key={dev.id}
                       >
                         <ItemContentTab
                           dataBoxContent={dataBoxContent}
@@ -414,13 +413,18 @@ const OperationStatusPage = () => {
                               inverterID: raw?.ds_id || '',
                               inverterName: raw?.ds_name || '',
                               installationLocation: raw?.pos_name || '',
-                              dmProddDay: `${raw?.dm_prod_day}KWH`,
-                              dmProddMonth: `${raw?.dm_prod_month}KWH`,
-                              dmProdSum: `${raw?.dm_prod_sum}MW`,
+                              dmProddDay:
+                                raw?.dm_prod_day &&
+                                `${raw?.dm_prod_day.toLocaleString('en')}KWH`,
+                              dmProddMonth:
+                                raw?.dm_prod_month &&
+                                `${raw?.dm_prod_month.toLocaleString('en')}KWH`,
+                              dmProdSum:
+                                raw?.dm_prod_sum &&
+                                `${raw?.dm_prod_sum.toLocaleString('en')}MW`,
                               dmPerformanceRatio: `${raw?.dm_performance_ratio}%`,
                             }))
                           }
-                          handleDownloadTrend={handleDownloadTrend}
                           dataContent={{}}
                           totalPage={totalRawData}
                           perPage={paramsSearch?.pagination?.value}
@@ -454,6 +458,10 @@ const OperationStatusPage = () => {
                           handleChangeSearch={handleChangeSearch}
                           activeTab={menuTab}
                           handleSubmitSearch={handleSubmitSearch}
+                          dateTime={{
+                            from,
+                            to,
+                          }}
                         />
                       </Tab>
                     ))}
