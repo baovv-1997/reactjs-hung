@@ -47,6 +47,7 @@ type Props = {
     label: string,
   }>,
   optionFilters: Array,
+  handleSubmitSearch: Function,
 };
 
 const ItemContentTab = ({
@@ -66,6 +67,7 @@ const ItemContentTab = ({
   listStatusCompanySelect,
   listInverter,
   optionFilters,
+  handleSubmitSearch,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const history = useHistory();
@@ -108,6 +110,7 @@ const ItemContentTab = ({
         listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
+        handleSubmitSearch={handleSubmitSearch}
       />
 
       <div className="group-char">
@@ -171,7 +174,7 @@ const ItemContentTab = ({
       <Table
         tableHeads={headOperationStatusByAreaCompany}
         tableBody={tableOperationStatusByAreaCompany}
-        // isShowId
+        isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
@@ -183,11 +186,7 @@ const ItemContentTab = ({
         optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY_REGISTER)
-          }
-        >
+        <Button onClick={() => history.push(ROUTERS.EVENT_REGISTER)}>
           등록
         </Button>
       </div>

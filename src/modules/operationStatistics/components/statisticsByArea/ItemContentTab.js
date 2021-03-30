@@ -1,6 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 import Table from 'commons/components/Table';
+import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatusCompany } from '../constant';
@@ -10,12 +11,14 @@ import GroupActionDownload from '../GroupActionDownload';
 import { FilterSearch } from '../FilterSearch';
 
 type Props = {
-  listMockupDataCompany: any,
+  rawData: any,
   dataContent: Object,
   dataBoxContent: Object,
   handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
+  totalPage: number,
+  perPage: number,
   listStatusCompanySelect: Array<{
     id: number,
     value: any,
@@ -29,7 +32,7 @@ type Props = {
 };
 
 const ItemContentTab = ({
-  listMockupDataCompany,
+  rawData,
   dataContent,
   dataBoxContent,
   handleDownloadTrend,
@@ -37,6 +40,8 @@ const ItemContentTab = ({
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
+  totalPage,
+  perPage,
 }: Props) => {
   console.log(dataContent, 'dataContent');
   const dataLengthChart = [
@@ -102,9 +107,24 @@ const ItemContentTab = ({
       <div>
         <Table
           tableHeads={headStatusCompany}
-          tableBody={listMockupDataCompany}
+          tableBody={rawData}
           // isShowId
         />
+        <div className="opacity d-block pagination mt-0">
+          {totalPage > perPage && (
+            <div className="wrapper-device__pagination mt-0">
+              <Pagination
+                activePage={paramsSearch?.page}
+                itemsCountPerPage={perPage}
+                totalItemsCount={totalPage}
+                pageRangeDisplayed={5}
+                onChange={(e) => handleChangeSearch(e, 'page')}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

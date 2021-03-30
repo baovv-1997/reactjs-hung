@@ -40,9 +40,9 @@ const StatusByAreaCompany = () => {
     company: companyId || (comList && comList[1] && comList[1].id),
     mockupType: null,
     parkingLot: null,
-    power: false,
-    performance: false,
-    insolation: false,
+    power: true,
+    performance: true,
+    insolation: true,
     pagination: defaultOption,
   };
 
@@ -214,7 +214,7 @@ const StatusByAreaCompany = () => {
           listStatusCompanySelect={comList.slice(1)}
           listMockupType={listMockupType}
         />
-        <div className="content-body-left">
+        <div className="content-body-left w-100">
           <div className="h-100">
             <Tabs
               defaultActiveKey={

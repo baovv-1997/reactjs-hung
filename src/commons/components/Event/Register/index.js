@@ -1,8 +1,9 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import MainLayout from 'layout/MainLayout';
+// import MainLayout from 'layout/MainLayout';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from 'commons/components/Loading';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
@@ -163,7 +164,8 @@ const EventRegister = () => {
   };
 
   return (
-    <MainLayout isProcessing={isProcessing}>
+    <>
+      {isProcessing && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 운영 현황"
@@ -306,7 +308,7 @@ const EventRegister = () => {
       >
         {modalConform?.content}
       </ModalPopup>
-    </MainLayout>
+    </>
   );
 };
 

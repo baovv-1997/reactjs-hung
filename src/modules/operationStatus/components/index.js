@@ -71,10 +71,10 @@ const OperationStatusPage = ({ location }: Props) => {
 
   // const [randomNumber, setRandomNumber] = useState(null);
   const dataBoxContent = {
-    angleOfIncidence: '15',
-    azimuth: '남동10',
-    moduleOutput: '378',
-    moduleColor: '보라',
+    angleOfIncidence: cardInfo?.ds_incidence_angle,
+    azimuth: cardInfo?.ds_azimuth_angle,
+    moduleOutput: cardInfo?.dm_power,
+    moduleColor: cardInfo?.ds_color,
   };
 
   const [menuTab, setMenuTab] = useState('');
@@ -303,7 +303,6 @@ const OperationStatusPage = ({ location }: Props) => {
   const handleDownloadTrend = (name) => {
     console.log(name, 'download Trend');
   };
-
   return (
     <div>
       {isProcessing && <Loading />}

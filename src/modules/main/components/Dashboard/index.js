@@ -49,6 +49,8 @@ const MainPage = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm.label, 500);
 
+  console.log(cardPositionMain, 'cardPositionMain');
+
   useEffect(() => {
     if (debouncedSearchTerm) {
       dispatch(getCompanySearchMain({ keyword: debouncedSearchTerm }));
@@ -70,24 +72,35 @@ const MainPage = () => {
     dispatch(getTotalMetric());
   }, []);
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     count.current += 1;
+  //     if (count.current > listPositions.length) {
+  //       count.current = 1;
+  //   }
+  //     dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
+  //     setSearchTerm({ ...searchTerm, id: '', key: '' });
+  //   }, 30000);
+  //   return () => clearInterval(interval);
+  // }, [listPositions, cardPositionMain]);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(getTotalMetric());
+      switch (searchTerm?.key) {
+        case 'posId':
+          dispatch(getTotalMetric({ pos_id: searchTerm.id }));
+          break;
+        case 'comId':
+          dispatch(getTotalMetric({ com_id: searchTerm.id }));
+          break;
+        default:
+          dispatch(getTotalMetric());
+          break;
+      }
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [totalMetric]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      count.current += 1;
-      if (count.current > listPositions.length) {
-        count.current = 1;
-      }
-      dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
-    }, 30000);
-    return () => clearInterval(interval);
-  }, [listPositions, cardPositionMain]);
+  }, [totalMetric, searchTerm.id]);
 
   // when click title redirect dashboard area of area
   const handleTitleClick = (id) => {

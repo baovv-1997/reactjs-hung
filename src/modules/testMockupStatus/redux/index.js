@@ -16,6 +16,8 @@ const testMockupStatusSlide = createSlice({
     listDataTableRaw: [],
     dataChartOperation: {},
     listDataTableRawOperation: [],
+    listDataTableRawEventOperation: [],
+    totalEvent: 0,
   },
 
   reducers: {
@@ -168,6 +170,35 @@ const testMockupStatusSlide = createSlice({
       state.total = 0;
       state.listDataTableRawOperation = [];
     },
+
+    getDataTestMKRawEventTableOperation: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = true;
+    },
+    getDataTestMKRawEventTableOperationSuccess: (state, action) => {
+      const { data } = action;
+      const listDataTableRawEvent =
+        data &&
+        data?.data.map((item) => ({
+          id: item.id,
+          rowId: item.no,
+          dm_datetime: item.created_at || '',
+          com_name: item.com_name || '',
+          eventId: item?.id,
+          eventName: item.evt_content || '', // TODO
+          evtContent: item.evt_content,
+        }));
+      state.totalEvent = (data && data.total) || 0;
+      state.listDataTableRawEventOperation = listDataTableRawEvent;
+      state.type = action.type;
+      state.isProcessing = false;
+    },
+    getDataTestMKRawEventTableOperationFailed: (state, action) => {
+      state.type = action.type;
+      state.isProcessing = false;
+      state.totalEvent = 0;
+      state.listDataTableRawEventOperation = [];
+    },
   },
 });
 
@@ -197,6 +228,10 @@ export const {
   getCardTestMKStatusOperation,
   getCardTestMKStatusOperationSuccess,
   getCardTestMKStatusOperationFailed,
+
+  getDataTestMKRawEventTableOperation,
+  getDataTestMKRawEventTableOperationSuccess,
+  getDataTestMKRawEventTableOperationFailed,
 } = actions;
 
 export default reducer;

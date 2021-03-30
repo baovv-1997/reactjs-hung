@@ -254,3 +254,57 @@ button.h-32 {
     }
   }
 }
+
+.group-char-right {
+  width: 100%;
+  padding: pxToRem(20) pxToRem(50);
+
+  #chart {
+    height: pxToRem(360) !important;
+
+    svg {
+      height: pxToRem(360) !important;
+
+      .dxc-axes-group {
+        text {
+          font-family: $Noto-Sans-Font !important;
+          font-size: pxToRem(17) !important;
+          font-weight: bold !important;
+          line-height: 1.47;
+          letter-spacing: -0.51px !important;
+          fill: #1d2b36 !important;
+        }
+      }
+    }
+  }
+}
+
+.group-char-right {
+  position: relative;
+}
+
+.unit-chart {
+  position: absolute;
+  bottom: pxToRem(50);
+  display: flex;
+  justify-content: space-between;
+  width: 93%;
+
+  .unit-left,
+  .unit-right {
+    font-size: pxToRem(10);
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    text-align: left;
+    color: $bg-button;
+    margin-left: pxToRem(8);
+  }
+
+  .unit-right {
+    position: relative;
+    top: pxToRem(-12);
+  }
+}

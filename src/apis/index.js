@@ -38,6 +38,9 @@ export const ROUTES = {
   // generator statistics
   GENERATOR_STATISTICS_RAW:
     '/data/solar-monitoring/statistic/generator/raw-measure',
+  OPERATOR_STATISTICS_CARD: `/data/solar-monitoring/statistic/operation/cards`,
+  OPERATOR_STATISTICS_RAW: `/solar-monitoring/statistic/generator/raw-measure`,
+  OPERATOR_STATISTICS_CHART: `/data/solar-monitoring/statistic/operation/chart`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_CARD: `/data/test-solar-monitoring/status-operation/status-cards`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_RAW: `/data/test-solar-monitoring/status-operation/raw-data`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_TREND_CHART: `/data/test-solar-monitoring/status-operation/chart-data`,
@@ -54,9 +57,11 @@ export const ROUTES = {
   API_TEST_MOCKUP_STATUS_RAW: `/data/test-mockup/status-generator/raw-data`,
   API_TEST_MOCKUP_STATUS_CHART: `/data/test-mockup/status-generator/chart-data`,
 
-  API_TEST_MOCKUP_STATUS_OPERATION_CARD: `/data/test-solar-monitoring/statistic/operation/cards`, // TODO EDIT URL API
-  API_TEST_MOCKUP_STATUS_OPERATION_RAM: `/data/test-mockup/statistic/generator/raw-measure`, // TODO EDIT URL API
-  API_TEST_MOCKUP_STATUS_OPERATION_CHART: `/data/test-mockup/statistic/generator/chart`, // TODO EDIT URL API
+  API_TEST_MOCKUP_STATUS_OPERATION_CARD: `/data/test-mockup/status-operation/status-cards`,
+  API_TEST_MOCKUP_STATUS_OPERATION_RAM: `/data/test-mockup/status-operation/raw-data`,
+  API_TEST_MOCKUP_STATUS_OPERATION_CHART: `/data/test-mockup/status-operation/chart-data`,
+  API_TEST_MOCKUP_STATUS_OPERATION_RAM_EVENT:
+    '/data/test-mockup/status-operation/event/raw-data',
 
   API_TEST_MOCKUP_STATISTIC_GENERATOR_CARD: `/data/test-mockup/statistic/generator/cards`,
   API_TEST_MOCKUP_STATISTIC_GENERATOR_CHART: `/data/test-mockup/statistic/generator/chart`,

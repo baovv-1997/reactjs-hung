@@ -18,6 +18,8 @@
     "autoprefixer": "^9.8.5",
     "bootstrap": "^4.5.0",
     "date-fns": "^2.15.0",
+    "devextreme-react": "^20.2.6",
+    "devextreme": "20.2.6",
     "dotenv": "^8.2.0",
     "exif-js": "^2.3.0",
     "flow": "^0.2.3",

@@ -4,8 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: pxToRem(445);
+  min-width: pxToRem(445);
   height: pxToRem(139);
+  width: 100%;
 
   &__icon {
     width: pxToRem(127);
