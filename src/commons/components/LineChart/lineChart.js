@@ -149,7 +149,12 @@ export const LineChart = ({
             tickInterval={'second'}
             minorTickInterval={'second'}
           >
-            <Label customizeText={customizeText} />
+            {/* <Label format="S" /> */}
+            <Label
+              wordWrap="none"
+              overlappingBehavior={'none'}
+              customizeText={customizeText}
+            />
           </ArgumentAxis>
           <Tooltip enabled={true} customizeTooltip={customizeTooltip} />
           <Legend visible={false} />

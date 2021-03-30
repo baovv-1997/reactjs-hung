@@ -82,7 +82,7 @@ export const ButtonDownIMG = ({
           });
         }}
       >
-        취소 시 수정 내역은 전부 사라집니다. 그래도 취소하시겠습니까?.
+        {showModalConfirm.content}
       </ModalPopup>
     </>
   );
