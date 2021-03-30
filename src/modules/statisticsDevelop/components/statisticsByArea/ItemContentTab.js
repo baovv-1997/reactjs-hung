@@ -12,9 +12,7 @@ import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   rawData: any,
-  dataContent: Object,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   listStatusCompanySelect: Array<{
@@ -31,13 +29,12 @@ type Props = {
   perPage: number,
   handleSubmitSearch: Function,
   activeTab: boolean,
+  dateTime: Object,
 };
 
 const ItemContentTab = ({
   rawData,
-  dataContent,
   dataBoxContent,
-  handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
   totalPage,
@@ -46,6 +43,7 @@ const ItemContentTab = ({
   listInverter,
   handleSubmitSearch,
   activeTab,
+  dateTime,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -94,7 +92,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`generator/statistic?inverter_id=${activeTab}&pos_id=${paramsSearch?.posSelected}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
       />
       <div>
         <Table

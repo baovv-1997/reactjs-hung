@@ -144,7 +144,12 @@ Props) => {
             tickInterval="second"
             minorTickInterval="second"
           >
-            <Label customizeText={customizeText} />
+            {/* <Label format="S" /> */}
+            <Label
+              // wordWrap="none"
+              // overlappingBehavior={'none'}
+              customizeText={customizeText}
+            />
           </ArgumentAxis>
           <Tooltip enabled customizeTooltip={customizeTooltip} />
           <Legend visible={false} />

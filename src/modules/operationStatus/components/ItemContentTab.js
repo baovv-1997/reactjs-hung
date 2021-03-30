@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -25,7 +26,6 @@ type Props = {
   listMockupDataCompany: any,
 
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
@@ -46,7 +46,6 @@ type Props = {
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
@@ -124,7 +123,7 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`operator/status?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
@@ -162,8 +161,16 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
-            Raw Date 다운
+          <Button onClick={() => {}}>
+            <a
+              href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
+                `operator/status/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Raw Date 다운
+            </a>
           </Button>
         </div>
       </div>

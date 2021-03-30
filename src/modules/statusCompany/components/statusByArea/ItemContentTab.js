@@ -14,24 +14,24 @@ import LineChart from 'commons/components/LineChart/lineChart';
 type Props = {
   rawData: any,
   powerData: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   performanceData: Object,
   insolationData: Object,
   totalRawData: number,
+  activeTab: any,
   chartData: any,
 };
 
 const ItemContentTab = ({
   rawData,
   powerData,
-  handleDownloadTrend,
   handleChangeSearch,
   performanceData,
   insolationData,
   paramsSearch,
   totalRawData,
+  activeTab,
   chartData,
 }: Props) => {
   const dataLengthChart = [
@@ -86,12 +86,11 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-
       <TitleSubHeader title="발전 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        linkDownTable={`generator?pos_id=${paramsSearch?.posSelected}&com_id=${activeTab}`}
       />
       <div>
         <Table

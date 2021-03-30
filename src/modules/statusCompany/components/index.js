@@ -230,6 +230,7 @@ const StatusByAreaCompany = () => {
                         {device?.label !== '전체' && <span>{device?.id}</span>}
                       </div>
                     }
+                    key={device.id}
                   >
                     <ItemContentTab
                       chartData={chartData}

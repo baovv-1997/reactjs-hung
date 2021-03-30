@@ -13,7 +13,6 @@ import { FilterSearch } from '../FilterSearch';
 type Props = {
   rawData: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   totalPage: number,
@@ -28,18 +27,21 @@ type Props = {
     value: any,
     label: string,
   }>,
+  tabActive: any,
+  dateTime: Object,
 };
 
 const ItemContentTab = ({
   rawData,
   dataBoxContent,
-  handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
   listStatusCompanySelect,
   listInverter,
   totalPage,
   perPage,
+  tabActive,
+  dateTime,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -97,9 +99,9 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="실시간 계측정보 통계" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
+        linkDownTable={`operator/statistic/?inverter_id=${tabActive}&pos_id=${paramsSearch?.posSelected}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`} // TODO
       />
       <div>
         <Table
