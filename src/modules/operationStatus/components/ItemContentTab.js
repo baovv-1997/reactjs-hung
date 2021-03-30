@@ -170,7 +170,7 @@ const ItemContentTab = ({
       <Table
         tableHeads={headOperationStatusByAreaCompany}
         tableBody={tableOperationStatusByAreaCompany}
-        // isShowId
+        isShowId
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{

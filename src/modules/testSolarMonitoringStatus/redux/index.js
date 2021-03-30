@@ -149,7 +149,9 @@ const testSolarMonitoringStatusSlide = createSlice({
           dm_power:
             item?.dm_power && `${item?.dm_power.toLocaleString('en') || 0}KW`,
           performanceRatio: `${item.dm_performance_ratio || 0}%`,
-          dmPowerEff: `${item.dm_power_eff || 0}Hz`,
+          dm_rad:
+            (item.dm_freq && `${item?.dm_freq.toLocaleString('en') || 0}Hz`) ||
+            '0Hz',
         }));
       state.type = action.type;
       state.isProcessing = false;
@@ -198,12 +200,13 @@ const testSolarMonitoringStatusSlide = createSlice({
           com_name: item.com_name || '',
           inverterId: item.ds_id || '',
           inverterName: item.ds_name || '',
-          dm_module_temp: `${item.dm_module_temp || 0}℃`, // TODO
-          outsideTemperature: `${item.dm_env_temp || 0}℃`, // TODO
+          dm_module_temp: `${item.dm_module_temp || 0}℃`,
+          outsideTemperature: `${item.dm_env_temp || 0}℃`,
           dm_rad:
-            item?.dm_rad && `${item?.dm_rad.toLocaleString('en') || 0}W/㎡`, // TODO
+            item?.dm_rad && `${item?.dm_rad.toLocaleString('en') || 0}W/㎡`,
           dm_rad_Max:
-            item?.dm_rad && `${item?.dm_rad.toLocaleString('en') || 0}W/㎡`, // TODO
+            item?.ds_max_power &&
+            `${item?.ds_max_power.toLocaleString('en') || 0}W/㎡`, // TODO
         }));
       state.type = action.type;
       state.isProcessing = false;

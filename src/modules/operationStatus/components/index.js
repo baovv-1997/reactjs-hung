@@ -35,7 +35,7 @@ const OperationStatusPage = ({ location }: Props) => {
   const { dataChart, rawData, totalRawData, cardInfo } = useSelector(
     (state) => state.operationStatus
   );
-  console.log('cardInfo', cardInfo);
+
   const {
     eventList,
     comList,
