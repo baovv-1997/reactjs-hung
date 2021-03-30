@@ -402,6 +402,10 @@ const OperationStatusPage = () => {
                       perPage={paramsSearch?.pagination?.value}
                       tabActive={menuTab}
                       handleSubmitSearch={handleSubmitSearch}
+                      dateTime={{
+                        from,
+                        to,
+                      }}
                     />
                   </Tab>
                 ))}
