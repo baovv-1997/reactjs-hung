@@ -85,7 +85,7 @@ export const Card = ({
           <CardItem
             name="금월"
             specifications={amountElectricMonth}
-            unit="mWh"
+            unit="kWh"
           />
           <CardItem
             name="누적발전량"
