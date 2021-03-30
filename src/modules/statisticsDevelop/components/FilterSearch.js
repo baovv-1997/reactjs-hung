@@ -1,6 +1,7 @@
 // @flow
 // libs
 import React, { memo } from 'react';
+import moment from 'moment';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import IMAGES from 'themes/images';
 import SelectDropdown from 'commons/components/Select';
@@ -89,14 +90,6 @@ export const FilterSearch = ({
               >
                 월별
               </Button>
-              <Button
-                onClick={() => handleChangeSearch('year', 'classification')}
-                customClass={`${
-                  paramsSearch?.classification === 'year' ? 'active' : ''
-                }`}
-              >
-                연별
-              </Button>
             </div>
           </div>
         </div>
@@ -160,7 +153,15 @@ export const FilterSearch = ({
                   dateFormat={
                     CONTRACT_FORMAT_DATE[paramsSearch?.classification]
                   }
-                  maxDate={new Date()}
+                  minDate={
+                    new Date(
+                      moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
+                        30,
+                        'days'
+                      )
+                    )
+                  }
+                  maxDate={paramsSearch?.endDate}
                   locale="ko"
                   peekNextMonth
                   showMonthDropdown
@@ -185,7 +186,14 @@ export const FilterSearch = ({
                         }
                         locale="ko"
                         minDate={paramsSearch?.startDate}
-                        maxDate={new Date()}
+                        maxDate={
+                          new Date(
+                            moment(paramsSearch?.startDate, 'YYYY-MM-DD').add(
+                              30,
+                              'days'
+                            )
+                          )
+                        }
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown
