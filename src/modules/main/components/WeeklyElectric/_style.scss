@@ -3,5 +3,9 @@
   #chart {
     height: pxToRem(180);
     color: #135998;
+
+    .dxc-arg-axis {
+      opacity: 1;
+    }
   }
 }
