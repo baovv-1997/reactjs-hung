@@ -44,7 +44,6 @@ const Submenu = ({
     setNestSubClicking(activeNestSub);
   }, []);
 
-  console.log('nestSubClicking', nestSubClicking);
   const renderNestedSub =
     listNestSub &&
     listNestSub.length > 0 &&

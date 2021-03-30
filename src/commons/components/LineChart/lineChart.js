@@ -1,5 +1,6 @@
 // @flow
 import React, { memo } from 'react';
+import moment from 'moment';
 import {
   Chart,
   Series,
@@ -15,6 +16,7 @@ import {
   CommonSeriesSettings,
   ArgumentAxis,
   LoadingIndicator,
+  VerticalLine,
 } from 'devextreme-react/chart';
 import Loading from '../Loading/LoadingSmall';
 
@@ -31,21 +33,25 @@ export const LineChart = ({
   unitLeft = 'kWh',
   unitRight = 'W/㎡',
 }: Props) => {
-  const lengthData =
-    dataChart[dataChart.length] &&
-    dataChart[dataChart.length].time &&
-    dataChart[dataChart.length].time - 3600;
+  const date = moment(new Date()).format('YYYY-MM-DD');
+  const dateTime = moment(new Date()).format('HH');
   const customizeTooltip = (arg) => {
     let text = '';
     switch (arg.seriesName) {
       case 'Series 1':
-        text = `${arg.value.toFixed(2)}kWh`;
+        text = `${arg.value.toLocaleString('en', {
+          maximumFractionDigits: 2,
+        })}kWh`;
         break;
       case 'Series 2':
-        text = `${arg.value.toFixed(2)}%`;
+        text = `${arg.value.toLocaleString('en', {
+          maximumFractionDigits: 2,
+        })}%`;
         break;
       case 'Series 3':
-        text = `${arg.value.toFixed(2)}W/㎡`;
+        text = `${arg.value.toLocaleString('en', {
+          maximumFractionDigits: 2,
+        })}W/㎡`;
         break;
       default:
         text = arg.value;
@@ -114,14 +120,14 @@ export const LineChart = ({
             valueMarginsEnabled={true}
           />
           <Crosshair enabled={true} color="#949494" width={3} dashStyle="dot">
-            <Label visible={true} backgroundColor="#949494"></Label>
+            <Label visible={true} backgroundColor="#000000" />
+            <VerticalLine visible={true} />
             <HorizontalLine visible={true} />
           </Crosshair>
           <ArgumentAxis
             defaultVisualRange={{
-              startValue: lengthData,
-              endValue: lengthData,
-              length: { seconds: 3600 },
+              startValue: `${date} ${dateTime}:00:00`,
+              endValue: `${date} ${dateTime}:59:59`,
             }}
             argumentType="datetime"
           />
