@@ -70,6 +70,9 @@ export const ROUTES = {
   API_TEST_MOCKUP_STATISTIC_OPERATION_CARD: `/data/test-solar-monitoring/statistic/operation/cards`,
   API_TEST_MOCKUP_STATISTIC_OPERATION_CHART: `/data/test-mockup/statistic/operation/chart`,
   API_TEST_MOCKUP_STATISTIC_OPERATION_RAM: `/data/test-mockup/statistic/generator/raw-measure`,
+
+  API_DOWNLOAD_FILE_EXCEL: (name) =>
+    `/data/export/test-solar-monitoring/operator/${name}`,
 };
 
 export const API = create({

@@ -5,7 +5,6 @@ import Table from 'commons/components/Table';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatusByCompany } from './constants';
-// import LineSeriesChart from './chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
@@ -13,9 +12,7 @@ import LineChart from 'commons/components/LineChart/lineChart';
 
 type Props = {
   rawData: any,
-  // dataContent: Object,
   powerData: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   performanceData: Object,
@@ -29,8 +26,6 @@ type Props = {
 const ItemContentTab = ({
   rawData,
   powerData,
-  // dataContent,
-  handleDownloadTrend,
   handleChangeSearch,
   performanceData,
   insolationData,
@@ -95,7 +90,6 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="발전 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
