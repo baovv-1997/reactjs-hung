@@ -86,33 +86,12 @@ const OperationStatusPage = () => {
   const date = new Date();
 
   switch (paramsSearch?.classification) {
-    case 'minute':
-      from = paramsSearch?.from
-        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.to
-        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      break;
-    case 'hour':
-      from = paramsSearch?.from
-        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.to
-        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      break;
-    case 'day':
-      from = paramsSearch?.from
-        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.to
-        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      break;
     case 'month':
+      const dateOfMonth = new Date(paramsSearch?.from);
       from = paramsSearch?.from
-        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
+        ? moment(
+            new Date(dateOfMonth.getFullYear(), dateOfMonth.getMonth(), 1)
+          ).format('YYYY-MM-DD')
         : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
             'YYYY-MM-DD'
           );
@@ -123,6 +102,13 @@ const OperationStatusPage = () => {
           );
       break;
     default:
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
+        : moment(date).format('YYYY-MM-DD');
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
+        : moment(date).format('YYYY-MM-DD');
+      break;
       break;
   }
 
