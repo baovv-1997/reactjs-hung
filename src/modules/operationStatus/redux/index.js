@@ -65,7 +65,7 @@ const operationStatusSlide = createSlice({
     getDataChartFailed: (state, action) => {
       state.type = action.type;
       // state.isProcessing = false;
-      state.dataChart = [];
+      // state.dataChart = [];
     },
 
     getTrendChart: (state, action) => {
