@@ -45,8 +45,7 @@ const DeviceManagement = ({ history }: Props) => {
         page: 1,
       })
     );
-  }, [selectOption]);
-
+  }, [selectOption, selectOption?.value]);
   // handle when slect change
   const onChangeSelect = (option) => {
     setSelectOption(option);
