@@ -65,8 +65,8 @@ export const LineChart = ({
 // unitLine5,
 Props) => {
   const customizeText = (arg) => {
-    const date = arg.value.getDate();
-    console.log('arg', date);
+    // const date = arg.value.getDate();
+    // console.log('arg', date);
     // switch (type) {
     //   case 'seconds':
     //     break;
@@ -185,15 +185,15 @@ Props) => {
                 }
               : null
           }
-          // argumentType="datetime"
-          // aggregationInterval={type}
-          // tickInterval={type}
-          // minorTickInterval={type}
+          argumentType="datetime"
+          aggregationInterval={type}
+          tickInterval={type}
+          minorTickInterval={type}
         >
           {/* <Label format="S" /> */}
           <Label
-            wordWrap="breakWord"
-            overlappingBehavior={'none'}
+            // wordWrap="breakWord"
+            // overlappingBehavior={'none'}
             customizeText={customizeText}
           />
         </ArgumentAxis>

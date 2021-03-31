@@ -328,5 +328,6 @@ button.h-32 {
   svg {
     cursor: pointer;
     width: 100% !important;
+    min-width: pxToRem(1000) !important;
   }
 }
