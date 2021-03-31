@@ -38,11 +38,11 @@ const OperationStatusPage = () => {
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
     page2: 1,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    PVVoltage: true,
+    PVCurrent: true,
+    outputVoltage: true,
+    outputCurrent: true,
+    print: true,
     pagination: defaultOption,
     pagination2: defaultOption,
   };

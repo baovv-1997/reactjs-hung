@@ -19,13 +19,7 @@ const testSMStatisticsGeneratorSlide = createSlice({
       power: 0,
     },
     dataChart: any,
-    dataChartOperation: {
-      dmOCurrent: [],
-      dmOVoltage: [],
-      dmPower: [],
-      dmPvCurrent: [],
-      dmPvVoltage: [],
-    },
+    dataChartOperation: [],
     listDataTableRaw: [],
     listDataTableRawOperation: [],
   },
@@ -128,24 +122,12 @@ const testSMStatisticsGeneratorSlide = createSlice({
       const { data } = action;
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChartOperation = {
-        dmOCurrent: (data && data.dm_o_current) || [],
-        dmOVoltage: (data && data.dm_o_voltage) || [],
-        dmPower: (data && data.dm_power) || [],
-        dmPvCurrent: (data && data.dm_pv_current) || [],
-        dmPvVoltage: (data && data.dm_pv_voltage) || [],
-      };
+      state.dataChartOperation = data;
     },
     getDataTrendChartStatisticsOperationFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
-      state.dataChartOperation = {
-        dmOCurrent: [],
-        dmOVoltage: [],
-        dmPower: [],
-        dmPvCurrent: [],
-        dmPvVoltage: [],
-      };
+      state.dataChartOperation = [];
     },
 
     getDataRawTableOperation: (state, action) => {
