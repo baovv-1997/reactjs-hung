@@ -87,37 +87,37 @@ const OperationStatusPage = () => {
 
   switch (paramsSearch?.classification) {
     case 'minute':
-      from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
       break;
     case 'hour':
-      from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
       break;
     case 'day':
-      from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
       break;
     case 'month':
-      from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
         : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
             'YYYY-MM-DD'
           );
-      to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
         : moment(new Date(date.getFullYear(), date.getMonth() + 1, 0)).format(
             'YYYY-MM-DD'
           );
@@ -278,13 +278,13 @@ const OperationStatusPage = () => {
           page2: item,
         });
         break;
-      case 'startDate':
+      case 'from':
         setParamsSearch({
           ...paramsSearch,
           from: item,
         });
         break;
-      case 'endDate':
+      case 'to':
         setParamsSearch({
           ...paramsSearch,
           to: item,

@@ -65,8 +65,8 @@ export const LineChart = ({
 // unitLine5,
 Props) => {
   const customizeText = (arg) => {
-    const year = arg.value.getDate();
-    console.log('arg', arg.value);
+    // const year = arg.value.getDate();
+    // console.log('arg', arg.value);
     switch (type) {
       case 'seconds':
         break;
@@ -77,7 +77,6 @@ Props) => {
       case 'months':
         const labelText = arg.value.getDate();
         return `${labelText}`;
-        break;
       default:
         break;
     }
@@ -96,7 +95,7 @@ Props) => {
       text,
     };
   };
-  console.log('dataChart', dataChart);
+
   return (
     <>
       <Chart id="chart" dataSource={dataChart} palette="Harmony Light">
