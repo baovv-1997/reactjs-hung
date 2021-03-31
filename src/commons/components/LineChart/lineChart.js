@@ -95,7 +95,6 @@ Props) => {
       text,
     };
   };
-
   return (
     <>
       <Chart id="chart" dataSource={dataChart} palette="Harmony Light">

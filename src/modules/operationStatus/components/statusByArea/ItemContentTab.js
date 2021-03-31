@@ -4,7 +4,8 @@ import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-// import LineSeriesChart from 'commons/components/LineChart';
+import LineChart2 from 'commons/components/LineChart/LineChart2';
+
 import { headStatusCompany } from '../constants';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
@@ -18,7 +19,8 @@ type Props = {
   activeTab: string,
   id: number,
   totalPage: number,
-  dataChart: Array,
+  chartData: Array,
+  chartData: any,
 };
 
 const ItemContentTab = ({
@@ -29,7 +31,7 @@ const ItemContentTab = ({
   activeTab,
   id,
   totalPage,
-  dataChart,
+  chartData,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -78,14 +80,30 @@ const ItemContentTab = ({
           </div>
         </div>
         <div className="group-char-right">
-          {/* {activeTab === id.toString() && (
-            <LineSeriesChart
-              width={1100}
-              height={450}
-              dataChart={dataChart}
-              activeTab={activeTab}
+          {activeTab === id.toString() && chartData && (
+            <LineChart2
+              dataChart={chartData}
+              unitLine1="V"
+              unitLine2="A"
+              unitLine3="A"
+              unitLine4="kW"
+              unitLine5="V"
+              optionLine={{
+                line1: paramsSearch?.PVVoltage,
+                line2: paramsSearch?.PVCurrent,
+                line3: paramsSearch?.outputVoltage,
+                line4: paramsSearch?.outputCurrent,
+                line5: paramsSearch?.print,
+              }}
+              typeLine="line"
+              widthLine={2}
+              unitLeft="V"
+              unitRight="A"
+              showPoint1
+              showPoint2
+              showPoint3
             />
-          )} */}
+          )}
         </div>
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
