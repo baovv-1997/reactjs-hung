@@ -25,6 +25,7 @@ type Props = {
   }>,
   handleSubmitSearch: Function,
   activeTab: boolean,
+  isCompany: boolean,
 };
 
 export const FilterSearch = ({
@@ -34,6 +35,7 @@ export const FilterSearch = ({
   listInverter,
   handleSubmitSearch,
   activeTab,
+  isCompany,
 }: Props) => {
   const CONTRACT_FORMAT_DATE = {
     minute: 'yyyy-MM-dd',
@@ -90,10 +92,14 @@ export const FilterSearch = ({
           <div className="colum-right">
             <div className="d-flex justify-content-start date-group align-items-center">
               <div className="group-select-search d-flex justify-content-start align-items-center">
-                <div className="title-label">업체 선택</div>
+                <div className="title-label">{`${
+                  isCompany ? '업체1 선택' : '인버터1 선택'
+                }`}</div>
                 <SelectDropdown
                   placeholder="업체 선택"
-                  listItem={listInverter1}
+                  listItem={listInverter1.filter(
+                    (inverter1) => inverter1.id !== paramsSearch?.inverter?.id
+                  )}
                   onChange={(option) => handleChangeSearch(option, 'inverter1')}
                   option={paramsSearch?.inverter1 || null}
                   noOptionsMessage={() => '옵션 없음'}
@@ -104,10 +110,14 @@ export const FilterSearch = ({
               </div>
               <img src={IMAGES.arrow_right} alt="" className="mx-2" />
               <div className="group-select-search d-flex justify-content-start align-items-center mr-10">
-                <div className="title-label">인버터 선택</div>
+                <div className="title-label">{`${
+                  isCompany ? '업체2 선택' : '인버터2 선택'
+                }`}</div>
                 <SelectDropdown
                   placeholder="선택되지 않음"
-                  listItem={listInverter}
+                  listItem={listInverter.filter(
+                    (inverter) => inverter.id !== paramsSearch?.inverter1?.id
+                  )}
                   onChange={(option) => handleChangeSearch(option, 'inverter')}
                   option={paramsSearch?.inverter || null}
                   noOptionsMessage={() => '옵션 없음'}

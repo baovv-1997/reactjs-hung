@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 // import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listParkingLot } from 'mockData/listCompany';
-import { getPosList, getListDevice } from 'commons/redux';
-
+import { getPosList, getCompanyList } from 'commons/redux';
+import { getListInverter } from 'modules/accounts/redux';
 import * as SignInAction from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import {
@@ -24,13 +24,14 @@ const OperationStatusPage = () => {
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
-  const { listInverter } = useSelector((state) => state?.account);
-  const { posList, isProcessing, deviceList } = useSelector(
+
+  const { posList, isProcessing, comList } = useSelector(
     (state) => state?.commons
   );
-  const { rawData, totalRawData, cardInfo } = useSelector(
+  const { rawData, totalRawData, cardInfo, dataChart } = useSelector(
     (state) => state.statisticsDevelop
   );
+
   const defaultOption = {
     id: 1,
     value: 6,
@@ -48,11 +49,11 @@ const OperationStatusPage = () => {
     company: null,
     mockupType: null,
     parkingLot: null,
-    insolation: false,
-    performance: false,
-    generation: false,
+    insolation: true,
+    performance: true,
+    generation: true,
     pagination: defaultOption,
-    inverter1: menuTab === '' ? null : [deviceList[1]],
+    inverter1: menuTab === '' ? null : [comList[1]],
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -79,19 +80,47 @@ const OperationStatusPage = () => {
     getListCompanyCallback();
   }, [getListCompanyCallback]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      posSelected: posList && posList[1] && posList[1].id,
+    });
+  }, []);
+
   /**
-   * get Device list
+   * get Event List data
    */
-  const getDevicesCallback = useCallback(
+  const getListInverterCallback = useCallback(
     (params) => {
-      dispatch(getListDevice(params));
+      dispatch(getListInverter(params));
     },
     [dispatch]
   );
 
   useEffect(() => {
-    getDevicesCallback({ pos_id: paramsSearch?.posSelected });
-  }, [getDevicesCallback, paramsSearch?.posSelected]);
+    if (paramsSearch?.company) {
+      getListInverterCallback({
+        per_page: 9999,
+        pos_id: paramsSearch?.posSelected,
+      });
+    }
+  }, [getListInverterCallback, paramsSearch?.posSelected]);
+
+  /**
+   * get Device list
+   */
+  const getCompanyListCallback = useCallback(
+    (params) => {
+      dispatch(getCompanyList(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (paramsSearch?.posSelected) {
+      getCompanyListCallback({ pos_id: paramsSearch?.posSelected });
+    }
+  }, [getCompanyListCallback, paramsSearch?.posSelected]);
 
   /**
    * get statistics generator data
@@ -104,12 +133,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticsDevelopRawCallback({
-      inverter_id: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-      pos_id: paramsSearch?.posSelected,
-    });
+    if (paramsSearch?.posSelected) {
+      getStatisticsDevelopRawCallback({
+        com_id: menuTab,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+        pos_id: paramsSearch?.posSelected,
+      });
+    }
   }, [
     getStatisticsDevelopRawCallback,
     menuTab,
@@ -122,7 +153,7 @@ const OperationStatusPage = () => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
         });
         break;
@@ -224,14 +255,22 @@ const OperationStatusPage = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    const inverter1Selected = deviceList.find(
+    const inverter1Selected = comList.find(
       (item) => item.id === parseInt(eventKey, 10)
     );
 
     if (eventKey === '') {
-      setParamsSearch({ ...defaultSearch, inverter1: null });
+      setParamsSearch({
+        ...defaultSearch,
+        inverter1: null,
+        posSelected: paramsSearch?.posSelected,
+      });
     }
-    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
+    setParamsSearch({
+      ...defaultSearch,
+      inverter1: inverter1Selected,
+      posSelected: paramsSearch?.posSelected,
+    });
   };
 
   let from;
@@ -269,11 +308,11 @@ const OperationStatusPage = () => {
       getStatisticDevelopChartData({
         pos_id: paramsSearch?.posSelected,
         ds_id: paramsSearch?.inverter?.id,
+        com_id: paramsSearch?.inverter1?.id,
         from,
         to,
         type: paramsSearch?.classification,
-        inverter_ids: menuTab === '' ? paramsSearch?.inverter1?.id : menuTab,
-        compare_inverter_id: paramsSearch?.inverter?.id,
+        com_compare_id: paramsSearch?.inverter1?.id,
       })
     );
   };
@@ -289,10 +328,12 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticDevelopChartDataCallback({
-      pos_id: paramsSearch?.posSelected,
-      inverter_ids: menuTab,
-    });
+    if (paramsSearch?.posSelected) {
+      getStatisticDevelopChartDataCallback({
+        pos_id: paramsSearch?.posSelected,
+        inverter_ids: menuTab,
+      });
+    }
   }, [
     getStatisticDevelopChartDataCallback,
     paramsSearch?.posSelected,
@@ -310,10 +351,12 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticDevelopCardCallback({
-      pos_id: paramsSearch?.posSelected,
-      inverter_ids: menuTab,
-    });
+    if (paramsSearch?.posSelected) {
+      getStatisticDevelopCardCallback({
+        pos_id: paramsSearch?.posSelected,
+        inverter_ids: menuTab,
+      });
+    }
   }, [getStatisticDevelopCardCallback, paramsSearch?.posSelected, menuTab]);
 
   return (
@@ -331,22 +374,18 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={
-                  deviceList && deviceList.length > 1
-                    ? ''
-                    : deviceList && deviceList[0] && deviceList[0].id
-                }
+                defaultActiveKey=""
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                {deviceList &&
-                  deviceList.map((dev) => (
+                {comList &&
+                  comList.map((com) => (
                     <Tab
-                      eventKey={dev.id}
+                      eventKey={com.id}
                       title={
                         <div className="tab-name">
-                          {dev?.label}
-                          {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                          {com?.label}
+                          {com?.label !== '전체' && <span>{com?.id}</span>}
                         </div>
                       }
                     >
@@ -359,7 +398,7 @@ const OperationStatusPage = () => {
                               `${
                                 totalRawData -
                                 (paramsSearch?.page - 1) *
-                                  paramsSearch.pagination.value -
+                                  paramsSearch?.pagination?.value -
                                 index
                               }` || '',
                             dateTime: moment(raw.dm_datetime).format(
@@ -384,7 +423,7 @@ const OperationStatusPage = () => {
                         dataContent={{}}
                         totalPage={totalRawData}
                         perPage={paramsSearch?.pagination?.value}
-                        listInverter={listInverter}
+                        listInverter={comList.slice(1)}
                         listStatusCompanySelect={listStatusCompanySelect}
                         paramsSearch={paramsSearch}
                         handleChangeSearch={handleChangeSearch}
@@ -394,6 +433,8 @@ const OperationStatusPage = () => {
                           from,
                           to,
                         }}
+                        chartData={dataChart}
+                        id={com.id}
                       />
                     </Tab>
                   ))}

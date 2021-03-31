@@ -52,16 +52,16 @@ const OperationStatusPage = ({ location }: Props) => {
   };
 
   const defaultSearch = {
-    company: comList && comList[1] && comList[1].id,
+    company: null,
     page: 1,
     mockupType: null,
     parkingLot: null,
     page2: 1,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    PVVoltage: true,
+    PVCurrent: true,
+    outputVoltage: true,
+    outputCurrent: true,
+    print: true,
     pagination: defaultOption,
     pagination2: defaultOption,
   };
@@ -92,6 +92,13 @@ const OperationStatusPage = ({ location }: Props) => {
     getListCompany();
   }, [getListCompany]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company: comList && comList[1] && comList[1].id,
+    });
+  }, []);
+
   /**
    * get Device list
    */
@@ -103,7 +110,9 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getDevicesCallback({ com_id: paramsSearch?.company });
+    if (paramsSearch?.company) {
+      getDevicesCallback({ com_id: paramsSearch?.company });
+    }
   }, [getDevicesCallback, paramsSearch?.company]);
 
   /**
@@ -117,10 +126,12 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getCardInfoCallback({
-      com_id: paramsSearch?.company,
-      inverter_id: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getCardInfoCallback({
+        com_id: paramsSearch?.company,
+        inverter_id: menuTab,
+      });
+    }
   }, [getCardInfoCallback, paramsSearch?.company, menuTab]);
 
   // useEffect(() => {
@@ -133,7 +144,7 @@ const OperationStatusPage = ({ location }: Props) => {
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
-        setParamsSearch({ ...defaultSearch, company: item });
+        setParamsSearch({ ...defaultSearch, company: item.id });
         setMenuTab('');
 
         break;
@@ -226,10 +237,12 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getDataChartCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getDataChartCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+      });
+    }
   }, [menuTab, paramsSearch?.company, getDataChartCallback]);
 
   /**
@@ -243,12 +256,14 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getTrendChartCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-    });
+    if (paramsSearch?.company) {
+      getTrendChartCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+      });
+    }
   }, [
     menuTab,
     paramsSearch?.company,
@@ -269,13 +284,15 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getEventListCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-      page: paramsSearch?.page2,
-      per_page: paramsSearch?.pagination2?.value,
-      type: optionFilters,
-    });
+    if (paramsSearch?.company) {
+      getEventListCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+        page: paramsSearch?.page2,
+        per_page: paramsSearch?.pagination2?.value,
+        type: optionFilters,
+      });
+    }
   }, [
     menuTab,
     paramsSearch?.company,
@@ -297,7 +314,7 @@ const OperationStatusPage = ({ location }: Props) => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    setParamsSearch({ ...defaultSearch, company: paramsSearch?.company });
   };
 
   return (
@@ -317,11 +334,7 @@ const OperationStatusPage = ({ location }: Props) => {
             <div className="h-100">
               <Tabs
                 // set active tab
-                defaultActiveKey={
-                  deviceList && deviceList.length > 1
-                    ? ''
-                    : deviceList && deviceList[0] && deviceList[0].id
-                }
+                defaultActiveKey=""
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

@@ -4,8 +4,10 @@ import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import LineChart from 'commons/components/LineChart/lineChart';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import {
   headStatisticsCompany,
   headStatisticsOfModuleCompany,
@@ -14,7 +16,6 @@ import FilterSearch from '../FilterSearch';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   rawData: any,
@@ -41,6 +42,8 @@ type Props = {
   activeTab: string,
   handleSubmitSearch: Function,
   dateTime: Object,
+  id: string,
+  chartData: any,
 };
 
 const ItemContentTab = ({
@@ -58,6 +61,8 @@ const ItemContentTab = ({
   activeTab,
   handleSubmitSearch,
   dateTime,
+  id,
+  chartData,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -97,11 +102,27 @@ const ItemContentTab = ({
             paramsSearch={paramsSearch}
             handleChangeSearch={handleChangeSearch}
           />
+
           <div className="group-length-chart">
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          {activeTab === id.toString() && chartData && (
+            <LineChart
+              dataChart={chartData}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
+              optionLine={{
+                line1: paramsSearch?.insolation,
+                line2: paramsSearch?.performance,
+                line3: paramsSearch?.generation,
+              }}
+              type="minute"
+            />
+          )}
+        </div>
       </div>
       <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
