@@ -135,8 +135,8 @@ const OperationStatusPage = () => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
-          posSelected: item,
+          ...defaultSearch,
+          posSelected: item.id,
         });
         setMenuTab(1);
         break;
@@ -202,9 +202,11 @@ const OperationStatusPage = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    setParamsSearch({
+      ...defaultSearch,
+      posSelected: paramsSearch?.posSelected,
+    });
   };
-
 
   return (
     <>
@@ -222,11 +224,7 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={
-                  comList && comList.length > 1
-                    ? ''
-                    : comList && comList[0] && comList[0].id
-                }
+                defaultActiveKey=""
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

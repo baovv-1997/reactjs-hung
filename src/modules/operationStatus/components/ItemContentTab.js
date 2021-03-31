@@ -12,7 +12,8 @@ import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
 import { operator_event_filter } from 'constants/optionCheckbox';
 
-// import LineSeriesChart from 'commons/components/LineChart';
+// import LineChart from 'commons/components/LineChart/lineChart';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
@@ -20,7 +21,6 @@ import {
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
-import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   listMockupDataCompany: any,
@@ -38,8 +38,8 @@ type Props = {
   handleChangeSearch: Function,
   paramsSearch: Object,
   activeTab: string,
-  id: string,
-  dataChart: Array,
+  // id: string,
+  // dataChart: Array,
   optionFilters: Array,
 };
 
@@ -57,9 +57,9 @@ const ItemContentTab = ({
   paramsSearch,
   activeTab,
   optionFilters,
-  id,
-  dataChart,
-}: Props) => {
+}: // id,
+// dataChart,
+Props) => {
   const history = useHistory();
 
   const dataLengthChart = [
@@ -110,12 +110,18 @@ const ItemContentTab = ({
         </div>
 
         <div className="group-char-right">
-          {/* {activeTab === id.toString() && (
-            <LineSeriesChart
-              width={1100}
-              height={450}
+          {/* {activeTab === id.toString() && dataChart && (
+            <LineChart
               dataChart={dataChart}
-              activeTab={activeTab}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
+              optionLine={{
+                line1: paramsSearch?.insolation,
+                line2: paramsSearch?.performance,
+                line3: paramsSearch?.generation,
+              }}
+              type="minute"
             />
           )} */}
         </div>

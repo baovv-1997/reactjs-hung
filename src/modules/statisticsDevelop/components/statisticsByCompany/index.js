@@ -4,6 +4,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import moment from 'moment';
 import Loading from 'commons/components/Loading';
 import { Tabs, Tab } from 'react-bootstrap';
+import { getListInverter } from 'modules/accounts/redux';
+
 import { useDispatch, useSelector } from 'react-redux';
 // import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
@@ -33,6 +35,7 @@ const OperationStatusPage = () => {
     cardInfo,
     totalRadiationRawData,
     radiationList,
+    dataChart,
   } = useSelector((state) => state.statisticsDevelop);
 
   const { listStatusCompanySelect } = useSelector(
@@ -47,7 +50,7 @@ const OperationStatusPage = () => {
   };
 
   const defaultSearch = {
-    company: comList && comList[1] && comList[1].id,
+    company: null,
     page: 1,
     classification: 'minute',
     startDate: null,
@@ -57,9 +60,9 @@ const OperationStatusPage = () => {
     mockupType: null,
     parkingLot: null,
     page2: 1,
-    insolation: false,
-    performance: false,
-    generation: false,
+    insolation: true,
+    performance: true,
+    generation: true,
     pagination: defaultOption,
     pagination2: defaultOption,
     inverter1: menuTab === '' ? null : [deviceList[1]],
@@ -88,6 +91,32 @@ const OperationStatusPage = () => {
     getListCompanyCallback();
   }, [getListCompanyCallback]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company: comList && comList[1] && comList[1].id,
+    });
+  }, []);
+
+  /**
+   * get Event List data
+   */
+  const getListInverterCallback = useCallback(
+    (params) => {
+      dispatch(getListInverter(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (paramsSearch?.company) {
+      getListInverterCallback({
+        per_page: 9999,
+        com_id: paramsSearch?.company,
+      });
+    }
+  }, [getListInverterCallback, paramsSearch?.company]);
+
   /**
    * get Device list
    */
@@ -99,7 +128,9 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getDevicesCallback({ com_id: paramsSearch?.company });
+    if (paramsSearch?.company) {
+      getDevicesCallback({ com_id: paramsSearch?.company });
+    }
   }, [getDevicesCallback, paramsSearch?.company]);
 
   /**
@@ -113,12 +144,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticsDevelopRawCallback({
-      inverter_id: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-      com_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      getStatisticsDevelopRawCallback({
+        inverter_id: menuTab,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+        com_id: paramsSearch?.company,
+      });
+    }
   }, [
     getStatisticsDevelopRawCallback,
     menuTab,
@@ -138,12 +171,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getRadiationRawCallback({
-      inverter_id: menuTab,
-      page: paramsSearch?.page2,
-      per_page: paramsSearch?.pagination2?.value,
-      com_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      getRadiationRawCallback({
+        inverter_id: menuTab,
+        page: paramsSearch?.page2,
+        per_page: paramsSearch?.pagination2?.value,
+        com_id: paramsSearch?.company,
+      });
+    }
   }, [
     getRadiationRawCallback,
     menuTab,
@@ -156,7 +191,7 @@ const OperationStatusPage = () => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
         });
         break;
@@ -275,9 +310,17 @@ const OperationStatusPage = () => {
     );
 
     if (eventKey === '') {
-      setParamsSearch({ ...defaultSearch, inverter1: null });
+      setParamsSearch({
+        ...defaultSearch,
+        inverter1: null,
+        company: paramsSearch?.company,
+      });
     }
-    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
+    setParamsSearch({
+      ...defaultSearch,
+      inverter1: inverter1Selected,
+      company: paramsSearch?.company,
+    });
   };
 
   /**
@@ -291,10 +334,12 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticDevelopChartDataCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getStatisticDevelopChartDataCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+      });
+    }
   }, [getStatisticDevelopChartDataCallback, paramsSearch?.company, menuTab]);
 
   /**
@@ -308,10 +353,12 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticDevelopCardCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getStatisticDevelopCardCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+      });
+    }
   }, [getStatisticDevelopCardCallback, paramsSearch?.company, menuTab]);
 
   let from;
@@ -347,12 +394,11 @@ const OperationStatusPage = () => {
     dispatch(
       getStatisticDevelopChartData({
         com_id: paramsSearch?.company,
-        ds_id: paramsSearch?.inverter?.id,
         from,
         to,
         type: paramsSearch?.classification,
-        inverter_ids: menuTab === '' ? paramsSearch?.inverter1?.id : menuTab,
-        compare_inverter_id: paramsSearch?.inverter?.id,
+        inverter_ids: paramsSearch?.inverter?.id,
+        compare_inverter_id: paramsSearch?.inverter1?.id,
       })
     );
   };
@@ -374,11 +420,7 @@ const OperationStatusPage = () => {
             <div className="h-100">
               <div className="h-100">
                 <Tabs
-                  defaultActiveKey={
-                    deviceList && deviceList.length > 1
-                      ? ''
-                      : deviceList && deviceList[0] && deviceList[0].id
-                  }
+                  defaultActiveKey=""
                   className="list-order tab-list"
                   onSelect={(eventKey) => onSelect(eventKey)}
                 >
@@ -462,6 +504,8 @@ const OperationStatusPage = () => {
                             from,
                             to,
                           }}
+                          id={dev?.id}
+                          chartData={dataChart}
                         />
                       </Tab>
                     ))}

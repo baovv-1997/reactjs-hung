@@ -15,15 +15,14 @@ import {
   getStatusGeneratorCard,
 } from 'modules/statusCompany/redux';
 
-import ItemContentTab from './ItemContentTab';
 import Loading from 'commons/components/Loading';
+import ItemContentTab from './ItemContentTab';
 
 const StatusByAreaCompany = () => {
   const dispatch = useDispatch();
   const [menuTab, setMenuTab] = useState('');
 
   const { comList, deviceList } = useSelector((state) => state?.commons);
-  const { companyId } = useSelector((state) => state?.main);
 
   const {
     totalRawData,
@@ -41,7 +40,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: companyId || (comList && comList[1] && comList[1].id),
+    company: null,
     mockupType: null,
     parkingLot: null,
     power: true,
@@ -63,6 +62,13 @@ const StatusByAreaCompany = () => {
     getListCompany();
   }, [getListCompany]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company: comList && comList[1] && comList[1].id,
+    });
+  }, [comList]);
+
   /**
    * get Device list
    */
@@ -74,7 +80,9 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getDevices({ com_id: paramsSearch?.company });
+    if (paramsSearch?.company) {
+      getDevices({ com_id: paramsSearch?.company });
+    }
   }, [getDevices, paramsSearch?.company]);
 
   /**
@@ -88,12 +96,14 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getRawData({
-      com_id: paramsSearch?.company,
-      inverter_id: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-    });
+    if (paramsSearch?.company) {
+      getRawData({
+        com_id: paramsSearch?.company,
+        inverter_id: menuTab,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+      });
+    }
   }, [
     getRawData,
     paramsSearch?.company,
@@ -113,10 +123,12 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getChartDataCallback({
-      com_id: paramsSearch?.company,
-      inverter_id: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getChartDataCallback({
+        com_id: paramsSearch?.company,
+        inverter_id: menuTab,
+      });
+    }
   }, [getChartDataCallback, paramsSearch?.company, menuTab]);
 
   /**
@@ -130,10 +142,12 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getStatusGeneratorCardInfo({
-      com_id: paramsSearch?.company,
-      inverter_id: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getStatusGeneratorCardInfo({
+        com_id: paramsSearch?.company,
+        inverter_id: menuTab,
+      });
+    }
   }, [getStatusGeneratorCardInfo, paramsSearch?.company, menuTab]);
 
   // getStatusGeneratorChartData
@@ -198,7 +212,7 @@ const StatusByAreaCompany = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch(defaultSearch);
+    setParamsSearch({ ...defaultSearch, company: paramsSearch?.company });
   };
 
   return (

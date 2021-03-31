@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
+import LineChart from 'commons/components/LineChart/lineChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatisticsCompany } from '../constant';
 import FilterSearch from '../FilterSearch';
@@ -30,6 +31,8 @@ type Props = {
   handleSubmitSearch: Function,
   activeTab: boolean,
   dateTime: Object,
+  chartData: any,
+  id: string,
 };
 
 const ItemContentTab = ({
@@ -44,6 +47,8 @@ const ItemContentTab = ({
   handleSubmitSearch,
   activeTab,
   dateTime,
+  chartData,
+  id,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -86,7 +91,24 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          <div className="group-char-right">
+            {activeTab === id.toString() && chartData && (
+              <LineChart
+                dataChart={chartData}
+                unitLine1="kWh"
+                unitLine2="W/㎡"
+                unitLine3="%"
+                optionLine={{
+                  line1: paramsSearch?.insolation,
+                  line2: paramsSearch?.performance,
+                  line3: paramsSearch?.generation,
+                }}
+                type="minute"
+              />
+            )}
+          </div>
+        </div>
       </div>
       <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
