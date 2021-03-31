@@ -64,6 +64,17 @@ export const LineChart = ({
 }: // unitLine4,
 // unitLine5,
 Props) => {
+  /**
+  days?: any;
+  hours?: any;
+  milliseconds?: any;
+  minutes?: any;
+  months?: any;
+  quarters?: any;
+  seconds?: any;
+  weeks?: any;
+  years?: any;
+  */
   const customizeText = (arg) => {
     const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
 
@@ -163,10 +174,14 @@ Props) => {
           <HorizontalLine visible />
         </Crosshair>
         <ArgumentAxis
-          defaultVisualRange={{
-            startValue: 0 || `${date} ${dateTime}:00:00`,
-            endValue: `${date} ${dateTime}:05:00`,
-          }}
+          defaultVisualRange={
+            type === 'second'
+              ? {
+                  startValue: `${date} ${dateTime}:00:00`,
+                  endValue: `${date} ${dateTime}:05:00`,
+                }
+              : null
+          }
           argumentType="datetime"
           aggregationInterval={type}
           tickInterval={type}

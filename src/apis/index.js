@@ -71,7 +71,7 @@ export const ROUTES = {
   API_TEST_MOCKUP_STATISTIC_OPERATION_RAM: `/data/test-mockup/statistic/generator/raw-measure`,
 
   // statistics develop
-  STATISTICS_DEVELOP_RAW: `/data/test-mockup/statistic/generator/raw-measure`,
+  STATISTICS_DEVELOP_RAW: `/data/solar-monitoring/statistic/generator/raw-measure`,
   STATISTICS_DEVELOP_CHART: `/data/solar-monitoring/statistic/generator/chart`,
   STATISTICS_DEVELOP_CARD: `/data/solar-monitoring/statistic/generator/cards`,
 
