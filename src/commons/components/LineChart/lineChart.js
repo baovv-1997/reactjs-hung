@@ -17,6 +17,7 @@ import {
   ArgumentAxis,
   LoadingIndicator,
   VerticalLine,
+  Format,
 } from 'devextreme-react/chart';
 import Loading from '../Loading/LoadingSmall';
 
@@ -32,7 +33,14 @@ type Props = {
   unitLine4: string,
   unitLine5: string,
   type: string,
-
+  typeLine?: string,
+  widthLine?: number,
+  showPoint1?: boolean,
+  showPoint2?: boolean,
+  showPoint3?: boolean,
+  showLabel1?: boolean,
+  showLabel2?: boolean,
+  showLabel3?: boolean,
   // unitLine4: string,
   // unitLine5: string,
 };
@@ -45,11 +53,18 @@ export const LineChart = ({
   unitLine1,
   unitLine2,
   unitLine3,
-
-  // unitLine4,
-  // unitLine5,
+  typeLine = 'spline',
+  widthLine = 3,
+  showPoint1 = false,
+  showPoint2 = false,
+  showPoint3 = false,
   type,
-}: Props) => {
+  showLabel1 = false,
+  showLabel2 = false,
+  showLabel3 = false,
+}: // unitLine4,
+// unitLine5,
+Props) => {
   const customizeText = (arg) => {
     const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
 
@@ -79,42 +94,53 @@ export const LineChart = ({
           <LoadingIndicator enabled />
           <CommonSeriesSettings
             endOnTick={false}
-            type="spline"
+            type={typeLine}
             argumentField="time"
           />
 
           {optionLine?.line1 && (
             <Series
               valueField="y1"
-              type="spline"
+              type={typeLine}
               axis="frequency1"
               color="#7c5caf"
-              width={4}
+              width={widthLine}
               name={unitLine1}
             >
-              <Point visible={false} />
+              <Point visible={showPoint1} size={10} />
+              <Label visible={showLabel1}>
+                <Format type="fixedPoint" precision={0} />
+              </Label>
             </Series>
           )}
           {optionLine?.line2 && (
             <Series
               valueField="y2"
-              type="spline"
+              type={typeLine}
               color="#bc5200"
               axis="frequency2"
-              width={4}
+              width={widthLine}
               name={unitLine2}
             >
-              <Point visible={false} />
+              <Point visible={showPoint2} size={10} />
+              <Label visible={showLabel2}>
+                <Format type="fixedPoint" precision={0} />
+              </Label>
             </Series>
           )}
           {optionLine?.line3 && (
             <Series
               valueField="y3"
-              type="spline"
+              type={typeLine}
               color="#ff7913"
-              width={4}
+              width={widthLine}
               name={unitLine3}
-            />
+            >
+              <Point visible={showPoint3} size={10} />
+              <Label visible={showLabel3}>
+                <Format type="fixedPoint" precision={0} />
+              </Label>
+            </Series>
           )}
           <ValueAxis
             title=""
@@ -133,7 +159,8 @@ export const LineChart = ({
               type="linear"
               pane="top"
               minorTickCount={20}
-              valueMarginsEnabled
+              autoBreaksEnabled
+              defaultVisualRange={{ startValue: 0, endValue: 100 }}
             />
           )}
           <Crosshair enabled color="#949494" width={3} dashStyle="dot">
@@ -176,5 +203,13 @@ export const LineChart = ({
 LineChart.defaultProps = {
   unitLeft: 'kWh',
   unitRight: 'W/㎡',
+  typeLine: 'spline',
+  widthLine: 3,
+  showPoint1: false,
+  showPoint2: false,
+  showPoint3: false,
+  showLabel1: false,
+  showLabel2: false,
+  showLabel3: false,
 };
 export default memo<Props>(LineChart);

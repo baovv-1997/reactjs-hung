@@ -77,15 +77,6 @@ const OperationStatusPage = ({ location }: Props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-        null,
-    });
-  }, [listInverterTest]);
-
-  useEffect(() => {
     dispatch(CommonAction.getListDevice());
   }, []);
 
@@ -109,7 +100,9 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
 
   // call api getDataTrend chart
@@ -121,9 +114,11 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    handleGetDataTrendChart({
-      inverter_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+      });
+    }
   }, [
     handleGetDataTrendChart,
     paramsSearch?.company,
@@ -140,11 +135,13 @@ const OperationStatusPage = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      inverter_id: paramsSearch?.company,
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        inverter_id: paramsSearch?.company,
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.company,
@@ -155,14 +152,16 @@ const OperationStatusPage = ({ location }: Props) => {
 
   // get event list when inverter, page, perpage have change
   useEffect(() => {
-    dispatch(
-      getEventList({
-        inverter_id: paramsSearch?.company || null,
-        per_page: paramsSearch?.pagination2?.value,
-        page: paramsSearch?.page2,
-        type: optionFilters,
-      })
-    );
+    if (paramsSearch?.company) {
+      dispatch(
+        getEventList({
+          inverter_id: paramsSearch?.company || null,
+          per_page: paramsSearch?.pagination2?.value,
+          page: paramsSearch?.page2,
+          type: optionFilters,
+        })
+      );
+    }
   }, [
     paramsSearch?.pagination2,
     paramsSearch?.page2,

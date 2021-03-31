@@ -311,7 +311,9 @@ button.h-32 {
 
   .unit-right {
     position: relative;
-    top: pxToRem(-12);
+    top: pxToRem(5);
+    margin-left: 0;
+    right: pxToRem(30);
   }
 }
 

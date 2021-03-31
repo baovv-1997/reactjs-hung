@@ -19,11 +19,11 @@ import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 import moment from 'moment';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import { LineChart } from 'commons/components/LineChart/lineChart';
 
 type Props = {
   listMockupDataCompany: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   totalPage: number,
@@ -42,7 +42,6 @@ type Props = {
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
   totalPage,
@@ -87,7 +86,27 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
+        <div className="group-char-right">
+          <LineChart
+            dataChart={dataChartOperation}
+            unitLine1="V"
+            unitLine2="A"
+            unitLine3="kW"
+            optionLine={{
+              line1: paramsSearch?.ACVoltage,
+              line2: paramsSearch?.ACCurrent,
+              line3: paramsSearch?.ACPower,
+            }}
+            type="minute"
+            typeLine="line"
+            widthLine={2}
+            unitLeft="V"
+            unitRight="A"
+            showPoint1
+            showPoint2
+            showPoint3
+          />
+        </div>
       </div>
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload

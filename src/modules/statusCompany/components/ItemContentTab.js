@@ -83,6 +83,7 @@ const ItemContentTab = ({
                 line2: paramsSearch?.insolation,
                 line3: paramsSearch?.performance,
               }}
+              showPoint3
               type="minute"
             />
           )}
