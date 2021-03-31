@@ -1,6 +1,5 @@
 // @flow
 import React, { memo } from 'react';
-import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
@@ -21,6 +20,7 @@ import {
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   listMockupDataCompany: any,
@@ -161,17 +161,10 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => {}}>
-            <a
-              href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
-                `operator/status/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Raw Date 다운
-            </a>
-          </Button>
+          <ButtonDownExcel
+            linkDownTable={`operator/status/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`}
+            keyName="solar"
+          />
         </div>
       </div>
       <Table

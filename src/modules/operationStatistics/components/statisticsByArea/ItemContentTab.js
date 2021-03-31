@@ -106,7 +106,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`operator/statistic/?inverter_id=${tabActive}&pos_id=${paramsSearch?.posSelected}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
+        linkDownTable={`operator/statistic/?inverter_id=${tabActive}&pos_id=${paramsSearch?.posSelected}&time_to=${dateTime?.to}&time_from=${dateTime?.from}&type=${paramsSearch?.classification}`}
       />
       <div>
         <Table

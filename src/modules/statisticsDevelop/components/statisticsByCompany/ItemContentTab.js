@@ -1,12 +1,10 @@
 // @flow
 import React, { memo } from 'react';
-import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import {
   headStatisticsCompany,
@@ -16,6 +14,7 @@ import FilterSearch from '../FilterSearch';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   rawData: any,
@@ -108,7 +107,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`}
+        linkDownTable={`generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}&type=${paramsSearch?.classification}`}
       />
       <div>
         <Table
@@ -143,17 +142,10 @@ const ItemContentTab = ({
           option={paramsSearch?.pagination2 || null}
           noOptionsMessage={() => '옵션 없음'}
         />
-        <Button onClick={() => {}}>
-          <a
-            href={`${ROUTES.API_DOWN_EXCEL_SOLAR_MONITORING(
-              `generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Raw Date 다운
-          </a>
-        </Button>
+        <ButtonDownExcel
+          linkDownTable={`generator/statistic?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}&type=${paramsSearch?.classification}`}
+          keyName="solar"
+        />
       </div>
       <Table
         tableHeads={headStatisticsOfModuleCompany}
