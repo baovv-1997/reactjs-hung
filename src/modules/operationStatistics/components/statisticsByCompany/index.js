@@ -16,14 +16,14 @@ import { listMockupType, listParkingLot } from 'mockData/listCompany';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import { getListInverter } from 'modules/accounts/redux';
+// import { getListInverter } from 'modules/accounts/redux';
+import Loading from 'commons/components/Loading';
 import ItemContentTab from './ItemContentTab';
 import {
   getStatisticOperatorRawData,
   getStatisticOperatorCard,
   getStatisticOperatorChartData,
 } from '../../redux';
-import Loading from 'commons/components/Loading';
 
 type Props = {
   location: {
@@ -47,7 +47,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   const { rawData, totalRawData, cardInfo, isProcessing } = useSelector(
     (state) => state.operationStatistics
   );
-  const { listInverter } = useSelector((state) => state?.account);
+  // const { listInverter } = useSelector((state) => state?.account);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -56,7 +56,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
 
   const defaultSearch = {
     page: 1,
-    company: comList && comList[1] && comList[1].id,
+    company: null,
     mockupType: null,
     parkingLot: null,
     page2: 1,
@@ -108,7 +108,16 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getDevicesCallback({ com_id: paramsSearch?.company });
+    setParamsSearch({
+      ...paramsSearch,
+      company: comList && comList[1] && comList[1].id,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (paramsSearch?.company) {
+      getDevicesCallback({ com_id: paramsSearch?.company });
+    }
   }, [getDevicesCallback, paramsSearch?.company]);
 
   /**
@@ -122,12 +131,14 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getStatisticOperatorRawDataCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-    });
+    if (paramsSearch?.company) {
+      getStatisticOperatorRawDataCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+      });
+    }
   }, [
     getStatisticOperatorRawDataCallback,
     paramsSearch?.company,
@@ -147,10 +158,13 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getCardInfoCallback({
-      inverter_ids: menuTab,
-    });
-  }, [getCardInfoCallback, menuTab]);
+    if (paramsSearch?.company) {
+      getCardInfoCallback({
+        inverter_ids: menuTab,
+        com_id: paramsSearch?.company,
+      });
+    }
+  }, [getCardInfoCallback, menuTab, paramsSearch?.company]);
 
   /**
    * get Event List data
@@ -163,13 +177,15 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getEventListCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-      page: paramsSearch?.page2,
-      per_page: paramsSearch?.pagination2?.value,
-      type: optionFilters,
-    });
+    if (paramsSearch?.company) {
+      getEventListCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+        page: paramsSearch?.page2,
+        per_page: paramsSearch?.pagination2?.value,
+        type: optionFilters,
+      });
+    }
   }, [
     menuTab,
     paramsSearch?.company,
@@ -179,22 +195,22 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     optionFilters,
   ]);
 
-  /**
-   * get Event List data
-   */
-  const getListInverterCallback = useCallback(
-    (params) => {
-      dispatch(getListInverter(params));
-    },
-    [dispatch]
-  );
+  // /**
+  //  * get Event List data
+  //  */
+  // const getListInverterCallback = useCallback(
+  //   (params) => {
+  //     dispatch(getListInverter(params));
+  //   },
+  //   [dispatch]
+  // );
 
-  useEffect(() => {
-    getListInverterCallback({
-      com_id: paramsSearch?.vendorCompany?.id,
-      per_page: 9999,
-    });
-  }, [paramsSearch?.vendorCompany, getListInverterCallback]);
+  // useEffect(() => {
+  //   getListInverterCallback({
+  //     per_page: 9999,
+  //     com_id: paramsSearch?.company,
+  //   });
+  // }, [getListInverterCallback, paramsSearch?.company]);
 
   /**
    * get Event List data
@@ -207,17 +223,19 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    getStatisticOperatorChartDataCallback({
-      com_id: paramsSearch?.company,
-      inverter_ids: menuTab,
-    });
+    if (paramsSearch?.company) {
+      getStatisticOperatorChartDataCallback({
+        com_id: paramsSearch?.company,
+        inverter_ids: menuTab,
+      });
+    }
   }, [getStatisticOperatorChartDataCallback, paramsSearch?.company, menuTab]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
         });
         break;
@@ -353,9 +371,17 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     );
 
     if (eventKey === '') {
-      setParamsSearch({ ...defaultSearch, inverter1: null });
+      setParamsSearch({
+        ...defaultSearch,
+        inverter1: null,
+        company: paramsSearch?.company,
+      });
     }
-    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
+    setParamsSearch({
+      ...defaultSearch,
+      inverter1: inverter1Selected,
+      company: paramsSearch?.company,
+    });
   };
 
   let from;
@@ -391,11 +417,11 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     dispatch(
       getStatisticOperatorChartData({
         com_id: paramsSearch?.company,
-        ds_id: paramsSearch?.inverter?.id,
+        inverter_ids: paramsSearch?.inverter1?.id,
         from,
         to,
         type: paramsSearch?.classification,
-        inverter_ids: paramsSearch?.inverter1?.id,
+        compare_inverter_id: paramsSearch?.inverter?.id,
       })
     );
   };
@@ -416,11 +442,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={
-                  deviceList && deviceList.length > 1
-                    ? ''
-                    : deviceList && deviceList[0] && deviceList[0].id
-                }
+                defaultActiveKey=""
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
@@ -488,11 +510,11 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                         }
                         isShowModalSorting={isShowModalSorting}
                         paramsSearch={paramsSearch}
-                        listInverter={listInverter}
+                        listInverter={deviceList.slice(1)}
                         handleClickDetail={handleClickDetail}
                         handleChangeSearch={handleChangeSearch}
                         optionFilters={optionFilters}
-                        listStatusCompanySelect={listInverter}
+                        listStatusCompanySelect={deviceList.slice(1)}
                         handleSubmitSearch={handleSubmitSearch}
                         tabActive={menuTab}
                         dateTime={{

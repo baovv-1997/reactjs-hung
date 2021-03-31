@@ -257,7 +257,7 @@ button.h-32 {
 
 .group-char-right {
   width: 100%;
-  padding: pxToRem(20) pxToRem(50);
+  margin: pxToRem(20) pxToRem(50);
 
   #chart {
     height: pxToRem(360) !important;
@@ -291,10 +291,10 @@ button.h-32 {
 
 .unit-chart {
   position: absolute;
-  bottom: pxToRem(50);
+  bottom: pxToRem(24);
   display: flex;
   justify-content: space-between;
-  width: 93%;
+  width: 100%;
 
   .unit-left,
   .unit-right {
@@ -307,13 +307,18 @@ button.h-32 {
     text-align: left;
     color: $bg-button;
     margin-left: pxToRem(8);
+    position: absolute;
+    bottom: 0;
+  }
+
+  .unit-left {
+    left: pxToRem(10);
   }
 
   .unit-right {
-    position: relative;
-    top: pxToRem(5);
+    bottom: pxToRem(7);
     margin-left: 0;
-    right: pxToRem(30);
+    right: 0;
   }
 }
 

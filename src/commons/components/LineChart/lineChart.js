@@ -19,7 +19,6 @@ import {
   VerticalLine,
   Format,
 } from 'devextreme-react/chart';
-import addYears from 'date-fns/addYears/index';
 
 type Props = {
   dataChart: any,
@@ -97,7 +96,7 @@ Props) => {
       text,
     };
   };
-
+  console.log('dataChart', dataChart);
   return (
     <>
       <Chart id="chart" dataSource={dataChart} palette="Harmony Light">
@@ -159,20 +158,21 @@ Props) => {
           name="frequency1"
           position="left"
           showZero
+          visible={optionLine?.line1}
         />
-        {optionLine?.line2 && (
-          <ValueAxis
-            name="frequency2"
-            tickInterval={20}
-            showZero
-            position="right"
-            type="linear"
-            pane="top"
-            minorTickCount={20}
-            autoBreaksEnabled
-            defaultVisualRange={{ startValue: 0, endValue: 100 }}
-          />
-        )}
+
+        <ValueAxis
+          name="frequency2"
+          tickInterval={20}
+          showZero
+          position="right"
+          type="linear"
+          pane="top"
+          minorTickCount={20}
+          // autoBreaksEnabled
+          visible={optionLine?.line2}
+          defaultVisualRange={{ startValue: 0, endValue: 100 }}
+        />
         <Crosshair enabled color="#949494" width={3} dashStyle="dot">
           <Label visible backgroundColor="#000000" />
           <VerticalLine visible />
@@ -206,7 +206,7 @@ Props) => {
 
       {dataChart && (
         <div className="unit-chart">
-          {optionLine?.line2 && <div className="unit-left">{unitLeft}</div>}
+          {optionLine?.line1 && <div className="unit-left">{unitLeft}</div>}
           {optionLine?.line2 && <div className="unit-right">{unitRight}</div>}
         </div>
       )}

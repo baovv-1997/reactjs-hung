@@ -6,10 +6,10 @@ import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TitleHeader from 'commons/components/TitleHeader';
-import { getPosList, getListDevice, getCompanyList } from 'commons/redux';
+import { getPosList, getCompanyList } from 'commons/redux';
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
-import { getListInverter } from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import Loading from 'commons/components/Loading';
 import {
   getStatisticOperatorRawData,
   getStatisticOperatorCard,
@@ -17,15 +17,11 @@ import {
 } from '../../redux';
 
 import ItemContentTab from './ItemContentTab';
-import Loading from 'commons/components/Loading';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { listInverter } = useSelector((state) => state?.account);
-  const { posList, deviceList, comList } = useSelector(
-    (state) => state.commons
-  );
+  const { posList, comList } = useSelector((state) => state.commons);
   const { rawData, totalRawData, cardInfo, isProcessing } = useSelector(
     (state) => state.operationStatistics
   );
@@ -38,7 +34,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    posSelected: posList && posList[1] && posList[1].id,
+    posSelected: null,
     mockupType: null,
     parkingLot: null,
     PVVoltage: false,
@@ -52,7 +48,7 @@ const OperationStatusPage = () => {
     endDate: null,
     vendorCompany: null,
     inverter: null,
-    inverter1: menuTab === '' ? null : [deviceList[1]],
+    inverter1: menuTab === '' ? null : [comList[1]],
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -76,6 +72,13 @@ const OperationStatusPage = () => {
     getPosListCallback();
   }, [getPosListCallback]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      posSelected: posList && posList[1] && posList[1].id,
+    });
+  }, []);
+
   /**
    * get card info data
    */
@@ -87,61 +90,29 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getCardInfoCallback({
-      inverter_ids: menuTab,
-    });
-  }, [getCardInfoCallback, menuTab]);
-
-  // call api get list all video
-  const getDataListStatusCompany = useCallback(() => {
-    //  Call api
-  }, [paramsSearch, dispatch]);
-
-  useEffect(() => {
-    getDataListStatusCompany();
-  }, [getDataListStatusCompany]);
+    if (paramsSearch?.posSelected) {
+      getCardInfoCallback({
+        com_id: menuTab,
+        pos_id: paramsSearch?.posSelected,
+      });
+    }
+  }, [getCardInfoCallback, menuTab, paramsSearch?.posSelected]);
 
   /**
    * get Device list
    */
-  const getDevicesCallback = useCallback(
+  const getCompanyListCallback = useCallback(
     (params) => {
-      dispatch(getListDevice(params));
+      dispatch(getCompanyList(params));
     },
     [dispatch]
   );
 
   useEffect(() => {
-    getDevicesCallback({ pos_id: paramsSearch?.posSelected });
-  }, [getDevicesCallback, paramsSearch?.posSelected]);
-
-  /**
-   * get company list
-   */
-  const getListCompanyCallback = useCallback(() => {
-    dispatch(getCompanyList());
-  }, [dispatch]);
-
-  useEffect(() => {
-    getListCompanyCallback();
-  }, [getListCompanyCallback]);
-
-  /**
-   * get Event List data
-   */
-  const getListInverterCallback = useCallback(
-    (params) => {
-      dispatch(getListInverter(params));
-    },
-    [dispatch]
-  );
-
-  useEffect(() => {
-    getListInverterCallback({
-      com_id: paramsSearch?.vendorCompany?.id,
-      per_page: 9999,
-    });
-  }, [paramsSearch?.vendorCompany, getListInverterCallback]);
+    if (paramsSearch?.posSelected) {
+      getCompanyListCallback({ pos_id: paramsSearch?.posSelected });
+    }
+  }, [getCompanyListCallback, paramsSearch?.posSelected]);
 
   /**
    * get raw data list
@@ -154,12 +125,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getStatisticOperatorRawDataCallback({
-      pos_id: paramsSearch?.posSelected,
-      inverter_ids: menuTab,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-    });
+    if (paramsSearch?.posSelected) {
+      getStatisticOperatorRawDataCallback({
+        pos_id: paramsSearch?.posSelected,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+        com_id: menuTab,
+      });
+    }
   }, [
     getStatisticOperatorRawDataCallback,
     paramsSearch?.posSelected,
@@ -168,11 +141,34 @@ const OperationStatusPage = () => {
     paramsSearch?.page,
   ]);
 
+  /**
+   * get List data
+   */
+  const getStatisticOperatorChartDataCallback = useCallback(
+    (params) => {
+      dispatch(getStatisticOperatorChartData(params));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (paramsSearch?.posSelected) {
+      getStatisticOperatorChartDataCallback({
+        pos_id: paramsSearch?.posSelected,
+        com_id: menuTab,
+      });
+    }
+  }, [
+    getStatisticOperatorChartDataCallback,
+    paramsSearch?.posSelected,
+    menuTab,
+  ]);
+
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
         });
         break;
@@ -276,14 +272,22 @@ const OperationStatusPage = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    const inverter1Selected = deviceList.find(
+    const inverter1Selected = comList.find(
       (item) => item.id === parseInt(eventKey, 10)
     );
 
     if (eventKey === '') {
-      setParamsSearch({ ...defaultSearch, inverter1: null });
+      setParamsSearch({
+        ...defaultSearch,
+        inverter1: null,
+        posSelected: paramsSearch?.posSelected,
+      });
     }
-    setParamsSearch({ ...defaultSearch, inverter1: inverter1Selected });
+    setParamsSearch({
+      ...defaultSearch,
+      inverter1: inverter1Selected,
+      posSelected: paramsSearch?.posSelected,
+    });
   };
 
   let from;
@@ -320,12 +324,11 @@ const OperationStatusPage = () => {
     dispatch(
       getStatisticOperatorChartData({
         pos_id: paramsSearch?.posSelected,
-        ds_id: paramsSearch?.inverter?.id,
+        com_id: paramsSearch?.inverter1?.id,
         from,
         to,
         type: paramsSearch?.classification,
-        inverter_ids: menuTab === '' ? paramsSearch?.inverter1?.id : menuTab,
-        compare_inverter_id: paramsSearch?.inverter?.id,
+        com_compare_id: paramsSearch?.inverter?.id,
       })
     );
   };
@@ -346,22 +349,18 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={
-                  deviceList && deviceList.length > 1
-                    ? ''
-                    : deviceList && deviceList[0] && deviceList[0].id
-                }
+                defaultActiveKey=""
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                {deviceList &&
-                  deviceList.map((dev) => (
+                {comList &&
+                  comList.map((com) => (
                     <Tab
-                      eventKey={dev.id}
+                      eventKey={com.id}
                       title={
                         <div className="tab-name">
-                          {dev?.label}
-                          {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                          {com?.label}
+                          {com?.label !== '전체' && <span>{com?.id}</span>}
                         </div>
                       }
                     >
@@ -374,7 +373,7 @@ const OperationStatusPage = () => {
                               `${
                                 totalRawData -
                                 (paramsSearch?.page - 1) *
-                                  paramsSearch.pagination.value -
+                                  paramsSearch?.pagination?.value -
                                 index
                               }` || '',
                             dateTime: moment(raw.dm_datetime).format(
@@ -396,7 +395,7 @@ const OperationStatusPage = () => {
                           }))
                         }
                         dataContent={{}}
-                        listInverter={listInverter}
+                        listInverter={comList.slice(1)}
                         paramsSearch={paramsSearch}
                         handleChangeSearch={handleChangeSearch}
                         listStatusCompanySelect={comList.slice(1)}

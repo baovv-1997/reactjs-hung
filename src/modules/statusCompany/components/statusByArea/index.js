@@ -15,8 +15,8 @@ import {
   getStatusGeneratorCard,
 } from 'modules/statusCompany/redux';
 
-import ItemContentTab from './ItemContentTab';
 import Loading from 'commons/components/Loading';
+import ItemContentTab from './ItemContentTab';
 
 const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
@@ -39,7 +39,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    posSelected: posList && posList[1] && posList[1].id,
+    posSelected: null,
     power: true,
     performance: true,
     insolation: true,
@@ -60,6 +60,12 @@ const StatusByAreaCompany = () => {
     getPosListCallback();
   }, [getPosListCallback]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      posSelected: posList && posList[1] && posList[1].id,
+    });
+  }, []);
   /**
    * get company list list
    */
@@ -71,9 +77,11 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getCompanyListCallback({
-      pos_id: paramsSearch?.posSelected,
-    });
+    if (paramsSearch?.posSelected) {
+      getCompanyListCallback({
+        pos_id: paramsSearch?.posSelected,
+      });
+    }
   }, [getCompanyListCallback, paramsSearch?.posSelected]);
 
   /**
@@ -87,12 +95,16 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getRawDataCallback({
-      com_id: menuTab,
-      pos_id: paramsSearch?.posSelected,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-    });
+    console.log('paramsSearch?.posSelected', paramsSearch?.posSelected);
+    if (paramsSearch?.posSelected) {
+      console.log('run....');
+      getRawDataCallback({
+        com_id: menuTab,
+        pos_id: paramsSearch?.posSelected,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+      });
+    }
   }, [
     getRawDataCallback,
     paramsSearch?.posSelected,
@@ -112,10 +124,12 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getStatusGeneratorCardInfo({
-      pos_id: paramsSearch?.posSelected,
-      com_id: menuTab,
-    });
+    if (paramsSearch?.posSelected) {
+      getStatusGeneratorCardInfo({
+        pos_id: paramsSearch?.posSelected,
+        com_id: menuTab,
+      });
+    }
   }, [getStatusGeneratorCardInfo, paramsSearch?.posSelected, menuTab]);
 
   /**
@@ -129,10 +143,12 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    getChartDataCallback({
-      pos_id: paramsSearch?.posSelected,
-      com_id: menuTab,
-    });
+    if (paramsSearch?.posSelected) {
+      getChartDataCallback({
+        pos_id: paramsSearch?.posSelected,
+        com_id: menuTab,
+      });
+    }
   }, [getChartDataCallback, paramsSearch?.posSelected, menuTab]);
 
   const handleChangeSearch = (item, name) => {
@@ -182,9 +198,12 @@ const StatusByAreaCompany = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch({ ...defaultSearch });
+    setParamsSearch({
+      ...defaultSearch,
+      posSelected: paramsSearch?.posSelected,
+    });
   };
-
+  console.log('paramSearch', paramsSearch);
   return (
     <>
       {isProcessing && <Loading />}

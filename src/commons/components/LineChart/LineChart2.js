@@ -70,7 +70,7 @@ export const LineChart = ({
   showPoint4 = false,
   showPoint5 = false,
 
-  type = 'second',
+  type = 'seconds',
 
   showLabel1 = false,
   showLabel2 = false,
@@ -152,6 +152,7 @@ export const LineChart = ({
             valueField="y3"
             type={typeLine}
             color="#ff7913"
+            axis="frequency2"
             width={widthLine}
             name={unitLine3}
           >
@@ -161,6 +162,36 @@ export const LineChart = ({
             </Label>
           </Series>
         )}
+
+        {optionLine?.line4 && (
+          <Series
+            valueField="y4"
+            type={typeLine}
+            color="#ffcc00"
+            width={widthLine}
+            name={unitLine4}
+          >
+            <Point visible={showPoint4} size={10} />
+            <Label visible={showLabel4}>
+              <Format type="fixedPoint" precision={0} />
+            </Label>
+          </Series>
+        )}
+        {optionLine?.line5 && (
+          <Series
+            valueField="y5"
+            type={typeLine}
+            color="#102a82"
+            width={widthLine}
+            name={unitLine5}
+          >
+            <Point visible={showPoint5} size={10} />
+            <Label visible={showLabel5}>
+              <Format type="fixedPoint" precision={0} />
+            </Label>
+          </Series>
+        )}
+
         <ValueAxis
           title=""
           type="linear"
@@ -168,20 +199,32 @@ export const LineChart = ({
           name="frequency1"
           position="left"
           showZero
+          visible={optionLine?.line1 || optionLine?.line5}
         />
-        {optionLine?.line2 && (
-          <ValueAxis
-            name="frequency2"
-            tickInterval={20}
-            showZero
-            position="right"
-            type="linear"
-            pane="top"
-            minorTickCount={20}
-            autoBreaksEnabled
-            defaultVisualRange={{ startValue: 0, endValue: 100 }}
-          />
-        )}
+
+        <ValueAxis
+          name="frequency2"
+          tickInterval={20}
+          showZero
+          position="right"
+          type="linear"
+          pane="top"
+          visible={optionLine?.line2 || optionLine?.line3}
+          minorTickCount={20}
+          // defaultVisualRange={{ startValue: 0, endValue: 100 }}
+        />
+
+        <ValueAxis
+          name="frequency3"
+          tickInterval={20}
+          showZero
+          position="right"
+          type="linear"
+          pane="top"
+          minorTickCount={20}
+          autoBreaksEnabled
+          visible={true}
+        />
         <Crosshair enabled color="#949494" width={3} dashStyle="dot">
           <Label visible backgroundColor="#000000" />
           <VerticalLine visible />
@@ -189,7 +232,7 @@ export const LineChart = ({
         </Crosshair>
         <ArgumentAxis
           defaultVisualRange={
-            type === 'second'
+            type === 'seconds'
               ? {
                   startValue: `${date} ${dateTime}:00:00`,
                   endValue: `${date} ${dateTime}:05:00`,
@@ -207,11 +250,14 @@ export const LineChart = ({
         <Legend visible={false} />
         <ZoomAndPan argumentAxis="both" />
       </Chart>
-
       {dataChart && (
         <div className="unit-chart">
-          {optionLine?.line2 && <div className="unit-left">{unitLeft}</div>}
-          {optionLine?.line2 && <div className="unit-right">{unitRight}</div>}
+          {(optionLine?.line1 || optionLine?.line5) && (
+            <div className="unit-left">{unitLeft}</div>
+          )}
+          {(optionLine?.line2 || optionLine?.line3) && (
+            <div className="unit-right">{unitRight}</div>
+          )}
         </div>
       )}
     </>
@@ -232,6 +278,6 @@ LineChart.defaultProps = {
   showLabel3: false,
   showLabel4: false,
   showLabel5: false,
-  type: 'second',
+  type: 'seconds',
 };
 export default memo<Props>(LineChart);

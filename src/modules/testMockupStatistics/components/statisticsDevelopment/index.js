@@ -243,8 +243,8 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
-          from: null,
-          to: null,
+          from: new Date(),
+          to: new Date(),
         });
         break;
       case 'pagination':

@@ -39,16 +39,16 @@ const OperationStatusPage = () => {
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
     page2: 1,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    PVVoltage: true,
+    PVCurrent: true,
+    outputVoltage: true,
+    outputCurrent: true,
+    print: true,
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
-    startDate: null,
-    endDate: null,
+    startDate: new Date(),
+    endDate: new Date(),
     isSubmitSearch: false,
   };
 
@@ -265,8 +265,8 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
-          startDate: null,
-          endDate: null,
+          startDate: new Date(),
+          endDate: new Date(),
         });
         break;
       case 'startDate':
