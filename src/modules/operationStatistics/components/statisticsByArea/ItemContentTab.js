@@ -33,6 +33,7 @@ type Props = {
   dateTime: Object,
   handleSubmitSearch: Function,
   chartData: any,
+  id: string,
 };
 
 const ItemContentTab = ({
@@ -48,6 +49,7 @@ const ItemContentTab = ({
   dateTime,
   handleSubmitSearch,
   chartData,
+  id,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -104,28 +106,30 @@ const ItemContentTab = ({
           </div>
         </div>
         <div className="group-char-right">
-          <LineChart2
-            dataChart={chartData}
-            unitLine1="V"
-            unitLine2="A"
-            unitLine3="A"
-            unitLine4="kW"
-            unitLine5="V"
-            optionLine={{
-              line1: paramsSearch?.PVVoltage,
-              line2: paramsSearch?.PVCurrent,
-              line3: paramsSearch?.outputVoltage,
-              line4: paramsSearch?.outputCurrent,
-              line5: paramsSearch?.print,
-            }}
-            typeLine="line"
-            widthLine={2}
-            unitLeft="V"
-            unitRight="A"
-            showPoint1
-            showPoint2
-            showPoint3
-          />
+          {tabActive === id.toString() && chartData && (
+            <LineChart2
+              dataChart={chartData}
+              unitLine1="V"
+              unitLine2="A"
+              unitLine3="A"
+              unitLine4="kW"
+              unitLine5="V"
+              optionLine={{
+                line1: paramsSearch?.PVVoltage,
+                line2: paramsSearch?.PVCurrent,
+                line3: paramsSearch?.outputVoltage,
+                line4: paramsSearch?.outputCurrent,
+                line5: paramsSearch?.print,
+              }}
+              typeLine="line"
+              widthLine={2}
+              unitLeft="V"
+              unitRight="A"
+              showPoint1
+              showPoint2
+              showPoint3
+            />
+          )}
         </div>
       </div>
 

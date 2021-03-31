@@ -526,6 +526,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                           to,
                         }}
                         chartData={chartData}
+                        id={dev.id}
                       />
                     </Tab>
                   ))}
