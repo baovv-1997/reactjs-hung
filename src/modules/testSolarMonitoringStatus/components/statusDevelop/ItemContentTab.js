@@ -68,7 +68,7 @@ const ItemContentTab = ({
           {/* <LineSeriesChart width={1200} height={400} dataChart={dataChart} /> */}
         </div>
       </div>
-      <TitleSubHeader title="발전 현황" />
+      <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
         linkDownTable={`generator/statistic?com_id=${paramsSearch?.company}`}
         paramsSearch={paramsSearch}

@@ -6,10 +6,14 @@ import TotalPowerItem from './TotalPowerItem';
 type Props = {
   amountElectricDay?: number,
   amountElectricMonth?: number,
-  cumulativeElectric?: number
+  cumulativeElectric?: number,
 };
 
-export const TotalPower = ({ amountElectricDay = 0, amountElectricMonth = 0, cumulativeElectric = 0, }: Props) => {
+export const TotalPower = ({
+  amountElectricDay = 0,
+  amountElectricMonth = 0,
+  cumulativeElectric = 0,
+}: Props) => {
   return (
     <div className="total-power main-card">
       <div className="total-power__header main-card__header">
@@ -17,22 +21,22 @@ export const TotalPower = ({ amountElectricDay = 0, amountElectricMonth = 0, cum
         <div className="total-power__unit main-card__unit">kWh</div>
       </div>
 
-      <div className="total-power__body main-card__body">
+      <div className="total-power__body ">
         <TotalPowerItem
           icon={images.icon_day}
-          name='금일 발전량'
+          name="금일 발전량"
           value={amountElectricDay}
           customClass="bg-color-day"
         />
         <TotalPowerItem
           icon={images.icon_month}
-          name='금월 발전량'
+          name="금월 발전량"
           value={amountElectricMonth}
           customClass="bg-color-month"
         />
         <TotalPowerItem
           icon={images.icon_plus}
-          name='누적 발전량'
+          name="누적 발전량"
           value={cumulativeElectric}
           customClass="bg-color-plus"
         />
@@ -45,6 +49,6 @@ TotalPower.defaultProps = {
   amountElectricDay: 0,
   amountElectricMonth: 0,
   cumulativeElectric: 0,
-}
+};
 
-export default memo < Props > (TotalPower);
+export default memo<Props>(TotalPower);

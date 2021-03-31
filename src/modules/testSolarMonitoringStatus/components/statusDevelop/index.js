@@ -50,7 +50,7 @@ const StatusByAreaCompany = () => {
     type: 'power',
     data: [
       {
-        title: '일일 평균 1시간 발전량',
+        title: '실시간 발전량',
         value:
           (dataBox &&
             dataBox?.avg_prod &&
@@ -58,7 +58,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '일일발전량 달성율',
+        title: '실시간 성능비',
         value:
           (dataBox &&
             dataBox?.prod_ratio &&
