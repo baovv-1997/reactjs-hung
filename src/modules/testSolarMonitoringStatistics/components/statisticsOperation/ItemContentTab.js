@@ -17,6 +17,8 @@ import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import LineChart2 from 'commons/components/LineChart/LineChart2';
+import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 
 type Props = {
   listMockupDataCompany: any,
@@ -54,30 +56,31 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: 'PV전압',
+      name: 'PV전압(V)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: 'PV전류',
+      name: 'PV전류(A)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '출력전류',
+      name: '출력전류(A)',
       color: '#fe8224',
     },
     {
       id: 4,
-      name: '출력',
+      name: '출력(kW)',
       color: '#ffcc00',
     },
     {
       id: 5,
-      name: '출력전압',
+      name: '출력전압(V)',
       color: '#102a82',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup
@@ -100,7 +103,31 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          <LineChart2
+            dataChart={dataChartOperation}
+            unitLine1="V"
+            unitLine2="A"
+            unitLine3="A"
+            unitLine4="kW"
+            unitLine5="V"
+            optionLine={{
+              line1: paramsSearch?.PVVoltage,
+              line2: paramsSearch?.PVCurrent,
+              line3: paramsSearch?.outputVoltage,
+              line4: paramsSearch?.outputCurrent,
+              line5: paramsSearch?.print,
+            }}
+            typeLine="line"
+            widthLine={2}
+            unitLeft="V"
+            unitRight="A"
+            showPoint1
+            showPoint2
+            showPoint3
+            type={CONTRACT_FORMAT_TIME_CHART[paramsSearch?.classification]}
+          />
+        </div>
       </div>
 
       <TitleSubHeader title="실시간 계측정보 통계" />

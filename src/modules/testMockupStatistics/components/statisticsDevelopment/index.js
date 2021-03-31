@@ -36,8 +36,8 @@ const OperationStatusPage = () => {
     page: 1,
     page2: 1,
     classification: 'minute',
-    startDate: null,
-    endDate: null,
+    startDate: new Date(),
+    endDate: new Date(),
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
@@ -229,8 +229,8 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
-          startDate: null,
-          endDate: null,
+          startDate: new Date(),
+          endDate: new Date(),
         });
         break;
       case 'pagination':

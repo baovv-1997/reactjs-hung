@@ -51,10 +51,8 @@ const OperationStatusPage = () => {
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
-    startDate: null,
-    endDate: null,
-    vendorCompany: null,
-    inverter: null,
+    startDate: new Date(),
+    endDate: new Date(),
     isSubmitSearch: false,
   };
 
@@ -267,8 +265,8 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
-          startDate: null,
-          endDate: null,
+          startDate: new Date(),
+          endDate: new Date(),
         });
         break;
       case 'startDate':
