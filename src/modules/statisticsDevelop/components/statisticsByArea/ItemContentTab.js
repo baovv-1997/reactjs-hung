@@ -92,22 +92,20 @@ const ItemContentTab = ({
           </div>
         </div>
         <div className="group-char-right">
-          <div className="group-char-right">
-            {activeTab === id.toString() && chartData && (
-              <LineChart
-                dataChart={chartData}
-                unitLine1="kWh"
-                unitLine2="W/㎡"
-                unitLine3="%"
-                optionLine={{
-                  line1: paramsSearch?.insolation,
-                  line2: paramsSearch?.performance,
-                  line3: paramsSearch?.generation,
-                }}
-                type="minute"
-              />
-            )}
-          </div>
+          {activeTab === id.toString() && chartData && (
+            <LineChart
+              dataChart={chartData}
+              unitLine1="kWh"
+              unitLine2="W/㎡"
+              unitLine3="%"
+              optionLine={{
+                line1: paramsSearch?.insolation,
+                line2: paramsSearch?.performance,
+                line3: paramsSearch?.generation,
+              }}
+              type="minute"
+            />
+          )}
         </div>
       </div>
       <TitleSubHeader title="발전 통계" />
