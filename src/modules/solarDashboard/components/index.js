@@ -1,4 +1,5 @@
 import { Card } from 'commons/components/Card';
+import Loading from 'commons/components/Loading';
 import { TitleHeader } from 'commons/components/TitleHeader';
 // import MainLayout from 'layout/MainLayout';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +10,9 @@ import { getListDeviceTestSolarDashboard } from '../redux';
 const SolarDashboard = () => {
   const dispatch = useDispatch();
 
-  const { listDevice, total } = useSelector((state) => state?.solarDashboard);
+  const { listDevice, total, isLoading } = useSelector(
+    (state) => state?.solarDashboard
+  );
 
   const [activePage, setActivePage] = useState(1);
   const perPage = 10;
@@ -59,32 +62,33 @@ const SolarDashboard = () => {
     });
 
   return (
-    // <MainLayout isProcessing={isLoading}>
-    <div className="content-wrap">
-      <TitleHeader
-        title="테스트(실증단지)"
-        descSub="설치된 목업들에 데이터를 확인하실 수 있습니다."
-      />
+    <>
+      {isLoading && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader
+          title="테스트(실증단지)"
+          descSub="설치된 목업들에 데이터를 확인하실 수 있습니다."
+        />
 
-      <div className="list-company test-dashboard">{renderInverter}</div>
+        <div className="list-company test-dashboard">{renderInverter}</div>
 
-      <div className="opacity d-block pagination">
-        {total > perPage && (
-          <div className="wrapper-device__pagination">
-            <Pagination
-              activePage={activePage}
-              itemsCountPerPage={perPage}
-              totalItemsCount={total}
-              pageRangeDisplayed={9}
-              onChange={handlePageChange}
-              itemClass="page-item"
-              linkClass="page-link"
-            />
-          </div>
-        )}
+        <div className="opacity d-block pagination">
+          {total > perPage && (
+            <div className="wrapper-device__pagination">
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={perPage}
+                totalItemsCount={total}
+                pageRangeDisplayed={9}
+                onChange={handlePageChange}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-    // </MainLayout>
+    </>
   );
 };
 

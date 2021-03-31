@@ -16,15 +16,20 @@ import {
 } from 'modules/statusCompany/redux';
 
 import ItemContentTab from './ItemContentTab';
+import Loading from 'commons/components/Loading';
 
 const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
 
   const { posList, comList } = useSelector((state) => state?.commons);
 
-  const { totalRawData, rawData, cardInfo, chartData } = useSelector(
-    (state) => state.statusCompany
-  );
+  const {
+    totalRawData,
+    rawData,
+    cardInfo,
+    chartData,
+    isProcessing,
+  } = useSelector((state) => state.statusCompany);
 
   const defaultOption = {
     id: 1,
@@ -181,116 +186,117 @@ const StatusByAreaCompany = () => {
   };
 
   return (
-    // <MainLayout isProcessing={isProcessing}>
-    <div className="content-wrap">
-      <TitleHeader title="실증단지 발전 현황" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          listParkingLot={listParkingLot}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={posList.slice(1)}
-          listMockupType={listMockupType}
-        />
-        <div className="content-body-left w-100">
-          <div className="h-100">
-            <Tabs
-              defaultActiveKey={
-                comList && comList.length > 1
-                  ? ''
-                  : comList && comList[0] && comList[0].id
-              }
-              className="list-order tab-list"
-              onSelect={(eventKey) => onSelect(eventKey)}
-            >
-              {comList &&
-                comList.map((item) => (
-                  <Tab
-                    eventKey={item.id}
-                    title={<div className="tab-name">{item?.label}</div>}
-                  >
-                    <ItemContentTab
-                      chartData={chartData}
-                      rawData={
-                        rawData &&
-                        rawData.map((raw, index) => ({
-                          rowId:
-                            `${
-                              totalRawData -
-                              (paramsSearch?.page - 1) *
-                                paramsSearch.pagination.value -
-                              index
-                            }` || '',
-                          dateTime: moment(raw.dm_datetime).format(
-                            'YYYY-MM-DD'
-                          ),
-                          inverterID: raw?.ds_id,
-                          installationLocation: raw?.pos_name,
-                          inverterName: raw?.ds_name,
-                          moduleTemperature: `${raw?.dm_pv_voltage}V`,
-                          outsideTemperature: `${raw?.dm_pv_current}A`,
-                          horizontalInsolation: `${raw?.dm_o_voltage}V`,
-                          gradientInsolation: `${raw?.dm_o_current}A`,
-                          powerGeneration: `${raw?.dm_power}KW`,
-                          cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
-                          rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
-                        }))
-                      }
-                      powerData={{
-                        type: 'power',
-                        data: [
-                          {
-                            title: '일일 평균 1시간 발전량',
-                            value: cardInfo?.avg_prod
-                              ? Math.round(cardInfo?.avg_prod * 100) / 100
-                              : '',
-                          },
-                          {
-                            title: '일일발전량 달성율',
-                            value: cardInfo?.prod_ratio
-                              ? Math.round(cardInfo?.prod_ratio * 100) / 100
-                              : '',
-                          },
-                        ],
-                      }}
-                      dataContent={{}}
-                      handleChangeSearch={handleChangeSearch}
-                      performanceData={{
-                        type: 'performance',
-                        data: [
-                          {
-                            title: '현재 모듈 온도',
-                            value: cardInfo?.module_temp,
-                          },
-                          {
-                            title: '최고 모듈 온도',
-                            value: cardInfo?.max_module_temp,
-                          },
-                        ],
-                      }}
-                      insolationData={{
-                        type: 'insolation',
-                        data: [
-                          {
-                            title: '수평 일사량',
-                            value: cardInfo?.current_rad,
-                          },
-                          { title: '경사 일사량', value: cardInfo?.max_rad },
-                        ],
-                      }}
-                      paramsSearch={paramsSearch}
-                      totalRawData={totalRawData}
-                      activeTab={menuTab}
-                      id={item?.id}
-                    />
-                  </Tab>
-                ))}
-            </Tabs>
+    <>
+      {isProcessing && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="실증단지 발전 현황" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
+            handleChangeSearch={handleChangeSearch}
+            listParkingLot={listParkingLot}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={posList.slice(1)}
+            listMockupType={listMockupType}
+          />
+          <div className="content-body-left w-100">
+            <div className="h-100">
+              <Tabs
+                defaultActiveKey={
+                  comList && comList.length > 1
+                    ? ''
+                    : comList && comList[0] && comList[0].id
+                }
+                className="list-order tab-list"
+                onSelect={(eventKey) => onSelect(eventKey)}
+              >
+                {comList &&
+                  comList.map((item) => (
+                    <Tab
+                      eventKey={item.id}
+                      title={<div className="tab-name">{item?.label}</div>}
+                    >
+                      <ItemContentTab
+                        chartData={chartData}
+                        rawData={
+                          rawData &&
+                          rawData.map((raw, index) => ({
+                            rowId:
+                              `${
+                                totalRawData -
+                                (paramsSearch?.page - 1) *
+                                  paramsSearch.pagination.value -
+                                index
+                              }` || '',
+                            dateTime: moment(raw.dm_datetime).format(
+                              'YYYY-MM-DD'
+                            ),
+                            inverterID: raw?.ds_id,
+                            installationLocation: raw?.pos_name,
+                            inverterName: raw?.ds_name,
+                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
+                            outsideTemperature: `${raw?.dm_pv_current}A`,
+                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
+                            gradientInsolation: `${raw?.dm_o_current}A`,
+                            powerGeneration: `${raw?.dm_power}KW`,
+                            cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
+                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                          }))
+                        }
+                        powerData={{
+                          type: 'power',
+                          data: [
+                            {
+                              title: '일일 평균 1시간 발전량',
+                              value: cardInfo?.avg_prod
+                                ? Math.round(cardInfo?.avg_prod * 100) / 100
+                                : '',
+                            },
+                            {
+                              title: '일일발전량 달성율',
+                              value: cardInfo?.prod_ratio
+                                ? Math.round(cardInfo?.prod_ratio * 100) / 100
+                                : '',
+                            },
+                          ],
+                        }}
+                        dataContent={{}}
+                        handleChangeSearch={handleChangeSearch}
+                        performanceData={{
+                          type: 'performance',
+                          data: [
+                            {
+                              title: '현재 모듈 온도',
+                              value: cardInfo?.module_temp,
+                            },
+                            {
+                              title: '최고 모듈 온도',
+                              value: cardInfo?.max_module_temp,
+                            },
+                          ],
+                        }}
+                        insolationData={{
+                          type: 'insolation',
+                          data: [
+                            {
+                              title: '수평 일사량',
+                              value: cardInfo?.current_rad,
+                            },
+                            { title: '경사 일사량', value: cardInfo?.max_rad },
+                          ],
+                        }}
+                        paramsSearch={paramsSearch}
+                        totalRawData={totalRawData}
+                        activeTab={menuTab}
+                        id={item?.id}
+                      />
+                    </Tab>
+                  ))}
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    // </MainLayout>
+    </>
   );
 };
 
