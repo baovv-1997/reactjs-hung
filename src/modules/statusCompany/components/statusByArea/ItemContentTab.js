@@ -87,7 +87,7 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-      <TitleSubHeader title="발전 현황" />
+      <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}

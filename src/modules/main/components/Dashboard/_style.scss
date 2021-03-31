@@ -74,6 +74,9 @@
 
   &__body {
     padding: pxToRem(20) pxToRem(25);
+    &--total {
+      padding: pxToRem(15);
+    }
   }
 
   &__title {

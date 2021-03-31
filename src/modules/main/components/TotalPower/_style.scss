@@ -1,20 +1,29 @@
 .total-power {
+  width: pxToRem(330);
+  height: pxToRem(267);
+
   &__body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: pxToRem(10);
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    height: pxToRem(221);
+    padding: pxToRem(15);
   }
 
   &__item {
-    padding: pxToRem(12);
-    width: pxToRem(135);
+    width: pxToRem(98);
+    height: 100%;
+    padding: pxToRem(33) 0 pxToRem(24);
     border-radius: pxToRem(10);
     color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     &-name {
       font-size: pxToRem(14);
-      line-height: pxToRem(20);
-      letter-spacing: pxToRem(-0.4);
+      line-height: 1.43;
+      letter-spacing: pxToRem(-0.42);
       opacity: 0.7;
     }
 
@@ -25,32 +34,27 @@
       line-height: pxToRem(34);
       letter-spacing: pxToRem(-0.78);
       text-align: right;
+      margin-top: pxToRem(45);
     }
   }
 
-  &__content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: pxToRem(3);
-  }
-
   &__icon {
-    width: pxToRem(14);
-    height: pxToRem(20);
+    width: pxToRem(20);
+    height: pxToRem(29);
     object-fit: contain;
+    margin-bottom: pxToRem(16);
   }
 
   .bg-color-day {
     background-color: $color-progress1;
   }
   .bg-color-month {
-    background-color: $color-progress3;
+    background-color: $color-progress2;
   }
   .bg-color-year {
     background-color: $bg-color-year;
   }
   .bg-color-plus {
-    background-color: $color-progress4;
+    background-color: $color-progress3;
   }
 }

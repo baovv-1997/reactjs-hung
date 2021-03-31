@@ -17,10 +17,8 @@ const TotalPowerItem = ({
 }: Props) => {
   return (
     <div className={`total-power__item ${customClass}`}>
-      <div className="total-power__content-header">
-        <img src={icon} alt="" className="total-power__icon" />
-        <p className="total-power__item-name">{name}</p>
-      </div>
+      <img src={icon} alt="" className="total-power__icon" />
+      <p className="total-power__item-name">{name}</p>
       <p className="total-power__item-value">{formatNumber(value)}</p>
     </div>
   );
@@ -33,4 +31,4 @@ TotalPowerItem.defaultProps = {
   icon: '',
 };
 
-export default memo < Props > (TotalPowerItem);
+export default memo<Props>(TotalPowerItem);

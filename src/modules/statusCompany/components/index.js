@@ -270,13 +270,13 @@ const StatusByAreaCompany = () => {
                           type: 'power',
                           data: [
                             {
-                              title: '일일 평균 1시간 발전량',
+                              title: '실시간 발전량',
                               value: cardInfo?.avg_prod
                                 ? Math.round(cardInfo?.avg_prod * 100) / 100
                                 : '',
                             },
                             {
-                              title: '일일발전량 달성율',
+                              title: '실시간 성능비',
                               value: cardInfo?.prod_ratio
                                 ? Math.round(cardInfo?.prod_ratio * 100) / 100
                                 : '',
