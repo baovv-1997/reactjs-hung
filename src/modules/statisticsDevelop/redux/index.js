@@ -10,6 +10,7 @@ const statisticsDevelopSlide = createSlice({
     rawData: [],
     totalRadiationRawData: null,
     totalRawData: null,
+    chartData: [],
   },
 
   reducers: {

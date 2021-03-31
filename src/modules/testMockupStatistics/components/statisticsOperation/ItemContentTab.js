@@ -6,19 +6,19 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
-import {
-  headTestMockupOperationStatus,
-  headTestMockupOperationStatistics,
-} from '../constant';
 import Pagination from 'react-js-pagination';
-import BoxGroup from './BoxGroup';
-import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from './GroupActionDownload';
 import { FilterSearch } from 'commons/components/FilterSearch';
 import moment from 'moment';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 import { LineChart } from 'commons/components/LineChart/lineChart';
+import GroupActionDownload from './GroupActionDownload';
+import GroupCompareChart from './GroupCompareChart';
+import BoxGroup from './BoxGroup';
+import {
+  headTestMockupOperationStatus,
+  headTestMockupOperationStatistics,
+} from '../constant';
 
 type Props = {
   listMockupDataCompany: any,

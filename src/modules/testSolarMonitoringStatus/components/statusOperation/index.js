@@ -6,9 +6,9 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import Loading from 'commons/components/Loading';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
-import Loading from 'commons/components/Loading';
 
 const OperationStatusPage = () => {
   const { deviceList } = useSelector((state) => state?.commons);
