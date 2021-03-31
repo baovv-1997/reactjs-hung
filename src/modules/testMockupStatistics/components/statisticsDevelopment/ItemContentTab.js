@@ -16,6 +16,7 @@ import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import { LineChart } from 'commons/components/LineChart/lineChart';
+import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 
 type Props = {
   dataTableStatisticsCompany: any,
@@ -44,7 +45,6 @@ const ItemContentTab = ({
   timeDate,
   dataChart,
 }: Props) => {
-  console.log(dataChart, 'dataChart');
   const dataLengthChart = [
     {
       id: 1,
@@ -93,6 +93,7 @@ const ItemContentTab = ({
               line3: paramsSearch?.ratio,
             }}
             showPoint3
+            type={CONTRACT_FORMAT_TIME_CHART[paramsSearch?.classification]}
           />
         </div>
       </div>

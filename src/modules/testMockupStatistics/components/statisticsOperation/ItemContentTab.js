@@ -17,11 +17,12 @@ import GroupActionDownload from './GroupActionDownload';
 import { FilterSearch } from 'commons/components/FilterSearch';
 import moment from 'moment';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
+import { LineChart } from 'commons/components/LineChart/lineChart';
 
 type Props = {
   listMockupDataCompany: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   totalPage: number,
@@ -45,12 +46,12 @@ type Props = {
   }>,
   optionFilters: any,
   timeDate: Object,
+  dataChartOperation: Array<{}>,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  handleDownloadTrend,
   handleChangeSearch,
   paramsSearch,
   totalPage,
@@ -64,6 +65,7 @@ const ItemContentTab = ({
   dataTableBottom,
   optionFilters,
   timeDate,
+  dataChartOperation,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -102,7 +104,27 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
+        <div className="group-char-right">
+          <LineChart
+            dataChart={dataChartOperation}
+            unitLine1="V"
+            unitLine2="A"
+            unitLine3="kW"
+            optionLine={{
+              line1: paramsSearch?.ACVoltage,
+              line2: paramsSearch?.ACCurrent,
+              line3: paramsSearch?.ACPower,
+            }}
+            showPoint3
+            showPoint1
+            showPoint2
+            type={CONTRACT_FORMAT_TIME_CHART[paramsSearch?.classification]}
+            unitLeft="V"
+            unitRight="A"
+            typeLine="line"
+            widthLine={2}
+          />
+        </div>
       </div>
       <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
