@@ -1,12 +1,10 @@
 // @flow
 import React, { memo } from 'react';
-import { ROUTES } from 'apis';
 import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import {
   headTestMockupStatistics,
@@ -16,6 +14,7 @@ import FilterSearch from '../FilterSearch';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   dataTableStatisticsCompany: any,
@@ -133,17 +132,10 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => {}}>
-            <a
-              href={`${ROUTES.API_DOWN_EXCEL_MOCKUP(
-                `operator/statistic?inverter_id=${paramsSearch?.company}`
-              )}`} // TODO
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Raw Date 다운
-            </a>
-          </Button>
+          <ButtonDownExcel
+            linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}`}
+            keyName="test_mockup"
+          />
         </div>
       </div>
       <Table
