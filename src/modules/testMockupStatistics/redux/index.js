@@ -64,8 +64,6 @@ const testMockupStatisticsSlide = createSlice({
 
     getDataTestMKRawTableGeneratorSuccess: (state, action) => {
       const { data, params } = action;
-
-      console.log(data, 'data');
       const listDataTableRaw =
         data &&
         data?.data.map((item, index) => ({
@@ -203,9 +201,6 @@ const testMockupStatisticsSlide = createSlice({
           dm_rad:
             item?.dm_rad &&
             `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`,
-          dm_rad_Max:
-            item?.ds_max_power &&
-            `${item?.ds_max_power.toLocaleString('en') || 0}kWh/㎡·10초`,
         }));
       state.type = action.type;
       state.isProcessing = false;

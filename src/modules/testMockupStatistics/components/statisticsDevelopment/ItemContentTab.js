@@ -10,7 +10,7 @@ import {
   headTestMockupStatistics,
   headTestMockupStatisticsOfModule,
 } from '../constant';
-import FilterSearch from '../FilterSearch';
+import FilterSearch from 'commons/components/FilterSearch';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -19,39 +19,29 @@ import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 type Props = {
   dataTableStatisticsCompany: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
   perPage2: number,
   handleChangeSearch: Function,
   paramsSearch: Object,
-  listStatusCompanySelect: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
-  listInverter: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
   dataTableBottom: Array<{}>,
+  handleSubmitSearch: Function,
+  timeDate: Object,
 };
 
 const ItemContentTab = ({
   dataTableStatisticsCompany,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
   perPage2,
   handleChangeSearch,
   paramsSearch,
-  listStatusCompanySelect,
-  listInverter,
   dataTableBottom,
+  handleSubmitSearch,
+  timeDate,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -70,14 +60,14 @@ const ItemContentTab = ({
       color: '#fe8224',
     },
   ];
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
-        listStatusCompanySelect={listStatusCompanySelect}
-        listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
+        handleSubmitSearch={handleSubmitSearch}
       />
 
       <div className="group-char" id="groupChart">
@@ -96,7 +86,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}`} // TODO
+        linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
       />
       <div>
         <Table
@@ -133,7 +123,7 @@ const ItemContentTab = ({
         />
         <div className="group-btn-download">
           <ButtonDownExcel
-            linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}`}
+            linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
             keyName="test_mockup"
           />
         </div>

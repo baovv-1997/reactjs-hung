@@ -65,7 +65,7 @@ const ItemContentTab = ({
         <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
 
-      <TitleSubHeader title="발전 현황" />
+      <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
         linkDownTable={`generator/status?inverter_id=${paramsSearch?.company}`}
         paramsSearch={paramsSearch}

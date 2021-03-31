@@ -10,14 +10,13 @@ import {
   headTestMockupOperationStatus,
   headTestMockupOperationStatistics,
 } from '../constant';
-// import LineSeriesChart from '../chart';
 import Pagination from 'react-js-pagination';
-import { Button } from 'commons/components/Button';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
-import { FilterSearch } from '../FilterSearch';
+import { FilterSearch } from 'commons/components/FilterSearch';
 import moment from 'moment';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   listMockupDataCompany: any,
@@ -45,6 +44,7 @@ type Props = {
     label: string,
   }>,
   optionFilters: any,
+  timeDate: Object,
 };
 
 const ItemContentTab = ({
@@ -63,6 +63,7 @@ const ItemContentTab = ({
   listInverter,
   dataTableBottom,
   optionFilters,
+  timeDate,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -103,9 +104,9 @@ const ItemContentTab = ({
         </div>
         <div className="group-char-right">{/* <LineSeriesChart /> */}</div>
       </div>
-      <TitleSubHeader title="실시간 계측 통계" />
+      <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
@@ -141,9 +142,10 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
-            Raw Date 다운
-          </Button>
+          <ButtonDownExcel
+            linkDownTable={`operator/event?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
+            keyName="test_mockup"
+          />
         </div>
       </div>
 

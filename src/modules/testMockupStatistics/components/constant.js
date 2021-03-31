@@ -70,10 +70,6 @@ export const headTestMockupStatisticsOfModule = [
     id: 7,
     name: '현재 일사량',
   },
-  {
-    id: 8,
-    name: '최고 일사량',
-  },
 ];
 
 export const headTestMockupOperationStatistics = [
