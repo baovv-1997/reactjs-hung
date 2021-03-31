@@ -92,7 +92,6 @@ Props) => {
       text,
     };
   };
-  console.log('dataChart', dataChart);
   return (
     <>
       <Chart id="chart" dataSource={dataChart} palette="Harmony Light">

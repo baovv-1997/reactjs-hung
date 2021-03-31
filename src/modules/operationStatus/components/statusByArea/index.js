@@ -34,11 +34,11 @@ const OperationStatusPage = () => {
     posSelected: posList && posList[1] && posList[1].id,
     mockupType: null,
     parkingLot: null,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    PVVoltage: true,
+    PVCurrent: true,
+    outputVoltage: true,
+    outputCurrent: true,
+    print: true,
     pagination: defaultOption,
   };
 
@@ -269,7 +269,7 @@ const OperationStatusPage = () => {
                       activeTab={menuTab}
                       id={item.id}
                       totalPage={totalRawData}
-                      dataChart={dataChart}
+                      chartData={dataChart}
                     />
                   </Tab>
                 ))}

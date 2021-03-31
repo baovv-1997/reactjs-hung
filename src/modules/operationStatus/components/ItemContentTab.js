@@ -4,6 +4,7 @@ import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import LineChart2 from 'commons/components/LineChart/LineChart2';
 
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
@@ -38,8 +39,8 @@ type Props = {
   handleChangeSearch: Function,
   paramsSearch: Object,
   activeTab: string,
-  // id: string,
-  // dataChart: Array,
+  id: string,
+  chartData: Array,
   optionFilters: Array,
 };
 
@@ -57,9 +58,9 @@ const ItemContentTab = ({
   paramsSearch,
   activeTab,
   optionFilters,
-}: // id,
-// dataChart,
-Props) => {
+  id,
+  chartData,
+}: Props) => {
   const history = useHistory();
 
   const dataLengthChart = [
@@ -110,20 +111,30 @@ Props) => {
         </div>
 
         <div className="group-char-right">
-          {/* {activeTab === id.toString() && dataChart && (
-            <LineChart
-              dataChart={dataChart}
-              unitLine1="kWh"
-              unitLine2="W/㎡"
-              unitLine3="%"
+          {activeTab === id.toString() && chartData && (
+            <LineChart2
+              dataChart={chartData}
+              unitLine1="V"
+              unitLine2="A"
+              unitLine3="A"
+              unitLine4="kW"
+              unitLine5="V"
               optionLine={{
-                line1: paramsSearch?.insolation,
-                line2: paramsSearch?.performance,
-                line3: paramsSearch?.generation,
+                line1: paramsSearch?.PVVoltage,
+                line2: paramsSearch?.PVCurrent,
+                line3: paramsSearch?.outputVoltage,
+                line4: paramsSearch?.outputCurrent,
+                line5: paramsSearch?.print,
               }}
-              type="minute"
+              typeLine="line"
+              widthLine={2}
+              unitLeft="V"
+              unitRight="A"
+              showPoint1
+              showPoint2
+              showPoint3
             />
-          )} */}
+          )}
         </div>
       </div>
 

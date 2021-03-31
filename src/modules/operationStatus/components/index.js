@@ -5,6 +5,7 @@ import Loading from 'commons/components/Loading';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+
 // import { TIME_REQUEST } from 'constants/index';
 // import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
@@ -437,7 +438,7 @@ const OperationStatusPage = ({ location }: Props) => {
                         handleClickDetail={handleClickDetail}
                         handleChangeSearch={handleChangeSearch}
                         id={device.id}
-                        dataChart={dataChart}
+                        chartData={dataChart}
                       />
                     </Tab>
                   ))}
