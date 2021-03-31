@@ -118,15 +118,6 @@ const StatusByAreaCompany = () => {
   };
 
   useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-        null,
-    });
-  }, [listInverterTest]);
-
-  useEffect(() => {
     dispatch(CommonAction.getListDevice());
   }, []);
 
@@ -145,7 +136,7 @@ const StatusByAreaCompany = () => {
   // call api getDataTrend chart
   const handleGetDataTrendChart = useCallback(
     (params) => {
-      dispatch(ActionStatusGenerator.getDataRawTableTestMk(params));
+      dispatch(ActionStatusGenerator.getDataTrendChartTestMk(params));
     },
     [dispatch]
   );
