@@ -5,7 +5,7 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import { headStatisticsCompany } from '../constant';
-import FilterSearch from '../FilterSearch';
+import FilterSearch from 'commons/components/FilterSearch';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -14,35 +14,23 @@ import LineChart from 'commons/components/LineChart/lineChart';
 type Props = {
   dataTableStatisticsCompany: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   handleChangeSearch: Function,
   paramsSearch: Object,
-  listStatusCompanySelect: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
-  listInverter: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
   dataChart: Object,
+  timeDate: Object,
 };
 
 const ItemContentTab = ({
   dataTableStatisticsCompany,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   handleChangeSearch,
   paramsSearch,
-  listStatusCompanySelect,
-  listInverter,
   dataChart,
+  timeDate,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -61,13 +49,11 @@ const ItemContentTab = ({
       color: '#fe8224',
     },
   ];
-  console.log('paramsSearch', paramsSearch);
+
   return (
     <div className="content-wrap-tab">
       <BoxGroup dataBoxContent={dataBoxContent} />
       <FilterSearch
-        listStatusCompanySelect={listStatusCompanySelect}
-        listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
       />
@@ -102,7 +88,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
       />
       <div>
         <Table

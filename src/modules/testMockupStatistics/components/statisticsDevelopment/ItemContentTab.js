@@ -67,7 +67,6 @@ const ItemContentTab = ({
       <FilterSearch
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
-        handleSubmitSearch={handleSubmitSearch}
       />
 
       <div className="group-char" id="groupChart">

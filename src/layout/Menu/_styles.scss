@@ -1,6 +1,6 @@
 .menu {
   position: fixed;
-  z-index: 9999;
+  z-index: 999999;
   width: pxToRem(210);
   height: 100vh;
   color: #fff;
@@ -56,15 +56,16 @@
 
 .item {
   position: relative;
- 
+
   &__link {
     padding: pxToRem(10) 0;
     display: flex;
     justify-content: space-between;
-    color: $bg-footer;    
+    color: $bg-footer;
     align-items: center;
+
     &__label {
-      margin-left: pxToRem(15);    
+      margin-left: pxToRem(15);
       font-family: $Noto-Sans-Font;
       font-size: pxToRem(15);
       line-height: 1.47;
@@ -75,6 +76,7 @@
     &:hover {
       color: $bg-footer;
     }
+
     svg {
       margin-right: pxToRem(15);
     }
@@ -99,9 +101,11 @@
 .sub-item {
   margin-left: pxToRem(10);
 }
+
 .item-link-sub {
   padding-left: pxToRem(10);
 }
+
 .item-link-nestsub {
   padding-left: pxToRem(20);
 }

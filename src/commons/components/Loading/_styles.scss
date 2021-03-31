@@ -82,8 +82,19 @@
   position: fixed;
   top: 50%;
   left: 55%;
-  z-index: 99999;
+  z-index: 9999;
   @include transform-translate(-50%, -50%);
+  width: 100%;
+
+  &:after {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    content: '';
+    background-color: $black-opacity-6;
+  }
 
   .spinner-border {
     width: pxToRem(80);

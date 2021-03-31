@@ -118,6 +118,15 @@ const StatusByAreaCompany = () => {
   };
 
   useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+        null,
+    });
+  }, [listInverterTest]);
+
+  useEffect(() => {
     dispatch(CommonAction.getListDevice());
   }, []);
 
@@ -142,10 +151,12 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
-    handleGetDataTrendChart({
-      inverter_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+      });
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
 
   // call api getDataRawTable
@@ -157,11 +168,13 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-      inverter_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+        inverter_id: paramsSearch?.company,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.page,

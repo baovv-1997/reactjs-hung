@@ -77,6 +77,15 @@ const OperationStatusPage = ({ location }: Props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+        null,
+    });
+  }, [listInverterTest]);
+
+  useEffect(() => {
     dispatch(CommonAction.getListDevice());
   }, []);
 

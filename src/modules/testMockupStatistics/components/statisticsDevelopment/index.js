@@ -68,6 +68,15 @@ const OperationStatusPage = () => {
       0,
   };
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+        null,
+    });
+  }, [listInverterTest]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     const interval = setInterval(() => {
@@ -119,7 +128,9 @@ const OperationStatusPage = () => {
     [dispatch]
   );
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
   // call api getDataTrend chart
   const handleGetDataTrendChart = useCallback(
@@ -130,12 +141,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataTrendChart({
-      inverter_id: paramsSearch?.company,
-      type: paramsSearch?.classification || null,
-      from,
-      to,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+        type: paramsSearch?.classification || null,
+        from,
+        to,
+      });
+    }
   }, [
     handleGetDataTrendChart,
     paramsSearch?.isSubmitSearch,
@@ -152,14 +165,16 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      inverter_id: paramsSearch?.company,
-      type: paramsSearch?.classification || null,
-      from,
-      to,
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        inverter_id: paramsSearch?.company,
+        type: paramsSearch?.classification || null,
+        from,
+        to,
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.company,
@@ -178,11 +193,13 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTableMockup({
-      inverter_id: paramsSearch?.company,
-      per_page: paramsSearch?.pagination2?.value,
-      page: paramsSearch?.page2,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTableMockup({
+        inverter_id: paramsSearch?.company,
+        per_page: paramsSearch?.pagination2?.value,
+        page: paramsSearch?.page2,
+      });
+    }
   }, [
     handleGetDataRawTableMockup,
     paramsSearch?.company,

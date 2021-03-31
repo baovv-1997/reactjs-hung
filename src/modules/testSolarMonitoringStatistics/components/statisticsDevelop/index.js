@@ -3,26 +3,24 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
-import * as SignInAction from 'modules/accounts/redux';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
+import Loading from 'commons/components/Loading';
 
 const OperationStatusPage = () => {
-  const { deviceList, comList } = useSelector((state) => state?.commons);
+  const { deviceList } = useSelector((state) => state?.commons);
   const {
-    // isProcessing,
+    isProcessing,
     dataBoxCard,
     dataChart,
     listDataTableRaw,
     total,
   } = useSelector((state) => state?.testSMStatisticsGenerator);
 
-  const { listInverter } = useSelector((state) => state?.account);
   const [randomNumber, setRandomNumber] = useState(null);
   const defaultOption = {
     id: 1,
@@ -37,8 +35,6 @@ const OperationStatusPage = () => {
     classification: 'minute',
     startDate: null,
     endDate: null,
-    vendorCompany: null,
-    inverter: null,
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
@@ -76,39 +72,35 @@ const OperationStatusPage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  let from = null;
+  let to = null;
+
+  switch (paramsSearch?.classification) {
+    case 'minute':
+    case 'hour':
+    case 'day':
+      from = paramsSearch?.startDate
+        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+        : null;
+      to = paramsSearch?.endDate
+        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+        : null;
+      break;
+    case 'month':
+      from = paramsSearch?.startDate
+        ? moment(paramsSearch?.startDate).format('YYYY-MM')
+        : null;
+      to = paramsSearch?.endDate
+        ? moment(paramsSearch?.endDate).format('YYYY-MM')
+        : null;
+      break;
+    default:
+      break;
+  }
   useEffect(() => {
     dispatch(CommonAction.getListDevice());
     dispatch(CommonAction.getCompanyList());
   }, []);
-
-  let toDate =
-    (paramsSearch?.startDate &&
-      moment(paramsSearch?.startDate).format('YYYY')) ||
-    null;
-  let fromDate =
-    (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
-    null;
-
-  if (paramsSearch && paramsSearch.classification === 'year') {
-    toDate =
-      (paramsSearch?.startDate &&
-        moment(paramsSearch?.startDate).format('YYYY')) ||
-      null;
-    fromDate =
-      (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
-      null;
-  }
-  if (paramsSearch && paramsSearch.classification === 'month') {
-    toDate =
-      (paramsSearch?.startDate &&
-        moment(paramsSearch?.startDate).format('YYYY-MM')) ||
-      null;
-    fromDate =
-      (paramsSearch?.endDate &&
-        moment(paramsSearch?.endDate).format('YYYY-MM')) ||
-      null;
-  }
-
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
     (company) => {
@@ -135,8 +127,8 @@ const OperationStatusPage = () => {
     handleGetDataTrendChart({
       inverter_id: paramsSearch?.company,
       type: paramsSearch?.classification || null,
-      from: fromDate,
-      to: toDate,
+      from,
+      to,
       compare_inverter_id: paramsSearch?.inverter?.id,
     });
   }, [
@@ -158,8 +150,8 @@ const OperationStatusPage = () => {
     handleGetDataRawTable({
       inverter_id: paramsSearch?.company,
       type: paramsSearch?.classification || null,
-      from: fromDate,
-      to: toDate,
+      from,
+      to,
       per_page: paramsSearch?.pagination?.value,
       page: paramsSearch?.page,
     });
@@ -213,27 +205,6 @@ const OperationStatusPage = () => {
           page: 1,
         });
         break;
-
-      case 'inverter':
-        setParamsSearch({
-          ...paramsSearch,
-          inverter: item,
-        });
-        break;
-      case 'vendorCompany':
-        setParamsSearch({
-          ...paramsSearch,
-          vendorCompany: item,
-          inverter: null,
-        });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 999999999,
-            com_id: item?.value,
-            type: '2',
-          })
-        );
-        break;
       case 'page':
         setParamsSearch({
           ...paramsSearch,
@@ -265,37 +236,35 @@ const OperationStatusPage = () => {
     }
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
   return (
-    // <MainLayout isProcessing={isProcessing}>
-    <div className="content-wrap">
-      <TitleHeader title="테스트(실증단지) 발전 통계" />
-      <div className="content-body page-company">
-        <GroupSelectSidebar
-          handleChangeSearch={handleChangeSearch}
-          paramsSearch={paramsSearch}
-          listStatusCompanySelect={listInverterTest}
-        />
-        <div className="content-body-left w-100 border-pd-20">
-          <ItemContentTab
-            dataBoxContent={dataBoxContent}
-            dataTableStatisticsCompany={listDataTableRaw}
-            handleDownloadTrend={handleDownloadTrend}
-            totalPage={total}
-            listStatusCompanySelect={comList && comList.slice(1)}
-            perPage={paramsSearch?.pagination?.value}
-            listInverter={listInverter}
-            paramsSearch={paramsSearch}
-            dataChart={dataChart}
+    <>
+      {isProcessing && <Loading />}
+      <div className="content-wrap">
+        <TitleHeader title="테스트(실증단지) 발전 통계" />
+        <div className="content-body page-company">
+          <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
+            paramsSearch={paramsSearch}
+            listStatusCompanySelect={listInverterTest}
           />
+          <div className="content-body-left w-100 border-pd-20">
+            <ItemContentTab
+              dataBoxContent={dataBoxContent}
+              dataTableStatisticsCompany={listDataTableRaw}
+              totalPage={total}
+              perPage={paramsSearch?.pagination?.value}
+              paramsSearch={paramsSearch}
+              dataChart={dataChart}
+              handleChangeSearch={handleChangeSearch}
+              timeDate={{
+                from,
+                to,
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
-    // </MainLayout>
+    </>
   );
 };
 

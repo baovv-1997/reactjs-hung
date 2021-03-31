@@ -151,9 +151,4 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
   );
 };
 
-FilterSearch.defaultProps = {
-  isShowDupInverter: false,
-  listInverter1: [],
-};
-
 export default memo<Props>(FilterSearch);
