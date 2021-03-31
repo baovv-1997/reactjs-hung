@@ -36,8 +36,8 @@ const OperationStatusPage = () => {
     page: 1,
     page2: 1,
     classification: 'minute',
-    startDate: new Date(),
-    endDate: new Date(),
+    from: new Date(),
+    to: new Date(),
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
@@ -86,22 +86,36 @@ const OperationStatusPage = () => {
 
   switch (paramsSearch?.classification) {
     case 'minute':
+      from = paramsSearch?.startDate
+        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+        : moment(new Date()).format('YYYY-MM-DD');
+      to = paramsSearch?.endDate
+        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+        : moment(new Date()).format('YYYY-MM-DD');
+      break;
     case 'hour':
+      from = paramsSearch?.startDate
+        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+        : moment(new Date()).format('YYYY-MM-DD');
+      to = paramsSearch?.endDate
+        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+        : moment(new Date()).format('YYYY-MM-DD');
+      break;
     case 'day':
       from = paramsSearch?.startDate
         ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
-        : null;
+        : moment(new Date()).format('YYYY-MM-DD');
       to = paramsSearch?.endDate
         ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
-        : null;
+        : moment(new Date()).format('YYYY-MM-DD');
       break;
     case 'month':
       from = paramsSearch?.startDate
         ? moment(paramsSearch?.startDate).format('YYYY-MM')
-        : null;
+        : moment(new Date()).format('YYYY-MM');
       to = paramsSearch?.endDate
         ? moment(paramsSearch?.endDate).format('YYYY-MM')
-        : null;
+        : moment(new Date()).format('YYYY-MM');
       break;
     default:
       break;
@@ -229,8 +243,8 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
-          startDate: new Date(),
-          endDate: new Date(),
+          from: new Date(),
+          to: new Date(),
         });
         break;
       case 'pagination':
@@ -262,13 +276,13 @@ const OperationStatusPage = () => {
       case 'startDate':
         setParamsSearch({
           ...paramsSearch,
-          startDate: item,
+          from: item,
         });
         break;
       case 'endDate':
         setParamsSearch({
           ...paramsSearch,
-          endDate: item,
+          to: item,
         });
         break;
       case 'isSubmitSearch':

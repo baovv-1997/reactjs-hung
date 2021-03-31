@@ -57,28 +57,32 @@ export const LineChart = ({
   showPoint1 = false,
   showPoint2 = false,
   showPoint3 = false,
-  type = 'second',
+  type = 'seconds',
   showLabel1 = false,
   showLabel2 = false,
   showLabel3 = false,
 }: // unitLine4,
 // unitLine5,
 Props) => {
-  /**
-  days?: any;
-  hours?: any;
-  milliseconds?: any;
-  minutes?: any;
-  months?: any;
-  quarters?: any;
-  seconds?: any;
-  weeks?: any;
-  years?: any;
-  */
   const customizeText = (arg) => {
-    const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
-
-    return `${labelText}`;
+    const year = arg.value.getDate();
+    console.log('arg', arg.value);
+    switch (type) {
+      case 'seconds':
+        break;
+      case 'minutes':
+        break;
+      case 'days':
+        break;
+      case 'months':
+        const labelText = arg.value.getDate();
+        return `${labelText}`;
+        break;
+      default:
+        break;
+    }
+    // const labelText =
+    //       arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
   };
 
   const date = moment(new Date()).format('YYYY-MM-DD');
@@ -176,7 +180,7 @@ Props) => {
         </Crosshair>
         <ArgumentAxis
           defaultVisualRange={
-            type === 'second'
+            type === 'seconds'
               ? {
                   startValue: `${date} ${dateTime}:00:00`,
                   endValue: `${date} ${dateTime}:05:00`,
@@ -220,6 +224,6 @@ LineChart.defaultProps = {
   showLabel1: false,
   showLabel2: false,
   showLabel3: false,
-  type: 'second',
+  type: 'seconds',
 };
 export default memo<Props>(LineChart);

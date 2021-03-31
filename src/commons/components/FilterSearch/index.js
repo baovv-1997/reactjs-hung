@@ -72,7 +72,7 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
               <div className="title-label">검색기간</div>
               <div className="input-date">
                 <DatePicker
-                  selected={paramsSearch?.startDate}
+                  selected={paramsSearch?.from}
                   onChange={(date) => handleChangeSearch(date, 'startDate')}
                   dateFormat={
                     CONTRACT_FORMAT_DATE[paramsSearch?.classification]
@@ -85,7 +85,7 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
                       )
                     )
                   }
-                  maxDate={paramsSearch?.endDate}
+                  maxDate={paramsSearch?.to}
                   locale="ko"
                   peekNextMonth
                   showMonthDropdown
