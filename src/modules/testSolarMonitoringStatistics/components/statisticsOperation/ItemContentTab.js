@@ -6,7 +6,7 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
+import { FilterSearch } from 'commons/components/FilterSearch';
 import { listPaginationType } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
 import {
@@ -16,12 +16,11 @@ import {
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { FilterSearch } from '../FilterSearch';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   listMockupDataCompany: any,
   dataBoxContent: Object,
-  handleDownloadTrend: Function,
   totalPage: number,
   perPage: number,
   totalPage2: number,
@@ -32,24 +31,14 @@ type Props = {
   isShowModalSorting: boolean,
   handleChangeSearch: Function,
   paramsSearch: Object,
-  listStatusCompanySelect: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
-  listInverter: Array<{
-    id: number,
-    value: any,
-    label: string,
-  }>,
   dataChartOperation: Object,
   optionFilters: Object,
+  timeDate: Object,
 };
 
 const ItemContentTab = ({
   listMockupDataCompany,
   dataBoxContent,
-  handleDownloadTrend,
   totalPage,
   perPage,
   totalPage2,
@@ -58,10 +47,9 @@ const ItemContentTab = ({
   isShowModalSorting,
   handleChangeSearch,
   paramsSearch,
-  listStatusCompanySelect,
-  listInverter,
   dataChartOperation,
   optionFilters,
+  timeDate,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -98,8 +86,6 @@ const ItemContentTab = ({
         handleChangeSearch={handleChangeSearch}
       />
       <FilterSearch
-        listStatusCompanySelect={listStatusCompanySelect}
-        listInverter={listInverter}
         handleChangeSearch={handleChangeSearch}
         paramsSearch={paramsSearch}
       />
@@ -119,7 +105,7 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="실시간 계측정보 통계" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
@@ -157,9 +143,10 @@ const ItemContentTab = ({
           noOptionsMessage={() => '옵션 없음'}
         />
         <div className="group-btn-download">
-          <Button onClick={() => handleDownloadTrend('raw2')}>
-            Raw Date 다운
-          </Button>
+          <ButtonDownExcel
+            linkDownTable={`operator/event?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
+            keyName="test_solar"
+          />
         </div>
       </div>
       <Table

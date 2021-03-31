@@ -7,12 +7,11 @@ import { headTestMockupStatus } from '../constant';
 // import LineSeriesChart from 'commons/components/LineChart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from './GroupActionDownload';
+import GroupActionDownload from '../GroupActionDownload';
 
 type Props = {
   listMockupDataCompany: any,
   powerData: Object,
-  handleDownloadTrend: Function,
   handleChangeSearch: Function,
   paramsSearch: Object,
   performanceData: Object,
@@ -23,7 +22,6 @@ type Props = {
 const ItemContentTab = ({
   listMockupDataCompany,
   powerData,
-  handleDownloadTrend,
   handleChangeSearch,
   performanceData,
   insolationData,
@@ -72,10 +70,11 @@ const ItemContentTab = ({
       </div>
       <TitleSubHeader title="발전 현황" />
       <GroupActionDownload
-        handleDownloadTrend={handleDownloadTrend}
+        linkDownTable={`generator/statistic?com_id=${paramsSearch?.company}`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />
+
       <div>
         <Table
           tableHeads={headTestMockupStatus}
