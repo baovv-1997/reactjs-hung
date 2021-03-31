@@ -5,17 +5,17 @@ import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
+import Pagination from 'react-js-pagination';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import LineChart2 from 'commons/components/LineChart/LineChart2';
 import {
   headTestSolarMonitoringOperationStatus,
   headTestMockupStatisticsOfModule,
 } from '../constant';
 // import LineSeriesChart from '../chart';
-import Pagination from 'react-js-pagination';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
-import LineChart2 from 'commons/components/LineChart/LineChart2';
 
 type Props = {
   listMockupDataCompany: any,

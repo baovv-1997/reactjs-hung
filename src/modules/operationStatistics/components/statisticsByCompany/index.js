@@ -44,9 +44,13 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     totalEventPage,
   } = useSelector((state) => state?.commons);
 
-  const { rawData, totalRawData, cardInfo, isProcessing } = useSelector(
-    (state) => state.operationStatistics
-  );
+  const {
+    rawData,
+    totalRawData,
+    cardInfo,
+    isProcessing,
+    chartData,
+  } = useSelector((state) => state.operationStatistics);
   // const { listInverter } = useSelector((state) => state?.account);
   const defaultOption = {
     id: 1,
@@ -60,11 +64,11 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     mockupType: null,
     parkingLot: null,
     page2: 1,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    PVVoltage: true,
+    PVCurrent: true,
+    outputVoltage: true,
+    outputCurrent: true,
+    print: true,
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
@@ -521,6 +525,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                           from,
                           to,
                         }}
+                        chartData={chartData}
                       />
                     </Tab>
                   ))}

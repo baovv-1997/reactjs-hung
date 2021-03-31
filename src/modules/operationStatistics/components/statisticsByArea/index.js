@@ -22,9 +22,13 @@ const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
   const { posList, comList } = useSelector((state) => state.commons);
-  const { rawData, totalRawData, cardInfo, isProcessing } = useSelector(
-    (state) => state.operationStatistics
-  );
+  const {
+    rawData,
+    totalRawData,
+    cardInfo,
+    isProcessing,
+    chartData,
+  } = useSelector((state) => state.operationStatistics);
 
   const defaultOption = {
     id: 1,
@@ -37,11 +41,11 @@ const OperationStatusPage = () => {
     posSelected: null,
     mockupType: null,
     parkingLot: null,
-    PVVoltage: false,
-    PVCurrent: false,
-    outputVoltage: false,
-    outputCurrent: false,
-    print: false,
+    PVVoltage: true,
+    PVCurrent: true,
+    outputVoltage: true,
+    outputCurrent: true,
+    print: true,
     pagination: defaultOption,
     classification: 'minute',
     startDate: null,
@@ -407,6 +411,7 @@ const OperationStatusPage = () => {
                           from,
                           to,
                         }}
+                        chartData={chartData}
                       />
                     </Tab>
                   ))}

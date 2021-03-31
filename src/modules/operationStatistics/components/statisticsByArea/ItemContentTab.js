@@ -4,7 +4,9 @@ import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import LineChart2 from 'commons/components/LineChart/LineChart2';
 import { headStatusCompany } from '../constant';
+
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -30,6 +32,7 @@ type Props = {
   tabActive: any,
   dateTime: Object,
   handleSubmitSearch: Function,
+  chartData: any,
 };
 
 const ItemContentTab = ({
@@ -44,6 +47,7 @@ const ItemContentTab = ({
   tabActive,
   dateTime,
   handleSubmitSearch,
+  chartData,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -99,7 +103,30 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          <LineChart2
+            dataChart={chartData}
+            unitLine1="V"
+            unitLine2="A"
+            unitLine3="A"
+            unitLine4="kW"
+            unitLine5="V"
+            optionLine={{
+              line1: paramsSearch?.PVVoltage,
+              line2: paramsSearch?.PVCurrent,
+              line3: paramsSearch?.outputVoltage,
+              line4: paramsSearch?.outputCurrent,
+              line5: paramsSearch?.print,
+            }}
+            typeLine="line"
+            widthLine={2}
+            unitLeft="V"
+            unitRight="A"
+            showPoint1
+            showPoint2
+            showPoint3
+          />
+        </div>
       </div>
 
       <TitleSubHeader title="실시간 계측정보 통계" />
