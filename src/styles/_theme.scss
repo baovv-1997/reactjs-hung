@@ -323,7 +323,10 @@ button.h-32 {
 }
 
 #chart {
+  width: 100% !important;
+
   svg {
     cursor: pointer;
+    width: 100% !important;
   }
 }

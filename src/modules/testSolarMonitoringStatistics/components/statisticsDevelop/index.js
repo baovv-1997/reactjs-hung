@@ -78,8 +78,11 @@ const OperationStatusPage = () => {
 
   switch (paramsSearch?.classification) {
     case 'month':
+      const dateOfMonth = new Date(paramsSearch?.from);
       from = paramsSearch?.from
-        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
+        ? moment(
+            new Date(dateOfMonth.getFullYear(), dateOfMonth.getMonth(), 1)
+          ).format('YYYY-MM-DD')
         : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
             'YYYY-MM-DD'
           );

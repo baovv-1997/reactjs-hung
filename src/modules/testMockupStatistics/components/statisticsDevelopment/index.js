@@ -109,7 +109,6 @@ const OperationStatusPage = () => {
         ? moment(paramsSearch?.to).format('YYYY-MM-DD')
         : moment(date).format('YYYY-MM-DD');
       break;
-      break;
   }
 
   // call api getCardInformation
