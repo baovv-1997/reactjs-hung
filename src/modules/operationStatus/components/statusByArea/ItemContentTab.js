@@ -4,7 +4,7 @@ import Table from 'commons/components/Table';
 import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
-import LineSeriesChart from 'commons/components/LineChart';
+// import LineSeriesChart from 'commons/components/LineChart';
 import { headStatusCompany } from '../constants';
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
@@ -78,14 +78,14 @@ const ItemContentTab = ({
           </div>
         </div>
         <div className="group-char-right">
-          {activeTab === id.toString() && (
+          {/* {activeTab === id.toString() && (
             <LineSeriesChart
               width={1100}
               height={450}
               dataChart={dataChart}
               activeTab={activeTab}
             />
-          )}
+          )} */}
         </div>
       </div>
       <TitleSubHeader title="실시간 계측 현황" />

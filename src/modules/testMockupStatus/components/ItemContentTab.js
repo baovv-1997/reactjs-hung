@@ -75,8 +75,9 @@ const ItemContentTab = ({
               line2: paramsSearch?.insolation,
               line3: paramsSearch?.performance,
             }}
-            type="minute"
             showPoint3
+            showPoint1
+            showPoint2
           />
         </div>
       </div>

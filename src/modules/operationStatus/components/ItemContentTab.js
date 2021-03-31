@@ -12,7 +12,7 @@ import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
 import { operator_event_filter } from 'constants/optionCheckbox';
 
-import LineSeriesChart from 'commons/components/LineChart';
+// import LineSeriesChart from 'commons/components/LineChart';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
@@ -110,14 +110,14 @@ const ItemContentTab = ({
         </div>
 
         <div className="group-char-right">
-          {activeTab === id.toString() && (
+          {/* {activeTab === id.toString() && (
             <LineSeriesChart
               width={1100}
               height={450}
               dataChart={dataChart}
               activeTab={activeTab}
             />
-          )}
+          )} */}
         </div>
       </div>
 
@@ -162,7 +162,7 @@ const ItemContentTab = ({
         />
         <div className="group-btn-download">
           <ButtonDownExcel
-            linkDownTable={`operator/status/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`}
+            linkDownTable={`operator/event?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`}
             keyName="solar"
           />
         </div>

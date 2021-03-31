@@ -76,14 +76,6 @@ const OperationStatusPage = () => {
       '0',
     moduleColor: dataCardOperation?.color,
   };
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-        null,
-    });
-  }, [listInverterTest]);
   const dispatch = useDispatch();
 
   useEffect(() => {

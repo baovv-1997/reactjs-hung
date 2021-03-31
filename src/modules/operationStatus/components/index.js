@@ -359,13 +359,41 @@ const OperationStatusPage = ({ location }: Props) => {
                             inverterID: rawItem?.ds_id,
                             installationLocation: rawItem?.pos_name,
                             inverterName: rawItem?.ds_name,
-                            moduleTemperature: `${rawItem?.dm_pv_voltage}V`,
-                            outsideTemperature: `${rawItem?.dm_pv_current}A`,
-                            horizontalInsolation: `${rawItem?.dm_o_voltage}V`,
-                            gradientInsolation: `${rawItem?.dm_o_current}A`,
-                            powerGeneration: `${rawItem?.dm_power}KW`,
-                            cumulativePowerGeneration: `${rawItem?.dm_power_eff}%`,
-                            rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
+                            moduleTemperature:
+                              rawItem?.dm_pv_voltage &&
+                              `${
+                                rawItem?.dm_pv_voltage.toLocaleString('en') ||
+                                '0'
+                              }V`,
+                            outsideTemperature:
+                              rawItem?.dm_pv_current &&
+                              `${
+                                rawItem?.dm_pv_current.toLocaleString('en') ||
+                                '0'
+                              }A`,
+                            horizontalInsolation:
+                              rawItem?.dm_o_voltage &&
+                              `${
+                                rawItem?.dm_o_voltage.toLocaleString('en') ||
+                                '0'
+                              }V`,
+                            gradientInsolation:
+                              rawItem?.dm_o_current &&
+                              `${
+                                rawItem?.dm_o_current.toLocaleString('en') ||
+                                '0'
+                              }A`,
+                            powerGeneration:
+                              rawItem?.dm_power &&
+                              `${
+                                rawItem?.dm_power.toLocaleString('en') || '0'
+                              }KW`,
+                            cumulativePowerGeneration: `${rawItem?.dm_performance_ratio}%`,
+                            rateOfPowerGeneration:
+                              rawItem?.dm_rad &&
+                              `${
+                                rawItem?.dm_rad.toLocaleString('en') || '0'
+                              }HZ`,
                           }))
                         }
                         optionFilters={optionFilters}

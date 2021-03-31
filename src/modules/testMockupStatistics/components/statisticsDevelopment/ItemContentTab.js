@@ -15,6 +15,7 @@ import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import { LineChart } from 'commons/components/LineChart/lineChart';
 
 type Props = {
   dataTableStatisticsCompany: any,
@@ -26,8 +27,8 @@ type Props = {
   handleChangeSearch: Function,
   paramsSearch: Object,
   dataTableBottom: Array<{}>,
-  handleSubmitSearch: Function,
   timeDate: Object,
+  dataChart: any,
 };
 
 const ItemContentTab = ({
@@ -40,23 +41,24 @@ const ItemContentTab = ({
   handleChangeSearch,
   paramsSearch,
   dataTableBottom,
-  handleSubmitSearch,
   timeDate,
+  dataChart,
 }: Props) => {
+  console.log(dataChart, 'dataChart');
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량(KWh)',
+      name: '발전량(kWh)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: '일사량 ℃',
+      name: '일사량(W/㎡)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '성능비 kWh/㎡·10초',
+      name: '성능비(%)',
       color: '#fe8224',
     },
   ];
@@ -79,7 +81,20 @@ const ItemContentTab = ({
             <LengthChart dataLengthChart={dataLengthChart} />
           </div>
         </div>
-        <div className="group-char-right">{/* Add  Chart */}</div>
+        <div className="group-char-right">
+          <LineChart
+            dataChart={dataChart}
+            unitLine1="kWh"
+            unitLine2="W/㎡"
+            unitLine3="%"
+            optionLine={{
+              line1: paramsSearch?.power,
+              line2: paramsSearch?.insolation,
+              line3: paramsSearch?.ratio,
+            }}
+            showPoint3
+          />
+        </div>
       </div>
       <TitleSubHeader title="발전 통계" />
       <GroupActionDownload
