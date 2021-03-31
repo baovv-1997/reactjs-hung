@@ -42,12 +42,12 @@ export const LabelStatus = ({
       <img src={icon} alt="Icon" className="label-status__icon" />
       <div className="label-status__body">
         {data &&
-          data.map((item) => {
+          data.map((item, index) => {
             let itemUnit = '';
             if (isPower && item === data[0]) itemUnit = 'kWh';
             else if (isPower && item === data[1]) itemUnit = '%';
             return (
-              <div className="label-status__content">
+              <div className="label-status__content" key={index + 1}>
                 <p className="label-status__title">{item.title}</p>
                 <div className="label-status__group-value">
                   <p className="label-status__value">{item.value}</p>

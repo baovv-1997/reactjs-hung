@@ -10,6 +10,7 @@ import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
 import LineChart from 'commons/components/LineChart/lineChart';
+import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 
 type Props = {
   dataTableStatisticsCompany: any,
@@ -35,17 +36,17 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량 kWh',
+      name: '발전량(kWh)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: '일사량 ℃',
+      name: '일사량(W/㎡)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '성능비 kWh/㎡·10초',
+      name: '성능비(%)',
       color: '#fe8224',
     },
   ];
@@ -75,11 +76,12 @@ const ItemContentTab = ({
               unitLine2="W/㎡"
               unitLine3="%"
               optionLine={{
-                line1: paramsSearch?.generation,
-                line2: paramsSearch?.insolation,
-                line3: paramsSearch?.performance,
+                line1: paramsSearch?.insolation,
+                line2: paramsSearch?.performance,
+                line3: paramsSearch?.generation,
               }}
-              type={paramsSearch?.classification}
+              showPoint3
+              type={CONTRACT_FORMAT_TIME_CHART[paramsSearch?.classification]}
             />
           )}
         </div>
