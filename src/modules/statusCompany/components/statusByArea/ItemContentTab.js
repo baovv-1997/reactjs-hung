@@ -21,6 +21,7 @@ type Props = {
   totalRawData: number,
   activeTab: any,
   chartData: any,
+  id: number,
 };
 
 const ItemContentTab = ({
@@ -33,6 +34,7 @@ const ItemContentTab = ({
   totalRawData,
   activeTab,
   chartData,
+  id,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -71,7 +73,7 @@ const ItemContentTab = ({
           </div>
         </div>
         <div className="group-char-right">
-          {chartData && (
+          {activeTab === id.toString() && chartData && (
             <LineChart
               dataChart={chartData}
               unitLine1="kWh"

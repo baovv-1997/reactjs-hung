@@ -329,5 +329,10 @@ button.h-32 {
     cursor: pointer;
     width: 100% !important;
     min-width: pxToRem(1000) !important;
+
+    >rect {
+      min-width: pxToRem(1000) !important;
+      width: 100% !important;
+    }
   }
 }
