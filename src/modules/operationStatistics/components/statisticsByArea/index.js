@@ -412,6 +412,7 @@ const OperationStatusPage = () => {
                           to,
                         }}
                         chartData={chartData}
+                        id={com.id}
                       />
                     </Tab>
                   ))}
