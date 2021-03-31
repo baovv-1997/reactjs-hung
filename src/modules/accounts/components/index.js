@@ -401,7 +401,6 @@ const SignUp = () => {
               onChange={(e) => handleChange(e.target.value, 'username')}
               onKeyPress={handleKeyDown}
             />
-
             <Input
               placeholder="비밀번호를 입력하세요."
               type="password"
