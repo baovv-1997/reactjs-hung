@@ -238,6 +238,10 @@
         color: $bg-button;
       }
     }
+
+    .group-char-right {
+      width: calc(100% - #{pxToRem(150)});
+    }
   }
 }
 
