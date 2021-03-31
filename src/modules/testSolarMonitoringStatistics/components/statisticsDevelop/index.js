@@ -33,8 +33,8 @@ const OperationStatusPage = () => {
   const defaultSearch = {
     page: 1,
     classification: 'minute',
-    startDate: new Date(),
-    endDate: new Date(),
+    from: new Date(),
+    to: new Date(),
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
@@ -74,29 +74,31 @@ const OperationStatusPage = () => {
 
   let from = null;
   let to = null;
+  const date = new Date();
 
   switch (paramsSearch?.classification) {
-    case 'minute':
-    case 'hour':
-    case 'day':
-      from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
-        : null;
-      to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
-        : null;
-      break;
     case 'month':
-      from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM')
-        : null;
-      to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM')
-        : null;
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
+        : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
+            'YYYY-MM-DD'
+          );
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
+        : moment(new Date(date.getFullYear(), date.getMonth() + 1, 0)).format(
+            'YYYY-MM-DD'
+          );
       break;
     default:
+      from = paramsSearch?.from
+        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
+        : moment(date).format('YYYY-MM-DD');
+      to = paramsSearch?.to
+        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
+        : moment(date).format('YYYY-MM-DD');
       break;
   }
+
   useEffect(() => {
     dispatch(CommonAction.getListDevice());
     dispatch(CommonAction.getCompanyList());
@@ -194,8 +196,8 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           classification: item,
-          startDate: new Date(),
-          endDate: new Date(),
+          from: new Date(),
+          to: new Date(),
         });
         break;
       case 'pagination':
@@ -212,16 +214,16 @@ const OperationStatusPage = () => {
         });
         break;
 
-      case 'startDate':
+      case 'from':
         setParamsSearch({
           ...paramsSearch,
-          startDate: item,
+          from: item,
         });
         break;
-      case 'endDate':
+      case 'to':
         setParamsSearch({
           ...paramsSearch,
-          endDate: item,
+          to: item,
         });
         break;
       case 'isSubmitSearch':
