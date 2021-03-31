@@ -73,13 +73,13 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
               <div className="input-date">
                 <DatePicker
                   selected={paramsSearch?.from}
-                  onChange={(date) => handleChangeSearch(date, 'startDate')}
+                  onChange={(date) => handleChangeSearch(date, 'from')}
                   dateFormat={
                     CONTRACT_FORMAT_DATE[paramsSearch?.classification]
                   }
                   minDate={
                     new Date(
-                      moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
+                      moment(paramsSearch?.to, 'YYYY-MM-DD').subtract(
                         30,
                         'days'
                       )
@@ -103,16 +103,16 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
                     <span>~</span>
                     <div className="input-date">
                       <DatePicker
-                        selected={paramsSearch?.endDate}
-                        onChange={(date) => handleChangeSearch(date, 'endDate')}
+                        selected={paramsSearch?.to}
+                        onChange={(date) => handleChangeSearch(date, 'to')}
                         dateFormat={
                           CONTRACT_FORMAT_DATE[paramsSearch?.classification]
                         }
                         locale="ko"
-                        minDate={paramsSearch?.startDate}
+                        minDate={paramsSearch?.from}
                         maxDate={
                           new Date(
-                            moment(paramsSearch?.startDate, 'YYYY-MM-DD').add(
+                            moment(paramsSearch?.from, 'YYYY-MM-DD').add(
                               30,
                               'days'
                             )
