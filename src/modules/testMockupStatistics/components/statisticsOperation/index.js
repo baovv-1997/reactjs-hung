@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
-import * as SignInAction from 'modules/accounts/redux';
 import * as CommonAction from 'commons/redux';
 import { getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
@@ -92,32 +91,30 @@ const OperationStatusPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  let toDate =
-    (paramsSearch?.startDate &&
-      moment(paramsSearch?.startDate).format('YYYY')) ||
-    null;
-  let fromDate =
-    (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
-    null;
+  let from = null;
+  let to = null;
 
-  if (paramsSearch && paramsSearch.classification === 'year') {
-    toDate =
-      (paramsSearch?.startDate &&
-        moment(paramsSearch?.startDate).format('YYYY')) ||
-      null;
-    fromDate =
-      (paramsSearch?.endDate && moment(paramsSearch?.endDate).format('YYYY')) ||
-      null;
-  }
-  if (paramsSearch && paramsSearch.classification === 'month') {
-    toDate =
-      (paramsSearch?.startDate &&
-        moment(paramsSearch?.startDate).format('YYYY-MM')) ||
-      null;
-    fromDate =
-      (paramsSearch?.endDate &&
-        moment(paramsSearch?.endDate).format('YYYY-MM')) ||
-      null;
+  switch (paramsSearch?.classification) {
+    case 'minute':
+    case 'hour':
+    case 'day':
+      from = paramsSearch?.startDate
+        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+        : null;
+      to = paramsSearch?.endDate
+        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+        : null;
+      break;
+    case 'month':
+      from = paramsSearch?.startDate
+        ? moment(paramsSearch?.startDate).format('YYYY-MM')
+        : null;
+      to = paramsSearch?.endDate
+        ? moment(paramsSearch?.endDate).format('YYYY-MM')
+        : null;
+      break;
+    default:
+      break;
   }
 
   // call api getCardInformation
@@ -146,9 +143,8 @@ const OperationStatusPage = () => {
     handleGetDataTrendChart({
       inverter_id: paramsSearch?.company,
       type: paramsSearch?.classification || null,
-      from: fromDate,
-      to: toDate,
-      ds_id: paramsSearch?.inverter?.id,
+      from,
+      to,
     });
   }, [
     handleGetDataTrendChart,
@@ -169,8 +165,8 @@ const OperationStatusPage = () => {
     handleGetDataRawTable({
       inverter_id: paramsSearch?.company,
       type: paramsSearch?.classification || null,
-      from: fromDate,
-      to: toDate,
+      from,
+      to,
       per_page: paramsSearch?.pagination?.value,
       page: paramsSearch?.page,
     });
@@ -268,27 +264,6 @@ const OperationStatusPage = () => {
           endDate: null,
         });
         break;
-      case 'inverter':
-        setParamsSearch({
-          ...paramsSearch,
-          inverter: item,
-        });
-        break;
-      case 'vendorCompany':
-        setParamsSearch({
-          ...paramsSearch,
-          vendorCompany: item,
-          inverter: null,
-        });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 999999999,
-            com_id: item?.value,
-            type: '2',
-          })
-        );
-
-        break;
       case 'startDate':
         setParamsSearch({
           ...paramsSearch,
@@ -314,10 +289,6 @@ const OperationStatusPage = () => {
     }
   };
 
-  const handleDownloadTrend = (name) => {
-    console.log(name, 'download Trend');
-  };
-
   return (
     <>
       {(isProcessing || isLoading) && <Loading />}
@@ -333,7 +304,6 @@ const OperationStatusPage = () => {
             <ItemContentTab
               dataBoxContent={dataBoxContent}
               listMockupDataCompany={listDataTableRawOperation}
-              handleDownloadTrend={handleDownloadTrend}
               totalPage={total}
               perPage={paramsSearch?.pagination?.value}
               totalPage2={totalEventPage}
@@ -346,6 +316,7 @@ const OperationStatusPage = () => {
               optionFilters={optionFilters}
               handleChangeSearch={handleChangeSearch}
               listStatusCompanySelect={comList && comList.slice(1)}
+              timeDate={{ from, to }}
             />
           </div>
         </div>
