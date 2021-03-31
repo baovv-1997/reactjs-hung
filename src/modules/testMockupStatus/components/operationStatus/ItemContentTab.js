@@ -97,7 +97,6 @@ const ItemContentTab = ({
               line2: paramsSearch?.ACCurrent,
               line3: paramsSearch?.ACPower,
             }}
-            type="minute"
             typeLine="line"
             widthLine={2}
             unitLeft="V"

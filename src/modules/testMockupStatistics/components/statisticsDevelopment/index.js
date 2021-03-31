@@ -41,9 +41,9 @@ const OperationStatusPage = () => {
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
-    power: false,
-    insolation: false,
-    ratio: false,
+    power: true,
+    insolation: true,
+    ratio: true,
     pagination: defaultOption,
     pagination2: defaultOption,
     isSubmitSearch: false,
@@ -67,15 +67,6 @@ const OperationStatusPage = () => {
         dataBoxCard.prod_sum.toLocaleString('en')) ||
       0,
   };
-
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-        null,
-    });
-  }, [listInverterTest]);
 
   const dispatch = useDispatch();
   useEffect(() => {

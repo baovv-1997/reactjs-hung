@@ -84,7 +84,6 @@ const ItemContentTab = ({
                 line3: paramsSearch?.performance,
               }}
               showPoint3
-              type="minute"
             />
           )}
         </div>
@@ -94,7 +93,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`generator?com_id=${paramsSearch?.company}&inverter_id=${activeTab}`}
+        linkDownTable={`generator/statistic?com_id=${paramsSearch?.company}&inverter_id=${activeTab}`}
       />
       <div>
         <Table
