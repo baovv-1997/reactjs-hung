@@ -19,6 +19,7 @@ const StatusByAreaCompany = () => {
     total,
     dataChart,
   } = useSelector((state) => state?.testSolarMonitoringStatus);
+  const { companyId } = useSelector((state) => state?.solarDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { comList } = useSelector((state) => state?.commons);
   const defaultOption = {
@@ -29,7 +30,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: (comList && comList[1] && comList[1]?.id) || null,
+    company: companyId || (comList && comList[1] && comList[1]?.id) || null,
     mockupType: null,
     parkingLot: null,
     power: true,

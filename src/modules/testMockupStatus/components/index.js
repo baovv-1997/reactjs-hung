@@ -19,8 +19,10 @@ const StatusByAreaCompany = () => {
     total,
     dataChart,
   } = useSelector((state) => state?.testMockupStatus);
+  const { inverterId } = useSelector((state) => state?.testDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { deviceList } = useSelector((state) => state?.commons);
+  // const {companyId}
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
   const defaultOption = {
@@ -32,6 +34,7 @@ const StatusByAreaCompany = () => {
   const defaultSearch = {
     page: 1,
     company:
+      inverterId ||
       (listInverterTest && listInverterTest[0] && listInverterTest[0]?.id) ||
       null,
     mockupType: null,

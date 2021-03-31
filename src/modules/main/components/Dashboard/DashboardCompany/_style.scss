@@ -25,6 +25,7 @@
     padding: pxToRem(20);
     border-radius: pxToRem(15);
     background-color: $color-gray1;
+    cursor: pointer;
 
     .company-name {
       color: $bg-button;

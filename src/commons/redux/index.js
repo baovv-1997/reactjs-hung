@@ -32,6 +32,7 @@ const initialState = {
   comList: [],
   deviceList: [],
   eventList: [],
+  eventNotifications: [],
   optionFilters: [],
   isProcessing: false,
 };
@@ -190,6 +191,19 @@ const commonSilice = createSlice({
       state.type = action.type;
       state.optionFilters = action.payload;
     },
+    getEventNotification: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getEventNotificationSuccess: (state, action) => {
+      state.type = action.type;
+      state.eventNotifications = action.data;
+      // state.isProcessing = false;
+    },
+    getEventNotificationFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = false;
+    },
   },
 });
 
@@ -220,6 +234,9 @@ export const {
   updateEventSuccess,
   updateEventFailed,
   addEventFilter,
+  getEventNotification,
+  getEventNotificationSuccess,
+  getEventNotificationFailed,
 } = actions;
 
 export default reducer;
