@@ -2,11 +2,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import IMAGES from 'themes/images';
-import MainLayout from 'layout/MainLayout';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import TitleHeader from 'commons/components/TitleHeader';
 import FormEdit from './FormEdit';
 import { getAccountList } from '../../redux';
+import Loading from 'commons/components/Loading';
 
 type Props = {
   match: {
@@ -30,7 +30,8 @@ const EditAccount = ({ match, history }: Props) => {
   }, [id]);
 
   return (
-    <MainLayout isProcessing={isProcessing}>
+    <>
+      {isProcessing && <Loading />}
       <div className="account">
         <TitleHeader
           title="관리자 계정 확인"
@@ -44,7 +45,7 @@ const EditAccount = ({ match, history }: Props) => {
           // deviceList={accountDetail && accountDetail.devices}
         />
       </div>
-    </MainLayout>
+    </>
   );
 };
 
