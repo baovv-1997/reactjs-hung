@@ -83,39 +83,44 @@ const OperationStatusPage = () => {
 
   let from = null;
   let to = null;
+  const date = new Date();
 
   switch (paramsSearch?.classification) {
     case 'minute':
       from = paramsSearch?.startDate
         ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
-        : moment(new Date()).format('YYYY-MM-DD');
+        : moment(date).format('YYYY-MM-DD');
       to = paramsSearch?.endDate
         ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
-        : moment(new Date()).format('YYYY-MM-DD');
+        : moment(date).format('YYYY-MM-DD');
       break;
     case 'hour':
       from = paramsSearch?.startDate
         ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
-        : moment(new Date()).format('YYYY-MM-DD');
+        : moment(date).format('YYYY-MM-DD');
       to = paramsSearch?.endDate
         ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
-        : moment(new Date()).format('YYYY-MM-DD');
+        : moment(date).format('YYYY-MM-DD');
       break;
     case 'day':
       from = paramsSearch?.startDate
         ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
-        : moment(new Date()).format('YYYY-MM-DD');
+        : moment(date).format('YYYY-MM-DD');
       to = paramsSearch?.endDate
         ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
-        : moment(new Date()).format('YYYY-MM-DD');
+        : moment(date).format('YYYY-MM-DD');
       break;
     case 'month':
       from = paramsSearch?.startDate
-        ? moment(paramsSearch?.startDate).format('YYYY-MM')
-        : moment(new Date()).format('YYYY-MM');
+        ? moment(paramsSearch?.startDate).format('YYYY-MM-DD')
+        : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
+            'YYYY-MM-DD'
+          );
       to = paramsSearch?.endDate
-        ? moment(paramsSearch?.endDate).format('YYYY-MM')
-        : moment(new Date()).format('YYYY-MM');
+        ? moment(paramsSearch?.endDate).format('YYYY-MM-DD')
+        : moment(new Date(date.getFullYear(), date.getMonth() + 1, 0)).format(
+            'YYYY-MM-DD'
+          );
       break;
     default:
       break;
