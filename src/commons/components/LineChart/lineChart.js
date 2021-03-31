@@ -67,21 +67,21 @@ Props) => {
   const customizeText = (arg) => {
     const date = arg.value.getDate();
     console.log('arg', date);
-    switch (type) {
-      case 'seconds':
-        break;
-      case 'minutes':
-        break;
-      case 'days':
-        break;
-      case 'months':
-        const labelText = arg.value.getDate();
-        return `${labelText}`;
-      default:
-        break;
-    }
-    // const labelText =
-    //       arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
+    // switch (type) {
+    //   case 'seconds':
+    //     break;
+    //   case 'minutes':
+    //     break;
+    //   case 'days':
+    //     break;
+    //   case 'months':
+    //     const labelText = arg.value.getDate();
+    //     return `${labelText}`;
+    //   default:
+    //     break;
+    // }
+    const labelText = arg?.valueText.replace(/AM|PM/gi, '') || arg?.valueText;
+    return `${labelText}`;
   };
 
   const date = moment(new Date()).format('YYYY-MM-DD');
@@ -185,15 +185,15 @@ Props) => {
                 }
               : null
           }
-          argumentType="datetime"
-          aggregationInterval={type}
-          tickInterval={type}
-          minorTickInterval={type}
+          // argumentType="datetime"
+          // aggregationInterval={type}
+          // tickInterval={type}
+          // minorTickInterval={type}
         >
           {/* <Label format="S" /> */}
           <Label
-            // wordWrap="none"
-            // overlappingBehavior={'none'}
+            wordWrap="breakWord"
+            overlappingBehavior={'none'}
             customizeText={customizeText}
           />
         </ArgumentAxis>
