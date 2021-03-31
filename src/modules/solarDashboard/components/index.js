@@ -2,12 +2,15 @@ import { Card } from 'commons/components/Card';
 import Loading from 'commons/components/Loading';
 import { TitleHeader } from 'commons/components/TitleHeader';
 // import MainLayout from 'layout/MainLayout';
+import ROUTERS from 'constants/routers';
 import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListDeviceTestSolarDashboard } from '../redux';
+import { useHistory } from 'react-router-dom';
+import { getListDeviceTestSolarDashboard, setCompanyId } from '../redux';
 
 const SolarDashboard = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const { listDevice, total, isLoading } = useSelector(
@@ -28,6 +31,11 @@ const SolarDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleCardClick = (id) => {
+    history.push(ROUTERS.TEST_SOLAR_STATUS_DEVELOP);
+    dispatch(setCompanyId({ id }));
+  };
+
   const renderInverter =
     listDevice &&
     listDevice.map((item) => {
@@ -41,22 +49,19 @@ const SolarDashboard = () => {
         cumulativeElectric,
         event,
       } = item;
-      const isEvent = Boolean(event);
       return (
         <Card
           key={id}
           customClass="card-company"
           isCardCompany
           title={name}
-          isEvent={isEvent}
+          isEvent={!!event}
           amountElectricDay={amountElectricDay}
           amountElectricMonth={amountElectricMonth}
           electricRealtime={electricRealtime}
           ratePower={ratePower}
           cumulativeElectric={cumulativeElectric}
-          titleClick={() => {
-            console.log(id);
-          }}
+          onClick={() => handleCardClick(id)}
         />
       );
     });

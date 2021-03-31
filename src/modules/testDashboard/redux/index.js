@@ -7,6 +7,7 @@ const testDashBoardSlice = createSlice({
     isLoading: false,
     type: '',
     listDevice: [],
+    inverterId: [],
     total: 0,
     current_page: 0,
   },
@@ -39,6 +40,10 @@ const testDashBoardSlice = createSlice({
       state.isLoading = false;
       state.type = action.type;
     },
+    setInverterId: (state, action) => {
+      state.type = action.type;
+      state.inverterId = action.payload.id;
+    },
   },
 });
 
@@ -48,6 +53,7 @@ export const {
   getListDeviceTestDashboard,
   getListDeviceTestDashboardSuccess,
   getListDeviceTestDashboardFailed,
+  setInverterId,
 } = actions;
 
 export default reducer;

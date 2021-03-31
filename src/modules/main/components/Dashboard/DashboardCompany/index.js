@@ -1,15 +1,18 @@
 import { Card } from 'commons/components/Card';
 import Loading from 'commons/components/Loading';
 import TitleHeader from 'commons/components/TitleHeader';
+import ROUTERS from 'constants/routers';
 // import MainLayout from 'layout/MainLayout';
 import { handleGroupItem, spliceCompanyInverter } from 'helpers';
-import { getListCompanyInverters } from 'modules/main/redux';
+import { getListCompanyInverters, setCompanyId } from 'modules/main/redux';
 import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const DashboardCompany = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { total, listCompanyInverters, perPage, isLoading } = useSelector(
     (state) => state?.main
   );
@@ -35,6 +38,11 @@ const DashboardCompany = () => {
         page: pageNumber,
       })
     );
+  };
+
+  const handleCompanyClick = (id) => {
+    history.push(ROUTERS.STATUS_COMPANY);
+    dispatch(setCompanyId({ id }));
   };
 
   // Group item if has company duplicate
@@ -87,6 +95,8 @@ const DashboardCompany = () => {
           }`}
           // eslint-disable-next-line react/no-array-index-key
           key={index}
+          onClick={() => handleCompanyClick(item[0].id)}
+          role="presentation"
         >
           <div
             className={`company-name ${

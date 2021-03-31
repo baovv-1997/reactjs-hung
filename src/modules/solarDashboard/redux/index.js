@@ -6,6 +6,7 @@ const solarDashBoardSlice = createSlice({
   initialState: {
     isLoading: false,
     listDevice: [],
+    companyId: null,
     type: '',
     total: 0,
     current_page: 0,
@@ -39,6 +40,10 @@ const solarDashBoardSlice = createSlice({
       state.isLoading = false;
       state.type = action.type;
     },
+    setCompanyId: (state, action) => {
+      state.type = action.type;
+      state.companyId = action.payload.id;
+    },
   },
 });
 
@@ -48,6 +53,7 @@ export const {
   getListDeviceTestSolarDashboard,
   getListDeviceTestSolarDashboardSuccess,
   getListDeviceTestSolarDashboardFailed,
+  setCompanyId,
 } = actions;
 
 export default reducer;

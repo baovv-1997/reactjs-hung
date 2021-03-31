@@ -1,19 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// @flow
-import React, { memo, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEventNotification } from 'commons/redux';
 import ModalEvent from './ModalEvent';
 
-type Props = {
-  eventCount?: number,
-};
-
-const Header = ({ eventCount = 0 }: Props) => {
+const Header = () => {
+  const dispatch = useDispatch();
+  const { eventNotifications } = useSelector((state) => state?.commons);
   const [isShow, setIsShow] = useState(false);
+  const [notifications, setNotifications] = useState(eventNotifications);
+
+  const solarEvent = notifications.filter((item) => item.ds_type === '0');
+  const testMockupEvent = notifications.filter((item) => item.ds_type === '2');
+  const testSolarEvent = notifications.filter((item) => item.ds_type === '3');
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(getEventNotification());
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(getEventNotification());
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   // handle click outside event
   useClickOutside(
@@ -25,6 +41,15 @@ const Header = ({ eventCount = 0 }: Props) => {
     },
     { iconRef }
   );
+
+  const handleEventClick = (id) => {
+    console.log(id);
+    // GOIT API
+    // Hard code
+
+    setNotifications(notifications.filter((x) => x.id !== id));
+  };
+  console.log('new notifications', notifications);
 
   return (
     <div className="header">
@@ -39,8 +64,8 @@ const Header = ({ eventCount = 0 }: Props) => {
             role="presentation"
             ref={iconRef}
           />
-          {eventCount > 0 ? (
-            <span className="header__notification">{eventCount}</span>
+          {notifications.length > 0 ? (
+            <span className="header__notification">{notifications.length}</span>
           ) : (
             ''
           )}
@@ -49,15 +74,18 @@ const Header = ({ eventCount = 0 }: Props) => {
         <div className="header__label-event">
           <span className="header__label-content">이벤트발생</span>
           {/* Modal event */}
-          <ModalEvent isShow={isShow} wrapperRef={wrapperRef} />
+          <ModalEvent
+            isShow={isShow}
+            wrapperRef={wrapperRef}
+            handleEventClick={handleEventClick}
+            solarEvent={solarEvent}
+            testMockupEvent={testMockupEvent}
+            testSolarEvent={testSolarEvent}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-Header.defaultProps = {
-  eventCount: 0,
-};
-
-export default memo<Props>(Header);
+export default Header;

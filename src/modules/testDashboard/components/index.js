@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import Loading from 'commons/components/Loading';
-import { getListDeviceTestDashboard } from '../redux';
+import { getListDeviceTestDashboard, setInverterId } from '../redux';
 
 const TestDashboard = () => {
   const dispatch = useDispatch();
@@ -34,6 +34,11 @@ const TestDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleCardClick = (id) => {
+    history.push(ROUTERS.TEST_MOCKUP_STATISTICS_DEVELOP);
+    dispatch(setInverterId({ id }));
+  };
+
   const renderInverter =
     listDevice &&
     listDevice.map((item) => {
@@ -47,23 +52,19 @@ const TestDashboard = () => {
         cumulativeElectric,
         event,
       } = item;
-      const isEvent = Boolean(event);
       return (
         <Card
           key={id}
           customClass="card-company"
           isCardCompany
           title={name}
-          isEvent={isEvent}
+          isEvent={!!event}
           amountElectricDay={amountElectricDay}
           amountElectricMonth={amountElectricMonth}
           electricRealtime={electricRealtime}
           ratePower={ratePower}
           cumulativeElectric={cumulativeElectric}
-          onClick={() => {
-            // them id sau router
-            history.push(`${ROUTERS.TEST_MOCKUP_STATUS}`);
-          }}
+          onClick={() => handleCardClick(id)}
         />
       );
     });
