@@ -38,7 +38,6 @@ const EventDetail = ({ match, location }: Props) => {
   const userInfo = useSelector((state) => state.account.userInfo);
 
   const history = useHistory();
-
   const [modalConform, setModalConfirm] = useState({
     isShow: false,
     content: '이벤트 현황을 삭제하시겠습니까?',

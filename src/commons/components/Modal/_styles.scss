@@ -5,6 +5,10 @@
     z-index: 9998;
   }
 
+  &.z-index9999 {
+    z-index: 9999;
+  }
+
   .modal-dialog {
     width: 100%;
     height: 100%;
@@ -23,6 +27,8 @@
 }
 
 .modal-backdrop {
+  z-index: 9999;
+
   &.show {
     opacity: 0.6;
   }

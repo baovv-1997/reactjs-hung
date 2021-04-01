@@ -36,6 +36,7 @@ type Props = {
   dataChartOperation: Object,
   optionFilters: Object,
   timeDate: Object,
+  handleClickDetail: Function,
 };
 
 const ItemContentTab = ({
@@ -52,6 +53,7 @@ const ItemContentTab = ({
   dataChartOperation,
   optionFilters,
   timeDate,
+  handleClickDetail,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -205,6 +207,7 @@ const ItemContentTab = ({
         }}
         listOption={operator_event_filter}
         optionDefault={optionFilters}
+        onClickRow={handleClickDetail}
       />
       <div className="opacity d-block pagination mt-0">
         {totalPage2 > perPage2 && (
