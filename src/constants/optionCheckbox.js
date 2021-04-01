@@ -31,7 +31,7 @@ export const registerDeviceOptions = [
   {
     name: 'test-mockup',
     key: '3',
-    label: '테스트(실증단지)',
+    label: '테스트(목업)',
   },
 ];
 

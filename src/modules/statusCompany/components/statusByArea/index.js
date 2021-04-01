@@ -286,7 +286,7 @@ const StatusByAreaCompany = () => {
                               value: cardInfo?.module_temp,
                             },
                             {
-                              title: '최고 모듈 온도',
+                              title: '일일 최고 모듈 온도',
                               value: cardInfo?.max_module_temp,
                             },
                           ],
@@ -295,10 +295,10 @@ const StatusByAreaCompany = () => {
                           type: 'insolation',
                           data: [
                             {
-                              title: '수평 일사량',
+                              title: '현재 일사량',
                               value: cardInfo?.current_rad,
                             },
-                            { title: '경사 일사량', value: cardInfo?.max_rad },
+                            { title: '최고 일사량', value: cardInfo?.max_rad },
                           ],
                         }}
                         paramsSearch={paramsSearch}

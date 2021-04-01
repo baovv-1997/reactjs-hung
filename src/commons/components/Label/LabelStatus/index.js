@@ -33,7 +33,7 @@ export const LabelStatus = ({
   }
   if (isInsolation) {
     icon = images.icon_insolation;
-    unit = '단위 : kWh/㎡·10초';
+    unit = '단위 : W/㎡';
     color = COLOR_LABEL.INSOLATION;
   }
 

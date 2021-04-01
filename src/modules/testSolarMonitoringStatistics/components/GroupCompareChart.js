@@ -60,7 +60,7 @@ export const GroupCompareChart = ({
         id="print"
         subLabel="p"
         isChecked={paramsSearch?.print}
-        label="수평 일사량"
+        label="출력"
         handleToggleCheckbox={() =>
           handleChangeSearch(paramsSearch?.print, 'print')
         }

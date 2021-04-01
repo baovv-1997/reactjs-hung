@@ -54,7 +54,7 @@ const Header = () => {
   const handleEventClick = (id) => {
     console.log(id);
     // GOIT API
-    // Hard code
+    dispatch(updateCheckEvent({ event_id: id }));
 
     dispatch(updateCheckEvent({ event_id: id }));
 

@@ -87,7 +87,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '최고 모듈 온도',
+        title: '일일 최고 모듈 온도',
         value:
           (dataBox &&
             dataBox?.module_temp &&
@@ -101,7 +101,7 @@ const StatusByAreaCompany = () => {
     type: 'insolation',
     data: [
       {
-        title: '수평 일사량',
+        title: '현재 일사량',
         value:
           (dataBox &&
             dataBox?.max_rad &&
@@ -109,7 +109,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '경사 일사량',
+        title: '최고 일사량',
         value:
           (dataBox &&
             dataBox?.current_rad &&

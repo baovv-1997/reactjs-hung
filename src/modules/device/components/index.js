@@ -143,7 +143,7 @@ const DeviceManagement = ({ history }: Props) => {
           </div>
           <div className="wrapper-device__head-menu__search">
             <div className="wrapper-device__head-menu__search__options">
-              <p className="search-option-title">권한</p>{' '}
+              <p className="search-option-title">분류</p>{' '}
               <span className="search-option-character">|</span>{' '}
               {renderRadioList}
             </div>
@@ -190,7 +190,7 @@ const DeviceManagement = ({ history }: Props) => {
                 history.push(ROUTERS.REGISTER_DEVICE);
               }}
             >
-              검색
+              등록
             </Button>
           </div>
           {totalPage > perPage && (
