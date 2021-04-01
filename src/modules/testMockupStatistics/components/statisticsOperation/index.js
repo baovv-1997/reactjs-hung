@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import TitleHeader from 'commons/components/TitleHeader';
@@ -11,8 +11,18 @@ import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 import Loading from 'commons/components/Loading';
+import ROUTERS from 'constants/routers';
 
-const OperationStatusPage = () => {
+type Props = {
+  location: {
+    pathname: string,
+  },
+  history: {
+    push: Function,
+  },
+};
+
+const OperationStatusPage = ({ location, history }: Props) => {
   const {
     deviceList,
     comList,
@@ -297,6 +307,14 @@ const OperationStatusPage = () => {
     }
   };
 
+  //  click vào table bên dưới đến trang chi tiết
+  const handleClickDetail = (item) => {
+    history.push({
+      pathname: `${ROUTERS.EVENT}/detail/${item.id}`,
+      state: { prevRoute: location.pathname },
+    });
+  };
+
   return (
     <>
       {(isProcessing || isLoading) && <Loading />}
@@ -325,6 +343,7 @@ const OperationStatusPage = () => {
               handleChangeSearch={handleChangeSearch}
               listStatusCompanySelect={comList && comList.slice(1)}
               timeDate={{ from, to }}
+              handleClickDetail={handleClickDetail}
             />
           </div>
         </div>
@@ -333,4 +352,4 @@ const OperationStatusPage = () => {
   );
 };
 
-export default OperationStatusPage;
+export default memo<Props>(OperationStatusPage);
