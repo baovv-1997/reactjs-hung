@@ -30,7 +30,6 @@ const StatusByAreaCompany = () => {
     value: 6,
     label: '6 개씩 보기',
   };
-
   const defaultSearch = {
     page: 1,
     company:
@@ -174,6 +173,7 @@ const StatusByAreaCompany = () => {
     paramsSearch?.page,
     paramsSearch?.pagination?.value,
     randomNumber,
+    paramsSearch?.company,
   ]);
 
   const handleChangeSearch = (item, name) => {

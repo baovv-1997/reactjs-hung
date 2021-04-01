@@ -7,7 +7,7 @@ const testDashBoardSlice = createSlice({
     isLoading: false,
     type: '',
     listDevice: [],
-    inverterId: [],
+    inverterId: null,
     total: 0,
     current_page: 0,
   },
