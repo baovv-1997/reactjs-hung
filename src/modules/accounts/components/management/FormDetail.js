@@ -115,7 +115,9 @@ const FormDetail = ({ accountDetail, history }: Props) => {
             </div>
           </div>
           <div className="col-2">전화번호</div>
-          <div className="col-4">{formatValue(accountDetail?.phone)}</div>
+          <div className="col-4">
+            {accountDetail?.phone && formatValue(accountDetail?.phone)}
+          </div>
         </div>
         <div className="row">
           <div className="col-2">아이디</div>
