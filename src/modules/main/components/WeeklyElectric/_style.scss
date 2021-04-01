@@ -1,8 +1,25 @@
 .weekly-electric {
   height: pxToRem(263);
+
+  &__body {
+    position: relative;
+  }
+
+  &__sub-unit {
+    position: absolute;
+    display: inline-block;
+    top: pxToRem(11);
+    right: pxToRem(22);
+    font-size: pxToRem(10);
+    font-weight: $medium;
+    line-height: 1.5;
+    letter-spacing: pxToRem(-0.3);
+    color: $color-border-active;
+  }
+
   #chart {
     height: pxToRem(180);
-    color: #135998;
+    color: $blue1;
 
     .dxc-arg-axis {
       opacity: 1;

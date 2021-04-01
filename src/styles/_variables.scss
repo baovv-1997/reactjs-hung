@@ -4,11 +4,9 @@ $viewPort: 360;
 
 // font weight
 
-$Noto-Sans-Font: 'Noto Sans KR',
-'sans-serif';
+$Noto-Sans-Font: 'Noto Sans KR', 'sans-serif';
 $NanumSquare-Font: 'NanumSquare';
-$Roboto-Font: 'Roboto',
-'sans-serif';
+$Roboto-Font: 'Roboto', 'sans-serif';
 $thin: 100;
 $extraLight: 200;
 $light: 300;
@@ -142,7 +140,8 @@ $box-shadow-card: rgba(21, 27, 35, 0.46);
 $text-card: #3b3b3b;
 $color-border-card: #e3e3e3;
 $color-number-card: #232323;
-$progress-default: rgba($color: #d1d1d1,
+$progress-default: rgba(
+  $color: #d1d1d1,
   $alpha: 0.42,
 );
 $color-progress1: #5d86ff;
@@ -182,3 +181,4 @@ $btn-shadow: #696a70;
 $color-light13: #d4d4d4;
 $bg-event: #ff7d7d;
 $light-gray: #f3f3f3;
+$blue1: #135998;

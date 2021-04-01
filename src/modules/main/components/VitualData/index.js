@@ -18,8 +18,8 @@ const VitualData = ({ radiance = 0, temperature = 0 }: Props) => {
       <div className="vitual-data__body main-card__body">
         <div className="vitual-data__item">
           <div className="vitual-data__group-name">
-            <p className="vitual-data__name">수평 일사량</p>
-            <p className="vitual-data__unit">kWh/㎡·10초</p>
+            <p className="vitual-data__name">현재 일사량</p>
+            <p className="vitual-data__unit">W/㎡</p>
           </div>
           <div className="vitual-data__param">
             <img src={IMAGES.motion_weather_blue} alt="motion" />

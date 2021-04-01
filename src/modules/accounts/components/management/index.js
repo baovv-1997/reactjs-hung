@@ -103,7 +103,7 @@ const AccountManagement = ({ history }: Props) => {
             <img src={IMAGES.iconTitle} alt="icon-title-device" />
             <span className="account__head-menu__title__text">계정 관리</span>
             <span className="account__head-menu__title__des">
-              등록되어있는 기기정보들을 관리하실 수 있습니다.
+              등록되어있는 관리자들을 관리하실 수 있습니다.
             </span>
           </div>
           <div className="account__head-menu__search">
@@ -115,7 +115,7 @@ const AccountManagement = ({ history }: Props) => {
 
             <div className="account__head-menu__search__input">
               <Input
-                placeholder="업체명, 구분, 설치위치로 검색해보세요."
+                placeholder="아이디, 담당자, 이메일로 검색해보세요."
                 customClass="wrapper-input-search"
                 onChange={handleInputChange}
                 value={valueSearch}

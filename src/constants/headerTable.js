@@ -13,7 +13,7 @@ export const DeivceDetailHead = [
   },
   {
     id: 4,
-    name: '담당자',
+    name: '담당자 이름',
   },
   {
     id: 5,

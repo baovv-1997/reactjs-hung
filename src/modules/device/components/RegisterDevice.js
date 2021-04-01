@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
 import { TitleHeader } from 'commons/components/TitleHeader';
-import MainLayout from '../../../layout/MainLayout';
+import Loading from 'commons/components/Loading';
 import FormRegister from './FormRegister';
 
 type Props = {
@@ -14,7 +14,8 @@ type Props = {
 const RegisterDevice = ({ history }: Props) => {
   const isLoading = useSelector((state) => state?.device?.isLoading);
   return (
-    <MainLayout isProcessing={isLoading}>
+    <>
+      {isLoading && <Loading />}
       <div className="wrapper-device">
         <div className="wrapper-device__head-menu">
           <TitleHeader
@@ -27,7 +28,7 @@ const RegisterDevice = ({ history }: Props) => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

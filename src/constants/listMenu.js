@@ -160,7 +160,7 @@ export const DASHBOARD = {
 
 export const SETUP = {
   id: 2,
-  label: '기기 관리',
+  label: '관리',
   icon: IMAGES.setup,
   key: 'setup',
   childRoute: [ROUTERS.ACCOUNT_MANAGEMENT, ROUTERS.DEVICE],

@@ -25,6 +25,7 @@ const WeeklyElectric = (measure: Props) => {
       </div>
 
       <div className="weekly-electric__body main-card__body">
+        <p className="weekly-electric__sub-unit">단위(일)</p>
         <Chart id="chart" dataSource={dataChart}>
           <Series argumentField="time" type="bar" />
           <ArgumentAxis>
