@@ -93,6 +93,7 @@ import getStatisticDevelopCardSaga from 'modules/statisticsDevelop/saga/getStati
 
 import logOutSaga from 'modules/accounts/sagas/logOutSaga';
 import getEventNotificationSaga from 'commons/saga/getEventNotificationSaga';
+import updateCheckEventSaga from 'commons/saga/updateCheckEventSaga';
 
 export default function* RootSagas() {
   yield all([
@@ -121,6 +122,7 @@ export default function* RootSagas() {
     addNewEventSaga(),
     updateEventSaga(),
     getEventNotificationSaga(),
+    updateCheckEventSaga(),
     getSearchMainSaga(),
     getCardMeasureMainSaga(),
     getDataChartSaga(),
