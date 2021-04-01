@@ -30,14 +30,22 @@ const SignUp = () => {
     username: '',
     password: '',
   });
-  const [dataRegister, setDataRegister] = useState({
+  const dataRegisterDefault = {
     username: '',
     passwords: '',
     email: '',
     phone: '',
     person: '',
     role: 'admin',
-  });
+  };
+  const itemDeviceDefault = {
+    idx: Math.random(),
+    area: null,
+    company: null,
+    inverter: null,
+    type: null,
+  };
+  const [dataRegister, setDataRegister] = useState(dataRegisterDefault);
   const [error, setError] = useState({
     username: '',
     passwords: '',
@@ -55,15 +63,7 @@ const SignUp = () => {
     content: '',
   });
 
-  const [listItemDevice, setListItemDevice] = useState([
-    {
-      idx: Math.random(),
-      area: null,
-      company: null,
-      inverter: null,
-      type: null,
-    },
-  ]);
+  const [listItemDevice, setListItemDevice] = useState([itemDeviceDefault]);
 
   /** Show popup sign in success */
   useEffect(() => {
@@ -484,14 +484,19 @@ const SignUp = () => {
         isShowHeader
         title="알림"
         isShowIconClose
+        customClass="z-index9999"
         isShowFooter
         handleCloseIcon={() => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
+          setListItemDevice(itemDeviceDefault);
+          setDataRegister([dataRegisterDefault]);
         }}
         handleClose={() => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
+          setListItemDevice([itemDeviceDefault]);
+          setDataRegister(dataRegisterDefault);
         }}
         textBtnRight="확인"
       >
