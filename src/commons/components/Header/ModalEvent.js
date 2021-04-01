@@ -1,6 +1,6 @@
 // @flow
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+// import { useSelector } from 'react-redux';
 
 type Props = {
   isShow?: boolean,

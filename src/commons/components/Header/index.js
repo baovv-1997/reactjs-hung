@@ -1,14 +1,23 @@
+// @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState, useEffect } from 'react';
+import React, {
+  lazy,
+  useRef,
+  useState,
+  useEffect,
+  memo,
+  useCallback,
+} from 'react';
 import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEventNotification } from 'commons/redux';
-import ModalEvent from './ModalEvent';
+import { getEventNotification } from 'modules/accounts/redux';
+// import ModalEvent from './ModalEvent';
 
+const ModalEvent = lazy(() => import('./ModalEvent'));
 const Header = () => {
   const dispatch = useDispatch();
-  const { eventNotifications } = useSelector((state) => state?.commons);
+  const { eventNotifications } = useSelector((state) => state?.account);
   const [isShow, setIsShow] = useState(false);
   const [notifications, setNotifications] = useState(eventNotifications);
 
@@ -19,13 +28,20 @@ const Header = () => {
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
 
+  const getEventNotificationCallback = useCallback(
+    (params) => {
+      dispatch(getEventNotification(params));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
-    dispatch(getEventNotification());
-  }, []);
+    getEventNotificationCallback();
+  }, [getEventNotificationCallback]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(getEventNotification());
+      getEventNotificationCallback();
     }, 10000);
 
     return () => clearInterval(interval);
@@ -43,13 +59,8 @@ const Header = () => {
   );
 
   const handleEventClick = (id) => {
-    console.log(id);
-    // GOIT API
-    // Hard code
-
     setNotifications(notifications.filter((x) => x.id !== id));
   };
-  console.log('new notifications', notifications);
 
   return (
     <div className="header">
@@ -88,4 +99,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo<Props>(Header);

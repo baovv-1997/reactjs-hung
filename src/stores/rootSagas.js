@@ -92,7 +92,7 @@ import getStatisticDevelopChartDataSaga from 'modules/statisticsDevelop/saga/get
 import getStatisticDevelopCardSaga from 'modules/statisticsDevelop/saga/getStatisticDevelopCardSaga';
 
 import logOutSaga from 'modules/accounts/sagas/logOutSaga';
-import getEventNotificationSaga from 'commons/saga/getEventNotificationSaga';
+import getEventNotificationSaga from 'modules/accounts/sagas/getEventNotificationSaga';
 
 export default function* RootSagas() {
   yield all([

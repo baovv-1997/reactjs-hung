@@ -16,6 +16,7 @@ const initialState = {
   accountList: [],
   accountDetail: {},
   errors: {},
+  eventNotifications: [],
 };
 
 const accountSlice = createSlice({
@@ -200,6 +201,20 @@ const accountSlice = createSlice({
       state.type = action.type;
       state.isProcessing = false;
     },
+
+    getEventNotification: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    getEventNotificationSuccess: (state, action) => {
+      state.type = action.type;
+      state.eventNotifications = action.data;
+      // state.isProcessing = false;
+    },
+    getEventNotificationFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = false;
+    },
   },
 });
 
@@ -234,6 +249,9 @@ export const {
   logOut,
   logOutSuccess,
   logOutFalied,
+  getEventNotification,
+  getEventNotificationSuccess,
+  getEventNotificationFailed,
 } = actions;
 
 export default reducer;
