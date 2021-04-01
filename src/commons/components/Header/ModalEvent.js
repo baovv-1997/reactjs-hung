@@ -1,6 +1,5 @@
 // @flow
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
 type Props = {
   isShow?: boolean,
@@ -18,23 +17,6 @@ const ModalEvent = ({
   testMockupEvent,
   testSolarEvent,
 }: Props) => {
-  // const { eventNotifications } = useSelector((state) => state?.commons);
-  // const [notifications, setNotifications] = useState(eventNotifications);
-
-  // const solarEvent = notifications.filter((item) => item.ds_type === '0');
-  // const testMockupEvent = notifications.filter((item) => item.ds_type === '2');
-  // const testSolarEvent = notifications.filter((item) => item.ds_type === '3');
-
-  // handle event click
-  // const handleEventClick = (id) => {
-  //   console.log(id);
-  //   // GOIT API
-  //   // Hard code
-
-  //   setNotifications(notifications.filter((x) => x.id !== id));
-  // };
-  // console.log('new notifications', notifications);
-
   const renderEvent = (listEvent) => {
     let newListEvent;
     if (listEvent.length) {

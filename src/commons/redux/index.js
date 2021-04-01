@@ -204,6 +204,18 @@ const commonSilice = createSlice({
       state.type = action.type;
       // state.isProcessing = false;
     },
+    updateCheckEvent: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = true;
+    },
+    updateCheckEventSuccess: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = false;
+    },
+    updateCheckEventFailed: (state, action) => {
+      state.type = action.type;
+      // state.isProcessing = false;
+    },
   },
 });
 
@@ -237,6 +249,9 @@ export const {
   getEventNotification,
   getEventNotificationSuccess,
   getEventNotificationFailed,
+  updateCheckEvent,
+  updateCheckEventSuccess,
+  updateCheckEventFailed,
 } = actions;
 
 export default reducer;

@@ -23,6 +23,7 @@ export const ROUTES = {
   DELETE_EVENT: (id) => `/event/${id}`,
   UPDATE_EVENT: (id) => `/event/${id}`,
   GET_EVENT_NOTIFICATION: `/event/list`,
+  CHECK_UPDATE_EVENT: `/event/update/check`,
   STATUS_OPERATOR_CHART: `/data/solar-monitoring/status-operation/chart-data`,
   STATUS_OPERATOR_TREND_CHART: `/data/solar-monitoring/status-operation/raw-data`,
   STATUS_OPERATOR_CARD_INFOR: `/data/solar-monitoring/status-operation/status-cards`,
