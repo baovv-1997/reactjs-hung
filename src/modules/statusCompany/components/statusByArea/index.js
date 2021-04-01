@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -95,9 +95,7 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    console.log('paramsSearch?.posSelected', paramsSearch?.posSelected);
     if (paramsSearch?.posSelected) {
-      console.log('run....');
       getRawDataCallback({
         com_id: menuTab,
         pos_id: paramsSearch?.posSelected,
@@ -203,7 +201,7 @@ const StatusByAreaCompany = () => {
       posSelected: paramsSearch?.posSelected,
     });
   };
-  console.log('paramSearch', paramsSearch);
+
   return (
     <>
       {isProcessing && <Loading />}
@@ -319,4 +317,4 @@ const StatusByAreaCompany = () => {
   );
 };
 
-export default StatusByAreaCompany;
+export default memo<Props>(StatusByAreaCompany);

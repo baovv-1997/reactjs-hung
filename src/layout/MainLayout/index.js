@@ -1,5 +1,6 @@
+// @flow
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, memo } from 'react';
 import useClickOutside from 'customHooks/useClickOutSide';
 import Loading from 'commons/components/Loading';
 import Header from 'commons/components/Header';
@@ -40,6 +41,7 @@ export const MainLayout = ({
     classHeight = 'heightMenu';
   }
 
+  console.log('redner main');
   return (
     <>
       {isProcessing && <Loading />}
@@ -84,4 +86,4 @@ MainLayout.defaultProps = {
   isProcessing: false,
 };
 
-export default withRouter(MainLayout);
+export default withRouter(memo<Props>(MainLayout));

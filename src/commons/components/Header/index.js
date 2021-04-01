@@ -1,17 +1,21 @@
+// @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState, useEffect } from 'react';
+import React, { lazy, useRef, useState, useEffect, memo } from 'react';
 import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEventNotification, updateCheckEvent } from 'commons/redux';
+import { getEventNotification } from 'modules/accounts/redux';
+// import ModalEvent from './ModalEvent';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
-import ModalEvent from './ModalEvent';
+// import ModalEvent from './ModalEvent';
+import { updateCheckEvent } from 'commons/redux';
 
+const ModalEvent = lazy(() => import('./ModalEvent'));
 const Header = () => {
   const dispatch = useDispatch();
+  const { eventNotifications } = useSelector((state) => state?.account);
   const history = useHistory();
-  const { eventNotifications } = useSelector((state) => state?.commons);
   const [isShow, setIsShow] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
@@ -57,7 +61,6 @@ const Header = () => {
     setNotifications(notifications.filter((x) => x.id !== id));
     history.push(`${ROUTERS.EVENT}/detail/${id}`);
   };
-  console.log('new notifications', notifications);
 
   return (
     <div className="header">
@@ -98,4 +101,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo<Props>(Header);
