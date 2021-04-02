@@ -15,6 +15,7 @@ import MenuItem from './MenuItem';
 type Props = {
   location: {
     pathname: string,
+    state: string,
   },
 };
 
@@ -37,12 +38,16 @@ const Menu = ({ location }: Props) => {
       setMenuClicking({});
     }
   }, [location.pathname]);
+  console.log(location?.state?.id);
+  console.log('ssss', location.pathname.replace(`/${location?.state?.id}`, ''));
 
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
       const isActive =
         menuClicking?.key === item.key ||
-        item?.childRoute?.includes(location.pathname);
+        item?.childRoute?.includes(
+          location.pathname.replace(`/${location?.state?.id}`, '')
+        );
 
       return (
         <MenuItem
@@ -57,8 +62,6 @@ const Menu = ({ location }: Props) => {
       );
     });
   };
-
-  console.log('render');
 
   return (
     <div className="menu">

@@ -170,14 +170,22 @@ export const SETUP = {
       name: '계정 관리',
       to: ROUTERS.ACCOUNT_MANAGEMENT,
       key: 'setup-account',
-      childRoute: [ROUTERS.ACCOUNT_MANAGEMENT],
+      childRoute: [
+        ROUTERS.ACCOUNT_MANAGEMENT,
+        '/accounts/detail',
+        '/accounts/edit',
+      ],
     },
     {
       id: 2,
       name: '기기 관리',
       to: ROUTERS.DEVICE,
       key: 'setup-device',
-      childRoute: [ROUTERS.DEVICE],
+      childRoute: [
+        ROUTERS.DEVICE,
+        ROUTERS.REGISTER_DEVICE,
+        ROUTERS.DEVICE_DETAIL,
+      ],
     },
   ],
 };

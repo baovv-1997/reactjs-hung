@@ -41,7 +41,6 @@ export const MainLayout = ({
     classHeight = 'heightMenu';
   }
 
-  console.log('redner main');
   return (
     <>
       {isProcessing && <Loading />}
