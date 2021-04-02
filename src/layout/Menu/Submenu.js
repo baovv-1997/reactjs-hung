@@ -49,7 +49,7 @@ const Submenu = ({
     listNestSub.length > 0 &&
     listNestSub.map((item) => {
       const activeNestItem =
-        item?.key === nestSubClicking?.key && location.pathname === item.to;
+        item?.key === nestSubClicking?.key || location.pathname === item.to;
 
       return (
         <li

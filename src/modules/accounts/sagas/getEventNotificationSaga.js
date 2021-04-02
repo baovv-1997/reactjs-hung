@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { ROUTES, API } from 'apis';
-import * as CommonAction from '../redux';
+import * as accountAction from '../redux';
 
 // worker Saga: will be fired on SEND_INVITE actions
 function* getEventNotification(action) {
@@ -13,23 +13,23 @@ function* getEventNotification(action) {
       const { data } = response;
       // In case: request success
       yield put({
-        type: CommonAction.getEventNotificationSuccess,
+        type: accountAction.getEventNotificationSuccess,
         data,
       });
     } else {
       // In case: request failed
       yield put({
-        type: CommonAction.getEventNotificationFailed,
+        type: accountAction.getEventNotificationFailed,
       });
     }
   } catch (error) {
     // in case: server error
-    yield put({ type: CommonAction.getEventNotificationFailed, error });
+    yield put({ type: accountAction.getEventNotificationFailed, error });
   }
 }
 
 function* getEventNotificationSaga() {
-  yield takeLatest(CommonAction.getEventNotification, getEventNotification);
+  yield takeLatest(accountAction.getEventNotification, getEventNotification);
 }
 
 export default getEventNotificationSaga;

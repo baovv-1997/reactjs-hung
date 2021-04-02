@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @flow
 // libs
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { setMenuItemClicking } from 'commons/redux';
 import { logOut } from 'modules/accounts/redux';
@@ -28,6 +29,15 @@ const Menu = ({ location }: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (
+      menuClicking &&
+      !menuClicking?.childRoute?.includes(location.pathname)
+    ) {
+      setMenuClicking({});
+    }
+  }, [location.pathname]);
+
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
       const isActive =
@@ -47,6 +57,8 @@ const Menu = ({ location }: Props) => {
       );
     });
   };
+
+  console.log('render');
 
   return (
     <div className="menu">
