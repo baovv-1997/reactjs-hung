@@ -2,7 +2,7 @@
 // @flow
 // libs
 import React, { useState, memo, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { setMenuItemClicking } from 'commons/redux';
 import { logOut } from 'modules/accounts/redux';
 
@@ -15,14 +15,17 @@ import MenuItem from './MenuItem';
 type Props = {
   location: {
     pathname: string,
-    state: string,
+    state: {
+      id: string,
+    },
   },
 };
 
 const Menu = ({ location }: Props) => {
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.account);
   const [menuClicking, setMenuClicking] = useState({});
-
+  const roleName = userInfo?.roles[0]?.name;
   const handleClickItem = (item, active) => {
     setMenuClicking(item);
     if (item.name === menuClicking.name && active) {
@@ -81,13 +84,18 @@ const Menu = ({ location }: Props) => {
         </div>
         <ul className="menu__list">{renderMenuList(MOCKUP)}</ul>
 
-        <div className="menu__wraper-head">
-          <p className="menu__info">
-            <img src={SETUP?.icon} alt="menu" />
-            <span>{SETUP?.label}</span>
-          </p>
-        </div>
-        <ul className="menu__list">{renderMenuList(SETUP)}</ul>
+        {(roleName === 'admin' || roleName === 'company') && (
+          <>
+            <div className="menu__wraper-head">
+              <p className="menu__info">
+                <img src={SETUP?.icon} alt="menu" />
+                <span>{SETUP?.label}</span>
+              </p>
+            </div>
+
+            <ul className="menu__list">{renderMenuList(SETUP)}</ul>
+          </>
+        )}
       </div>
       <div className="logout">
         <div className="name-user">마스터님</div>
