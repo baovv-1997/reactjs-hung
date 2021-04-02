@@ -38,8 +38,6 @@ const Menu = ({ location }: Props) => {
       setMenuClicking({});
     }
   }, [location.pathname]);
-  console.log(location?.state?.id);
-  console.log('ssss', location.pathname.replace(`/${location?.state?.id}`, ''));
 
   const renderMenuList = (listMenu) => {
     return listMenu.items.map((item) => {
