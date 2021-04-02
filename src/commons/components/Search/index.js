@@ -17,18 +17,19 @@ type Props = {
 
 const Search = ({
   placeholder,
-  handleIconClick = () => { },
+  handleIconClick = () => {},
   customClass = '',
   value = '',
-  onChange = () => { },
-  setSearchTerm = () => { },
+  onChange = () => {},
+  setSearchTerm = () => {},
   options = [],
   handleKeyDown,
-  isSpinner = false
+  isSpinner = false,
 }: Props) => {
   const [display, setDisplay] = useState(false);
 
   const wrapperRef = useRef(null);
+  const inputRef = useRef(null);
 
   const handleClickOutside = (event) => {
     const { current: wrap } = wrapperRef;
@@ -45,9 +46,10 @@ const Search = ({
   });
 
   const updateSearchInput = (searchValue) => {
-    console.log(searchValue, "searchValue");
+    console.log(searchValue, 'searchValue');
     setSearchTerm(searchValue);
     setDisplay(false);
+    inputRef.current.focus();
   };
 
   return (
@@ -59,6 +61,7 @@ const Search = ({
         value={value}
         onChange={onChange}
         onKeyPress={(e) => handleKeyDown(e)}
+        ref={inputRef}
       />
 
       {isSpinner && <div className="spinner" />}
@@ -70,7 +73,13 @@ const Search = ({
         onClick={handleIconClick}
         role="presentation"
       />
-      {(display && options.length) ? <AutoSuggest search={value} onClick={updateSearchInput} options={options} /> : null}
+      {display && options.length ? (
+        <AutoSuggest
+          search={value}
+          onClick={updateSearchInput}
+          options={options}
+        />
+      ) : null}
     </div>
   );
 };
@@ -79,11 +88,11 @@ Search.defaultProps = {
   placeholder: '',
   customClass: '',
   value: '',
-  onChange: () => { },
-  setSearchTerm: () => { },
-  handleIconClick: () => { },
+  onChange: () => {},
+  setSearchTerm: () => {},
+  handleIconClick: () => {},
   options: [],
   isSpinner: false,
 };
 
-export default memo < Props > (Search);
+export default memo<Props>(Search);

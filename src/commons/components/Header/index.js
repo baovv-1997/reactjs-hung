@@ -25,7 +25,6 @@ const Header = () => {
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
-
   useEffect(() => {
     dispatch(getEventNotification());
     setNotifications(eventNotifications);
@@ -38,7 +37,7 @@ const Header = () => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [eventNotifications]);
 
   // handle click outside event
   useClickOutside(

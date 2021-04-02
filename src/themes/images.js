@@ -39,6 +39,10 @@ const IMAGES = {
   default_logo: require('assets/images/logo_company/logo_l&c@3x.png'),
   motion_weather_blue: require('assets/images/motion/icon_weather_blue.gif'),
   motion_weather_orange: require('assets/images/motion/icon_weather_orange.gif'),
+  double_arrow_left: require('assets/icons/arrow_double_L.png'),
+  double_arrow_right: require('assets/icons/arrow_double_R.png'),
+  arrow_left: require('assets/icons/arrow_L.png'),
+  arrow_right1: require('assets/icons/arrow_R.png'),
 };
 
 export default IMAGES;
