@@ -8,6 +8,7 @@ import { listPaginationType } from 'constants/listKey';
 import Pagination from 'react-js-pagination';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import LineChart2 from 'commons/components/LineChart/LineChart2';
+import IMAGES from 'themes/images';
 import {
   headTestSolarMonitoringOperationStatus,
   headTestMockupStatisticsOfModule,
@@ -133,6 +134,30 @@ const ItemContentTab = ({
                 onChange={(e) => handleChangeSearch(e, 'page')}
                 itemClass="page-item"
                 linkClass="page-link"
+                firstPageText={
+                  <img
+                    src={IMAGES.double_arrow_left}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                lastPageText={
+                  <img
+                    src={IMAGES.double_arrow_right}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                prevPageText={
+                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+                }
+                nextPageText={
+                  <img
+                    src={IMAGES.arrow_right1}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
               />
             </div>
           )}
@@ -171,6 +196,26 @@ const ItemContentTab = ({
               onChange={(e) => handleChangeSearch(e, 'page2')}
               itemClass="page-item"
               linkClass="page-link"
+              firstPageText={
+                <img
+                  src={IMAGES.double_arrow_left}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              lastPageText={
+                <img
+                  src={IMAGES.double_arrow_right}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              prevPageText={
+                <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+              }
+              nextPageText={
+                <img src={IMAGES.arrow_right1} alt="" className="double-prev" />
+              }
             />
           </div>
         )}

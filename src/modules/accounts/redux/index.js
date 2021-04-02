@@ -195,6 +195,7 @@ const accountSlice = createSlice({
       state.type = '';
       state.token = '';
       state.userInfo = '';
+      state.eventNotifications = [];
       state.isProcessing = false;
     },
     logOutFalied: (state, action) => {

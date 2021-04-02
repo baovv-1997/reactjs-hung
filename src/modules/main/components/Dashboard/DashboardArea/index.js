@@ -3,7 +3,6 @@ import { Card } from 'commons/components/Card';
 import Loading from 'commons/components/Loading';
 import SelectDropdown from 'commons/components/Select';
 import ROUTERS from 'constants/routers';
-import { setPositionCardMeasure } from 'helpers';
 import {
   getListPosition,
   getCardMeasureArea,
@@ -131,18 +130,11 @@ const DashboardArea = () => {
             temperature={totalInfo?.temperature}
           />
         </div>
-
-        {cardMeasureArea &&
-          cardMeasureArea?.map((posItem, index) => (
-            <div
-              // key={posItem?.position?.id}
-              className="display-main-card"
-              style={{
-                top: `${setPositionCardMeasure(index)?.top}px`,
-                left: `${setPositionCardMeasure(index)?.left}px`,
-              }}
-            >
+        <div className="dashboard-area__card">
+          {cardMeasureArea &&
+            cardMeasureArea?.map((posItem, index) => (
               <Card
+                key={index}
                 title={posItem?.company?.com_name}
                 listCompany={[posItem?.company]}
                 amountElectricDay={posItem?.card?.prod_today}
@@ -152,13 +144,8 @@ const DashboardArea = () => {
                 ratePower={posItem?.card?.performance_ratio}
                 logoClick={handleLogoClick}
               />
-              <img
-                src={IMAGES.icon_location}
-                alt=""
-                className="location-area"
-              />
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </>
   );

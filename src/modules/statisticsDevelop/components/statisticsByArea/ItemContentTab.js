@@ -5,6 +5,7 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import LineChart from 'commons/components/LineChart/lineChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
+import IMAGES from 'themes/images';
 import { headStatisticsCompany } from '../constant';
 import FilterSearch from '../FilterSearch';
 import BoxGroup from '../BoxGroup';
@@ -131,6 +132,30 @@ const ItemContentTab = ({
                 onChange={(e) => handleChangeSearch(e, 'page')}
                 itemClass="page-item"
                 linkClass="page-link"
+                firstPageText={
+                  <img
+                    src={IMAGES.double_arrow_left}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                lastPageText={
+                  <img
+                    src={IMAGES.double_arrow_right}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                prevPageText={
+                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+                }
+                nextPageText={
+                  <img
+                    src={IMAGES.arrow_right1}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
               />
             </div>
           )}

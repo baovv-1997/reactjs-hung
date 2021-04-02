@@ -31,6 +31,7 @@ const StatusByAreaCompany = () => {
     chartData,
     isProcessing,
   } = useSelector((state) => state.statusCompany);
+  const { companyId } = useSelector((state) => state?.main);
 
   const defaultOption = {
     id: 1,
@@ -65,7 +66,7 @@ const StatusByAreaCompany = () => {
   useEffect(() => {
     setParamsSearch({
       ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
+      company: companyId || (comList && comList[1] && comList[1].id),
     });
   }, [comList]);
 

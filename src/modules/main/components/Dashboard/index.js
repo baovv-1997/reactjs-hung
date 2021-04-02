@@ -38,6 +38,7 @@ const MainPage = () => {
     isLoading,
     totalMetric,
   } = useSelector((state) => state.main);
+  const { userInfo } = useSelector((state) => state?.account);
 
   const [searchTerm, setSearchTerm] = useState({
     label: '',
@@ -189,17 +190,21 @@ const MainPage = () => {
     <>
       {isLoading && <Loading />}
       <div className="main-page">
-        <Search
-          placeholder="회사명이나 구역명으로 검색해보세요."
-          customClass="main-search"
-          value={searchTerm.label}
-          onChange={handleSearchChange}
-          setSearchTerm={setSearchTerm}
-          options={[...optionsPosition, ...optionsCompany]}
-          handleIconClick={handleIconClick}
-          handleKeyDown={handleKeyDownSearch}
-          isSpinner={isSpinner}
-        />
+        {userInfo?.roles[0]?.id === 1 ? (
+          <Search
+            placeholder="회사명이나 구역명으로 검색해보세요."
+            customClass="main-search"
+            value={searchTerm.label}
+            onChange={handleSearchChange}
+            setSearchTerm={setSearchTerm}
+            options={[...optionsPosition, ...optionsCompany]}
+            handleIconClick={handleIconClick}
+            handleKeyDown={handleKeyDownSearch}
+            isSpinner={isSpinner}
+          />
+        ) : (
+          ''
+        )}
 
         <div className="current-electric">
           <div className="current-electric__title">

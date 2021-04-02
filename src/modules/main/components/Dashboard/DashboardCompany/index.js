@@ -7,6 +7,7 @@ import { handleGroupItem, spliceCompanyInverter } from 'helpers';
 import { getListCompanyInverters, setCompanyId } from 'modules/main/redux';
 import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
+import IMAGES from 'themes/images';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -160,6 +161,30 @@ const DashboardCompany = () => {
                 onChange={handlePageChange}
                 itemClass="page-item"
                 linkClass="page-link"
+                firstPageText={
+                  <img
+                    src={IMAGES.double_arrow_left}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                lastPageText={
+                  <img
+                    src={IMAGES.double_arrow_right}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                prevPageText={
+                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+                }
+                nextPageText={
+                  <img
+                    src={IMAGES.arrow_right1}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
               />
             </div>
           )}
