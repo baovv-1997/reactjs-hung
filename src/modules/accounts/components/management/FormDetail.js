@@ -150,9 +150,12 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           <Button
             customClass="btn-modify"
             onClick={() => {
-              history.push(
-                `${ROUTERS.ACCOUNT_MANAGEMENT}/edit/${accountDetail?.id}`
-              );
+              history.push({
+                pathname: `${ROUTERS.ACCOUNT_MANAGEMENT}/edit/${accountDetail?.id}`,
+                state: {
+                  id: accountDetail?.id,
+                },
+              });
             }}
           >
             수정

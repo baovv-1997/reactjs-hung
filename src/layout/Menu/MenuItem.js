@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // @flow
 // libs
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 // import { setSubMenuItemActived } from 'commons/redux';
 // import { useSelector, useDispatch } from 'react-redux';
 
@@ -51,15 +50,6 @@ const MenuItem = ({
       setNestSubClicking({});
     }
   };
-
-  useEffect(() => {
-    if (
-      nestSubClicking &&
-      !nestSubClicking?.childRoute?.includes(location.pathname)
-    ) {
-      setNestSubClicking({});
-    }
-  }, [location.pathname]);
 
   const renderSub =
     listSub &&

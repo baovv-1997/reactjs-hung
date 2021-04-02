@@ -124,7 +124,12 @@ const DeviceManagement = ({ history }: Props) => {
 
   // Handle click to table row
   const handleClickTableRow = (item) => {
-    history.push(`${ROUTERS.DEVICE}/${item.id}`);
+    history.push({
+      pathname: `${ROUTERS.DEVICE}/${item.id}`,
+      state: {
+        id: item.id,
+      },
+    });
   };
 
   return (
