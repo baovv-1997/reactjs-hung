@@ -89,7 +89,7 @@
   z-index: 9;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -133,7 +133,7 @@
     cursor: pointer;
 
     &::before {
-      content: "";
+      content: '';
     }
 
     &.active {
@@ -185,7 +185,6 @@
 //   background-color: darkgrey;
 //   outline: 1px solid slategrey;
 // }
-
 
 .tab-content,
 .border-pd-20 {
@@ -249,6 +248,7 @@
   .customer-select {
     width: pxToRem(140);
   }
+  margin-bottom: pxToRem(10);
 }
 
 .group-btn-download,

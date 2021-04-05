@@ -16,7 +16,7 @@
     font-size: pxToRem(15);
     line-height: 1.47;
     letter-spacing: pxToRem(-0.45);
-    font-weight: normal;
+    font-weight: normal !important;
   }
 
   .auto-suggest {

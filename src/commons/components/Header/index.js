@@ -5,14 +5,18 @@ import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventNotification } from 'modules/accounts/redux';
-// import ModalEvent from './ModalEvent';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
-// import ModalEvent from './ModalEvent';
 import { updateCheckEvent } from 'commons/redux';
 
+type Props = {
+  location: {
+    pathname: string,
+  },
+};
+
 const ModalEvent = lazy(() => import('./ModalEvent'));
-const Header = () => {
+const Header = ({ location }: Props) => {
   const dispatch = useDispatch();
   const { eventNotifications } = useSelector((state) => state?.account);
   const history = useHistory();
@@ -55,7 +59,10 @@ const Header = () => {
     // GOIT API
     dispatch(updateCheckEvent({ event_id: id }));
     setNotifications(notifications.filter((x) => x.id !== id));
-    history.push(`${ROUTERS.EVENT}/detail/${id}`);
+    history.push({
+      pathname: `${ROUTERS.EVENT}/detail/${id}`,
+      state: { prevRoute: location.pathname },
+    });
   };
 
   return (

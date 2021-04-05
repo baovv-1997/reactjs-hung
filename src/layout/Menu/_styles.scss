@@ -15,16 +15,19 @@
     letter-spacing: -0.84px;
     text-align: left;
     color: $bg-footer;
-    margin: pxToRem(26) pxToRem(55) 0;
+    margin: pxToRem(26) pxToRem(55);
   }
 
   &__info {
-    margin-left: pxToRem(15);
-    margin-top: pxToRem(48);
-    padding-bottom: pxToRem(23);
+    padding: pxToRem(23) 0 pxToRem(23) pxToRem(15);
 
     span {
       margin-left: pxToRem(5);
+      font-weight: $medium;
+      font-size: pxToRem(16);
+      line-height: 1.5;
+      letter-spacing: pxToRem(-0.48);
+      color: $bg-footer;
     }
   }
 
@@ -33,7 +36,6 @@
   }
 
   &__list {
-    margin-top: pxToRem(10);
     background-color: $color-black-light;
   }
 
@@ -93,9 +95,30 @@
 
     &.active-link {
       background-color: $bg-button-primary;
+
+      // border-left: 6px solid #1961a2;
     }
   }
+}
 
+.active-link {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 42px;
+    color: #1961a2;
+    top: 0;
+    left: 0;
+  }
+}
+
+.menu__line {
+  width: 100%;
+  height: pxToRem(2);
+  opacity: 0.1;
+  background-color: $white;
 }
 
 .sub-item {

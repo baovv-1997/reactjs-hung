@@ -12,11 +12,11 @@
   line-height: 1.5;
 
   &.bg-primary {
-    background-color: $bg-button-primary;
+    background-color: $bg-button-primary !important;
   }
 
   &.btn-red {
-    background-color: $color-label-event
+    background-color: $color-label-event;
   }
 
   &:focus {
@@ -51,7 +51,7 @@
     padding-right: pxToRem(15);
 
     &:after {
-      content: "";
+      content: '';
       border: solid $white;
       border-width: 0 pxToRem(0.5) pxToRem(0.5) 0;
       display: inline-block;

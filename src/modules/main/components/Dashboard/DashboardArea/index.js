@@ -82,7 +82,14 @@ const DashboardArea = () => {
     return () => clearInterval(interval);
   }, [optionDropdown]);
 
+  // event logo click
   const handleLogoClick = (id) => {
+    history.push(ROUTERS.STATUS_COMPANY);
+    dispatch(setCompanyId({ id }));
+  };
+
+  // event title click
+  const handleTitleClick = (id) => {
     history.push(ROUTERS.STATUS_COMPANY);
     dispatch(setCompanyId({ id }));
   };
@@ -143,6 +150,7 @@ const DashboardArea = () => {
                 cumulativeElectric={posItem?.card?.prod_sum}
                 ratePower={posItem?.card?.performance_ratio}
                 logoClick={handleLogoClick}
+                titleClick={() => handleTitleClick(posItem?.company?.id)}
               />
             ))}
         </div>
