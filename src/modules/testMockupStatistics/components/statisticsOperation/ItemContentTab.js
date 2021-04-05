@@ -180,7 +180,7 @@ const ItemContentTab = ({
         </div>
       </div>
       <TitleSubHeader title="이벤트 통계" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
+      <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}

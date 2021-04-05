@@ -8,7 +8,7 @@
   position: relative;
 
   &__card {
-    width: calc(100vw - #{pxToRem(580)});
+    width: calc(100vw - #{pxToRem(600)});
     padding: pxToRem(20) 0 pxToRem(20) pxToRem(20);
     display: flex;
     flex-wrap: wrap;
@@ -16,6 +16,7 @@
     grid-gap: 20px;
   }
 }
+
 .location-area {
   margin-top: pxToRem(30);
   position: absolute;

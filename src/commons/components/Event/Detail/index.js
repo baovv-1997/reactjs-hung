@@ -13,6 +13,7 @@ import Button from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import { getEventList, deleteEvent } from 'commons/redux';
+import { getEventNotification } from 'modules/accounts/redux';
 
 type Props = {
   match: {
@@ -57,7 +58,7 @@ const EventDetail = ({ match, location }: Props) => {
         id,
       })
     );
-  }, []);
+  }, [id]);
 
   const handleDelete = () => {
     dispatch(deleteEvent(id));
@@ -71,6 +72,7 @@ const EventDetail = ({ match, location }: Props) => {
     switch (type) {
       case 'commons/deleteEventSuccess':
         history.push(location?.state?.prevRoute);
+        dispatch(getEventNotification());
         break;
       default:
         break;

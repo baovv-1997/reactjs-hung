@@ -17,7 +17,7 @@ export const GroupActionDownload = ({
   handleChangeSearch,
   handleDownloadTrend,
 }: Props) => (
-  <div className="group-option-table d-flex  justify-content-between mb-3">
+  <div className="group-option-table d-flex  justify-content-between">
     <SelectDropdown
       placeholder="구분"
       listItem={listPaginationType}
