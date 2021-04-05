@@ -54,9 +54,6 @@ const Header = () => {
     console.log(id);
     // GOIT API
     dispatch(updateCheckEvent({ event_id: id }));
-
-    dispatch(updateCheckEvent({ event_id: id }));
-
     setNotifications(notifications.filter((x) => x.id !== id));
     history.push(`${ROUTERS.EVENT}/detail/${id}`);
   };

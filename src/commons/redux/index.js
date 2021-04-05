@@ -169,7 +169,7 @@ const commonSilice = createSlice({
     },
     addNewEventSuccess: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessing = false;
     },
     addNewEventFailed: (state, action) => {
       state.type = action.type;
@@ -177,7 +177,7 @@ const commonSilice = createSlice({
     },
     updateEvent: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessing = false;
     },
     updateEventSuccess: (state, action) => {
       state.type = action.type;
