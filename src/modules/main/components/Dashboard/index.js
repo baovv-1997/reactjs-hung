@@ -190,21 +190,18 @@ const MainPage = () => {
     <>
       {isLoading && <Loading />}
       <div className="main-page">
-        {userInfo?.roles[0]?.id === 1 ? (
-          <Search
-            placeholder="회사명이나 구역명으로 검색해보세요."
-            customClass="main-search"
-            value={searchTerm.label}
-            onChange={handleSearchChange}
-            setSearchTerm={setSearchTerm}
-            options={[...optionsPosition, ...optionsCompany]}
-            handleIconClick={handleIconClick}
-            handleKeyDown={handleKeyDownSearch}
-            isSpinner={isSpinner}
-          />
-        ) : (
-          ''
-        )}
+        <Search
+          placeholder="회사명이나 구역명으로 검색해보세요."
+          customClass="main-search"
+          value={searchTerm.label}
+          onChange={handleSearchChange}
+          setSearchTerm={setSearchTerm}
+          options={[...optionsPosition, ...optionsCompany]}
+          handleIconClick={handleIconClick}
+          handleKeyDown={handleKeyDownSearch}
+          isSpinner={isSpinner}
+          isDisabled={userInfo?.roles[0].id !== 1}
+        />
 
         <div className="current-electric">
           <div className="current-electric__title">

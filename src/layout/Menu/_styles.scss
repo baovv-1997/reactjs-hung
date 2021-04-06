@@ -95,8 +95,6 @@
 
     &.active-link {
       background-color: $bg-button-primary;
-
-      // border-left: 6px solid #1961a2;
     }
   }
 }
@@ -108,7 +106,7 @@
     position: absolute;
     width: 6px;
     height: 42px;
-    color: #1961a2;
+    background-color: $blue2;
     top: 0;
     left: 0;
   }
