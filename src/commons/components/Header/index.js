@@ -18,7 +18,7 @@ type Props = {
 const ModalEvent = lazy(() => import('./ModalEvent'));
 const Header = ({ location }: Props) => {
   const dispatch = useDispatch();
-  const { eventNotifications } = useSelector((state) => state?.account);
+  const { eventNotifications, type } = useSelector((state) => state?.account);
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -31,17 +31,25 @@ const Header = ({ location }: Props) => {
   const iconRef = useRef(null);
   useEffect(() => {
     dispatch(getEventNotification());
-    setNotifications(eventNotifications);
   }, []);
+
+  useEffect(() => {
+    switch (type) {
+      case 'accounts/getEventNotificationSuccess':
+        setNotifications(eventNotifications);
+        break;
+      default:
+        break;
+    }
+  }, [type]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       dispatch(getEventNotification());
-      setNotifications(eventNotifications);
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [eventNotifications]);
+  }, [notifications]);
 
   // handle click outside event
   useClickOutside(
@@ -91,6 +99,7 @@ const Header = ({ location }: Props) => {
           {notifications.length > 0 && (
             <ModalEvent
               isShow={isShow}
+              setIsShow={setIsShow}
               wrapperRef={wrapperRef}
               handleEventClick={handleEventClick}
               solarEvent={solarEvent}

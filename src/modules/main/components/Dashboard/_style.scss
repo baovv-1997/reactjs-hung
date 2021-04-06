@@ -10,8 +10,11 @@
 }
 .current-electric {
   // margin: pxToRem(18) pxToRem(20);
-  margin: pxToRem(78) pxToRem(20) pxToRem(18);
-  width: pxToRem(330);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: pxToRem(78);
+  width: pxToRem(370);
   height: calc(100vh - #{pxToRem(68) - #{pxToRem(18)}});
   overflow: scroll;
   position: fixed;
@@ -29,6 +32,7 @@
   }
 
   &__title {
+    width: pxToRem(330);
     display: flex;
     justify-content: center;
     align-items: center;

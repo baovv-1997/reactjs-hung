@@ -35,7 +35,7 @@
       display: flex;
       align-items: center;
       margin-top: pxToRem(25);
-      margin: pxToRem(20) 0 pxToRem(20) 0;
+      margin: pxToRem(20) 0 pxToRem(30) 0;
       justify-content: space-between;
 
       &__options {
@@ -65,11 +65,13 @@
 
       &__input {
         position: relative;
+        width: pxToRem(982);
+        margin-left: pxToRem(30);
 
         .search__icon {
           position: absolute;
-          left: pxToRem(70);
-          top: 55%;
+          left: pxToRem(20);
+          top: 50%;
           transform: translateY(-50%);
           cursor: pointer;
           width: pxToRem(20);
@@ -83,8 +85,7 @@
         .wrapper-input-search {
           border-radius: pxToRem(3);
           border: solid 1px $color-light10;
-          margin-left: pxToRem(50);
-          width: pxToRem(939);
+          width: 100%;
           height: pxToRem(39);
           padding-left: pxToRem(55);
         }
@@ -134,7 +135,6 @@
   }
 
   .table {
-
     .wrapper-radio {
       display: flex;
       margin-top: pxToRem(5);
@@ -200,7 +200,6 @@
       &.disable {
         padding-left: pxToRem(30);
       }
-      
     }
 
     .input-field,

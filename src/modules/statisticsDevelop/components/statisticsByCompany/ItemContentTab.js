@@ -180,7 +180,7 @@ const ItemContentTab = ({
 
       {/*  Table Bottom */}
       <TitleSubHeader title="모듈,외기 온도 / 일사량 통계" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
+      <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}
