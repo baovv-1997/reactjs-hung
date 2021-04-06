@@ -29,7 +29,7 @@ export const ButtonDownExcel = ({ linkDownTable, keyName }: Props) => {
   return (
     <Button onClick={() => {}}>
       <a href={LINK_API} target="_blank" rel="noopener noreferrer">
-        Raw Date 다운
+        Raw Data 다운
       </a>
     </Button>
   );

@@ -320,7 +320,10 @@ const StatusByAreaCompany = () => {
                               title: '현재 일사량',
                               value: cardInfo?.current_rad,
                             },
-                            { title: '최고 일사량', value: cardInfo?.max_rad },
+                            {
+                              title: '일일 최고 일사량',
+                              value: cardInfo?.max_rad,
+                            },
                           ],
                         }}
                         paramsSearch={paramsSearch}

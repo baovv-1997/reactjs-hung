@@ -15,7 +15,6 @@
     left: 0;
     bottom: 0;
     object-fit: contain;
-    opacity: 0.35;
   }
 
   &__body {
@@ -30,7 +29,7 @@
     font-size: pxToRem(15);
     line-height: pxToRem(22);
     letter-spacing: pxToRem(-0.45);
-    margin-bottom: pxToRem(10);
+    margin-bottom: pxToRem(6);
     color: $white;
   }
 
@@ -99,7 +98,6 @@
   }
 
   .label-status__body {
-
     .status__icon {
       width: pxToRem(85);
       margin-right: pxToRem(20);

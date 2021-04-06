@@ -9,6 +9,7 @@ type Props = {
   solarEvent: any,
   testMockupEvent: any,
   testSolarEvent: any,
+  setIsShow: Function,
 };
 const ModalEvent = ({
   isShow = false,
@@ -17,9 +18,11 @@ const ModalEvent = ({
   solarEvent,
   testMockupEvent,
   testSolarEvent,
+  setIsShow,
 }: Props) => {
   const renderEvent = (listEvent) => {
     let newListEvent;
+
     if (listEvent.length) {
       newListEvent = (
         <div className="modal__event__group-content">
@@ -29,7 +32,10 @@ const ModalEvent = ({
           {listEvent.map((item) => (
             <p
               className="modal__event__event-name"
-              onClick={() => handleEventClick(item.id)}
+              onClick={() => {
+                handleEventClick(item.id);
+                setIsShow(false);
+              }}
               role="presentation"
               key={item.id}
             >

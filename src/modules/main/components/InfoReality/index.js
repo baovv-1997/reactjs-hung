@@ -43,7 +43,7 @@ const InfoReality = ({
           unit="kW"
         />
         <InfoRealityItem
-          name="전체 모듈 성능비"
+          name="전체 모듈평균 성능비"
           subName=""
           value={ratePower}
           unit="%"
