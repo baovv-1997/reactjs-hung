@@ -13,6 +13,7 @@ type Props = {
   options?: Array<{ id: number, value: number, label: string }>,
   handleKeyDown: Function,
   isSpinner?: boolean,
+  isDisabled?: boolean,
 };
 
 const Search = ({
@@ -25,6 +26,7 @@ const Search = ({
   options = [],
   handleKeyDown,
   isSpinner = false,
+  isDisabled = true,
 }: Props) => {
   const [display, setDisplay] = useState(false);
 
@@ -62,6 +64,7 @@ const Search = ({
         onChange={onChange}
         onKeyPress={(e) => handleKeyDown(e)}
         ref={inputRef}
+        disabled={isDisabled}
       />
 
       {isSpinner && <div className="spinner" />}
@@ -70,7 +73,7 @@ const Search = ({
         src={images.icon_search}
         alt="Icon Search"
         className="search__icon"
-        onClick={handleIconClick}
+        onClick={!isDisabled ? handleIconClick : null}
         role="presentation"
       />
       {display && options.length ? (
@@ -93,6 +96,7 @@ Search.defaultProps = {
   handleIconClick: () => {},
   options: [],
   isSpinner: false,
+  isDisabled: true,
 };
 
 export default memo<Props>(Search);
