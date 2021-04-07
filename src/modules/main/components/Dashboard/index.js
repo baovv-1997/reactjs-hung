@@ -38,6 +38,7 @@ const MainPage = () => {
     isLoading,
     totalMetric,
   } = useSelector((state) => state.main);
+  const { userInfo } = useSelector((state) => state?.account);
 
   const [searchTerm, setSearchTerm] = useState({
     label: '',
@@ -199,6 +200,7 @@ const MainPage = () => {
           handleIconClick={handleIconClick}
           handleKeyDown={handleKeyDownSearch}
           isSpinner={isSpinner}
+          isDisabled={userInfo?.roles[0].id !== 1}
         />
 
         <div className="current-electric">

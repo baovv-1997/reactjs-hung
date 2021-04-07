@@ -66,7 +66,6 @@
       margin-left: 0;
       padding-top: pxToRem(80);
     }
-    
   }
 
   .btn-menu {
@@ -210,16 +209,18 @@
   .btn-logout {
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
 
-    width: pxToRem(80);
-    height: pxToRem(38);
+    width: pxToRem(81);
+    height: pxToRem(28);
     padding: pxToRem(5) pxToRem(10);
-    box-shadow: 3px 0 6px 0 rgba(0, 0, 0, 0.28);
     background-color: $btn-shadow;
     border-radius: pxToRem(3);
 
     img {
+      width: pxToRem(15);
+      height: pxToRem(15);
       margin-right: pxToRem(5);
     }
 
@@ -228,6 +229,7 @@
       font-weight: normal;
       line-height: 1.5;
       text-align: center;
+      letter-spacing: -0.36px;
       color: $white;
     }
   }

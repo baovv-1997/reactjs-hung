@@ -77,6 +77,8 @@ const Menu = ({ location }: Props) => {
         </div>
         <ul className="menu__list">{renderMenuList(DASHBOARD)}</ul>
 
+        <div className="menu__line"> </div>
+
         <div className="menu__wraper-head">
           <p className="menu__info">
             <img src={MOCKUP?.icon} alt="menu" />
@@ -87,6 +89,7 @@ const Menu = ({ location }: Props) => {
 
         {(roleName === 'admin' || roleName === 'company') && (
           <>
+            <div className="menu__line"> </div>
             <div className="menu__wraper-head">
               <p className="menu__info">
                 <img src={SETUP?.icon} alt="menu" />

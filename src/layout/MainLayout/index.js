@@ -71,7 +71,9 @@ export const MainLayout = ({
           }`}
           ref={mainContent}
         >
-          {location.pathname !== ROUTERS.LOGIN && <Header />}
+          {location.pathname !== ROUTERS.LOGIN && (
+            <Header location={location} />
+          )}
           <div className="content">
             <div>{children}</div>
           </div>

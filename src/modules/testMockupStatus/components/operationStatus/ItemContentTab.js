@@ -14,6 +14,7 @@ import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
+import IMAGES from 'themes/images';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -130,13 +131,37 @@ const ItemContentTab = ({
                 onChange={(e) => handleChangeSearch(e, 'page')}
                 itemClass="page-item"
                 linkClass="page-link"
+                firstPageText={
+                  <img
+                    src={IMAGES.double_arrow_left}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                lastPageText={
+                  <img
+                    src={IMAGES.double_arrow_right}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                prevPageText={
+                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+                }
+                nextPageText={
+                  <img
+                    src={IMAGES.arrow_right1}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
               />
             </div>
           )}
         </div>
       </div>
       <TitleSubHeader title="테스트(목업) 운영 현황" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
+      <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}
@@ -203,6 +228,26 @@ const ItemContentTab = ({
               onChange={(e) => handleChangeSearch(e, 'page2')}
               itemClass="page-item"
               linkClass="page-link"
+              firstPageText={
+                <img
+                  src={IMAGES.double_arrow_left}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              lastPageText={
+                <img
+                  src={IMAGES.double_arrow_right}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              prevPageText={
+                <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+              }
+              nextPageText={
+                <img src={IMAGES.arrow_right1} alt="" className="double-prev" />
+              }
             />
           </div>
         )}

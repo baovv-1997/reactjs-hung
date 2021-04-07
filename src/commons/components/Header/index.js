@@ -5,16 +5,20 @@ import images from 'themes/images';
 import useClickOutside from 'customHooks/useClickOutSide';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventNotification } from 'modules/accounts/redux';
-// import ModalEvent from './ModalEvent';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
-// import ModalEvent from './ModalEvent';
 import { updateCheckEvent } from 'commons/redux';
 
+type Props = {
+  location: {
+    pathname: string,
+  },
+};
+
 const ModalEvent = lazy(() => import('./ModalEvent'));
-const Header = () => {
+const Header = ({ location }: Props) => {
   const dispatch = useDispatch();
-  const { eventNotifications } = useSelector((state) => state?.account);
+  const { eventNotifications, type } = useSelector((state) => state?.account);
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -25,20 +29,27 @@ const Header = () => {
 
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
-
   useEffect(() => {
     dispatch(getEventNotification());
-    setNotifications(eventNotifications);
   }, []);
+
+  useEffect(() => {
+    switch (type) {
+      case 'accounts/getEventNotificationSuccess':
+        setNotifications(eventNotifications);
+        break;
+      default:
+        break;
+    }
+  }, [type]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       dispatch(getEventNotification());
-      setNotifications(eventNotifications);
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [notifications]);
 
   // handle click outside event
   useClickOutside(
@@ -55,11 +66,11 @@ const Header = () => {
     console.log(id);
     // GOIT API
     dispatch(updateCheckEvent({ event_id: id }));
-
-    dispatch(updateCheckEvent({ event_id: id }));
-
     setNotifications(notifications.filter((x) => x.id !== id));
-    history.push(`${ROUTERS.EVENT}/detail/${id}`);
+    history.push({
+      pathname: `${ROUTERS.EVENT}/detail/${id}`,
+      state: { prevRoute: location.pathname },
+    });
   };
 
   return (
@@ -88,6 +99,7 @@ const Header = () => {
           {notifications.length > 0 && (
             <ModalEvent
               isShow={isShow}
+              setIsShow={setIsShow}
               wrapperRef={wrapperRef}
               handleEventClick={handleEventClick}
               solarEvent={solarEvent}

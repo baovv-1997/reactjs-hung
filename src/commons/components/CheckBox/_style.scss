@@ -28,24 +28,24 @@
     }
 
     &::before {
-      height: pxToRem(14);
-      width: pxToRem(14);
-      border: pxToRem(1) solid $bg-button;
+      height: pxToRem(12);
+      width: pxToRem(12);
+      border: pxToRem(1) solid $color-border-active;
       left: pxToRem(-1);
       top: 0;
       position: absolute;
-      content: "";
+      content: '';
       display: inline-block;
       background-color: $white;
       border: pxToRem(0.5) solid $black-light;
-      margin-top: pxToRem(5)
+      margin-top: pxToRem(5);
     }
 
     &::after {
       position: absolute;
       display: inline-block;
       height: pxToRem(5);
-      width: pxToRem(8);
+      width: pxToRem(7);
       border-left: pxToRem(0.5) solid;
       border-bottom: pxToRem(0.5) solid;
       color: $black-light;
@@ -59,7 +59,7 @@
 
   &.checkbox--checked {
     .checkbox__label::after {
-      content: "";
+      content: '';
       opacity: 1;
     }
   }

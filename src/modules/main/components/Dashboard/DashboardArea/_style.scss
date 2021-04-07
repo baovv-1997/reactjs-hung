@@ -6,7 +6,17 @@
   object-fit: contain;
 
   position: relative;
+
+  &__card {
+    width: calc(100vw - #{pxToRem(600)});
+    padding: pxToRem(20) 0 pxToRem(20) pxToRem(20);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    grid-gap: 30px;
+  }
 }
+
 .location-area {
   margin-top: pxToRem(30);
   position: absolute;

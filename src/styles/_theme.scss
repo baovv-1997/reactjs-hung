@@ -8,7 +8,7 @@ html {
 }
 
 .main-content {
-  >.content {
+  > .content {
     min-height: 90.08vh;
   }
 }
@@ -312,7 +312,8 @@ button.h-32 {
   }
 
   .unit-left {
-    left: pxToRem(10);
+    left: pxToRem(40);
+    bottom: pxToRem(8);
   }
 
   .unit-right {
@@ -330,7 +331,7 @@ button.h-32 {
     width: 100% !important;
     min-width: pxToRem(1000) !important;
 
-    >rect {
+    > rect {
       min-width: pxToRem(1000) !important;
       width: 100% !important;
     }

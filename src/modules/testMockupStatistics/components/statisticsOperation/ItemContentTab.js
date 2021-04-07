@@ -12,6 +12,7 @@ import moment from 'moment';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 import { LineChart } from 'commons/components/LineChart/lineChart';
+import IMAGES from 'themes/images';
 import GroupActionDownload from './GroupActionDownload';
 import GroupCompareChart from './GroupCompareChart';
 import BoxGroup from './BoxGroup';
@@ -149,13 +150,37 @@ const ItemContentTab = ({
                 onChange={(e) => handleChangeSearch(e, 'page')}
                 itemClass="page-item"
                 linkClass="page-link"
+                firstPageText={
+                  <img
+                    src={IMAGES.double_arrow_left}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                lastPageText={
+                  <img
+                    src={IMAGES.double_arrow_right}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                prevPageText={
+                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+                }
+                nextPageText={
+                  <img
+                    src={IMAGES.arrow_right1}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
               />
             </div>
           )}
         </div>
       </div>
       <TitleSubHeader title="이벤트 통계" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
+      <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}
@@ -213,6 +238,26 @@ const ItemContentTab = ({
               onChange={(e) => handleChangeSearch(e, 'page2')}
               itemClass="page-item"
               linkClass="page-link"
+              firstPageText={
+                <img
+                  src={IMAGES.double_arrow_left}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              lastPageText={
+                <img
+                  src={IMAGES.double_arrow_right}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              prevPageText={
+                <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+              }
+              nextPageText={
+                <img src={IMAGES.arrow_right1} alt="" className="double-prev" />
+              }
             />
           </div>
         )}

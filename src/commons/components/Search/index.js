@@ -13,22 +13,25 @@ type Props = {
   options?: Array<{ id: number, value: number, label: string }>,
   handleKeyDown: Function,
   isSpinner?: boolean,
+  isDisabled?: boolean,
 };
 
 const Search = ({
   placeholder,
-  handleIconClick = () => { },
+  handleIconClick = () => {},
   customClass = '',
   value = '',
-  onChange = () => { },
-  setSearchTerm = () => { },
+  onChange = () => {},
+  setSearchTerm = () => {},
   options = [],
   handleKeyDown,
-  isSpinner = false
+  isSpinner = false,
+  isDisabled = true,
 }: Props) => {
   const [display, setDisplay] = useState(false);
 
   const wrapperRef = useRef(null);
+  const inputRef = useRef(null);
 
   const handleClickOutside = (event) => {
     const { current: wrap } = wrapperRef;
@@ -45,9 +48,10 @@ const Search = ({
   });
 
   const updateSearchInput = (searchValue) => {
-    console.log(searchValue, "searchValue");
+    console.log(searchValue, 'searchValue');
     setSearchTerm(searchValue);
     setDisplay(false);
+    inputRef.current.focus();
   };
 
   return (
@@ -59,6 +63,8 @@ const Search = ({
         value={value}
         onChange={onChange}
         onKeyPress={(e) => handleKeyDown(e)}
+        ref={inputRef}
+        disabled={isDisabled}
       />
 
       {isSpinner && <div className="spinner" />}
@@ -67,10 +73,16 @@ const Search = ({
         src={images.icon_search}
         alt="Icon Search"
         className="search__icon"
-        onClick={handleIconClick}
+        onClick={!isDisabled ? handleIconClick : null}
         role="presentation"
       />
-      {(display && options.length) ? <AutoSuggest search={value} onClick={updateSearchInput} options={options} /> : null}
+      {display && options.length ? (
+        <AutoSuggest
+          search={value}
+          onClick={updateSearchInput}
+          options={options}
+        />
+      ) : null}
     </div>
   );
 };
@@ -79,11 +91,12 @@ Search.defaultProps = {
   placeholder: '',
   customClass: '',
   value: '',
-  onChange: () => { },
-  setSearchTerm: () => { },
-  handleIconClick: () => { },
+  onChange: () => {},
+  setSearchTerm: () => {},
+  handleIconClick: () => {},
   options: [],
   isSpinner: false,
+  isDisabled: true,
 };
 
-export default memo < Props > (Search);
+export default memo<Props>(Search);

@@ -6,6 +6,7 @@ import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
+import IMAGES from 'themes/images';
 import {
   headTestMockupStatistics,
   headTestMockupStatisticsOfModule,
@@ -120,6 +121,30 @@ const ItemContentTab = ({
                 onChange={(e) => handleChangeSearch(e, 'page')}
                 itemClass="page-item"
                 linkClass="page-link"
+                firstPageText={
+                  <img
+                    src={IMAGES.double_arrow_left}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                lastPageText={
+                  <img
+                    src={IMAGES.double_arrow_right}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
+                prevPageText={
+                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+                }
+                nextPageText={
+                  <img
+                    src={IMAGES.arrow_right1}
+                    alt=""
+                    className="double-prev"
+                  />
+                }
               />
             </div>
           )}
@@ -128,7 +153,7 @@ const ItemContentTab = ({
 
       {/*  Table Bottom */}
       <TitleSubHeader title="모듈,외기 온도 / 일사량 통계" />
-      <div className="group-option-table d-flex  justify-content-between mb-3">
+      <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
           listItem={listPaginationType}
@@ -159,6 +184,26 @@ const ItemContentTab = ({
               onChange={(e) => handleChangeSearch(e, 'page2')}
               itemClass="page-item"
               linkClass="page-link"
+              firstPageText={
+                <img
+                  src={IMAGES.double_arrow_left}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              lastPageText={
+                <img
+                  src={IMAGES.double_arrow_right}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              prevPageText={
+                <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+              }
+              nextPageText={
+                <img src={IMAGES.arrow_right1} alt="" className="double-prev" />
+              }
             />
           </div>
         )}
