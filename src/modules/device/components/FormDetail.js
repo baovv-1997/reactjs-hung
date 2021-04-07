@@ -100,7 +100,7 @@ const FormDetail = ({ data, history }: Props) => {
         <div className="col-item col-2 left">
           <div className="cell">NO</div>
           <div className="cell">구분</div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">설치위치</div>
           )}
           <div className="cell">담당자</div>
@@ -110,7 +110,7 @@ const FormDetail = ({ data, history }: Props) => {
         <div className="col-item col-4">
           <div className="cell">{data?.no}</div>
           <div className="cell">{renderLabelType(data?.ds_type)}</div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">{data?.position?.pos_name}</div>
           )}
           <div className="cell">{nameManager}</div>
@@ -120,7 +120,7 @@ const FormDetail = ({ data, history }: Props) => {
         <div className="col-item col-2 right">
           <div className="cell">설치일</div>
           <div className="cell">업체명</div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">모듈명</div>
           )}
           <div className="cell">담당자 전화번호</div>
@@ -130,7 +130,7 @@ const FormDetail = ({ data, history }: Props) => {
         <div className="col-item col-4">
           <div className="cell">{data?.ds_install_date}</div>
           <div className="cell">{data?.company?.com_name}</div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">{data?.ds_name}</div>
           )}
           <div className="cell">{phoneManager}</div>
