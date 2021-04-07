@@ -25,7 +25,8 @@ const Menu = ({ location }: Props) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.account);
   const [menuClicking, setMenuClicking] = useState({});
-  const roleName = userInfo?.roles[0]?.name;
+  const roleName =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.name;
   const handleClickItem = (item, active) => {
     setMenuClicking(item);
     if (item.name === menuClicking.name && active) {

@@ -8,6 +8,7 @@ const ROUTERS = {
   STORES_DETAIL: '/stores/:id',
   REGISTER_DEVICE: '/devices/register',
   DEVICE_DETAIL: '/devices/:id',
+  DEVICE_EDIT: '/devices/edit/:id',
   STATUS_COMPANY: `/status/company-development`,
   STATUS_COMPANY_BY_AREA: `/status/company-by-area`,
   OPERATION_STATUS_BY_COMPANY: `/operation/status-by-company`,

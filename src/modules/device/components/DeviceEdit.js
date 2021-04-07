@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TitleHeader } from 'commons/components/TitleHeader';
 import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
-import FormDetail from './FormDetail';
-import { getDeivceDetail } from '../redux';
 import Loading from 'commons/components/Loading';
+import FormEdit from './FormEdit';
+import { getDeivceDetail } from '../redux';
 
 type Props = {
   match: {
@@ -34,12 +34,12 @@ const DeviceDetail = ({ match, history }: Props) => {
         <div className="wrapper-device__head-menu">
           <TitleHeader
             title="기기 관리"
-            descSub="기기 정보를 수정하실 수 있습니다"
+            descSub="관리자 계정 정보를 수정하실 수 있습니다."
           />
         </div>
         <div className="device-detail">
           <TitleSubHeader title="계정 정보" />
-          <FormDetail data={deviceDetail} history={history} />
+          <FormEdit data={deviceDetail} history={history} />
         </div>
       </div>
     </>

@@ -2,12 +2,12 @@
 import React, { memo, useState, useEffect } from 'react';
 // import { DeivceDetailHead } from 'constants/headerTable';
 import { renderLabelType } from 'helpers/';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import Button from 'commons/components/Button';
 import ModalPopup from 'commons/components/Modal';
 import ROUTERS from 'constants/routers';
-import InputPhone from 'commons/components/Input/InputPhone';
-import { updateDevice } from '../redux';
+// import InputPhone from 'commons/components/Input/InputPhone';
+// import { updateDevice } from '../redux';
 
 type Props = {
   data: {
@@ -37,7 +37,7 @@ type Props = {
 };
 
 const FormDetail = ({ data, history }: Props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [nameManager, setNameManager] = useState(data?.ds_manager);
   const [incidenceAngle, setIncidenceAngle] = useState(
     data?.ds_incidence_angle
@@ -47,26 +47,26 @@ const FormDetail = ({ data, history }: Props) => {
   const [azimuthAngle, setAzimuthAngle] = useState(data?.ds_azimuth_angle);
   const [isCancel, setIsCancel] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
 
-    switch (name) {
-      case 'managerName':
-        setNameManager(value);
-        break;
-      case 'incidenceAngle':
-        setIncidenceAngle(value);
-        break;
-      case 'phoneManager':
-        setPhoneManager(value);
-        break;
-      case 'azimuthAngle':
-        setAzimuthAngle(value);
-        break;
-      default:
-        break;
-    }
-  };
+  //   switch (name) {
+  //     case 'managerName':
+  //       setNameManager(value);
+  //       break;
+  //     case 'incidenceAngle':
+  //       setIncidenceAngle(value);
+  //       break;
+  //     case 'phoneManager':
+  //       setPhoneManager(value);
+  //       break;
+  //     case 'azimuthAngle':
+  //       setAzimuthAngle(value);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   useEffect(() => {
     setNameManager(data?.ds_manager);
@@ -75,24 +75,24 @@ const FormDetail = ({ data, history }: Props) => {
     setAzimuthAngle(data?.ds_azimuth_angle);
   }, [data]);
 
-  const handleUpdateDevice = () => {
-    dispatch(
-      updateDevice({
-        id: data.id,
-        manager: nameManager,
-        incidence_angle: incidenceAngle,
-        manager_phone: phoneManager && phoneManager.replace(/-/g, ''),
-        azimuth_angle: azimuthAngle,
-        install_date: data?.ds_install_date,
-        color: data?.ds_color,
-        com_id: data?.com_id,
-        max_power: data?.ds_max_power,
-        name: data?.ds_name,
-        pos_id: data?.pos_id,
-        type: data?.ds_type,
-      })
-    );
-  };
+  // const handleUpdateDevice = () => {
+  //   dispatch(
+  //     updateDevice({
+  //       id: data.id,
+  //       manager: nameManager,
+  //       incidence_angle: incidenceAngle,
+  //       manager_phone: phoneManager && phoneManager.replace(/-/g, ''),
+  //       azimuth_angle: azimuthAngle,
+  //       install_date: data?.ds_install_date,
+  //       color: data?.ds_color,
+  //       com_id: data?.com_id,
+  //       max_power: data?.ds_max_power,
+  //       name: data?.ds_name,
+  //       pos_id: data?.pos_id,
+  //       type: data?.ds_type,
+  //     })
+  //   );
+  // };
 
   return (
     <div>
@@ -108,35 +108,14 @@ const FormDetail = ({ data, history }: Props) => {
           <div className="cell">입사각</div>
         </div>
         <div className="col-item col-4">
-          <div className="cell">
-            <input disabled value={data?.no} />
-          </div>
-          <div className="cell">
-            <input disabled value={renderLabelType(data?.ds_type)} />
-          </div>
+          <div className="cell">{data?.no}</div>
+          <div className="cell">{renderLabelType(data?.ds_type)}</div>
           {parseInt(data?.ds_type, 10) !== 0 && (
-            <div className="cell">
-              <input disabled value={data?.position?.pos_name} />
-            </div>
+            <div className="cell">{data?.position?.pos_name}</div>
           )}
-          <div className="cell">
-            <input
-              name="managerName"
-              value={nameManager}
-              onChange={(e) => handleInputChange(e)}
-            />
-          </div>
-          <div className="cell">
-            <input disabled value={`${data?.ds_max_power}v`} />
-          </div>
-          <div className="cell">
-            <input
-              name="incidenceAngle"
-              value={incidenceAngle}
-              onChange={(e) => handleInputChange(e)}
-              maxLength="11"
-            />
-          </div>
+          <div className="cell">{nameManager}</div>
+          <div className="cell">{`${data?.ds_max_power}v`}</div>
+          <div className="cell">{incidenceAngle}</div>
         </div>
         <div className="col-item col-2 right">
           <div className="cell">설치일</div>
@@ -149,49 +128,29 @@ const FormDetail = ({ data, history }: Props) => {
           <div className="cell">방위각</div>
         </div>
         <div className="col-item col-4">
-          <div className="cell">
-            <input value={data?.ds_install_date} disabled />
-          </div>
-          <div className="cell">
-            <input value={data?.company?.com_name} disabled />
-          </div>
+          <div className="cell">{data?.ds_install_date}</div>
+          <div className="cell">{data?.company?.com_name}</div>
           {parseInt(data?.ds_type, 10) !== 0 && (
-            <div className="cell">
-              <input value={data?.ds_name} disabled />
-            </div>
+            <div className="cell">{data?.ds_name}</div>
           )}
-          <div className="cell justify-content-start">
-            <InputPhone
-              className="input-field"
-              value={phoneManager || ''}
-              name="phone"
-              options={{
-                numericOnly: true,
-                delimiters: ['-', '-'],
-                blocks: [3, 4, 4],
-              }}
-              onChange={(e) => handleInputChange(e)}
-              pattern="[0-9]*"
-              inputMode="numeric"
-              customClass="custom-input"
-            />
-          </div>
-          <div className="cell">
-            <input value={data?.ds_color} disabled />
-          </div>
-          <div className="cell">
-            <input
-              value={azimuthAngle}
-              name="azimuthAngle"
-              onChange={(e) => handleInputChange(e)}
-              maxLength="11"
-            />
-          </div>
+          <div className="cell">{phoneManager}</div>
+          <div className="cell">{data?.ds_color}</div>
+          <div className="cell">{azimuthAngle}</div>
         </div>
       </div>
       <div className="device-detail__btn-group">
-        <Button customClass="btn-modify" onClick={handleUpdateDevice}>
-          수정 완료
+        <Button
+          customClass="btn-modify"
+          onClick={() => {
+            history.push({
+              pathname: `${ROUTERS.DEVICE}/edit/${data?.id}`,
+              state: {
+                id: data?.id,
+              },
+            });
+          }}
+        >
+          수정
         </Button>
         <Button
           customClass="btn-cancel"
