@@ -49,7 +49,7 @@ const Header = ({ location }: Props) => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [notifications]);
+  }, [notifications, eventNotifications]);
 
   // handle click outside event
   useClickOutside(

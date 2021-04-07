@@ -90,9 +90,13 @@
     border: pxToRem(1) solid $color-light8 !important;
     background-color: transparent;
 
+    .css-1wa3eu0-placeholder {
+      color: $black-opacity-5 !important;
+    }
+
     .css-g1d714-ValueContainer,
     .css-1uccc91-singleValue {
-      padding-left: pxToRem(10);
+      padding-left: pxToRem(15);
     }
   }
 

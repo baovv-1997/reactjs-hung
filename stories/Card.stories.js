@@ -53,8 +53,8 @@ storiesOf('Card', module).add('logoTop', () => {
       listCompany={listCompany[0]}
       logoClick={action('on-logo-click')}
       titleClick={action('on-title-click')}
-      isLogoTop
-      customClass="title-middle"
+      customClass="card-company"
+      isCardCompany
     />
   );
 });

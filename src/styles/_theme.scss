@@ -312,8 +312,9 @@ button.h-32 {
   }
 
   .unit-left {
-    left: pxToRem(40);
+    left: pxToRem(44);
     bottom: pxToRem(8);
+    margin-left: 0;
   }
 
   .unit-right {
