@@ -48,6 +48,8 @@ const FormEdit = ({ data, history }: Props) => {
   const [phoneManager, setPhoneManager] = useState(data?.ds_manager_phone);
   const [azimuthAngle, setAzimuthAngle] = useState(data?.ds_azimuth_angle);
   const [isCancel, setIsCancel] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -80,12 +82,7 @@ const FormEdit = ({ data, history }: Props) => {
   useEffect(() => {
     switch (type) {
       case 'device/updateDeviceSuccess':
-        history.push({
-          pathname: `${ROUTERS.DEVICE}/${data?.id}`,
-          state: {
-            id: data?.id,
-          },
-        });
+        setIsSuccess(true);
         break;
 
       default:
@@ -118,10 +115,10 @@ const FormEdit = ({ data, history }: Props) => {
         <div className="col-item col-2 left">
           <div className="cell">NO</div>
           <div className="cell">구분</div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">설치위치</div>
           )}
-          <div className="cell">담당자</div>
+          <div className="cell">담당자 이름</div>
           <div className="cell">모듈 출력</div>
           <div className="cell">입사각</div>
         </div>
@@ -132,7 +129,7 @@ const FormEdit = ({ data, history }: Props) => {
           <div className="cell">
             <input disabled value={renderLabelType(data?.ds_type)} />
           </div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">
               <input disabled value={data?.position?.pos_name} />
             </div>
@@ -159,7 +156,7 @@ const FormEdit = ({ data, history }: Props) => {
         <div className="col-item col-2 right">
           <div className="cell">설치일</div>
           <div className="cell">업체명</div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">모듈명</div>
           )}
           <div className="cell">담당자 전화번호</div>
@@ -173,7 +170,7 @@ const FormEdit = ({ data, history }: Props) => {
           <div className="cell">
             <input value={data?.company?.com_name} disabled />
           </div>
-          {parseInt(data?.ds_type, 10) !== 0 && (
+          {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">
               <input value={data?.ds_name} disabled />
             </div>
@@ -208,7 +205,7 @@ const FormEdit = ({ data, history }: Props) => {
         </div>
       </div>
       <div className="device-detail__btn-group">
-        <Button customClass="btn-modify" onClick={handleUpdateDevice}>
+        <Button customClass="btn-modify" onClick={() => setIsUpdate(true)}>
           수정 완료
         </Button>
         <Button
@@ -242,6 +239,58 @@ const FormEdit = ({ data, history }: Props) => {
         }}
       >
         취소 시 수정 내역은 전부 사라집니다. 정말 취소하시겠습니까?
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isUpdate}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() => {
+          setIsUpdate(false);
+        }}
+        handleClose={() => {
+          setIsUpdate(false);
+        }}
+        textBtnLeft="확인"
+        textBtnRight="취소"
+        isShowTwoBtn
+        customClassButton="btn-custom"
+        handleSubmit={() => {
+          setIsUpdate(false);
+          handleUpdateDevice();
+        }}
+      >
+        수정하시겠습니까?
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isSuccess}
+        isShowHeader
+        title="알림"
+        isShowFooter
+        handleClose={() => {
+          history.push({
+            pathname: `${ROUTERS.DEVICE}/${data?.id}`,
+            state: {
+              id: data?.id,
+            },
+          });
+        }}
+        textBtnRight="확인"
+        isShowTwoBtn={false}
+        customClassButton="btn-custom"
+        handleSubmit={() => {
+          history.push({
+            pathname: `${ROUTERS.DEVICE}/${data?.id}`,
+            state: {
+              id: data?.id,
+            },
+          });
+        }}
+      >
+        수정 완료되었습니다.
       </ModalPopup>
     </div>
   );
