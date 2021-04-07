@@ -75,3 +75,21 @@ export const operator_event_filter = [
     label: '설비 이력',
   },
 ];
+
+export const test_modal_search = [
+  {
+    name: '측정 문제',
+    key: 0,
+    label: '측정 문제',
+  },
+  {
+    name: '보수 이력',
+    key: 1,
+    label: '보수 이력',
+  },
+  {
+    name: '설비 이력',
+    key: 2,
+    label: '설비 이력',
+  },
+];

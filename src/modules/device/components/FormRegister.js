@@ -294,7 +294,7 @@ const FormRegister = ({ history }: Props) => {
       <ModalPopup
         isOpen={isErrorAdd}
         isShowHeader
-        title="Error"
+        title="확인"
         isShowIconClose
         isShowFooter
         handleCloseIcon={() => {
@@ -305,7 +305,7 @@ const FormRegister = ({ history }: Props) => {
           setIsErrorAdd(false);
           dispatch(resetDeviceType());
         }}
-        textBtnLeft="OK"
+        textBtnLeft="확인"
         customClassButton="btn-custom"
       >
         {errorsMessage}

@@ -9,7 +9,7 @@ import {
   headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 } from '../constant';
-import { operator_event_filter } from 'constants/optionCheckbox';
+import { test_modal_search } from 'constants/optionCheckbox';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
@@ -202,7 +202,7 @@ const ItemContentTab = ({
           keyItem: 4,
         }}
         onClickRow={handleClickDetail}
-        listOption={operator_event_filter}
+        listOption={test_modal_search}
         optionDefault={optionFilters}
       />
       <div className="group-btn-register text-right">
