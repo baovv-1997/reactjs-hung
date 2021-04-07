@@ -134,14 +134,20 @@ const accountSlice = createSlice({
     },
     getAccountListSuccess: (state, action) => {
       if (!action.isDetail) {
-        state.accountList = action?.data?.data.map((item) => ({
-          no: item.id,
+        state.accountList = action?.data?.data.map((item, index) => ({
+          rowId:
+            `${
+              action.data.total -
+              (action?.data?.current_page - 1) * action?.data?.per_page -
+              index
+            }` || '',
           dateCreate: moment(item?.created_at).format('YYYY-MM-DD'),
           roleName: item?.roles[0]?.display_name,
           username: item?.username,
           email: item?.email,
           name: item?.name,
           phone: item?.phone && formatValue(item?.phone),
+          id: item.id,
         }));
       } else {
         state.accountDetail = action?.data;
