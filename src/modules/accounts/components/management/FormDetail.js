@@ -218,7 +218,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
       <ModalPopup
         isOpen={isUpdateFailed}
         isShowHeader
-        title="Error"
+        title="알림"
         isShowIconClose
         isShowFooter
         handleCloseIcon={() => {
@@ -229,7 +229,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           setIsUpdateFailed(false);
           dispatch(resetAccountType());
         }}
-        textBtnLeft="OK"
+        textBtnLeft="확인"
         customClassButton="btn-custom"
       >
         {errorsMessage}

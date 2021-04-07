@@ -157,7 +157,9 @@ const DeviceManagement = ({ history }: Props) => {
                 listItem={renderListOptions()}
                 onChange={(option) => onChangeSelect(option)}
                 option={selectOption}
-                placeholder="업체 선택"
+                placeholder={`${
+                  currentOption === 'pos_id' ? '설치위치 선택' : '업체 선택'
+                }`}
               />
             </div>
             <div className="wrapper-device__head-menu__search__input">

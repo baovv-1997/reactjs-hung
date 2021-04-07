@@ -14,6 +14,7 @@ const mainSlice = createSlice({
     deviceDetail: {},
     dataAddNew: [],
     errorsAddDevice: {},
+    type: '',
   },
   reducers: {
     getListCompany: (state, action) => {

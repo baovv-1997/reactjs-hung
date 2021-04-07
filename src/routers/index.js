@@ -51,6 +51,7 @@ const RegisterDevice = lazy(() =>
 // components
 const MainPage = lazy(() => import('modules/main/components/Dashboard'));
 const DeviceManagement = lazy(() => import('modules/device/components'));
+const DeviceEdit = lazy(() => import('modules/device/components/DeviceEdit'));
 const DeviceDetail = lazy(() =>
   import('modules/device/components/DeviceDetail')
 );
@@ -158,6 +159,13 @@ const Router = () => {
               exact
               path={ROUTERS.DEVICE}
               component={DeviceManagement}
+              isAuthenticated={isAuthenticated}
+            />
+
+            <PrivateRoute
+              exact
+              path={ROUTERS.DEVICE_EDIT}
+              component={DeviceEdit}
               isAuthenticated={isAuthenticated}
             />
             <PrivateRoute

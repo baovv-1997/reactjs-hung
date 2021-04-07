@@ -12,8 +12,8 @@ import Button from 'commons/components/Button';
 import Table from 'commons/components/Table';
 import { ACCOUNT_HEAD } from 'constants/tableHeadData';
 // import { getListCompany, getListPosition } from '../../../device/redux';
-import { getAccountList } from '../../redux';
 import Loading from 'commons/components/Loading';
+import { getAccountList } from '../../redux';
 
 type Props = {
   history: {
@@ -40,6 +40,7 @@ const AccountManagement = ({ history }: Props) => {
   const onChangeOption = (e) => {
     const { name } = e.target;
     setCurrentOption(name);
+    setActivePage(1);
   };
 
   // render list radio
