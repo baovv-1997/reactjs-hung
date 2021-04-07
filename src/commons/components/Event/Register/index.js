@@ -77,6 +77,7 @@ const EventRegister = ({ location }: Props) => {
     switch (type) {
       case 'commons/addNewEventSuccess':
         history.go(-1);
+        dispatch(SignInAction.getEventNotification());
         break;
       default:
         break;

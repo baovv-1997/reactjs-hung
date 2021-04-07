@@ -115,6 +115,7 @@ const EditEvent = ({ match, location }: Props) => {
     switch (type) {
       case 'commons/updateEventSuccess':
         history.push(location.state.prevRoute);
+        dispatch(SignInAction.getEventNotification());
         break;
       default:
         break;

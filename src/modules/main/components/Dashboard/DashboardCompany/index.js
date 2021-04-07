@@ -139,6 +139,9 @@ const DashboardCompany = () => {
       );
     });
 
+  console.log(listCompanyInverters, 'listCompanyInverters');
+  console.log(newlistCompanyInverters, 'newlistCompanyInverters');
+
   return (
     <>
       {isLoading && <Loading />}

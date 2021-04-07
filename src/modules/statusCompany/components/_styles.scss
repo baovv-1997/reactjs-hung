@@ -156,7 +156,11 @@
       // display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: pxToRem(218);
+      height: pxToRem(40);
 
       span {
         font-size: pxToRem(12);

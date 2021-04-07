@@ -126,6 +126,9 @@ const MainPage = () => {
 
   const searchSubmit = () => {
     const type = searchTerm?.key;
+    if (!searchTerm.value) {
+      return;
+    }
     switch (type) {
       case 'posId':
         dispatch(
@@ -200,7 +203,7 @@ const MainPage = () => {
           handleIconClick={handleIconClick}
           handleKeyDown={handleKeyDownSearch}
           isSpinner={isSpinner}
-          isDisabled={userInfo?.roles[0].id !== 1}
+          isDisabled={userInfo?.roles[0].id === 2}
         />
 
         <div className="current-electric">
@@ -261,6 +264,7 @@ const MainPage = () => {
                 electricRealtime={posItem?.card?.prod_realtime}
                 cumulativeElectric={posItem?.card?.prod_sum}
                 ratePower={posItem?.card?.performance_ratio}
+                isEvent={!!posItem?.card?.event}
                 titleClick={() => handleTitleClick(posItem?.position?.id)}
                 logoClick={handleLogoClick}
               />
