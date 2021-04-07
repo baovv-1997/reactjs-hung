@@ -12,8 +12,8 @@ import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
 import Table from 'commons/components/Table';
 import { DEVICE_HEAD_TABLE } from 'constants/tableHeadData';
-import { getListCompany, getListDevice, getListPosition } from '../redux';
 import Loading from 'commons/components/Loading';
+import { getListCompany, getListDevice, getListPosition } from '../redux';
 
 type Props = {
   history: {
@@ -34,8 +34,16 @@ const DeviceManagement = ({ history }: Props) => {
   const [selectOption, setSelectOption] = useState(null);
 
   useEffect(() => {
-    dispatch(getListCompany());
-    dispatch(getListPosition());
+    dispatch(
+      getListCompany({
+        per_page: 9999,
+      })
+    );
+    dispatch(
+      getListPosition({
+        per_page: 9999,
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -61,6 +69,7 @@ const DeviceManagement = ({ history }: Props) => {
   const onChangeOption = (e) => {
     const { name } = e.target;
     setCurrentOption(name);
+    setSelectOption(null);
   };
 
   // render list radio
@@ -77,6 +86,7 @@ const DeviceManagement = ({ history }: Props) => {
 
   // handle submit search
   const handleSubmitSearch = () => {
+    setActivePage(1);
     dispatch(
       getListDevice({
         [currentOption]: selectOption?.value,
