@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TitleHeader } from 'commons/components/TitleHeader';
 import { TitleSubHeader } from 'commons/components/TitleHeader/titleSub';
+import Loading from 'commons/components/Loading';
 import FormDetail from './FormDetail';
 import { getDeivceDetail } from '../redux';
-import Loading from 'commons/components/Loading';
 
 type Props = {
   match: {

@@ -3,9 +3,9 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { ROUTES, API } from 'apis';
 
 // worker Saga: will be fired on SEND_INVITE actions
-function* getPosList() {
+function* getPosList(action) {
   try {
-    const response = yield call(() => API.get(ROUTES.GET_POS));
+    const response = yield call(() => API.get(ROUTES.GET_POS, action.payload));
 
     if (response.ok) {
       const { data } = response.data;
