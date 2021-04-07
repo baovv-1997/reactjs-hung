@@ -46,6 +46,7 @@ const statusCompanySlide = createSlice({
     },
     getStatusGeneratorRawSuccess: (state, action) => {
       const { data } = action.data;
+
       state.type = action.type;
       // state.isProcessing = true;
       state.rawData = data;
