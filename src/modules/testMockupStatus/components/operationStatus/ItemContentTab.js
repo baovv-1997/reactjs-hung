@@ -5,22 +5,22 @@ import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType } from 'constants/listKey';
-import {
-  headTestMockupOperationStatus,
-  headOperationStatusByAreaCompany,
-} from '../constant';
 import { test_modal_search } from 'constants/optionCheckbox';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
 import IMAGES from 'themes/images';
-import BoxGroup from './BoxGroup';
-import GroupCompareChart from './GroupCompareChart';
-import GroupActionDownload from '../GroupActionDownload';
 import moment from 'moment';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import { LineChart } from 'commons/components/LineChart/lineChart';
+import BoxGroup from './BoxGroup';
+import GroupCompareChart from './GroupCompareChart';
+import GroupActionDownload from '../GroupActionDownload';
+import {
+  headTestMockupOperationStatus,
+  headOperationStatusByAreaCompany,
+} from '../constant';
 
 type Props = {
   listMockupDataCompany: any,

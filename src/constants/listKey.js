@@ -40,7 +40,7 @@ const listPaginationType = [
   {
     id: 4,
     value: 24,
-    label: '14 개씩 보기',
+    label: '24 개씩 보기',
   },
   {
     id: 4,
