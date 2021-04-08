@@ -54,8 +54,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   // const { listInverter } = useSelector((state) => state?.account);
   const defaultOption = {
     id: 1,
-    value: 6,
-    label: '6 개씩 보기',
+    value: 5,
+    label: '5 개씩 보기',
   };
 
   const defaultSearch = {

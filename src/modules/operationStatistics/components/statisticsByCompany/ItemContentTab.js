@@ -6,7 +6,7 @@ import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
-import { listPaginationType } from 'constants/listKey';
+import { listPaginationType5PerPage } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
 import LineChart2 from 'commons/components/LineChart/LineChart2';
 
@@ -216,7 +216,7 @@ const ItemContentTab = ({
       <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
-          listItem={listPaginationType}
+          listItem={listPaginationType5PerPage}
           onChange={(option) => handleChangeSearch(option, 'pagination2')}
           option={paramsSearch?.pagination2 || null}
           noOptionsMessage={() => '옵션 없음'}
