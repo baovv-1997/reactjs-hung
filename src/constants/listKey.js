@@ -48,5 +48,32 @@ const listPaginationType = [
     label: '30 개씩 보기',
   },
 ];
+const listPaginationType5PerPage = [
+  {
+    id: 1,
+    value: 5,
+    label: '5 개씩 보기',
+  },
+  {
+    id: 2,
+    value: 10,
+    label: '10 개씩 보기',
+  },
+  {
+    id: 3,
+    value: 15,
+    label: '15 개씩 보기',
+  },
+  {
+    id: 4,
+    value: 20,
+    label: '20 개씩 보기',
+  },
+  {
+    id: 4,
+    value: 25,
+    label: '25 개씩 보기',
+  },
+];
 
-export { listType, listPaginationType };
+export { listType, listPaginationType, listPaginationType5PerPage };

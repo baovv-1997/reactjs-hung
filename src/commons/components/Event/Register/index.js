@@ -21,6 +21,7 @@ type Props = {
     pathname: string,
     state: {
       prevRoute: string,
+      typeEvent: string,
     },
   },
 };
@@ -173,13 +174,27 @@ const EventRegister = ({ location }: Props) => {
         break;
     }
   };
+  console.log('stateTypeEvent', stateTypeEvent);
+  const renderTitle = () => {
+    let title = '';
+    switch (stateTypeEvent) {
+      case 'mockup':
+        title = '테스트(목업) 운영 현황';
+        break;
 
+      default:
+        title = '실증단지 운영 현황';
+        break;
+    }
+
+    return title;
+  };
   return (
     <>
       {isProcessing && <Loading />}
       <div className="content-wrap">
         <TitleHeader
-          title="실증단지 운영 현황"
+          title={renderTitle()}
           descSub="설비 이력, 보수 이력을 등록하실 수 있습니다."
         />
         <TitleSubHeader title="이벤트 상세 내용" />
