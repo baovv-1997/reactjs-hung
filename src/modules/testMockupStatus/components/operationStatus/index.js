@@ -43,9 +43,7 @@ const OperationStatusPage = ({ location }: Props) => {
 
   const defaultSearch = {
     page: 1,
-    company:
-      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-      null,
+    company: null,
     page2: 1,
     ACVoltage: true,
     ACCurrent: true,
@@ -250,6 +248,15 @@ const OperationStatusPage = ({ location }: Props) => {
       state: { prevRoute: location.pathname },
     });
   };
+
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        listInverterTest && listInverterTest[0] && listInverterTest[0].id,
+    });
+  }, []);
+
   return (
     <>
       {isProcessing && <Loading />}

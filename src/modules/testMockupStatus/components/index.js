@@ -19,6 +19,8 @@ const StatusByAreaCompany = () => {
     total,
     dataChart,
   } = useSelector((state) => state?.testMockupStatus);
+  const dispatch = useDispatch();
+
   const { inverterId } = useSelector((state) => state?.testDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { deviceList } = useSelector((state) => state?.commons);
@@ -32,10 +34,7 @@ const StatusByAreaCompany = () => {
   };
   const defaultSearch = {
     page: 1,
-    company:
-      inverterId ||
-      (listInverterTest && listInverterTest[0] && listInverterTest[0]?.id) ||
-      null,
+    company: inverterId || null,
     mockupType: null,
     parkingLot: null,
     power: true,
@@ -123,7 +122,6 @@ const StatusByAreaCompany = () => {
     dispatch(CommonAction.getListDevice());
   }, []);
 
-  const dispatch = useDispatch();
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
     (company) => {
@@ -159,6 +157,14 @@ const StatusByAreaCompany = () => {
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        listInverterTest && listInverterTest[0] && listInverterTest[0].id,
+    });
+  }, []);
 
   useEffect(() => {
     if (paramsSearch?.company) {
