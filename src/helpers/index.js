@@ -65,10 +65,15 @@ export const spliceCompanyInverter = (comapyInverter) => {
   let countIndex = 0;
 
   comapyInverter.map((item, index) => {
-
     let newListInverter;
 
-    if (item.length === 6 || item.length === 8 || item.length === 9 || item.length === 10 || item.length === 7) {
+    if (
+      item.length === 6 ||
+      item.length === 8 ||
+      item.length === 9 ||
+      item.length === 10 ||
+      item.length === 7
+    ) {
       switch (countIndex) {
         case 0:
           newListInverter = item.splice(5);
@@ -177,7 +182,7 @@ export const handleGroupItem = (arr, newArr) => {
     let cloneArray = [arr[i]];
     for (let j = i + 1; j < arr.length; j += 1) {
       if (arr[i].comId === arr[j]?.comId) {
-        cloneArray = [...cloneArray, arr[j]]
+        cloneArray = [...cloneArray, arr[j]];
       }
     }
 
@@ -186,34 +191,29 @@ export const handleGroupItem = (arr, newArr) => {
     }
   }
   return newArr;
-}
+};
 
 export const avenrageCard = (arr) => {
-  const sumCardMeasure = arr.reduce(
-    (accumulator, currentValue) => ({
-      card: {
-        output_current:
-          accumulator.card?.output_current +
-          currentValue.card?.output_current,
-        output_voltage:
-          accumulator.card?.output_voltage +
-          currentValue.card?.output_voltage,
-        performance_ratio:
-          accumulator.card?.performance_ratio +
-          currentValue.card?.performance_ratio,
-        prod_inmonth:
-          accumulator.card?.prod_inmonth + currentValue.card?.prod_inmonth,
-        prod_realtime:
-          accumulator.card?.prod_realtime + currentValue.card?.prod_realtime,
-        prod_sum: accumulator.card?.prod_sum + currentValue.card?.prod_sum,
-        prod_today:
-          accumulator.card?.prod_today + currentValue.card?.prod_today,
-        radiance: accumulator.card?.radiance + currentValue.card?.radiance,
-        temperature:
-          accumulator.card?.temperature + currentValue.card?.temperature,
-      },
-    })
-  );
+  const sumCardMeasure = arr.reduce((accumulator, currentValue) => ({
+    card: {
+      output_current:
+        accumulator.card?.output_current + currentValue.card?.output_current,
+      output_voltage:
+        accumulator.card?.output_voltage + currentValue.card?.output_voltage,
+      performance_ratio:
+        accumulator.card?.performance_ratio +
+        currentValue.card?.performance_ratio,
+      prod_inmonth:
+        accumulator.card?.prod_inmonth + currentValue.card?.prod_inmonth,
+      prod_realtime:
+        accumulator.card?.prod_realtime + currentValue.card?.prod_realtime,
+      prod_sum: accumulator.card?.prod_sum + currentValue.card?.prod_sum,
+      prod_today: accumulator.card?.prod_today + currentValue.card?.prod_today,
+      radiance: accumulator.card?.radiance + currentValue.card?.radiance,
+      temperature:
+        accumulator.card?.temperature + currentValue.card?.temperature,
+    },
+  }));
 
   const avenrage = {
     card: {
@@ -226,98 +226,56 @@ export const avenrageCard = (arr) => {
       performance_ratio: Math.round(
         sumCardMeasure?.card?.performance_ratio / arr.length
       ),
-      prod_inmonth: Math.round(
-        sumCardMeasure?.card?.prod_inmonth / arr.length
-      ),
+      prod_inmonth: Math.round(sumCardMeasure?.card?.prod_inmonth / arr.length),
       prod_realtime: Math.round(
         sumCardMeasure?.card?.prod_realtime / arr.length
       ),
-      prod_sum: Math.round(
-        sumCardMeasure?.card?.prod_sum / arr.length
-      ),
-      prod_today: Math.round(
-        sumCardMeasure?.card?.prod_today / arr.length
-      ),
-      radiance: Math.round(
-        sumCardMeasure?.card?.radiance / arr.length
-      ),
-      temperature: Math.round(
-        sumCardMeasure?.card?.temperature / arr.length
-      ),
+      prod_sum: Math.round(sumCardMeasure?.card?.prod_sum / arr.length),
+      prod_today: Math.round(sumCardMeasure?.card?.prod_today / arr.length),
+      radiance: Math.round(sumCardMeasure?.card?.radiance / arr.length),
+      temperature: Math.round(sumCardMeasure?.card?.temperature / arr.length),
     },
   };
   return avenrage;
-}
-
-// eslint-disable-next-line consistent-return
-export const setPositionCardMeasure = (index) => {
-  switch (index) {
-    case 0:
-      return {
-        top: 366,
-        left: 19,
-      }
-
-    case 1:
-      return {
-        top: 366,
-        left: 346,
-      }
-
-    case 2:
-      return {
-        top: 366,
-        left: 1020,
-      }
-
-    case 3:
-      return {
-        top: 9,
-        left: 1006,
-      }
-
-    case 4:
-      return {
-        top: 9,
-        left: 347,
-      }
-
-    case 5:
-      return {
-        top: 9,
-        left: 17,
-      }
-
-    case 6:
-      return {
-        top: 9,
-        left: 677,
-      }
-
-    case 7:
-      return {
-        top: 366,
-        left: 682,
-      }
-
-    case 8:
-      return {
-        top: 660,
-        left: 194,
-      }
-
-    case 9:
-      return {
-        top: 660,
-        left: 527,
-      }
-    case 10:
-      return {
-        top: 660,
-        left: 861,
-      }
-
-    default:
-      break;
+};
+export const checkIsNumber = (field) => {
+  let classTd = '';
+  if (
+    field === 'rowId' ||
+    field === 'dateTime' ||
+    field === 'inverterID' ||
+    field === 'inverterName' ||
+    field === 'moduleTemperature' ||
+    field === 'outsideTemperature' ||
+    field === 'powerGeneration' ||
+    field === 'rateOfPowerGeneration' ||
+    field === 'cumulativePowerGeneration' ||
+    field === 'gradientInsolation' ||
+    field === 'horizontalInsolation' ||
+    field === 'dmProddMonth' ||
+    field === 'dmProddDay' ||
+    field === 'dmProdSum' ||
+    field === 'dmPerformanceRatio' ||
+    field === 'dmModuleTemp' ||
+    field === 'dmEnvTemp' ||
+    field === 'dmRad' ||
+    field === 'dm_datetime' ||
+    field === 'ds_incidence_angle' ||
+    field === 'ds_azimuth_angle' ||
+    field === 'dm_ac_voltage' ||
+    field === 'dm_ac_power' ||
+    field === 'dm_ac_current' ||
+    field === 'dm_prod_day' ||
+    field === 'dm_prod_month' ||
+    field === 'dm_prod_sum' ||
+    field === 'dm_performance_ratio' ||
+    field === 'inverterId' ||
+    field === 'dm_rad' ||
+    field === 'dm_module_temp' ||
+    field === 'performanceRatio' ||
+    field === 'insolation'
+  ) {
+    classTd = 'font-number';
   }
-}
+  return classTd;
+};

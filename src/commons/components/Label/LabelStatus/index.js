@@ -47,10 +47,13 @@ export const LabelStatus = ({
             if (isPower && item === data[0]) itemUnit = 'kWh';
             else if (isPower && item === data[1]) itemUnit = '%';
             return (
+              // eslint-disable-next-line react/no-array-index-key
               <div className="label-status__content" key={index + 1}>
                 <p className="label-status__title">{item.title}</p>
                 <div className="label-status__group-value">
-                  <p className="label-status__value">{item.value}</p>
+                  <p className="label-status__value">
+                    {item.value ? item.value : 0}
+                  </p>
                   <p className="label-status__unit">{itemUnit}</p>
                 </div>
               </div>

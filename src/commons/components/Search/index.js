@@ -14,6 +14,7 @@ type Props = {
   handleKeyDown: Function,
   isSpinner?: boolean,
   isDisabled?: boolean,
+  inputRef: any,
 };
 
 const Search = ({
@@ -27,11 +28,11 @@ const Search = ({
   handleKeyDown,
   isSpinner = false,
   isDisabled = true,
+  inputRef,
 }: Props) => {
   const [display, setDisplay] = useState(false);
 
   const wrapperRef = useRef(null);
-  const inputRef = useRef(null);
 
   const handleClickOutside = (event) => {
     const { current: wrap } = wrapperRef;
@@ -48,7 +49,6 @@ const Search = ({
   });
 
   const updateSearchInput = (searchValue) => {
-    console.log(searchValue, 'searchValue');
     setSearchTerm(searchValue);
     setDisplay(false);
     inputRef.current.focus();

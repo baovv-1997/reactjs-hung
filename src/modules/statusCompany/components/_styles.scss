@@ -226,10 +226,12 @@
       width: pxToRem(150);
       height: 100%;
       border-right: pxToRem(1) solid $color-light10;
-      padding: pxToRem(30) pxToRem(12) pxToRem(20) pxToRem(12);
+      padding: pxToRem(30) 0 pxToRem(20);
 
       .group-char-checkbox {
-        padding-left: pxToRem(10);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .checkbox-header {
@@ -239,6 +241,10 @@
         line-height: 1.47;
         letter-spacing: pxToRem(-0.51);
         color: $bg-button;
+      }
+
+      .group-length-chart {
+        margin-left: pxToRem(12);
       }
     }
 
