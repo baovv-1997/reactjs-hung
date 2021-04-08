@@ -7,9 +7,14 @@ import Button from 'commons/components/Button';
 type Props = {
   linkDownTable: string,
   keyName: string,
+  text?: string,
 };
 
-export const ButtonDownExcel = ({ linkDownTable, keyName }: Props) => {
+export const ButtonDownExcel = ({
+  linkDownTable,
+  keyName,
+  text = 'Raw Date 다운',
+}: Props) => {
   let LINK_API = '';
   switch (keyName) {
     case 'solar':
@@ -29,10 +34,14 @@ export const ButtonDownExcel = ({ linkDownTable, keyName }: Props) => {
   return (
     <Button onClick={() => {}}>
       <a href={LINK_API} target="_blank" rel="noopener noreferrer">
-        Raw Data 다운
+        {text}
       </a>
     </Button>
   );
+};
+
+ButtonDownExcel.defaultProps = {
+  text: 'Raw Date 다운',
 };
 
 export default memo<Props>(ButtonDownExcel);

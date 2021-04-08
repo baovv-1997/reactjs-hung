@@ -99,7 +99,7 @@ export const FilterSearch = ({
             <div className="d-flex justify-content-start date-group align-items-center">
               {isShowDupInverter ? (
                 <div className="group-select-search d-flex justify-content-start align-items-center mr-10">
-                  <div className="title-label">인버터 선택 1</div>
+                  <div className="title-label">인버터1 선택</div>
                   <SelectDropdown
                     placeholder="선택되지 않음"
                     listItem={listInverter1}
@@ -130,7 +130,7 @@ export const FilterSearch = ({
               <img src={IMAGES.arrow_right} alt="" className="mx-2" />
               <div className="group-select-search d-flex justify-content-start align-items-center mr-10">
                 <div className="title-label">{`${
-                  isShowDupInverter ? '인버터 선택 2' : '인버터 선택'
+                  isShowDupInverter ? '인버터2 선택' : '인버터 선택'
                 }`}</div>
                 <SelectDropdown
                   placeholder="선택되지 않음"
