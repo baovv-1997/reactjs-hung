@@ -103,7 +103,7 @@ const FormDetail = ({ data, history }: Props) => {
           {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">설치위치</div>
           )}
-          <div className="cell">담당자</div>
+          <div className="cell">담당자 이름</div>
           <div className="cell">모듈 출력</div>
           <div className="cell">입사각</div>
         </div>
@@ -115,7 +115,7 @@ const FormDetail = ({ data, history }: Props) => {
           )}
           <div className="cell">{nameManager}</div>
           <div className="cell">{`${data?.ds_max_power}v`}</div>
-          <div className="cell">{incidenceAngle}</div>
+          <div className="cell">{`${incidenceAngle}°도`}</div>
         </div>
         <div className="col-item col-2 right">
           <div className="cell">설치일</div>
@@ -135,7 +135,7 @@ const FormDetail = ({ data, history }: Props) => {
           )}
           <div className="cell">{phoneManager}</div>
           <div className="cell">{data?.ds_color}</div>
-          <div className="cell">{azimuthAngle}</div>
+          <div className="cell">{`${azimuthAngle}°도`}</div>
         </div>
       </div>
       <div className="device-detail__btn-group">

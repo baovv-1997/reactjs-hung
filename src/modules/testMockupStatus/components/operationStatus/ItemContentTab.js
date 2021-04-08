@@ -160,7 +160,7 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-      <TitleSubHeader title="테스트(목업) 운영 현황" />
+      <TitleSubHeader title="이벤트 현황" />
       <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"

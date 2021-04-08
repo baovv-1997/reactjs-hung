@@ -179,7 +179,7 @@ const FormEdit = ({ data, history }: Props) => {
             <InputPhone
               className="input-field"
               value={phoneManager || ''}
-              name="phone"
+              name="phoneManager"
               options={{
                 numericOnly: true,
                 delimiters: ['-', '-'],
