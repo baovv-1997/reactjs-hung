@@ -9,7 +9,7 @@ type Props = {
     label: string,
   }>,
   label: string,
-  handleCheckboxDefault: Function,
+  submitValue: Function,
   customClass: string,
   optionDefault: Array<string>,
 };

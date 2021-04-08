@@ -9,9 +9,9 @@ import { addEventFilter, getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
+import Loading from 'commons/components/Loading';
 import ItemContentTab from './ItemContentTab';
 import * as ActionGenerator from '../../redux';
-import Loading from 'commons/components/Loading';
 
 type Props = {
   location: {
@@ -228,6 +228,7 @@ const OperationStatusPage = ({ location }: Props) => {
       case 'checkBox':
         dispatch(addEventFilter(item));
         setIsShowModalSorting(false);
+        setParamsSearch({ ...paramsSearch, page2: 1 });
         break;
       case 'isSubmitSearch':
         setParamsSearch({
