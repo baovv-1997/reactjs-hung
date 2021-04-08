@@ -39,7 +39,8 @@ const MainPage = () => {
     totalMetric,
   } = useSelector((state) => state.main);
   const { userInfo } = useSelector((state) => state?.account);
-
+  const count = useRef(1);
+  const inputRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState({
     label: '',
     value: '',
@@ -65,8 +66,6 @@ const MainPage = () => {
     dispatch(getListPosition());
     dispatch(getListCompany());
   }, []);
-
-  const count = useRef(1);
 
   useEffect(() => {
     dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
@@ -126,7 +125,8 @@ const MainPage = () => {
 
   const searchSubmit = () => {
     const type = searchTerm?.key;
-    if (!searchTerm.value) {
+    if (!searchTerm.label) {
+      inputRef.current.focus();
       return;
     }
     switch (type) {
@@ -156,7 +156,7 @@ const MainPage = () => {
         setModal({
           ...modal,
           isShow: true,
-          content: '구역명이나 업체명을 정확히 입력해주세요',
+          content: '구역명이나 업체명을 정확히 입력해주세요.',
         });
         break;
     }
@@ -204,6 +204,7 @@ const MainPage = () => {
           handleKeyDown={handleKeyDownSearch}
           isSpinner={isSpinner}
           isDisabled={userInfo?.roles[0].id === 2}
+          inputRef={inputRef}
         />
 
         <div className="current-electric">

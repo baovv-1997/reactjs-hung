@@ -1,6 +1,7 @@
 // @flow
 
 import React, { memo } from 'react';
+import { checkIsNumber } from 'helpers';
 
 type Props = {
   rowItem: Object,
@@ -31,24 +32,26 @@ const TableRow = ({
       onClick={() => onClickTableRow && onClickTableRow(rowItem)}
       className={activeClass}
     >
-      {Object.keys(rowItem).map((item) => (
-        <td
-          key={item}
-          className={`${
-            // eslint-disable-next-line no-nested-ternary
-            isShowId && item === fieldId
-              ? 'd-none'
-              : isClickTableColumn
-              ? 'row-cursor-pointer'
-              : ''
-          }`}
-          onClick={() => isClickTableColumn && onClickTableColumn(rowItem)}
-          onKeyPress={() => isClickTableColumn && onClickTableColumn(rowItem)}
-          role="presentation"
-        >
-          {rowItem[item]}
-        </td>
-      ))}
+      {Object.keys(rowItem).map((item) => {
+        return (
+          <td
+            key={item}
+            className={`${
+              // eslint-disable-next-line no-nested-ternary
+              isShowId && item === fieldId
+                ? 'd-none'
+                : isClickTableColumn
+                ? 'row-cursor-pointer'
+                : ''
+            } ${checkIsNumber(item)}`}
+            onClick={() => isClickTableColumn && onClickTableColumn(rowItem)}
+            onKeyPress={() => isClickTableColumn && onClickTableColumn(rowItem)}
+            role="presentation"
+          >
+            {rowItem[item]}
+          </td>
+        );
+      })}
     </tr>
   );
 };
