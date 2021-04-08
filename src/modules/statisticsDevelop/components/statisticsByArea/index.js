@@ -80,13 +80,6 @@ const OperationStatusPage = () => {
     getListCompanyCallback();
   }, [getListCompanyCallback]);
 
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      posSelected: posList && posList[1] && posList[1].id,
-    });
-  }, []);
-
   /**
    * get Event List data
    */
@@ -233,10 +226,21 @@ const OperationStatusPage = () => {
         });
         break;
       case 'startDate':
-        setParamsSearch({
-          ...paramsSearch,
-          startDate: item,
-        });
+        if (
+          paramsSearch?.classification === 'minute' ||
+          paramsSearch?.classification === 'hour'
+        ) {
+          setParamsSearch({
+            ...paramsSearch,
+            startDate: item,
+            endDate: item,
+          });
+        } else {
+          setParamsSearch({
+            ...paramsSearch,
+            startDate: item,
+          });
+        }
         break;
       case 'endDate':
         setParamsSearch({
@@ -273,35 +277,41 @@ const OperationStatusPage = () => {
     });
   };
 
-  let from;
-  let to;
-  if (paramsSearch?.startDate && paramsSearch?.endDate) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-  } else if (
-    paramsSearch?.startDate &&
-    !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'minute' ||
-      paramsSearch?.classification === 'hour')
-  ) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-  } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
-    from = moment(new Date()).format('YYYY-MM-DD');
-    to = moment(new Date()).format('YYYY-MM-DD');
-  } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-  } else if (
-    paramsSearch?.startDate &&
-    !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'day' ||
-      paramsSearch?.classification === 'month' ||
-      paramsSearch?.classification === 'year')
-  ) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(new Date()).format('YYYY-MM-DD');
-  }
+  useEffect(() => {
+    switch (paramsSearch?.classification) {
+      case 'minute':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+      case 'hour':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+      case 'day':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+      case 'month':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+
+      default:
+        break;
+    }
+  }, [paramsSearch?.classification]);
 
   const handleSubmitSearch = () => {
     dispatch(
@@ -309,8 +319,14 @@ const OperationStatusPage = () => {
         pos_id: paramsSearch?.posSelected,
         ds_id: paramsSearch?.inverter?.id,
         com_id: paramsSearch?.inverter1?.id,
-        from,
-        to,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.startDate).format('YYYY-MM')
+            : moment(paramsSearch?.startDate).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.endDate).format('YYYY-MM')
+            : moment(paramsSearch?.endDate).format('YYYY-MM-DD'),
         type: paramsSearch?.classification,
         com_compare_id: paramsSearch?.inverter1?.id,
       })
@@ -358,6 +374,13 @@ const OperationStatusPage = () => {
       });
     }
   }, [getStatisticDevelopCardCallback, paramsSearch?.posSelected, menuTab]);
+
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      posSelected: posList && posList[1] && posList[1].id,
+    });
+  }, []);
 
   return (
     <>
@@ -430,8 +453,20 @@ const OperationStatusPage = () => {
                         activeTab={menuTab}
                         handleSubmitSearch={handleSubmitSearch}
                         dateTime={{
-                          from,
-                          to,
+                          from:
+                            paramsSearch?.classification === 'month'
+                              ? moment(paramsSearch?.startDate).format(
+                                  'YYYY-MM'
+                                )
+                              : moment(paramsSearch?.startDate).format(
+                                  'YYYY-MM-DD'
+                                ),
+                          to:
+                            paramsSearch?.classification === 'month'
+                              ? moment(paramsSearch?.endDate).format('YYYY-MM')
+                              : moment(paramsSearch?.startDate).format(
+                                  'YYYY-MM-DD'
+                                ),
                         }}
                         chartData={dataChart}
                         id={com.id}

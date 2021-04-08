@@ -53,8 +53,8 @@ const OperationStatusPage = () => {
     company: null,
     page: 1,
     classification: 'minute',
-    startDate: null,
-    endDate: null,
+    startDate: new Date(),
+    endDate: new Date(),
     vendorCompany: null,
     inverter: null,
     mockupType: null,
@@ -90,13 +90,6 @@ const OperationStatusPage = () => {
   useEffect(() => {
     getListCompanyCallback();
   }, [getListCompanyCallback]);
-
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
-    });
-  }, []);
 
   /**
    * get Event List data
@@ -186,7 +179,7 @@ const OperationStatusPage = () => {
     paramsSearch?.pagination2?.value,
     paramsSearch?.company,
   ]);
-
+  console.log('paramsSearch', paramsSearch);
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -282,10 +275,21 @@ const OperationStatusPage = () => {
         });
         break;
       case 'startDate':
-        setParamsSearch({
-          ...paramsSearch,
-          startDate: item,
-        });
+        if (
+          paramsSearch?.classification === 'minute' ||
+          paramsSearch?.classification === 'hour'
+        ) {
+          setParamsSearch({
+            ...paramsSearch,
+            startDate: item,
+            endDate: item,
+          });
+        } else {
+          setParamsSearch({
+            ...paramsSearch,
+            startDate: item,
+          });
+        }
         break;
       case 'endDate':
         setParamsSearch({
@@ -361,41 +365,54 @@ const OperationStatusPage = () => {
     }
   }, [getStatisticDevelopCardCallback, paramsSearch?.company, menuTab]);
 
-  let from;
-  let to;
-  if (paramsSearch?.startDate && paramsSearch?.endDate) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-  } else if (
-    paramsSearch?.startDate &&
-    !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'minute' ||
-      paramsSearch?.classification === 'hour')
-  ) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-  } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
-    from = moment(new Date()).format('YYYY-MM-DD');
-    to = moment(new Date()).format('YYYY-MM-DD');
-  } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-  } else if (
-    paramsSearch?.startDate &&
-    !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'day' ||
-      paramsSearch?.classification === 'month' ||
-      paramsSearch?.classification === 'year')
-  ) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(new Date()).format('YYYY-MM-DD');
-  }
+  useEffect(() => {
+    switch (paramsSearch?.classification) {
+      case 'minute':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+      case 'hour':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+      case 'day':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+      case 'month':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+        break;
+
+      default:
+        break;
+    }
+  }, [paramsSearch?.classification]);
+
   const handleSubmitSearch = () => {
     dispatch(
       getStatisticDevelopChartData({
         com_id: paramsSearch?.company,
-        from,
-        to,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.startDate).format('YYYY-MM')
+            : moment(paramsSearch?.startDate).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.endDate).format('YYYY-MM')
+            : moment(paramsSearch?.endDate).format('YYYY-MM-DD'),
         type: paramsSearch?.classification,
         inverter_ids: paramsSearch?.inverter?.id,
         compare_inverter_id: paramsSearch?.inverter1?.id,
@@ -403,6 +420,12 @@ const OperationStatusPage = () => {
     );
   };
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company: comList && comList[1] && comList[1].id,
+    });
+  }, []);
   return (
     <>
       {isProcessing && <Loading />}
@@ -501,8 +524,22 @@ const OperationStatusPage = () => {
                           activeTab={menuTab}
                           handleSubmitSearch={handleSubmitSearch}
                           dateTime={{
-                            from,
-                            to,
+                            from:
+                              paramsSearch?.classification === 'month'
+                                ? moment(paramsSearch?.startDate).format(
+                                    'YYYY-MM'
+                                  )
+                                : moment(paramsSearch?.startDate).format(
+                                    'YYYY-MM-DD'
+                                  ),
+                            to:
+                              paramsSearch?.classification === 'month'
+                                ? moment(paramsSearch?.endDate).format(
+                                    'YYYY-MM'
+                                  )
+                                : moment(paramsSearch?.startDate).format(
+                                    'YYYY-MM-DD'
+                                  ),
                           }}
                           id={dev?.id}
                           chartData={dataChart}
