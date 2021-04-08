@@ -154,12 +154,21 @@ export const FilterSearch = ({
                     CONTRACT_FORMAT_DATE[paramsSearch?.classification]
                   }
                   minDate={
-                    new Date(
-                      moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
-                        30,
-                        'days'
-                      )
-                    )
+                    paramsSearch?.classification === 'minute' ||
+                    paramsSearch?.classification === 'hour' ||
+                    paramsSearch?.classification === 'day'
+                      ? new Date(
+                          moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
+                            30,
+                            'days'
+                          )
+                        )
+                      : new Date(
+                          moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
+                            365,
+                            'days'
+                          )
+                        )
                   }
                   maxDate={paramsSearch?.endDate}
                   locale="ko"
@@ -187,12 +196,21 @@ export const FilterSearch = ({
                         locale="ko"
                         minDate={paramsSearch?.startDate}
                         maxDate={
-                          new Date(
-                            moment(paramsSearch?.startDate, 'YYYY-MM-DD').add(
-                              30,
-                              'days'
-                            )
-                          )
+                          paramsSearch?.classification === 'minute' ||
+                          paramsSearch?.classification === 'hour' ||
+                          paramsSearch?.classification === 'day'
+                            ? new Date(
+                                moment(
+                                  paramsSearch?.startDate,
+                                  'YYYY-MM-DD'
+                                ).add(30, 'days')
+                              )
+                            : new Date(
+                                moment(
+                                  paramsSearch?.startDate,
+                                  'YYYY-MM-DD'
+                                ).add(365, 'days')
+                              )
                         }
                         peekNextMonth
                         showMonthDropdown
