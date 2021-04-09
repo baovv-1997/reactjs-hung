@@ -251,6 +251,7 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={listInverterTest}
+            subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
