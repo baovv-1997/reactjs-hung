@@ -25,6 +25,7 @@ const Menu = ({ location }: Props) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.account);
   const [menuClicking, setMenuClicking] = useState({});
+  const [isClickLogout, setIsClickLogout] = useState(false);
   const roleName =
     userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.name;
   const handleClickItem = (item, active) => {
@@ -106,7 +107,10 @@ const Menu = ({ location }: Props) => {
         <Button
           customClass="btn-logout"
           onClick={() => {
-            dispatch(logOut());
+            if (!isClickLogout) {
+              dispatch(logOut());
+            }
+            setIsClickLogout(true);
           }}
         >
           <img src={IMAGES.btn_logout} alt="" />

@@ -115,7 +115,10 @@ const DeviceManagement = ({ history }: Props) => {
     let listOptions = [];
     switch (currentOption) {
       case 'all':
-        listOptions = [...companyOptions, ...posOptionList];
+        listOptions =
+          roleName === 'company'
+            ? posOptionList
+            : [...companyOptions, ...posOptionList];
         break;
       case 'com_id':
         listOptions = companyOptions;
@@ -166,11 +169,13 @@ const DeviceManagement = ({ history }: Props) => {
             </span>
           </div>
           <div className="wrapper-device__head-menu__search">
-            <div className="wrapper-device__head-menu__search__options">
-              <p className="search-option-title">분류</p>{' '}
-              <span className="search-option-character">|</span>{' '}
-              {renderRadioList}
-            </div>
+            {roleName !== 'company' && (
+              <div className="wrapper-device__head-menu__search__options">
+                <p className="search-option-title">분류</p>{' '}
+                <span className="search-option-character">|</span>{' '}
+                {renderRadioList}
+              </div>
+            )}
             <div lassName="wrapper-device__head-menu__search__select">
               <Select
                 listItem={renderListOptions()}
