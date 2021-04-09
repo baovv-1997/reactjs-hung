@@ -266,6 +266,7 @@ const OperationStatusPage = () => {
                 label: item?.company.com_name,
               }))
             }
+            subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab

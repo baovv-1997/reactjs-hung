@@ -45,7 +45,6 @@ export const GroupCompareChart = ({
       <CheckBox
         name="outputCurrent"
         id="outputCurrent"
-        subLabel="l2"
         isChecked={paramsSearch?.outputCurrent}
         label="출력전류(l2)"
         handleToggleCheckbox={() =>
