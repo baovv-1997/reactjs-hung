@@ -15,7 +15,7 @@ const initialState = {
   listInverter: [],
   accountList: [],
   accountDetail: {},
-  errors: {},
+  errorMsg: null,
   eventNotifications: [],
 };
 
@@ -23,6 +23,14 @@ const accountSlice = createSlice({
   name: 'accounts',
   initialState,
   reducers: {
+    resetData: (state) => {
+      state.listCompany = [];
+      state.listArea = [];
+      state.listInverter = [];
+      state.accountList = [];
+      state.type = '';
+      state.isProcessing = false;
+    },
     signInRequest: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
@@ -119,14 +127,17 @@ const accountSlice = createSlice({
     signUpRequest: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
+      state.errorMsg = null;
     },
     signUpRequestSuccess: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.errorMsg = null;
     },
     signUpRequestFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.errorMsg = action.errorMsg;
     },
     getAccountList: (state, action) => {
       state.type = action.type;
@@ -228,6 +239,7 @@ const accountSlice = createSlice({
 const { actions, reducer } = accountSlice;
 
 export const {
+  resetData,
   signInRequest,
   signInRequestSuccess,
   signInRequestFailed,

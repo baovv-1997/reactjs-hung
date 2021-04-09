@@ -457,12 +457,17 @@
 }
 
 .error-list {
-  text-align: left;
+  text-align: center;
   font-size: pxToRem(18);
   // color: $color-label-event;
-  padding-left: pxToRem(30);
+  padding-left: 0;
 
   li {
-    list-style: disc;
+    list-style: none;
+
+    .top-2 {
+      position: relative;
+      top: pxToRem(2);
+    }
   }
 }
