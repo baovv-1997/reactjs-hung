@@ -26,8 +26,8 @@ const OperationStatusPage = () => {
   const [randomNumber, setRandomNumber] = useState(null);
   const defaultOption = {
     id: 1,
-    value: 6,
-    label: '6 개씩 보기',
+    value: 5,
+    label: '5 개씩 보기',
   };
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];

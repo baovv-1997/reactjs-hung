@@ -7,7 +7,7 @@ import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { FilterSearch } from 'commons/components/FilterSearch';
-import { listPaginationType } from 'constants/listKey';
+import { listPaginationType5PerPage } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
 import IMAGES from 'themes/images';
 import {
@@ -191,7 +191,7 @@ const ItemContentTab = ({
       <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
-          listItem={listPaginationType}
+          listItem={listPaginationType5PerPage}
           onChange={(option) => handleChangeSearch(option, 'pagination2')}
           option={paramsSearch?.pagination2 || null}
           noOptionsMessage={() => '옵션 없음'}
@@ -210,11 +210,9 @@ const ItemContentTab = ({
         tableBody={
           (dataTableBottom &&
             dataTableBottom.length > 0 &&
-            dataTableBottom.map((event, index) => ({
+            dataTableBottom.map((event) => ({
               id: event?.id,
-              rowId: `${
-                totalPage2 - (paramsSearch?.page2 - 1) * perPage2 - index || ''
-              }`,
+              rowId: event.no,
               dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
               comName: event?.com_name,
               inverterID: event?.ds_id,

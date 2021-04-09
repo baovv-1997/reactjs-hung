@@ -219,8 +219,8 @@
     z-index: 10;
     margin-bottom: pxToRem(60);
 
-    .css-4ljt47-MenuList * {
-      padding: 0.8rem 0.5rem !important;
+    >div * {
+      padding: 0.4rem 0.5rem !important;
     }
 
     * {
@@ -231,7 +231,7 @@
   }
 }
 
-.css-4ljt47-MenuList {
+.css-26l3qy-menu>div {
   padding: 0 !important;
 
   &::-webkit-scrollbar-track {
