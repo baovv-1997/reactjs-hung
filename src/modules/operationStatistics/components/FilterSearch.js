@@ -172,7 +172,7 @@ export const FilterSearch = ({
                         }
                         locale="ko"
                         minDate={paramsSearch?.startDate}
-                        maxDate={new Date()}
+                        maxDate={paramsSearch?.endDate}
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown
