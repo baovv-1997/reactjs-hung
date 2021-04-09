@@ -27,11 +27,15 @@ const DeviceManagement = ({ history }: Props) => {
   const isLoading = useSelector((state) => state?.device?.isLoading);
   const totalPage = useSelector((state) => state?.device?.totalPage);
   const perPage = useSelector((state) => state?.device?.perPage);
+  const { userInfo } = useSelector((state) => state.account);
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const [currentOption, setCurrentOption] = useState('all');
   const [valueSearch, setValueSearch] = useState('');
   const [activePage, setActivePage] = useState(1);
   const [selectOption, setSelectOption] = useState(null);
+
+  const roleName =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo.roles[0].name;
 
   useEffect(() => {
     dispatch(
@@ -39,9 +43,11 @@ const DeviceManagement = ({ history }: Props) => {
         per_page: 9999,
       })
     );
+
     dispatch(
       getListPosition({
         per_page: 9999,
+        com_id: roleName === 'company' ? userInfo?.com_id : '',
       })
     );
   }, []);
@@ -51,14 +57,17 @@ const DeviceManagement = ({ history }: Props) => {
       getListDevice({
         [currentOption]: selectOption?.value,
         page: 1,
+        com_id: roleName === 'company' ? userInfo?.com_id : '',
+        per_page: 9999,
       })
     );
   }, [selectOption, selectOption?.value]);
+
   // handle when slect change
   const onChangeSelect = (option) => {
     setSelectOption(option);
   };
-
+  console.log('userInfo', userInfo);
   // handle input change
   const handleInputChange = (e) => {
     const { value } = e.target;

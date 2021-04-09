@@ -148,7 +148,7 @@ export const FilterSearch = ({
                           ).subtract(365, 'days')
                         )
                   }
-                  maxDate={new Date()}
+                  maxDate={paramsSearch?.endDate}
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
