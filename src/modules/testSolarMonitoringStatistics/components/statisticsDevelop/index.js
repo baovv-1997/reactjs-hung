@@ -241,6 +241,15 @@ const OperationStatusPage = () => {
     }
   };
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+        null,
+    });
+  }, []);
+
   return (
     <>
       {isProcessing && <Loading />}
@@ -250,7 +259,13 @@ const OperationStatusPage = () => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listStatusCompanySelect={
+              listInverterTest &&
+              listInverterTest.map((item) => ({
+                id: item?.id,
+                label: item?.company.com_name,
+              }))
+            }
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
