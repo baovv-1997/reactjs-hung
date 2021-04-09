@@ -167,7 +167,7 @@ const SignIn = ({
                   isNumberKey(e);
                   handleKeyDown(e);
                 }}
-                maxLength="13"
+                maxLength="11"
                 onPaste={(e) => isOnPasteNumber(e)}
                 value={phone}
                 onChange={(e) => handleChangeRegister(e.target.value, 'phone')}

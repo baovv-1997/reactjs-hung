@@ -20,7 +20,7 @@ function* signUp(action) {
       // In case: signup request failed
       yield put({
         type: signUpAction.signUpRequestFailed,
-        errorMsg: data?.error_msg,
+        errorMsg: data?.errors,
       });
     }
   } catch (error) {

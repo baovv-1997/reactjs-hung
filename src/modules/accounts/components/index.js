@@ -65,6 +65,18 @@ const SignUp = () => {
 
   const [listItemDevice, setListItemDevice] = useState([itemDeviceDefault]);
 
+  const errorsMessage =
+    errorMsg &&
+    Object.values(errorMsg).map((item, index) => {
+      return (
+        <ul className="error-list" key={index}>
+          <li>
+            <span className="text-danger top-2 mr-1">*</span>
+            {item && item[0]}
+          </li>
+        </ul>
+      );
+    });
   /** Show popup sign in success */
   useEffect(() => {
     switch (type) {
@@ -86,7 +98,7 @@ const SignUp = () => {
         setModalLogin({
           ...modalLogin,
           isShow: true,
-          content: '등록 요청이 완료되지 않았습니다.',
+          content: errorsMessage,
         });
         break;
       default:
@@ -99,6 +111,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (isShowModalRegister) {
+      dispatch(SignInAction.resetData());
       dispatch(SignInAction.getListCompany());
       dispatch(SignInAction.getListArea());
     }
@@ -347,7 +360,7 @@ const SignUp = () => {
       });
       return;
     }
-    const listItemDevices = listItemDevice.map((item) => item.area?.value);
+    const listItemDevices = listItemDevice.map((item) => item.inverter?.value);
     const dataSubmit = {
       role: dataRegister.role,
       username: dataRegister.username || '',
@@ -388,7 +401,6 @@ const SignUp = () => {
     );
     setListItemDevice(removedItems);
   };
-
   return (
     <div className="page-login">
       {isProcessing && <Loading />}
