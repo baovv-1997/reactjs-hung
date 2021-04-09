@@ -282,29 +282,29 @@ const OperationStatusPage = () => {
       case 'minute':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 1),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
       case 'hour':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 1),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
       case 'day':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 7),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
       case 'month':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 366),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
 

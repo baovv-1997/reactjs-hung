@@ -53,8 +53,8 @@ const OperationStatusPage = () => {
     company: null,
     page: 1,
     classification: 'minute',
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date().setDate(new Date().getDate() - 1),
+    endDate: new Date().setDate(new Date().getDate() - 1),
     vendorCompany: null,
     inverter: null,
     mockupType: null,
@@ -179,7 +179,7 @@ const OperationStatusPage = () => {
     paramsSearch?.pagination2?.value,
     paramsSearch?.company,
   ]);
-  console.log('paramsSearch', paramsSearch);
+
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
@@ -370,29 +370,29 @@ const OperationStatusPage = () => {
       case 'minute':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 1),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
       case 'hour':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 1),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
       case 'day':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 7),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
       case 'month':
         setParamsSearch({
           ...paramsSearch,
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().setDate(new Date().getDate() - 366),
+          endDate: new Date().setDate(new Date().getDate() - 1),
         });
         break;
 
