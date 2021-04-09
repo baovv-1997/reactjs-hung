@@ -3,7 +3,7 @@
 import React, { memo } from 'react';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
-import { listPaginationType } from 'constants/listKey';
+import { listPaginationType5PerPage } from 'constants/listKey';
 import { ButtonDownIMG } from 'commons/components/ButtonDownIMG';
 
 type Props = {
@@ -20,7 +20,7 @@ export const GroupActionDownload = ({
   <div className="group-option-table d-flex  justify-content-between">
     <SelectDropdown
       placeholder="구분"
-      listItem={listPaginationType}
+      listItem={listPaginationType5PerPage}
       onChange={(option) => handleChangeSearch(option, 'pagination')}
       option={paramsSearch?.pagination || null}
       noOptionsMessage={() => '옵션 없음'}

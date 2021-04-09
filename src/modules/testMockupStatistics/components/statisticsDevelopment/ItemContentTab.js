@@ -5,7 +5,7 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import { listPaginationType } from 'constants/listKey';
+import { listPaginationType5PerPage } from 'constants/listKey';
 import IMAGES from 'themes/images';
 import {
   headTestMockupStatistics,
@@ -156,7 +156,7 @@ const ItemContentTab = ({
       <div className="group-option-table d-flex  justify-content-between">
         <SelectDropdown
           placeholder="구분"
-          listItem={listPaginationType}
+          listItem={listPaginationType5PerPage}
           onChange={(option) => handleChangeSearch(option, 'pagination2')}
           option={paramsSearch?.pagination2 || null}
           noOptionsMessage={() => '옵션 없음'}
