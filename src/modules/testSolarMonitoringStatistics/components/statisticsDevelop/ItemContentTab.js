@@ -81,6 +81,7 @@ const ItemContentTab = ({
                 line2: paramsSearch?.performance,
                 line3: paramsSearch?.generation,
               }}
+              unitRight="%"
               showPoint3
               type={CONTRACT_FORMAT_TIME_CHART[paramsSearch?.classification]}
             />
