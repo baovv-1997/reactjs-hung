@@ -158,16 +158,16 @@ export const FilterSearch = ({
                     paramsSearch?.classification === 'hour' ||
                     paramsSearch?.classification === 'day'
                       ? new Date(
-                          moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
-                            30,
-                            'days'
-                          )
+                          moment(
+                            moment(paramsSearch?.endDate).format(),
+                            'YYYY-MM-DD'
+                          ).subtract(30, 'days')
                         )
                       : new Date(
-                          moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
-                            365,
-                            'days'
-                          )
+                          moment(
+                            moment(paramsSearch?.endDate).format(),
+                            'YYYY-MM-DD'
+                          ).subtract(365, 'days')
                         )
                   }
                   maxDate={paramsSearch?.endDate}
@@ -201,13 +201,13 @@ export const FilterSearch = ({
                           paramsSearch?.classification === 'day'
                             ? new Date(
                                 moment(
-                                  paramsSearch?.startDate,
+                                  moment(paramsSearch?.startDate).format(),
                                   'YYYY-MM-DD'
                                 ).add(30, 'days')
                               )
                             : new Date(
                                 moment(
-                                  paramsSearch?.startDate,
+                                  moment(paramsSearch?.startDate).format(),
                                   'YYYY-MM-DD'
                                 ).add(365, 'days')
                               )

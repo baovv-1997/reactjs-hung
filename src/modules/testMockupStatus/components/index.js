@@ -7,9 +7,9 @@ import Pagination from 'react-js-pagination';
 import TitleHeader from 'commons/components/TitleHeader';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import Loading from 'commons/components/Loading';
 import * as ActionStatusGenerator from '../redux';
 import ItemContentTab from './ItemContentTab';
-import Loading from 'commons/components/Loading';
 
 const StatusByAreaCompany = () => {
   const {
