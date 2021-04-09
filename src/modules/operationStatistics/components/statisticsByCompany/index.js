@@ -72,8 +72,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     pagination: defaultOption,
     pagination2: defaultOption,
     classification: 'minute',
-    startDate: null,
-    endDate: null,
+    startDate: new Date().setDate(new Date().getDate() - 1),
+    endDate: new Date().setDate(new Date().getDate() - 1),
     vendorCompany: null,
     inverter: null,
     inverter1: menuTab === '' ? null : [deviceList[1]],
@@ -388,42 +388,54 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     });
   };
 
-  let from;
-  let to;
-  if (paramsSearch?.startDate && paramsSearch?.endDate) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-  } else if (
-    paramsSearch?.startDate &&
-    !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'minute' ||
-      paramsSearch?.classification === 'hour')
-  ) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-  } else if (!paramsSearch?.startDate && !paramsSearch?.endDate) {
-    from = moment(new Date()).format('YYYY-MM-DD');
-    to = moment(new Date()).format('YYYY-MM-DD');
-  } else if (paramsSearch?.startDate && paramsSearch?.endDate) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(paramsSearch?.endDate).format('YYYY-MM-DD');
-  } else if (
-    paramsSearch?.startDate &&
-    !paramsSearch?.endDate &&
-    (paramsSearch?.classification === 'day' ||
-      paramsSearch?.classification === 'month' ||
-      paramsSearch?.classification === 'year')
-  ) {
-    from = moment(paramsSearch?.startDate).format('YYYY-MM-DD');
-    to = moment(new Date()).format('YYYY-MM-DD');
-  }
+  useEffect(() => {
+    switch (paramsSearch?.classification) {
+      case 'minute':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date().setDate(new Date().getDate() - 1),
+          endDate: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+      case 'hour':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date().setDate(new Date().getDate() - 1),
+          endDate: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+      case 'day':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date().setDate(new Date().getDate() - 7),
+          endDate: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+      case 'month':
+        setParamsSearch({
+          ...paramsSearch,
+          startDate: new Date().setDate(new Date().getDate() - 366),
+          endDate: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+
+      default:
+        break;
+    }
+  }, [paramsSearch?.classification]);
   const handleSubmitSearch = () => {
     dispatch(
       getStatisticOperatorChartData({
         com_id: paramsSearch?.company,
         inverter_ids: paramsSearch?.inverter1?.id,
-        from,
-        to,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.startDate).format('YYYY-MM')
+            : moment(paramsSearch?.startDate).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.endDate).format('YYYY-MM')
+            : moment(paramsSearch?.endDate).format('YYYY-MM-DD'),
         type: paramsSearch?.classification,
         compare_inverter_id: paramsSearch?.inverter?.id,
       })
@@ -522,8 +534,20 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                         handleSubmitSearch={handleSubmitSearch}
                         tabActive={menuTab}
                         dateTime={{
-                          from,
-                          to,
+                          from:
+                            paramsSearch?.classification === 'month'
+                              ? moment(paramsSearch?.startDate).format(
+                                  'YYYY-MM'
+                                )
+                              : moment(paramsSearch?.startDate).format(
+                                  'YYYY-MM-DD'
+                                ),
+                          to:
+                            paramsSearch?.classification === 'month'
+                              ? moment(paramsSearch?.endDate).format('YYYY-MM')
+                              : moment(paramsSearch?.startDate).format(
+                                  'YYYY-MM-DD'
+                                ),
                         }}
                         chartData={chartData}
                         id={dev.id}
