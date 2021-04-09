@@ -16,7 +16,8 @@
   }
 
   &.btn-red {
-    background-color: $color-label-event;
+    background-color: $color-label-event !important;
+    color: $white;
   }
 
   &:focus {

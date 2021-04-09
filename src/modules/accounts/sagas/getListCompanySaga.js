@@ -7,7 +7,9 @@ import * as AccountAction from '../redux';
 // worker Saga: will be fired on SIGN_IN actions
 function* getListCompany() {
   try {
-    const response = yield call(() => API.get(ROUTES.API_GET_LIST_COMPANY));
+    const response = yield call(() =>
+      API.get(ROUTES.API_GET_LIST_COMPANY, { sort_by: 'id', sort_dir: 'desc' })
+    );
 
     if (response.ok) {
       const { data } = response?.data;

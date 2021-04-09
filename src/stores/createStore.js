@@ -14,7 +14,7 @@ export default () => {
     key: 'root',
     storage,
     stateReconciler: seamlessImmutableReconciler,
-    whitelist: ['account', 'device', 'commons'],
+    whitelist: ['account', 'commons'],
   };
 
   /* ------------- Saga Middleware ------------- */
