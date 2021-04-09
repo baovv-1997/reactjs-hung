@@ -33,12 +33,12 @@ const DeviceDetail = ({ match, history }: Props) => {
       <div className="wrapper-device">
         <div className="wrapper-device__head-menu">
           <TitleHeader
-            title="기기 관리"
+            title="기기 정보"
             descSub="관리자 계정 정보를 수정하실 수 있습니다."
           />
         </div>
         <div className="device-detail">
-          <TitleSubHeader title="계정 정보" />
+          <TitleSubHeader title="기기 정보" />
           <FormEdit data={deviceDetail} history={history} />
         </div>
       </div>
