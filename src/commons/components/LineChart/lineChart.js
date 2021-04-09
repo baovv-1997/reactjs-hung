@@ -48,7 +48,7 @@ export const LineChart = ({
   dataChart,
   optionLine,
   unitLeft = 'kWh',
-  unitRight = 'W/㎡',
+  unitRight = '℃',
   unitLine1,
   unitLine2,
   unitLine3,
@@ -214,7 +214,7 @@ Props) => {
 };
 LineChart.defaultProps = {
   unitLeft: 'kWh',
-  unitRight: 'W/㎡',
+  unitRight: '℃',
   typeLine: 'spline',
   widthLine: 3,
   showPoint1: false,

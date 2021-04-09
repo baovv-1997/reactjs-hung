@@ -13,7 +13,7 @@ type Props = {
 export const ButtonDownExcel = ({
   linkDownTable,
   keyName,
-  text = 'Raw Date 다운',
+  text = 'Raw Data 다운',
 }: Props) => {
   let LINK_API = '';
   switch (keyName) {
@@ -41,7 +41,7 @@ export const ButtonDownExcel = ({
 };
 
 ButtonDownExcel.defaultProps = {
-  text: 'Raw Date 다운',
+  text: 'Raw Data 다운',
 };
 
 export default memo<Props>(ButtonDownExcel);

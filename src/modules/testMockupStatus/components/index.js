@@ -108,7 +108,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '일일 최고 일사량',
+        title: '최고 일사량',
         value:
           (dataBox &&
             dataBox?.current_rad &&

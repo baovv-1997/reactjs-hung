@@ -5,11 +5,6 @@ const listType = [
     label: '실증단지',
   },
   {
-    id: 2,
-    value: 1,
-    label: 'RTU(목업)',
-  },
-  {
     id: 3,
     value: 2,
     label: '테스트(실증단지)',

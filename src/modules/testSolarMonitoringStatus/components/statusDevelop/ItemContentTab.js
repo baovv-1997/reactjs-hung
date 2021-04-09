@@ -31,7 +31,7 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량(kWh)',
+      name: '평균발전량(kWh)',
       color: '#8567b4',
     },
     {
