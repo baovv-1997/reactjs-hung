@@ -8,7 +8,7 @@ html {
 }
 
 .main-content {
-  > .content {
+  >.content {
     min-height: 90.08vh;
   }
 }
@@ -336,7 +336,7 @@ button.h-32 {
     width: 100% !important;
     min-width: pxToRem(1000) !important;
 
-    > rect {
+    >rect {
       min-width: pxToRem(1000) !important;
       width: 100% !important;
     }

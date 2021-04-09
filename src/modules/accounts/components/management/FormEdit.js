@@ -28,6 +28,7 @@ type Props = {
 };
 
 const FormDetail = ({ accountDetail, history }: Props) => {
+  console.log(accountDetail, 'accountDetail');
   const dispatch = useDispatch();
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
@@ -80,7 +81,6 @@ const FormDetail = ({ accountDetail, history }: Props) => {
       );
     }
   };
-
   // render list radio
   const renderRadioList = accountOptions
     .slice(1, 4)
@@ -186,6 +186,12 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         break;
     }
   }, [type]);
+
+  useEffect(() => {
+    if (accountDetail.roles && accountDetail.roles[0]) {
+      setCurrentOption(accountDetail?.roles[0]?.name);
+    }
+  }, []);
 
   return (
     <div>

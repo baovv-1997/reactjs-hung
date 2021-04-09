@@ -193,7 +193,7 @@ const SignIn = ({
             </div>
           </div>
 
-          <div className="item">
+          <div className={`item ${role !== 'company' ? 'disabled' : ''}`}>
             <div className="item-label">
               관리기기<span>*</span>
             </div>

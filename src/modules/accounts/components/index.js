@@ -38,13 +38,13 @@ const SignUp = () => {
     person: '',
     role: 'admin',
   };
-  // const itemDeviceDefault = {
-  //   idx: Math.random(),
-  //   area: null,
-  //   company: null,
-  //   inverter: null,
-  //   type: null,
-  // };
+  const itemDeviceDefault = {
+    idx: Math.random(),
+    area: null,
+    company: null,
+    inverter: null,
+    type: null,
+  };
   const [dataRegister, setDataRegister] = useState(dataRegisterDefault);
   const [error, setError] = useState({
     username: '',
@@ -63,7 +63,7 @@ const SignUp = () => {
     content: '',
   });
 
-  const [listItemDevice, setListItemDevice] = useState([]);
+  const [listItemDevice, setListItemDevice] = useState([itemDeviceDefault]);
 
   /** Show popup sign in success */
   useEffect(() => {
@@ -207,7 +207,7 @@ const SignUp = () => {
           ...dataRegister,
           role: 'admin',
         });
-        setListItemDevice([]);
+        setListItemDevice([itemDeviceDefault]);
         break;
       case 'company':
         setDataRegister({
@@ -221,7 +221,7 @@ const SignUp = () => {
           ...dataRegister,
           role: 'monitoring',
         });
-        setListItemDevice([]);
+        setListItemDevice([itemDeviceDefault]);
         break;
       default:
         break;
@@ -287,6 +287,11 @@ const SignUp = () => {
           SignInAction.getListInverter({
             per_page: 999999,
             type: itemChange?.type?.value,
+            com_id: option?.value,
+          })
+        );
+        dispatch(
+          SignInAction.getListArea({
             com_id: option?.value,
           })
         );
@@ -490,13 +495,13 @@ const SignUp = () => {
         handleCloseIcon={() => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
-          setListItemDevice([]);
+          setListItemDevice([itemDeviceDefault]);
           setDataRegister([dataRegisterDefault]);
         }}
         handleClose={() => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
-          setListItemDevice([]);
+          setListItemDevice([itemDeviceDefault]);
           setDataRegister(dataRegisterDefault);
         }}
         textBtnRight="확인"

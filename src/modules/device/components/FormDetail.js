@@ -111,11 +111,11 @@ const FormDetail = ({ data, history }: Props) => {
           <div className="cell">{data?.no}</div>
           <div className="cell">{renderLabelType(data?.ds_type)}</div>
           {parseInt(data?.ds_type, 10) === 0 && (
-            <div className="cell">{data?.position?.pos_name}</div>
+            <div className="cell">{data?.position?.pos_name || ''}</div>
           )}
           <div className="cell">{nameManager}</div>
-          <div className="cell">{`${data?.ds_max_power}v`}</div>
-          <div className="cell">{`${incidenceAngle}°도`}</div>
+          <div className="cell">{`${data?.ds_max_power || ''}v`}</div>
+          <div className="cell">{`${incidenceAngle || ''}°도`}</div>
         </div>
         <div className="col-item col-2 right">
           <div className="cell">설치일</div>
@@ -128,14 +128,14 @@ const FormDetail = ({ data, history }: Props) => {
           <div className="cell">방위각</div>
         </div>
         <div className="col-item col-4">
-          <div className="cell">{data?.ds_install_date}</div>
-          <div className="cell">{data?.company?.com_name}</div>
+          <div className="cell">{data?.ds_install_date || ''}</div>
+          <div className="cell">{data?.company?.com_name || ''}</div>
           {parseInt(data?.ds_type, 10) === 0 && (
-            <div className="cell">{data?.ds_name}</div>
+            <div className="cell">{data?.ds_name || ''}</div>
           )}
-          <div className="cell">{phoneManager}</div>
-          <div className="cell">{data?.ds_color}</div>
-          <div className="cell">{`${azimuthAngle}°도`}</div>
+          <div className="cell">{phoneManager || ''}</div>
+          <div className="cell">{data?.ds_color || ''}</div>
+          <div className="cell">{`${azimuthAngle || ''}°도`}</div>
         </div>
       </div>
       <div className="device-detail__btn-group">
