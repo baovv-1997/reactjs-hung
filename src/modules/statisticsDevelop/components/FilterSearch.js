@@ -170,7 +170,7 @@ export const FilterSearch = ({
                           ).subtract(365, 'days')
                         )
                   }
-                  maxDate={new Date()}
+                  maxDate={paramsSearch?.endDate}
                   locale="ko"
                   peekNextMonth
                   showMonthDropdown
