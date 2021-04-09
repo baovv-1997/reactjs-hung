@@ -132,14 +132,23 @@ export const FilterSearch = ({
                     CONTRACT_FORMAT_DATE[paramsSearch?.classification]
                   }
                   minDate={
-                    new Date(
-                      moment(paramsSearch?.endDate, 'YYYY-MM-DD').subtract(
-                        30,
-                        'days'
-                      )
-                    )
+                    paramsSearch?.classification === 'minute' ||
+                    paramsSearch?.classification === 'hour' ||
+                    paramsSearch?.classification === 'day'
+                      ? new Date(
+                          moment(
+                            moment(paramsSearch?.endDate).format(),
+                            'YYYY-MM-DD'
+                          ).subtract(30, 'days')
+                        )
+                      : new Date(
+                          moment(
+                            moment(paramsSearch?.endDate).format(),
+                            'YYYY-MM-DD'
+                          ).subtract(365, 'days')
+                        )
                   }
-                  maxDate={paramsSearch?.endDate}
+                  maxDate={new Date()}
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
@@ -163,14 +172,7 @@ export const FilterSearch = ({
                         }
                         locale="ko"
                         minDate={paramsSearch?.startDate}
-                        maxDate={
-                          new Date(
-                            moment(paramsSearch?.startDate, 'YYYY-MM-DD').add(
-                              30,
-                              'days'
-                            )
-                          )
-                        }
+                        maxDate={new Date()}
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown

@@ -170,7 +170,7 @@ export const FilterSearch = ({
                           ).subtract(365, 'days')
                         )
                   }
-                  maxDate={paramsSearch?.endDate}
+                  maxDate={new Date()}
                   locale="ko"
                   peekNextMonth
                   showMonthDropdown
@@ -195,23 +195,7 @@ export const FilterSearch = ({
                         }
                         locale="ko"
                         minDate={paramsSearch?.startDate}
-                        maxDate={
-                          paramsSearch?.classification === 'minute' ||
-                          paramsSearch?.classification === 'hour' ||
-                          paramsSearch?.classification === 'day'
-                            ? new Date(
-                                moment(
-                                  moment(paramsSearch?.startDate).format(),
-                                  'YYYY-MM-DD'
-                                ).add(30, 'days')
-                              )
-                            : new Date(
-                                moment(
-                                  moment(paramsSearch?.startDate).format(),
-                                  'YYYY-MM-DD'
-                                ).add(365, 'days')
-                              )
-                        }
+                        maxDate={new Date()}
                         peekNextMonth
                         showMonthDropdown
                         showYearDropdown
