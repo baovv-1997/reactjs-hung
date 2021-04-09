@@ -81,7 +81,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '일일 최고 모듈 온도',
+        title: '최고 모듈 온도',
         value:
           (dataBox &&
             dataBox?.module_temp &&
