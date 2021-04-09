@@ -36,7 +36,7 @@ const mainSlice = createSlice({
     },
 
     getListPosition: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.type = action.type;
     },
     getListPositionSuccess: (state, action) => {

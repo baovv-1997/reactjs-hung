@@ -137,7 +137,7 @@ const FormEdit = ({ data, history }: Props) => {
           <div className="cell">
             <input
               name="managerName"
-              value={nameManager}
+              value={nameManager || ''}
               onChange={(e) => handleInputChange(e)}
             />
           </div>
@@ -147,7 +147,7 @@ const FormEdit = ({ data, history }: Props) => {
           <div className="cell">
             <input
               name="incidenceAngle"
-              value={incidenceAngle}
+              value={incidenceAngle || ''}
               onChange={(e) => handleInputChange(e)}
               maxLength="11"
             />
@@ -165,14 +165,14 @@ const FormEdit = ({ data, history }: Props) => {
         </div>
         <div className="col-item col-4">
           <div className="cell">
-            <input value={data?.ds_install_date} disabled />
+            <input value={data?.ds_install_date || ''} disabled />
           </div>
           <div className="cell">
-            <input value={data?.company?.com_name} disabled />
+            <input value={data?.company?.com_name || ''} disabled />
           </div>
           {parseInt(data?.ds_type, 10) === 0 && (
             <div className="cell">
-              <input value={data?.ds_name} disabled />
+              <input value={data?.ds_name || ''} disabled />
             </div>
           )}
           <div className="cell justify-content-start">
@@ -192,11 +192,11 @@ const FormEdit = ({ data, history }: Props) => {
             />
           </div>
           <div className="cell">
-            <input value={data?.ds_color} disabled />
+            <input value={data?.ds_color || ''} disabled />
           </div>
           <div className="cell">
             <input
-              value={azimuthAngle}
+              value={azimuthAngle || ''}
               name="azimuthAngle"
               onChange={(e) => handleInputChange(e)}
               maxLength="11"
@@ -238,7 +238,8 @@ const FormEdit = ({ data, history }: Props) => {
           history.push(ROUTERS.DEVICE);
         }}
       >
-        취소 시 수정 내역은 전부 사라집니다. 정말 취소하시겠습니까?
+        취소 시 수정 내역은 전부 사라집니다.
+        <br /> 정말 취소하시겠습니까?
       </ModalPopup>
 
       <ModalPopup
@@ -262,7 +263,7 @@ const FormEdit = ({ data, history }: Props) => {
           handleUpdateDevice();
         }}
       >
-        수정하시겠습니까?
+        수정 하시겠습니까?
       </ModalPopup>
 
       <ModalPopup

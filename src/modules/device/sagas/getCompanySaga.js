@@ -6,11 +6,7 @@ import { ROUTES, API } from 'apis';
 function* getCompanyList(action) {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.API_GET_LIST_COMPANY, {
-        ...action.payload,
-        sort_by: 'id',
-        sort_dir: 'desc',
-      })
+      API.get(ROUTES.API_GET_LIST_COMPANY, action.payload)
     );
 
     if (response.ok) {
