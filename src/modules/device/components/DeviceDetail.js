@@ -38,7 +38,7 @@ const DeviceDetail = ({ match, history }: Props) => {
           />
         </div>
         <div className="device-detail">
-          <TitleSubHeader title="계정 정보" />
+          <TitleSubHeader title="기기 정보" />
           <FormDetail data={deviceDetail} history={history} />
         </div>
       </div>

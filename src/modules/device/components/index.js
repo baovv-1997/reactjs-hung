@@ -162,10 +162,10 @@ const DeviceManagement = ({ history }: Props) => {
           <div className="wrapper-device__head-menu__title">
             <img src={IMAGES.iconTitle} alt="icon-title-device" />
             <span className="wrapper-device__head-menu__title__text">
-              기기 관리
+              기기 정보
             </span>
             <span className="wrapper-device__head-menu__title__des">
-              등록되어있는 기기정보들을 관리하실 수 있습니다.
+              관리자 계정 정보를 수정하실 수 있습니다
             </span>
           </div>
           <div className="wrapper-device__head-menu__search">
