@@ -44,22 +44,7 @@ export const MainLayout = ({
   return (
     <>
       {isProcessing && <Loading />}
-      <div className={`wrapper-content ${isOpen ? 'open' : ''}`}>
-        <div className="wrapper-mobile">
-          <div
-            className={`d-mobile btn-menu  ${isOpen ? 'show' : ''}`}
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-            tabIndex={0}
-            role="menuitem"
-            onKeyPress={() => {}}
-            ref={iconRef}
-          >
-            <span className="icon" />
-          </div>
-        </div>
-
+      <div className="wrapper-content">
         {location.pathname !== ROUTERS.LOGIN && (
           <div className={`sidebar ${isOpen ? 'show' : ''} ${classHeight}`}>
             <SidebarMenu innerRef={refMenu} />

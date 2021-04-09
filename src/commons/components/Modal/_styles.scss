@@ -22,6 +22,11 @@
 
     &.modal-lg {
       max-width: pxToRem(1080);
+      min-width: pxToRem(1080);
+
+      .loading-main {
+        left: 50%;
+      }
     }
   }
 }

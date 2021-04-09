@@ -24,7 +24,6 @@ type Props = {
   }>,
   listType: Array<{ id: number, value: any, label: string }>,
   handleRemove: Function,
-  handleAddListDevice: Function,
   idx: any,
   isAccountPage?: boolean,
 };
@@ -36,7 +35,6 @@ export const ItemDevice = ({
   listArea,
   listInverter,
   handleRemove,
-  handleAddListDevice,
   idx,
   listType,
   isAccountPage = false,
@@ -104,11 +102,9 @@ export const ItemDevice = ({
           />
         </div>
       </div>
-      {idx === 0 ? (
-        <Button onClick={handleAddListDevice}>추가</Button>
-      ) : (
-        <Button onClick={() => handleRemove(optionDevice)}>삭제</Button>
-      )}
+      <Button onClick={() => handleRemove(optionDevice)} customClass="btn-red">
+        삭제
+      </Button>
     </div>
   );
 };

@@ -144,6 +144,11 @@
     position: relative;
     min-height: pxToRem(50);
 
+    &.disabled {
+      pointer-events: none;
+      background-color: $input-disable;
+    }
+
     &:first-child {
       border-top: solid pxToRem(1) $color-light10;
     }

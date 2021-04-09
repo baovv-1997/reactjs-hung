@@ -33,11 +33,11 @@ const FormDetail = ({ accountDetail, history }: Props) => {
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
   const errors = useSelector((state) => state?.account?.errors);
   const type = useSelector((state) => state?.account?.type);
-
   const [currentOption, setCurrentOption] = useState('admin');
   const [isUpdateFailed, setIsUpdateFailed] = useState(false);
   const [isCancel, setIsCancel] = useState(false);
-
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [devices, setDevices] = useState([]);
 
   const [inputValue, setInputValue] = useState({
@@ -60,9 +60,8 @@ const FormDetail = ({ accountDetail, history }: Props) => {
 
   useEffect(() => {
     dispatch(getListCompany());
-    dispatch(getListPosition());
+    // dispatch(getListPosition());
   }, []);
-
   // handle select change
   const handleSelectChange = (option, name, id) => {
     const listDeviceUpdate =
@@ -72,8 +71,14 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           ? { ...item, [name]: { value: option.value, label: option.label } }
           : item
       );
-
     setDevices(listDeviceUpdate);
+    if (name === 'company') {
+      dispatch(
+        getListPosition({
+          com_id: option.value,
+        })
+      );
+    }
   };
 
   // render list radio
@@ -175,7 +180,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         setIsUpdateFailed(true);
         break;
       case 'accounts/updateAccountSuccess':
-        history.push(ROUTERS.ACCOUNT_MANAGEMENT);
+        setIsSuccess(true);
         break;
       default:
         break;
@@ -270,8 +275,8 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         </div>
 
         <div className="account__btn-group">
-          <Button customClass="btn-modify" onClick={handleSubmit}>
-            수정
+          <Button customClass="btn-modify" onClick={() => setIsUpdate(true)}>
+            수정 완료
           </Button>
           <Button
             customClass="btn-cancel"
@@ -279,7 +284,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
               setIsCancel(true);
             }}
           >
-            목록
+            취소
           </Button>
         </div>
       </div>
@@ -323,6 +328,52 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         customClassButton="btn-custom"
       >
         {errorsMessage}
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isUpdate}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() => {
+          setIsUpdate(false);
+        }}
+        handleClose={() => {
+          setIsUpdate(false);
+        }}
+        textBtnLeft="확인"
+        textBtnRight="취소"
+        isShowTwoBtn
+        customClassButton="btn-custom"
+        handleSubmit={() => {
+          setIsUpdate(false);
+          handleSubmit();
+        }}
+      >
+        수정하시겠습니까?
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isSuccess}
+        isShowHeader
+        title="알림"
+        isShowFooter
+        handleClose={() => {
+          history.push(
+            `${ROUTERS.ACCOUNT_MANAGEMENT}/detail/${accountDetail?.id}`
+          );
+        }}
+        textBtnRight="확인"
+        isShowTwoBtn={false}
+        customClassButton="btn-custom"
+        handleSubmit={() => {
+          history.push(
+            `${ROUTERS.ACCOUNT_MANAGEMENT}/detail/${accountDetail?.id}`
+          );
+        }}
+      >
+        수정 완료되었습니다.
       </ModalPopup>
     </div>
   );

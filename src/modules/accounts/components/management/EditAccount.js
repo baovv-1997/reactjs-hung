@@ -34,8 +34,8 @@ const EditAccount = ({ match, history }: Props) => {
       {isProcessing && <Loading />}
       <div className="account">
         <TitleHeader
-          title="관리자 계정 확인"
-          descSub="관리자 계정 정보를 확인하실 수 있습니다."
+          title="관리자 계정 수정"
+          descSub="관리자 계정 정보를 수정하실 수 있습니다."
         />
         <TitleSubHeader title="계정 정보" />
 

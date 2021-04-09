@@ -38,13 +38,13 @@ const SignUp = () => {
     person: '',
     role: 'admin',
   };
-  const itemDeviceDefault = {
-    idx: Math.random(),
-    area: null,
-    company: null,
-    inverter: null,
-    type: null,
-  };
+  // const itemDeviceDefault = {
+  //   idx: Math.random(),
+  //   area: null,
+  //   company: null,
+  //   inverter: null,
+  //   type: null,
+  // };
   const [dataRegister, setDataRegister] = useState(dataRegisterDefault);
   const [error, setError] = useState({
     username: '',
@@ -63,7 +63,7 @@ const SignUp = () => {
     content: '',
   });
 
-  const [listItemDevice, setListItemDevice] = useState([itemDeviceDefault]);
+  const [listItemDevice, setListItemDevice] = useState([]);
 
   /** Show popup sign in success */
   useEffect(() => {
@@ -125,7 +125,7 @@ const SignUp = () => {
   };
 
   const { username, password } = dataLogin;
-  const { email, phone, person } = dataRegister;
+  const { email, phone, person, role } = dataRegister;
 
   const handleSubmit = () => {
     if (!username && !password) {
@@ -148,7 +148,7 @@ const SignUp = () => {
       setModalLogin({
         ...modalLogin,
         isShow: true,
-        content: '아이디를 입력 해주세요.',
+        content: '비밀번호 를 입력 해주세요.',
       });
     }
     dispatch(SignInAction.signInRequest(dataLogin));
@@ -207,7 +207,7 @@ const SignUp = () => {
           ...dataRegister,
           role: 'admin',
         });
-
+        setListItemDevice([]);
         break;
       case 'company':
         setDataRegister({
@@ -221,7 +221,7 @@ const SignUp = () => {
           ...dataRegister,
           role: 'monitoring',
         });
-
+        setListItemDevice([]);
         break;
       default:
         break;
@@ -334,7 +334,7 @@ const SignUp = () => {
         item.type === null || item.company === null || item.inverter === null
     );
 
-    if (checkValidator && checkValidator.length > 0) {
+    if (role === 'company' && checkValidator && checkValidator.length > 0) {
       setModalLogin({
         ...modalLogin,
         isShow: true,
@@ -460,6 +460,7 @@ const SignUp = () => {
         isShowIconClose
         handleCloseIcon={() => setIsShowModalRegister(false)}
         isShowFooter
+        isProcessing={isProcessing}
         handleClose={() => handleRegisterSubmit()}
         textBtnRight="등록요청"
       >
@@ -489,13 +490,13 @@ const SignUp = () => {
         handleCloseIcon={() => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
-          setListItemDevice(itemDeviceDefault);
+          setListItemDevice([]);
           setDataRegister([dataRegisterDefault]);
         }}
         handleClose={() => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
-          setListItemDevice([itemDeviceDefault]);
+          setListItemDevice([]);
           setDataRegister(dataRegisterDefault);
         }}
         textBtnRight="확인"
