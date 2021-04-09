@@ -29,7 +29,7 @@ export const headTestMockupStatus = [
   },
   {
     id: 7,
-    name: '수평 일사량',
+    name: '일사량',
   },
   {
     id: 8,
@@ -52,7 +52,7 @@ export const headTestSolarMonitoringOperationStatus = [
   },
   {
     id: 1,
-    name: '발생 일시',
+    name: '측정 일시',
   },
   {
     id: 2,

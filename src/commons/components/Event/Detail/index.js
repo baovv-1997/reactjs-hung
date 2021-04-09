@@ -84,7 +84,7 @@ const EventDetail = ({ match, location }: Props) => {
       {isProcessing && <Loading />}
       <div className="content-wrap">
         <TitleHeader
-          title="실증단지 발전 현황"
+          title="실증단지 운영 현황"
           descSub="설비 이력, 보수 이력을 등록하실 수 있습니다."
         />
         <TitleSubHeader title="이벤트 상세 내용" />

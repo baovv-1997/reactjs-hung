@@ -18,8 +18,7 @@ export const GroupCompareChart = ({
       <CheckBox
         name="PVVoltage"
         isChecked={paramsSearch?.PVVoltage}
-        label="PV전압"
-        subLabel="v1"
+        label="PV전압(v1)"
         id="PVVoltage"
         handleToggleCheckbox={() =>
           handleChangeSearch(paramsSearch?.PVVoltage, 'PVVoltage')
@@ -28,9 +27,8 @@ export const GroupCompareChart = ({
       <CheckBox
         name="PVCurrent"
         id="PVCurrent"
-        subLabel="l1"
         isChecked={paramsSearch?.PVCurrent}
-        label="PV전류"
+        label="PV전류(l1)"
         handleToggleCheckbox={() =>
           handleChangeSearch(paramsSearch?.PVCurrent, 'PVCurrent')
         }
@@ -38,9 +36,8 @@ export const GroupCompareChart = ({
       <CheckBox
         name="outputVoltage"
         id="outputVoltage"
-        subLabel="v2"
         isChecked={paramsSearch?.outputVoltage}
-        label="출력전압"
+        label="출력전압(v2)"
         handleToggleCheckbox={() =>
           handleChangeSearch(paramsSearch?.outputVoltage, 'outputVoltage')
         }
@@ -48,9 +45,8 @@ export const GroupCompareChart = ({
       <CheckBox
         name="outputCurrent"
         id="outputCurrent"
-        subLabel="l2"
         isChecked={paramsSearch?.outputCurrent}
-        label="출력전류"
+        label="출력전류(l2)"
         handleToggleCheckbox={() =>
           handleChangeSearch(paramsSearch?.outputCurrent, 'outputCurrent')
         }
@@ -58,9 +54,8 @@ export const GroupCompareChart = ({
       <CheckBox
         name="print"
         id="print"
-        subLabel="p"
         isChecked={paramsSearch?.print}
-        label="출력"
+        label="출력(p)"
         handleToggleCheckbox={() =>
           handleChangeSearch(paramsSearch?.print, 'print')
         }

@@ -5,7 +5,7 @@ export const headStatusCompany = [
   },
   {
     id: 1,
-    name: '발생일시',
+    name: '측정 일시',
   },
   {
     id: 2,
