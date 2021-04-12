@@ -40,6 +40,7 @@ const OperationStatusPage = () => {
     outputCurrent: true,
     print: true,
     pagination: defaultOption,
+    posName: '',
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -208,6 +209,14 @@ const OperationStatusPage = () => {
     });
   };
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      posSelected: posList && posList[1] && posList[1].id,
+      posName: posList && posList[1] && posList[1].pos_name,
+    });
+  }, [posList]);
+
   return (
     <>
       {isProcessing && <Loading />}
@@ -231,7 +240,13 @@ const OperationStatusPage = () => {
                 {comList.map((item) => (
                   <Tab
                     eventKey={item.id}
-                    title={<div className="tab-name">{item?.label}</div>}
+                    title={
+                      <div className="tab-name">
+                        {item?.label === '전체'
+                          ? `전체(${paramsSearch?.posName})`
+                          : item?.label}
+                      </div>
+                    }
                   >
                     <ItemContentTab
                       rawData={rawData.map((rawItem, index) => ({

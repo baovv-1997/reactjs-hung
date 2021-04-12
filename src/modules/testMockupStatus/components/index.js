@@ -27,7 +27,7 @@ const StatusByAreaCompany = () => {
   const { deviceList } = useSelector((state) => state?.commons);
   // const {companyId}
   const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
+    deviceList && deviceList.filter((item) => item.ds_type === '3');
   const defaultOption = {
     id: 1,
     value: 6,
@@ -232,6 +232,14 @@ const StatusByAreaCompany = () => {
         break;
     }
   };
+
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        listInverterTest && listInverterTest[0] && listInverterTest[0].id,
+    });
+  }, [deviceList]);
 
   return (
     <>

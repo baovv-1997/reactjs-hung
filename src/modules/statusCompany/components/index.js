@@ -48,6 +48,7 @@ const StatusByAreaCompany = () => {
     performance: true,
     insolation: true,
     pagination: defaultOption,
+    comName: '',
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -67,6 +68,7 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       company: companyId || (comList && comList[1] && comList[1].id),
+      comName: comList && comList[1] && comList[1].com_name,
     });
   }, [comList]);
 
@@ -158,6 +160,7 @@ const StatusByAreaCompany = () => {
         setParamsSearch({
           ...paramsSearch,
           company: item.id,
+          comName: item.com_name,
         });
         dispatch(setCompanyId({ id: 0 }));
         break;
@@ -215,6 +218,10 @@ const StatusByAreaCompany = () => {
     setParamsSearch({ ...defaultSearch, company: paramsSearch?.company });
   };
 
+  const deviceWithtype0 =
+    deviceList &&
+    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
+
   return (
     <>
       {isProcessing && <Loading />}
@@ -239,15 +246,17 @@ const StatusByAreaCompany = () => {
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                {deviceList &&
-                  deviceList.map((device) => (
+                {deviceWithtype0 &&
+                  deviceWithtype0.map((device) => (
                     <Tab
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {device?.label}
+                          {device?.label === '전체'
+                            ? `전체(${paramsSearch?.comName})`
+                            : device?.id}
                           {device?.label !== '전체' && (
-                            <span>{device?.id}</span>
+                            <span>{device?.position?.pos_name}</span>
                           )}
                         </div>
                       }
