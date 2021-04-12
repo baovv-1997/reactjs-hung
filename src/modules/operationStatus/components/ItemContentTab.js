@@ -5,16 +5,13 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import LineChart2 from 'commons/components/LineChart/LineChart2';
-
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
 import { operator_event_filter } from 'constants/optionCheckbox';
-
 import IMAGES from 'themes/images';
-// import LineChart from 'commons/components/LineChart/lineChart';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import {
   headStatusCompany,
