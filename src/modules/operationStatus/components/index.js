@@ -422,7 +422,7 @@ const OperationStatusPage = ({ location }: Props) => {
                         totalPage={totalRawData}
                         perPage={paramsSearch?.pagination?.value}
                         totalPage2={totalEventPage}
-                        perPage2={paramsSearch?.pagination?.value}
+                        perPage2={paramsSearch?.pagination2?.value}
                         tableOperationStatusByAreaCompany={
                           eventList &&
                           eventList.length > 0 &&
