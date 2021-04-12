@@ -34,7 +34,7 @@ const EditEvent = ({ match, location }: Props) => {
   const { listCompany, listArea, listInverter } = useSelector(
     (state) => state?.account
   );
-  const { eventList, type, isProcessing, deviceList } = useSelector(
+  const { eventList, type, isProcessingDetail, deviceList } = useSelector(
     (state) => state.commons
   );
 
@@ -46,6 +46,11 @@ const EditEvent = ({ match, location }: Props) => {
     content: '현황을 등록하시겠습니까?',
   });
 
+  const [modalError, setModalError] = useState({
+    isShow: false,
+    content: '',
+  });
+
   const [dataSubmit, setDataSubmit] = useState({
     typeEvent: eventList,
     content: '월 정기 설비 진행',
@@ -54,16 +59,8 @@ const EditEvent = ({ match, location }: Props) => {
     inverter: null,
   });
 
-  const [error, setError] = useState({
-    content: '',
-    company: '',
-    area: '',
-    inverter: '',
-  });
-
   useEffect(() => {
     dispatch(SignInAction.getListCompany());
-    dispatch(SignInAction.getListArea());
     // eslint-disable-next-line
   }, []);
 
@@ -84,7 +81,10 @@ const EditEvent = ({ match, location }: Props) => {
     };
     validation = Validator(dataValidate, rules);
     if (Object.keys(validation).length > 0) {
-      setError(validation);
+      setModalError({
+        isShow: true,
+        content: '필수 정보를 모두 입력해주세요.',
+      });
       return;
     }
 
@@ -115,6 +115,7 @@ const EditEvent = ({ match, location }: Props) => {
     switch (type) {
       case 'commons/updateEventSuccess':
         history.push(location.state.prevRoute);
+        dispatch(SignInAction.getEventNotification());
         break;
       default:
         break;
@@ -124,18 +125,22 @@ const EditEvent = ({ match, location }: Props) => {
   const handleChange = (value, name) => {
     switch (name) {
       case 'company':
-        setError({
-          ...error,
-          company: '',
-        });
         setDataSubmit({
           ...dataSubmit,
           company: value,
-          inverter: '',
+          inverter: null,
+          area: null,
         });
+
+        dispatch(
+          SignInAction.getListArea({
+            per_page: 99999999,
+            com_id: dataSubmit?.company?.value,
+          })
+        );
         dispatch(
           SignInAction.getListInverter({
-            per_page: 0,
+            per_page: 99999,
             com_id: value && value.value,
           })
         );
@@ -144,15 +149,11 @@ const EditEvent = ({ match, location }: Props) => {
         setDataSubmit({
           ...dataSubmit,
           area: value,
-          inverter: '',
-        });
-        setError({
-          ...error,
-          area: '',
+          inverter: null,
         });
         dispatch(
           SignInAction.getListInverter({
-            per_page: 0,
+            per_page: 999999,
             com_id: company && company.value,
             pos_id: value && value.value,
           })
@@ -163,19 +164,11 @@ const EditEvent = ({ match, location }: Props) => {
           ...dataSubmit,
           inverter: value,
         });
-        setError({
-          ...error,
-          inverter: '',
-        });
         break;
       default:
         setDataSubmit({
           ...dataSubmit,
           [name]: value,
-        });
-        setError({
-          ...error,
-          [name]: '',
         });
         break;
     }
@@ -203,7 +196,7 @@ const EditEvent = ({ match, location }: Props) => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {isProcessingDetail && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 운영 현황"
@@ -250,12 +243,11 @@ const EditEvent = ({ match, location }: Props) => {
                   {eventList?.ds_type !== '3' && (
                     <div className="group-item">
                       <SelectDropdown
-                        placeholder="모듈 선택"
+                        placeholder="업체 선택"
                         listItem={listCompany}
                         onChange={(option) => handleChange(option, 'company')}
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
-                        errorMsg={error?.company}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -263,12 +255,11 @@ const EditEvent = ({ match, location }: Props) => {
                   {eventList?.ds_type !== '3' && (
                     <div className="group-item">
                       <SelectDropdown
-                        placeholder="모듈 선택"
+                        placeholder="구역 선택"
                         listItem={listArea}
                         onChange={(option) => handleChange(option, 'area')}
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
-                        errorMsg={error?.area}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -276,7 +267,7 @@ const EditEvent = ({ match, location }: Props) => {
 
                   <div className="group-item">
                     <SelectDropdown
-                      placeholder="모듈 선택"
+                      placeholder="구역 선택"
                       listItem={
                         eventList?.ds_type !== '3'
                           ? listInverter
@@ -285,7 +276,6 @@ const EditEvent = ({ match, location }: Props) => {
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.inverter}
                     />
                   </div>
                 </div>
@@ -304,9 +294,6 @@ const EditEvent = ({ match, location }: Props) => {
                 value={content}
                 onChange={(e) => handleChange(e.target.value, 'content')}
               />
-              {error?.content && (
-                <p className="input__error-msg">{error?.content}</p>
-              )}
             </div>
           </div>
         </div>
@@ -352,6 +339,34 @@ const EditEvent = ({ match, location }: Props) => {
         handleSubmit={() => handleSubmit()}
       >
         {modalConform?.content}
+      </ModalPopup>
+      <ModalPopup
+        isOpen={modalError.isShow}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() =>
+          setModalError({
+            ...modalError,
+            isShow: false,
+          })
+        }
+        handleClose={() => {
+          setModalError({
+            ...modalError,
+            isShow: false,
+          });
+        }}
+        textBtnRight="확인"
+        handleSubmit={() =>
+          setModalError({
+            ...modalError,
+            isShow: false,
+          })
+        }
+      >
+        {modalError?.content}
       </ModalPopup>
     </>
   );

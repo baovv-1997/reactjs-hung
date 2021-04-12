@@ -21,6 +21,7 @@ type Props = {
   //   label: string,
   // }>,
   handleChangeSearch: Function,
+  subTitle?: boolean,
 };
 
 export const GroupSelect = ({
@@ -29,6 +30,7 @@ export const GroupSelect = ({
   // listInverter = [],
   // listParkingLot = [],
   handleChangeSearch,
+  subTitle = true,
 }: Props) => {
   const renderListCompany =
     listStatusCompanySelect &&
@@ -81,7 +83,7 @@ export const GroupSelect = ({
       <div className="content-select-sidebar">
         {listStatusCompanySelect && listStatusCompanySelect.length > 0 && (
           <>
-            <TitleSubHeader title="실증단지" />
+            {subTitle && <TitleSubHeader title="실증단지" />}
             <ul className="list-item-select overflowY">{renderListCompany}</ul>
           </>
         )}
@@ -105,6 +107,7 @@ export const GroupSelect = ({
 GroupSelect.defaultProps = {
   listMockupType: [],
   listParkingLot: [],
+  subTitle: true,
 };
 
 export default memo<Props>(GroupSelect);

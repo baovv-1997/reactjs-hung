@@ -48,27 +48,27 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: 'PV전압',
+      name: 'PV전압(V)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: 'PV전류',
+      name: 'PV전류(A)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '출력전류',
+      name: '출력전류(A)',
       color: '#fe8224',
     },
     {
       id: 4,
-      name: '출력',
+      name: '출력(KW)',
       color: '#ffcc00',
     },
     {
       id: 5,
-      name: '출력전압',
+      name: '출력전압(V)',
       color: '#102a82',
     },
   ];

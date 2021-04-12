@@ -81,7 +81,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '일일 최고 모듈 온도',
+        title: '최고 모듈 온도',
         value:
           (dataBox &&
             dataBox?.module_temp &&
@@ -103,7 +103,7 @@ const StatusByAreaCompany = () => {
           '0',
       },
       {
-        title: '일일 최고 일사량',
+        title: '최고 일사량',
         value:
           (dataBox &&
             dataBox?.current_rad &&
@@ -225,6 +225,7 @@ const StatusByAreaCompany = () => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={comList && comList.slice(1)}
+            subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab

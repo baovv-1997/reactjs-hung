@@ -3,6 +3,7 @@
   background-color: $white;
   border-radius: pxToRem(15);
   box-shadow: pxToRem(2) pxToRem(3) pxToRem(10) 0 $box-shadow-card;
+  border: none;
 
   .title-middle {
     border-radius: unset;
@@ -26,6 +27,9 @@
     justify-content: space-between;
     align-items: flex-end;
     border-radius: pxToRem(15) pxToRem(15) 0 0;
+  }
+  &__header.header-event {
+    background-color: #ff7d7d;
   }
   &__logo-event {
     width: pxToRem(25);

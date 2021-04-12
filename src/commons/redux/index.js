@@ -35,6 +35,7 @@ const initialState = {
   eventNotifications: [],
   optionFilters: [],
   isProcessing: false,
+  isProcessingDetail: false,
 };
 
 const commonSilice = createSlice({
@@ -134,12 +135,13 @@ const commonSilice = createSlice({
     },
 
     getEventList: (state, action) => {
-      // state.isProcessing = true;
+      state.isProcessingDetail = true;
+
       state.type = action.type;
     },
 
     getEventListSuccess: (state, action) => {
-      // state.isProcessing = false;
+      state.isProcessingDetail = false;
       state.type = action.type;
       state.eventList = action.data;
       state.totalEventPage = action?.total;
@@ -147,7 +149,7 @@ const commonSilice = createSlice({
     },
 
     getEventListFailed: (state, action) => {
-      // state.isProcessing = false;
+      state.isProcessingDetail = false;
       state.type = action.type;
     },
     deleteEvent: (state, action) => {

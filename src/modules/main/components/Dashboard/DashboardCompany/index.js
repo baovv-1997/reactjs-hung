@@ -138,7 +138,6 @@ const DashboardCompany = () => {
         </div>
       );
     });
-
   return (
     <>
       {isLoading && <Loading />}

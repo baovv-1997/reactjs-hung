@@ -1,10 +1,8 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, memo } from 'react';
-// import MainLayout from 'layout/MainLayout';
 import Loading from 'commons/components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import images from 'themes/images';
@@ -32,11 +30,11 @@ type Props = {
 const EventDetail = ({ match, location }: Props) => {
   const dispatch = useDispatch();
 
-  const { eventList, isProcessing, type } = useSelector(
+  const { eventList, isProcessingDetail, type } = useSelector(
     (state) => state.commons
   );
 
-  const userInfo = useSelector((state) => state.account.userInfo);
+  const userInfo = useSelector((state) => state?.account?.userInfo);
 
   const history = useHistory();
   const [modalConform, setModalConfirm] = useState({
@@ -81,10 +79,10 @@ const EventDetail = ({ match, location }: Props) => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {isProcessingDetail && <Loading />}
       <div className="content-wrap">
         <TitleHeader
-          title="실증단지 발전 현황"
+          title="실증단지 운영 현황"
           descSub="설비 이력, 보수 이력을 등록하실 수 있습니다."
         />
         <TitleSubHeader title="이벤트 상세 내용" />

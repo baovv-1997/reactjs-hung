@@ -4,7 +4,7 @@ table {
   tbody td,
   th {
     vertical-align: middle !important;
-    border: solid pxToRem(1) $color-light-dd;
+    border: solid pxToRem(1) $color-light-dd !important;
   }
 
   thead th {
@@ -34,7 +34,14 @@ table {
       background-color: $bg-light10;
 
       &:nth-of-type(odd) {
-        background-color: $white;
+        background-color: $white !important;
+
+        &:hover {
+          background-color: $black-opacity-075 !important;
+        }
+      }
+      td:nth-child(1) {
+        background-color: #efefef !important;
       }
     }
 
@@ -45,7 +52,7 @@ table {
       letter-spacing: pxToRem(-0.51);
       text-align: center;
       color: $black-active;
-      padding: pxToRem(12) pxToRem(5)
+      padding: pxToRem(12) pxToRem(5);
     }
 
     .row-active {
@@ -65,7 +72,6 @@ table {
     }
   }
 }
-
 
 @include breakpoint(lg1280) {
   .table {

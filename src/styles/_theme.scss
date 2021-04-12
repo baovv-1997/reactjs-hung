@@ -8,7 +8,7 @@ html {
 }
 
 .main-content {
-  > .content {
+  >.content {
     min-height: 90.08vh;
   }
 }
@@ -187,7 +187,7 @@ button {
   }
 
   .customer-select {
-    .css-26l3qy-menu .css-4ljt47-MenuList * {
+    .css-26l3qy-menu>div * {
       padding: 0.3125rem 0.5rem !important;
     }
 
@@ -312,8 +312,9 @@ button.h-32 {
   }
 
   .unit-left {
-    left: pxToRem(40);
+    left: pxToRem(44);
     bottom: pxToRem(8);
+    margin-left: 0;
   }
 
   .unit-right {
@@ -321,6 +322,10 @@ button.h-32 {
     margin-left: 0;
     right: 0;
   }
+}
+
+.font-number {
+  font-family: $Roboto-Font;
 }
 
 #chart {
@@ -331,7 +336,7 @@ button.h-32 {
     width: 100% !important;
     min-width: pxToRem(1000) !important;
 
-    > rect {
+    >rect {
       min-width: pxToRem(1000) !important;
       width: 100% !important;
     }

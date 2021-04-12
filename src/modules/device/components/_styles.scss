@@ -272,7 +272,7 @@
         border-bottom: pxToRem(0.5) solid $color-light10;
       }
 
-      
+
     }
 
     &__btn-group {
@@ -313,6 +313,12 @@
 .register {
   &__form {
     display: flex;
+
+    .cell {
+      input {
+        font-size: inherit;
+      }
+    }
 
     &.col-span {
       .col-item {
@@ -451,11 +457,17 @@
 }
 
 .error-list {
-  text-align: left;
+  text-align: center;
   font-size: pxToRem(18);
   // color: $color-label-event;
+  padding-left: 0;
 
   li {
-    list-style: disc;
+    list-style: none;
+
+    .top-2 {
+      position: relative;
+      top: pxToRem(2);
+    }
   }
 }

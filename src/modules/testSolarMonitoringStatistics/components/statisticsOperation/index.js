@@ -39,8 +39,8 @@ const OperationStatusPage = ({ location, history }: Props) => {
 
   const defaultOption = {
     id: 1,
-    value: 6,
-    label: '6 개씩 보기',
+    value: 5,
+    label: '5 개씩 보기',
   };
 
   const defaultSearch = {
@@ -327,6 +327,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={listInverterTest}
+            subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab

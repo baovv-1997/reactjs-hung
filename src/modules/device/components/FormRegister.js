@@ -12,7 +12,13 @@ import Button from 'commons/components/Button';
 import ModalPopup from 'commons/components/Modal';
 import { isNumberKey } from 'helpers';
 import ROUTERS from 'constants/routers';
-import { addDevice, resetDeviceType } from '../redux';
+import {
+  addDevice,
+  resetDeviceType,
+  getListCompany,
+  getListPosition,
+} from '../redux';
+import InputPhone from 'commons/components/Input/InputPhone';
 
 type Props = {
   history: {
@@ -23,17 +29,19 @@ const FormRegister = ({ history }: Props) => {
   const dispatch = useDispatch();
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
-  const errorsAddDevice = useSelector(
-    (state) => state?.device?.errorsAddDevice
-  );
+  // const errorsAddDevice = useSelector(
+  //   (state) => state?.device?.errorsAddDevice
+  // );
   const dataAddNew = useSelector((state) => state?.device?.dataAddNew);
   const type = useSelector((state) => state?.device?.type);
   const [startDate, setStartDate] = useState(new Date());
   const [currentType, setCurrentType] = useState('0');
+  const [isDisablePosition, setIsDisablePosition] = useState(false);
   const [positionSelected, setPositionSelected] = useState(null);
   const [companySelected, setCompanySelected] = useState(null);
   const [isCancel, setIsCancel] = useState(false);
   const [isErrorAdd, setIsErrorAdd] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const [inputValue, setInputValue] = useState({
     manager: '',
     maxPower: '',
@@ -43,7 +51,18 @@ const FormRegister = ({ history }: Props) => {
     color: '',
     azimuthAngle: '',
   });
-
+  useEffect(() => {
+    dispatch(
+      getListCompany({
+        per_page: 9999,
+      })
+    );
+    dispatch(
+      getListPosition({
+        per_page: 9999,
+      })
+    );
+  }, []);
   // change radio option
   const onChangeOption = (e) => {
     const { name } = e.target;
@@ -81,6 +100,22 @@ const FormRegister = ({ history }: Props) => {
         break;
       case 'company':
         setCompanySelected(option);
+        dispatch(
+          getListPosition({
+            per_page: 9999,
+            com_id: option.value,
+          })
+        );
+        setPositionSelected(null);
+        if (
+          option.label === '주차장1' ||
+          option.label === '주차장2' ||
+          option.label === '목업'
+        ) {
+          setIsDisablePosition(true);
+        } else {
+          setIsDisablePosition(false);
+        }
         break;
       default:
         break;
@@ -98,6 +133,8 @@ const FormRegister = ({ history }: Props) => {
         },
         startDate,
         currentType,
+        phoneManager:
+          inputValue?.phoneManager && inputValue.phoneManager.replace(/-/g, ''),
       })
     );
   };
@@ -115,15 +152,15 @@ const FormRegister = ({ history }: Props) => {
     }
   }, [type]);
 
-  const errorsMessage =
-    errorsAddDevice &&
-    Object.values(errorsAddDevice).map((item, index) => {
-      return (
-        <ul className="error-list" key={index}>
-          <li>{item && item[0]}</li>
-        </ul>
-      );
-    });
+  // const errorsMessage =
+  //   errorsAddDevice &&
+  //   Object.values(errorsAddDevice).map((item, index) => {
+  //     return (
+  //       <ul className="error-list" key={index}>
+  //         <li><span className="text-danger top-2 mr-1">*</span>{item && item[0]}</li>
+  //       </ul>
+  //     );
+  //   });
   return (
     <div>
       <div className="register__form col-span">
@@ -153,7 +190,9 @@ const FormRegister = ({ history }: Props) => {
           <div className="cell">{renderRadioList}</div>
           <div
             className={`cell ${
-              currentType === '2' || currentType === '3' ? 'cell-disable' : ''
+              currentType === '2' || currentType === '3' || isDisablePosition
+                ? 'cell-disable'
+                : ''
             }`}
           >
             <Select
@@ -161,7 +200,9 @@ const FormRegister = ({ history }: Props) => {
               onChange={(option) => onChangeSelect(option, 'position')}
               option={positionSelected}
               placeholder="위치선택"
-              disabled={currentType === '2' || currentType === '3'}
+              disabled={
+                currentType === '2' || currentType === '3' || isDisablePosition
+              }
             />
           </div>
           <div className="cell">
@@ -228,14 +269,20 @@ const FormRegister = ({ history }: Props) => {
             />
           </div>
           <div className="cell">
-            <input
+            <InputPhone
+              className="input-field"
+              value={inputValue.phoneManager || ''}
               placeholder="입력해주세요."
-              onChange={(e) => handleInputChange(e)}
               name="phoneManager"
-              value={inputValue.phoneManager}
+              options={{
+                numericOnly: true,
+                delimiters: ['-', '-'],
+                blocks: [3, 4, 4],
+              }}
+              onChange={(e) => handleInputChange(e)}
               pattern="[0-9]*"
-              onKeyPress={(e) => isNumberKey(e)}
               inputMode="numeric"
+              customClass="custom-input"
             />
           </div>
           <div className="cell">
@@ -261,7 +308,7 @@ const FormRegister = ({ history }: Props) => {
         </div>
       </div>
       <div className="device-detail__btn-group">
-        <Button customClass="btn-modify" onClick={handleAddDevice}>
+        <Button customClass="btn-modify" onClick={() => setIsRegister(true)}>
           등록
         </Button>
         <Button customClass="btn-cancel" onClick={() => setIsCancel(true)}>
@@ -288,7 +335,7 @@ const FormRegister = ({ history }: Props) => {
           history.push(ROUTERS.DEVICE);
         }}
       >
-        취소 시 수정 내역은 전부 사라집니다. 그래도 취소하시겠습니까?.
+        취소 시 수정 내역은 전부 사라집니다. <br /> 그래도 취소하시겠습니까?.
       </ModalPopup>
 
       <ModalPopup
@@ -305,10 +352,34 @@ const FormRegister = ({ history }: Props) => {
           setIsErrorAdd(false);
           dispatch(resetDeviceType());
         }}
-        textBtnLeft="확인"
+        textBtnRight="확인"
         customClassButton="btn-custom"
       >
-        {errorsMessage}
+        필드에 유효한 정보를 입력하십시오
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isRegister}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() => {
+          setIsRegister(false);
+        }}
+        handleClose={() => {
+          setIsRegister(false);
+        }}
+        textBtnLeft="확인"
+        textBtnRight="취소"
+        isShowTwoBtn
+        customClassButton="btn-custom"
+        handleSubmit={() => {
+          setIsRegister(false);
+          handleAddDevice();
+        }}
+      >
+        구독 하시겠습니까?
       </ModalPopup>
     </div>
   );

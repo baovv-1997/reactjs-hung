@@ -144,6 +144,11 @@
     position: relative;
     min-height: pxToRem(50);
 
+    &.disabled {
+      pointer-events: none;
+      background-color: $input-disable;
+    }
+
     &:first-child {
       border-top: solid pxToRem(1) $color-light10;
     }
@@ -224,7 +229,7 @@
   }
 
   .customer-select {
-    .css-26l3qy-menu .css-4ljt47-MenuList * {
+    .css-26l3qy-menu>div * {
       padding: 0.3125rem 0.5rem !important;
     }
 

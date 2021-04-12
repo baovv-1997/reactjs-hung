@@ -37,7 +37,6 @@
       content: '';
       display: inline-block;
       background-color: $white;
-      border: pxToRem(0.5) solid $black-light;
       margin-top: pxToRem(5);
     }
 
@@ -48,7 +47,7 @@
       width: pxToRem(7);
       border-left: pxToRem(0.5) solid;
       border-bottom: pxToRem(0.5) solid;
-      color: $black-light;
+      color: $black-active;
       transform: rotate(-45deg);
       content: none;
       left: pxToRem(2);

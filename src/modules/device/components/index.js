@@ -67,7 +67,7 @@ const DeviceManagement = ({ history }: Props) => {
   const onChangeSelect = (option) => {
     setSelectOption(option);
   };
-  console.log('userInfo', userInfo);
+
   // handle input change
   const handleInputChange = (e) => {
     const { value } = e.target;

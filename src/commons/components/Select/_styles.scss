@@ -42,7 +42,7 @@
 .customer-select {
   line-height: pxToRem(30);
 
-  .css-26l3qy-menu > div * {
+  .css-26l3qy-menu>div * {
     padding: 0.3125rem 0.5rem !important;
   }
 
@@ -74,7 +74,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: pxToRem(30);
-    padding-right: pxToRem(30);
+    padding-right: pxToRem(10);
     padding-left: 0 !important;
     font-size: pxToRem(14);
     position: absolute;
@@ -84,15 +84,22 @@
     max-width: calc(100% - #{pxToRem(25)});
   }
 
+  .css-g1d714-ValueContainer {
+    width: 100% !important;
+  }
+
   .css-yk16xz-control {
     min-height: pxToRem(40);
     max-height: pxToRem(40);
     border: pxToRem(1) solid $color-light8 !important;
     background-color: transparent;
 
-    .css-g1d714-ValueContainer,
-    .css-1uccc91-singleValue {
-      padding-left: pxToRem(10);
+    .css-1wa3eu0-placeholder {
+      color: $black-opacity-5 !important;
+    }
+
+    .css-g1d714-ValueContainer {
+      padding-left: pxToRem(10) !important;
     }
   }
 
@@ -197,7 +204,6 @@
 
     .css-g1d714-ValueContainer,
     .css-1uccc91-singleValue {
-      padding-left: pxToRem(10);
       min-height: pxToRem(40);
       max-height: pxToRem(40);
     }
@@ -211,8 +217,8 @@
     z-index: 10;
     margin-bottom: pxToRem(60);
 
-    .css-4ljt47-MenuList * {
-      padding: 0.8rem 0.5rem !important;
+    >div * {
+      padding: 0.4rem 0.5rem !important;
     }
 
     * {
@@ -223,7 +229,7 @@
   }
 }
 
-.css-4ljt47-MenuList {
+.css-26l3qy-menu>div {
   padding: 0 !important;
 
   &::-webkit-scrollbar-track {
@@ -275,6 +281,7 @@
 }
 
 .page-login {
+
   .css-yt9ioa-option,
   .css-1n7v3ny-option {
     padding: pxToRem(4) !important;

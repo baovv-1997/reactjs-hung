@@ -5,9 +5,11 @@ import { ROUTES, API } from '../../../apis';
 import * as AccountAction from '../redux';
 
 // worker Saga: will be fired on SIGN_IN actions
-function* getListArea() {
+function* getListArea(action) {
   try {
-    const response = yield call(() => API.get(ROUTES.API_GET_LIST_POSITION));
+    const response = yield call(() =>
+      API.get(ROUTES.API_GET_LIST_POSITION, action.payload)
+    );
 
     if (response.ok) {
       const { data } = response?.data;

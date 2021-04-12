@@ -44,6 +44,11 @@ const EventRegister = ({ location }: Props) => {
     content: '현황을 등록하시겠습니까?',
   });
 
+  const [modalError, setModalError] = useState({
+    isShow: false,
+    content: '',
+  });
+
   const [dataSubmit, setDataSubmit] = useState({
     typeEvent: '0',
     content: '',
@@ -51,16 +56,9 @@ const EventRegister = ({ location }: Props) => {
     area: null,
     inverter: null,
   });
-  const [error, setError] = useState({
-    content: '',
-    company: '',
-    area: '',
-    inverter: '',
-  });
 
   useEffect(() => {
     dispatch(SignInAction.getListCompany());
-    dispatch(SignInAction.getListArea());
     // eslint-disable-next-line
   }, []);
 
@@ -75,9 +73,19 @@ const EventRegister = ({ location }: Props) => {
   }, [dataSubmit?.company, dataSubmit?.area]);
 
   useEffect(() => {
+    dispatch(
+      SignInAction.getListArea({
+        per_page: 99999999,
+        com_id: dataSubmit?.company?.value,
+      })
+    );
+  }, [dataSubmit?.company]);
+
+  useEffect(() => {
     switch (type) {
       case 'commons/addNewEventSuccess':
         history.go(-1);
+        dispatch(SignInAction.getEventNotification());
         break;
       default:
         break;
@@ -106,7 +114,10 @@ const EventRegister = ({ location }: Props) => {
     });
 
     if (Object.keys(validation).length > 0) {
-      setError(validation);
+      setModalError({
+        isShow: true,
+        content: '필수 정보를 모두 입력해주세요.',
+      });
       return;
     }
     // Call api register event
@@ -122,37 +133,24 @@ const EventRegister = ({ location }: Props) => {
   const handleChange = (value, name) => {
     switch (name) {
       case 'company':
-        setError({
-          ...error,
-          company: '',
-        });
         setDataSubmit({
           ...dataSubmit,
           company: value,
-          inverter: '',
+          inverter: null,
+          area: null,
         });
-
         break;
       case 'area':
         setDataSubmit({
           ...dataSubmit,
           area: value,
-          inverter: '',
+          inverter: null,
         });
-        setError({
-          ...error,
-          area: '',
-        });
-
         break;
       case 'inverter':
         setDataSubmit({
           ...dataSubmit,
           inverter: value,
-        });
-        setError({
-          ...error,
-          inverter: '',
         });
         break;
       case 'content':
@@ -166,14 +164,10 @@ const EventRegister = ({ location }: Props) => {
           ...dataSubmit,
           [name]: value,
         });
-        setError({
-          ...error,
-          [name]: '',
-        });
         break;
     }
   };
-  console.log('stateTypeEvent', stateTypeEvent);
+
   const renderTitle = () => {
     let title = '';
     switch (stateTypeEvent) {
@@ -237,12 +231,11 @@ const EventRegister = ({ location }: Props) => {
                   {stateTypeEvent !== 'mockup' && (
                     <div className="group-item">
                       <SelectDropdown
-                        placeholder="모듈 선택"
+                        placeholder="업체 선택"
                         listItem={listCompany}
                         onChange={(option) => handleChange(option, 'company')}
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
-                        errorMsg={error?.company}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -250,19 +243,18 @@ const EventRegister = ({ location }: Props) => {
                   {stateTypeEvent !== 'mockup' && (
                     <div className="group-item">
                       <SelectDropdown
-                        placeholder="모듈 선택"
+                        placeholder="구역 선택"
                         listItem={listArea}
                         onChange={(option) => handleChange(option, 'area')}
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
-                        errorMsg={error?.area}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
                   )}
                   <div className="group-item">
                     <SelectDropdown
-                      placeholder="모듈 선택"
+                      placeholder="구역 선택"
                       listItem={
                         stateTypeEvent === 'mockup'
                           ? listInverterTest
@@ -271,7 +263,6 @@ const EventRegister = ({ location }: Props) => {
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
-                      errorMsg={error?.inverter}
                     />
                   </div>
                 </div>
@@ -290,9 +281,6 @@ const EventRegister = ({ location }: Props) => {
                 value={content}
                 onChange={(e) => handleChange(e.target.value, 'content')}
               />
-              {error?.content && (
-                <p className="input__error-msg">{error?.content}</p>
-              )}
             </div>
           </div>
         </div>
@@ -340,6 +328,35 @@ const EventRegister = ({ location }: Props) => {
         handleSubmit={() => handleSubmit()}
       >
         {modalConform?.content}
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={modalError.isShow}
+        isShowHeader
+        title="알림"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() =>
+          setModalError({
+            ...modalError,
+            isShow: false,
+          })
+        }
+        handleClose={() => {
+          setModalError({
+            ...modalError,
+            isShow: false,
+          });
+        }}
+        textBtnRight="확인"
+        handleSubmit={() =>
+          setModalError({
+            ...modalError,
+            isShow: false,
+          })
+        }
+      >
+        {modalError?.content}
       </ModalPopup>
     </>
   );

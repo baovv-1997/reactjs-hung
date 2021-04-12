@@ -181,11 +181,9 @@ const ItemContentTab = ({
         tableBody={
           (dataTableBottom &&
             dataTableBottom.length > 0 &&
-            dataTableBottom.map((event, index) => ({
+            dataTableBottom.map((event) => ({
               id: event?.id,
-              rowId: `${
-                totalPage2 - (paramsSearch?.page2 - 1) * perPage2 - index || ''
-              }`,
+              rowId: event.no,
               dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
               comName: event?.com_name,
               inverterID: event?.ds_id,

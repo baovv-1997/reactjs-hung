@@ -1,5 +1,5 @@
 const ERROR_MESSAGE = {
-  EMAIL_FORMAT: '이메일 형식이 일치하지 않습니다.',
+  EMAIL_FORMAT: '이메일의 포맷은 틀렸습니다.',
   EMAIL_REQUIRED: 'Email does not exist.',
   NICK_NAME_REQUIRED: 'Nickname does not exist.',
   PASSWORD_REQUIRED: 'Password does not exist.',
@@ -14,7 +14,7 @@ const ERROR_MESSAGE = {
   VERIFY_EMAIL:
     'Email authentication is not complete.<br /> Would you like me to resend you<br /> the authentication email?',
   UN_AUTHENTICATED: 'Unauthenticated.',
-  PHONE_NUMBER: '숫자 11자리를 입력해주세요.',
+  PHONE_NUMBER: '전화번호의 포맷은 틀렸습니다.',
   REQUIRED: '이 필드는 필수입니다.',
 };
 

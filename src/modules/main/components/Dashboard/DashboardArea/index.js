@@ -94,6 +94,8 @@ const DashboardArea = () => {
     dispatch(setCompanyId({ id }));
   };
 
+  console.log(cardMeasureArea, 'cardMeasureArea');
+
   return (
     <>
       {isLoading && <Loading />}
@@ -149,6 +151,7 @@ const DashboardArea = () => {
                 electricRealtime={posItem?.card?.prod_realtime}
                 cumulativeElectric={posItem?.card?.prod_sum}
                 ratePower={posItem?.card?.performance_ratio}
+                isEvent={!!posItem?.card?.event}
                 logoClick={handleLogoClick}
                 titleClick={() => handleTitleClick(posItem?.company?.id)}
               />

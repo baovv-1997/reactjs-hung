@@ -87,7 +87,7 @@ export const DeivceRegisterHead = [
   },
   {
     id: 3,
-    name: '담당자',
+    name: '담당자 이름',
   },
   {
     id: 4,

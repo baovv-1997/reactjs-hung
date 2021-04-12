@@ -39,7 +39,8 @@ const MainPage = () => {
     totalMetric,
   } = useSelector((state) => state.main);
   const { userInfo } = useSelector((state) => state?.account);
-
+  const count = useRef(1);
+  const inputRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState({
     label: '',
     value: '',
@@ -65,8 +66,6 @@ const MainPage = () => {
     dispatch(getListPosition());
     dispatch(getListCompany());
   }, []);
-
-  const count = useRef(1);
 
   useEffect(() => {
     dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
@@ -126,6 +125,10 @@ const MainPage = () => {
 
   const searchSubmit = () => {
     const type = searchTerm?.key;
+    if (!searchTerm.label) {
+      inputRef.current.focus();
+      return;
+    }
     switch (type) {
       case 'posId':
         dispatch(
@@ -153,7 +156,7 @@ const MainPage = () => {
         setModal({
           ...modal,
           isShow: true,
-          content: '구역명이나 업체명을 정확히 입력해주세요',
+          content: '구역명이나 업체명을 정확히 입력해주세요.',
         });
         break;
     }
@@ -200,7 +203,8 @@ const MainPage = () => {
           handleIconClick={handleIconClick}
           handleKeyDown={handleKeyDownSearch}
           isSpinner={isSpinner}
-          isDisabled={userInfo?.roles[0].id !== 1}
+          isDisabled={userInfo?.roles[0].id === 2}
+          inputRef={inputRef}
         />
 
         <div className="current-electric">
@@ -261,6 +265,7 @@ const MainPage = () => {
                 electricRealtime={posItem?.card?.prod_realtime}
                 cumulativeElectric={posItem?.card?.prod_sum}
                 ratePower={posItem?.card?.performance_ratio}
+                isEvent={!!posItem?.card?.event}
                 titleClick={() => handleTitleClick(posItem?.position?.id)}
                 logoClick={handleLogoClick}
               />

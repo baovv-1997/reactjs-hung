@@ -4,6 +4,8 @@ import Input from 'commons/components/Input';
 import Radio from 'commons/components/Radio';
 import { isNumberKey, isOnPasteNumber } from 'helpers/index';
 import ItemDevice from './ItemDevice';
+import Loading from 'commons/components/Loading';
+import { Button } from 'commons/components/Button';
 
 type Props = {
   dataRegister: Object,
@@ -36,6 +38,7 @@ type Props = {
     type: Object,
   }>,
   handleAddListDevice: Function,
+  isProcessing: Boolean,
 };
 
 const SignIn = ({
@@ -51,6 +54,7 @@ const SignIn = ({
   listItemDevice,
   handleAddListDevice,
   listType,
+  isProcessing,
 }: Props) => {
   const { username, email, phone, person, role } = dataRegister;
   const renderListItemDevice =
@@ -67,12 +71,12 @@ const SignIn = ({
         listInverter={listInverter}
         listType={listType}
         handleRemove={handleRemove}
-        handleAddListDevice={handleAddListDevice}
       />
     ));
 
   return (
     <div className="page-register">
+      {isProcessing && <Loading />}
       <div className="sign-in">
         <div className="sign-desc mb-3">
           등록 요청시 담당자가 관련 내용을 확인 후 서버에 계정 등록을 도와드릴
@@ -137,7 +141,7 @@ const SignIn = ({
             </div>
             <div className="item-content">
               <Input
-                placeholder="영문 + 숫자 4~13자리를 입력해주세요."
+                placeholder="아이디를 입력해주세요."
                 type="text"
                 name="username"
                 value={username}
@@ -163,7 +167,7 @@ const SignIn = ({
                   isNumberKey(e);
                   handleKeyDown(e);
                 }}
-                maxLength="13"
+                maxLength="11"
                 onPaste={(e) => isOnPasteNumber(e)}
                 value={phone}
                 onChange={(e) => handleChangeRegister(e.target.value, 'phone')}
@@ -189,11 +193,21 @@ const SignIn = ({
             </div>
           </div>
 
-          <div className="item">
+          <div className={`item ${role !== 'company' ? 'disabled' : ''}`}>
             <div className="item-label">
               관리기기<span>*</span>
             </div>
-            <div className="item-content">{renderListItemDevice}</div>
+            <div className="item-content">
+              {renderListItemDevice}
+              <div className="mt-2 text-left">
+                <Button
+                  onClick={handleAddListDevice}
+                  isDisabled={role !== 'company'}
+                >
+                  추가
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

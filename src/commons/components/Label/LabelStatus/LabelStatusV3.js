@@ -42,7 +42,7 @@ export const LabelStatusV2 = ({
           </p>
           <div className="label-status__group-value">
             <p
-              className="label-status__value align-items-baseline"
+              className="label-status__value align-items-end"
               style={{ color: color }}
             >
               {nameStatus}

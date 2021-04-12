@@ -5,13 +5,13 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-// import Button from 'commons/components/Button';
+import Button from 'commons/components/Button';
 import { listPaginationType5PerPage } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
 import LineChart2 from 'commons/components/LineChart/LineChart2';
-
-// import { useHistory } from 'react-router-dom';
-// import ROUTERS from 'constants/routers';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import ROUTERS from 'constants/routers';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import IMAGES from 'themes/images';
 import {
@@ -76,7 +76,9 @@ const ItemContentTab = ({
   chartData,
   id,
 }: Props) => {
-  // const history = useHistory();
+  const history = useHistory();
+  const { userInfo } = useSelector((state) => state?.account);
+  const roles = userInfo?.roles[0]?.name || '';
   const dataLengthChart = [
     {
       id: 1,
@@ -243,13 +245,16 @@ const ItemContentTab = ({
         listOption={operator_event_filter}
         optionDefault={optionFilters}
       />
-      {/* <div className="group-btn-register text-right">
-        <Button onClick={() => history.push(ROUTERS.EVENT_REGISTER)}>
-          등록
-        </Button>
-      </div> */}
+      {(roles === 'admin' || roles === 'company') && (
+        <div className="group-btn-register text-right">
+          <Button onClick={() => history.push(ROUTERS.EVENT_REGISTER)}>
+            등록
+          </Button>
+        </div>
+      )}
+
       <div className="opacity d-block pagination mt-0">
-        {totalPage > perPage && (
+        {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}
