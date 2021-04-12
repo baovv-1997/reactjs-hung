@@ -62,7 +62,7 @@ const OperationStatusPage = () => {
         dataBoxCard.prod_month &&
         dataBoxCard.prod_month.toLocaleString('en')) ||
       0,
-    year:
+    sum:
       (dataBoxCard &&
         dataBoxCard.prod_sum &&
         dataBoxCard.prod_sum.toLocaleString('en')) ||

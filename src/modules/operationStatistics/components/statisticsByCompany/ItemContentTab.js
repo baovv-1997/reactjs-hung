@@ -165,6 +165,7 @@ const ItemContentTab = ({
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
         linkDownTable={`operator/statistic/?inverter_id=${tabActive}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}&type=${paramsSearch?.classification}`}
+        text="Sampling Data다운"
       />
       <div>
         <Table

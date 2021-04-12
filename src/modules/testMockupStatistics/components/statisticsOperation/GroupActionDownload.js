@@ -10,12 +10,14 @@ type Props = {
   paramsSearch: Object,
   handleChangeSearch: Function,
   handleDownloadTrend: Function,
+  text: string,
 };
 
 export const GroupActionDownload = ({
   paramsSearch,
   handleChangeSearch,
   handleDownloadTrend,
+  text,
 }: Props) => (
   <div className="group-option-table d-flex  justify-content-between">
     <SelectDropdown
@@ -27,7 +29,7 @@ export const GroupActionDownload = ({
     />
     <div className="group-btn-download">
       <ButtonDownIMG />
-      <Button onClick={() => handleDownloadTrend('raw')}>Raw Date 다운</Button>
+      <Button onClick={() => handleDownloadTrend('raw')}>{text}</Button>
     </div>
   </div>
 );

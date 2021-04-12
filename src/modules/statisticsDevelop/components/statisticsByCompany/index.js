@@ -74,8 +74,7 @@ const OperationStatusPage = () => {
     month:
       (cardInfo?.prod_month && cardInfo?.prod_month.toLocaleString('en')) ||
       '0',
-    year:
-      (cardInfo?.prod_sum && cardInfo?.prod_sum.toLocaleString('en')) || '0',
+    sum: (cardInfo?.prod_sum && cardInfo?.prod_sum.toLocaleString('en')) || '0',
   };
 
   const dispatch = useDispatch();
