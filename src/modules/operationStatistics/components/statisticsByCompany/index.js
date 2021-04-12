@@ -32,8 +32,6 @@ type Props = {
 };
 const OperatorStatisticCompany = ({ location }: Props) => {
   const history = useHistory();
-  const perPage = 6;
-  const totalPage = 100;
   const [menuTab, setMenuTab] = useState('');
   const {
     comList,
@@ -112,13 +110,6 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   );
 
   useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
-    });
-  }, []);
-
-  useEffect(() => {
     if (paramsSearch?.company) {
       getDevicesCallback({ com_id: paramsSearch?.company });
     }
@@ -170,6 +161,12 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     }
   }, [getCardInfoCallback, menuTab, paramsSearch?.company]);
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company: comList && comList[1] && comList[1].id,
+    });
+  }, []);
   /**
    * get Event List data
    */
@@ -504,8 +501,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                           }))
                         }
                         dataContent={{}}
-                        totalPage={totalPage}
-                        perPage={perPage}
+                        totalPage={totalRawData}
+                        perPage={paramsSearch?.pagination?.value}
                         totalPage2={totalEventPage}
                         perPage2={paramsSearch?.pagination2?.value}
                         tableOperationStatusByAreaCompany={

@@ -98,8 +98,7 @@
       color: $black-opacity-5 !important;
     }
 
-    .css-g1d714-ValueContainer,
-    .css-1uccc91-singleValue {
+    .css-g1d714-ValueContainer {
       padding-left: pxToRem(10) !important;
     }
   }
@@ -205,7 +204,6 @@
 
     .css-g1d714-ValueContainer,
     .css-1uccc91-singleValue {
-      padding-left: pxToRem(10) !important;
       min-height: pxToRem(40);
       max-height: pxToRem(40);
     }
