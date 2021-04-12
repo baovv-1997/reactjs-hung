@@ -212,25 +212,27 @@ const EditEvent = ({ match, location }: Props) => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '0',
+                      typeEvent: '1',
                     })
                   }
-                  isChecked={typeEvent === '0'}
+                  isChecked={typeEvent === '1'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
+                  disabled={typeEvent === '0'}
                 />
                 <Radio
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '1',
+                      typeEvent: '2',
                     })
                   }
-                  isChecked={typeEvent === '1'}
+                  isChecked={typeEvent === '2'}
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"
+                  disabled={typeEvent === '0'}
                 />
               </div>
             </div>
@@ -248,6 +250,7 @@ const EditEvent = ({ match, location }: Props) => {
                         onChange={(option) => handleChange(option, 'company')}
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
+                        disabled={typeEvent === '0'}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -260,6 +263,7 @@ const EditEvent = ({ match, location }: Props) => {
                         onChange={(option) => handleChange(option, 'area')}
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
+                        disabled={typeEvent === '0'}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -276,6 +280,7 @@ const EditEvent = ({ match, location }: Props) => {
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
+                      disabled={typeEvent === '0'}
                     />
                   </div>
                 </div>
@@ -292,6 +297,7 @@ const EditEvent = ({ match, location }: Props) => {
                 maxLength="5000"
                 className="form-control"
                 value={content}
+                disabled={typeEvent === '0'}
                 onChange={(e) => handleChange(e.target.value, 'content')}
               />
             </div>

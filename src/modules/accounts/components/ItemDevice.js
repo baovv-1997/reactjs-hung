@@ -68,6 +68,7 @@ export const ItemDevice = ({
             }
             option={optionDevice?.company || null}
             noOptionsMessage={() => '옵션 없음'}
+            disabled={idx !== 0}
           />
           <img src={images.icon_next} alt="" />
         </div>
