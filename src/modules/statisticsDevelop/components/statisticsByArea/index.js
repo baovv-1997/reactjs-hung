@@ -55,6 +55,7 @@ const OperationStatusPage = () => {
     generation: true,
     pagination: defaultOption,
     inverter1: menuTab === '' ? null : [comList[1]],
+    posName: '',
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -385,6 +386,7 @@ const OperationStatusPage = () => {
     setParamsSearch({
       ...paramsSearch,
       posSelected: posList && posList[1] && posList[1].id,
+      posName: posList && posList[1] && posList[1].pos_name,
     });
   }, [posList]);
 
@@ -413,8 +415,9 @@ const OperationStatusPage = () => {
                       eventKey={com.id}
                       title={
                         <div className="tab-name">
-                          {com?.label}
-                          {com?.label !== '전체' && <span>{com?.id}</span>}
+                          {com?.label === '전체'
+                            ? `전체(${paramsSearch?.posName})`
+                            : com?.label}
                         </div>
                       }
                     >

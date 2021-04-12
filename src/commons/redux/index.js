@@ -65,6 +65,7 @@ const commonSilice = createSlice({
       ];
 
       const posListFormat = action.data.map((pos) => ({
+        ...pos,
         id: pos.id,
         label: pos.pos_name,
       }));

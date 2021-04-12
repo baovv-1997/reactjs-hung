@@ -44,6 +44,7 @@ const StatusByAreaCompany = () => {
     performance: true,
     insolation: true,
     pagination: defaultOption,
+    posName: '',
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -64,8 +65,9 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       posSelected: posList && posList[1] && posList[1].id,
+      posName: posList && posList[1] && posList[1].pos_name,
     });
-  }, []);
+  }, [posList]);
   /**
    * get company list list
    */
@@ -155,6 +157,7 @@ const StatusByAreaCompany = () => {
         setParamsSearch({
           ...paramsSearch,
           posSelected: item.id,
+          posName: item.pos_name,
         });
         break;
 
@@ -230,7 +233,13 @@ const StatusByAreaCompany = () => {
                   comList.map((item) => (
                     <Tab
                       eventKey={item.id}
-                      title={<div className="tab-name">{item?.label}</div>}
+                      title={
+                        <div className="tab-name">
+                          {item?.label === '전체'
+                            ? `전체(${paramsSearch?.posName})`
+                            : item?.label}
+                        </div>
+                      }
                     >
                       <ItemContentTab
                         chartData={chartData}

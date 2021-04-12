@@ -66,6 +66,7 @@ const OperationStatusPage = () => {
     pagination: defaultOption,
     pagination2: defaultOption,
     inverter1: menuTab === '' ? null : [deviceList[1]],
+    comName: '',
   };
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
@@ -424,9 +425,13 @@ const OperationStatusPage = () => {
     setParamsSearch({
       ...paramsSearch,
       company: comList && comList[1] && comList[1].id,
+      comName: comList && comList[1] && comList[1].com_name,
     });
   }, [comList]);
 
+  const deviceWithtype0 =
+    deviceList &&
+    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
     <>
       {isProcessing && <Loading />}
@@ -448,17 +453,20 @@ const OperationStatusPage = () => {
                   className="list-order tab-list"
                   onSelect={(eventKey) => onSelect(eventKey)}
                 >
-                  {deviceList &&
-                    deviceList.map((dev) => (
+                  {deviceWithtype0 &&
+                    deviceWithtype0.map((dev) => (
                       <Tab
                         eventKey={dev.id}
                         title={
                           <div className="tab-name">
-                            {dev?.label}
-                            {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                            {dev?.label === '전체'
+                              ? `전체(${paramsSearch?.comName})`
+                              : dev?.id}
+                            {dev?.label !== '전체' && (
+                              <span>{dev?.position?.pos_name}</span>
+                            )}
                           </div>
                         }
-                        key={dev.id}
                       >
                         <ItemContentTab
                           dataBoxContent={dataBoxContent}

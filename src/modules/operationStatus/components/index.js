@@ -66,6 +66,7 @@ const OperationStatusPage = ({ location }: Props) => {
     print: true,
     pagination: defaultOption,
     pagination2: defaultOption,
+    comName: '',
   };
 
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
@@ -98,8 +99,9 @@ const OperationStatusPage = ({ location }: Props) => {
     setParamsSearch({
       ...paramsSearch,
       company: comList && comList[1] && comList[1].id,
+      comName: comList && comList[1] && comList[1].com_name,
     });
-  }, []);
+  }, [comList]);
 
   /**
    * get Device list
@@ -318,7 +320,9 @@ const OperationStatusPage = ({ location }: Props) => {
     setMenuTab(eventKey);
     setParamsSearch({ ...defaultSearch, company: paramsSearch?.company });
   };
-
+  const deviceWithtype0 =
+    deviceList &&
+    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
     <div>
       {(isProcessing || isProcessingDetail) && <Loading />}
@@ -340,16 +344,18 @@ const OperationStatusPage = ({ location }: Props) => {
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                {deviceList &&
-                  deviceList.length > 0 &&
-                  deviceList.map((device) => (
+                {deviceWithtype0 &&
+                  deviceWithtype0.length > 0 &&
+                  deviceWithtype0.map((device) => (
                     <Tab
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {device?.label}
+                          {device?.label === '전체'
+                            ? `전체(${paramsSearch?.comName})`
+                            : device?.id}
                           {device?.label !== '전체' && (
-                            <span>{device?.id}</span>
+                            <span>{device?.position?.pos_name}</span>
                           )}
                         </div>
                       }

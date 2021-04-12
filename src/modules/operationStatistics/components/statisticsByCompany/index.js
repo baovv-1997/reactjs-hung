@@ -75,6 +75,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     vendorCompany: null,
     inverter: null,
     inverter1: menuTab === '' ? null : [deviceList[1]],
+    comName: '',
   };
 
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
@@ -165,8 +166,9 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     setParamsSearch({
       ...paramsSearch,
       company: comList && comList[1] && comList[1].id,
+      comName: comList && comList[1] && comList[1].com_name,
     });
-  }, []);
+  }, [comList]);
   /**
    * get Event List data
    */
@@ -465,8 +467,12 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                       eventKey={dev.id}
                       title={
                         <div className="tab-name">
-                          {dev?.label}
-                          {dev?.label !== '전체' && <span>{dev?.id}</span>}
+                          {dev?.label === '전체'
+                            ? `전체(${paramsSearch?.comName})`
+                            : dev?.id}
+                          {dev?.label !== '전체' && (
+                            <span>{dev?.position?.pos_name}</span>
+                          )}
                         </div>
                       }
                     >
