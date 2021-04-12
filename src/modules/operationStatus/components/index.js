@@ -43,6 +43,7 @@ const OperationStatusPage = ({ location }: Props) => {
     isProcessing,
     deviceList,
     totalEventPage,
+    isProcessingDetail,
     optionFilters,
   } = useSelector((state) => state?.commons);
 
@@ -320,7 +321,7 @@ const OperationStatusPage = ({ location }: Props) => {
 
   return (
     <div>
-      {isProcessing && <Loading />}
+      {(isProcessing || isProcessingDetail) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 운영 현황" />
         <div className="content-body page-company">

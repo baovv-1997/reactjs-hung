@@ -22,6 +22,7 @@ const OperationStatusPage = () => {
     listDataTableRawMockup,
     total,
     totalMockup,
+    isProcessingRaw,
   } = useSelector((state) => state?.testMockupStatistics);
   const [randomNumber, setRandomNumber] = useState(null);
   const defaultOption = {
@@ -289,7 +290,7 @@ const OperationStatusPage = () => {
 
   return (
     <>
-      {(isProcessing || isLoading) && <Loading />}
+      {(isProcessing || isProcessingRaw || isLoading) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 발전 통계" />
         <div className="content-body page-company">

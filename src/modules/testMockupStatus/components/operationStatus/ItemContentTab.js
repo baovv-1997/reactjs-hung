@@ -8,6 +8,7 @@ import { listPaginationType } from 'constants/listKey';
 import { test_modal_search } from 'constants/optionCheckbox';
 import ROUTERS from 'constants/routers';
 import Pagination from 'react-js-pagination';
+import { useSelector } from 'react-redux';
 import { Button } from 'commons/components/Button';
 import { useHistory } from 'react-router-dom';
 import IMAGES from 'themes/images';
@@ -56,6 +57,8 @@ const ItemContentTab = ({
   optionFilters,
 }: Props) => {
   const history = useHistory();
+  const { userInfo } = useSelector((state) => state?.account);
+  const roles = userInfo?.roles[0]?.name || '';
   const dataLengthChart = [
     {
       id: 1,
@@ -187,7 +190,7 @@ const ItemContentTab = ({
               dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
               comName: event?.com_name,
               inverterID: event?.ds_id,
-              inverterName: event?.ds_name,
+              eventName: event?.evt_type_label,
               contents: event?.evt_content,
             }))) ||
           []
@@ -203,18 +206,20 @@ const ItemContentTab = ({
         listOption={test_modal_search}
         optionDefault={optionFilters}
       />
-      <div className="group-btn-register text-right">
-        <Button
-          onClick={() =>
-            history.push({
-              pathname: `${ROUTERS.EVENT}/register`,
-              state: { typeEvent: 'mockup' },
-            })
-          }
-        >
-          등록
-        </Button>
-      </div>
+      {(roles === 'admin' || roles === 'company') && (
+        <div className="group-btn-register text-right">
+          <Button
+            onClick={() =>
+              history.push({
+                pathname: `${ROUTERS.EVENT}/register`,
+                state: { typeEvent: 'mockup' },
+              })
+            }
+          >
+            등록
+          </Button>
+        </div>
+      )}
       <div className="opacity d-block pagination mt-0">
         {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">

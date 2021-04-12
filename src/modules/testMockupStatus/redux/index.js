@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const testMockupStatusSlide = createSlice({
   name: 'testMockupStatus',
   initialState: {
-    isLoading: false,
+    isProcessing: false,
+    isProcessingRaw: false,
     total: 0,
     dataCardOperation: {
       azimuth_angle: 0,
@@ -39,7 +40,7 @@ const testMockupStatusSlide = createSlice({
 
     getDataRawTableTestMk: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataRawTableTestMkSuccess: (state, action) => {
@@ -68,14 +69,14 @@ const testMockupStatusSlide = createSlice({
           performanceRatio: `${item.dm_performance_ratio || 0}%`,
         }));
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = (data && data.total) || 0;
       state.listDataTableRaw = listDataTableRaw;
     },
 
     getDataRawTableTestMkFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRaw = [];
     },
@@ -129,7 +130,7 @@ const testMockupStatusSlide = createSlice({
 
     getDataTestMKRawTableOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
     getDataTestMKRawTableOperationSuccess: (state, action) => {
       const { data, params } = action;
@@ -162,11 +163,11 @@ const testMockupStatusSlide = createSlice({
       state.total = (data && data.total) || 0;
       state.listDataTableRawOperation = listDataTableRaw;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
     },
     getDataTestMKRawTableOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRawOperation = [];
     },
