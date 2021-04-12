@@ -50,7 +50,7 @@ const EventRegister = ({ location }: Props) => {
   });
 
   const [dataSubmit, setDataSubmit] = useState({
-    typeEvent: '0',
+    typeEvent: '1',
     content: '',
     company: null,
     area: null,
@@ -200,10 +200,10 @@ const EventRegister = ({ location }: Props) => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '0',
+                      typeEvent: '1',
                     })
                   }
-                  isChecked={typeEvent === '0'}
+                  isChecked={typeEvent === '1'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
@@ -212,10 +212,10 @@ const EventRegister = ({ location }: Props) => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '1',
+                      typeEvent: '2',
                     })
                   }
-                  isChecked={typeEvent === '1'}
+                  isChecked={typeEvent === '2'}
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"

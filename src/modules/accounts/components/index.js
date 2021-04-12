@@ -252,14 +252,12 @@ const SignUp = () => {
       };
     });
     const listItemCompany = listItemDevice.map((item) => {
-      return item.idx === itemChange?.idx
-        ? {
-            ...item,
-            area: null,
-            company: (name === 'company' ? option : item.company) || null,
-            inverter: null,
-          }
-        : item;
+      return {
+        ...item,
+        area: null,
+        company: (name === 'company' ? option : item.company) || null,
+        inverter: null,
+      };
     });
 
     const listItemArea = listItemDevice.map((item) => {
@@ -363,7 +361,8 @@ const SignUp = () => {
       ...listItemDevice,
       {
         idx: Math.random(),
-        company: null,
+        company:
+          listItemDevice && listItemDevice[0] && listItemDevice[0].company,
         area: null,
         type:
           (listItemDevice && listItemDevice[0] && listItemDevice[0].type) ||

@@ -113,6 +113,10 @@ Props) => {
     visibleAxis3 = true;
     positionAxis3 = 'left';
   }
+  if (!optionLine?.line1 && optionLine?.line2 && !optionLine?.line3) {
+    visibleAxis3 = false;
+    positionAxis3 = 'left';
+  }
 
   return (
     <>
@@ -177,7 +181,9 @@ Props) => {
           name="frequency1"
           position="left"
           showZero
+          // autoBreaksEnabled
           visible={optionLine?.line1}
+          visualRangeUpdateMode={true}
         />
 
         <ValueAxis
@@ -189,7 +195,12 @@ Props) => {
           pane="top"
           minorTickCount={20}
           visible={optionLine?.line2}
-          defaultVisualRange={{ startValue: 0, endValue: 150 }}
+          // autoBreaksEnabled
+          defaultVisualRange={{ startValue: 0, endValue: 100 }}
+          // visualRangeUpdateMode={{
+          //   startValue: 0,
+          //   endValue: 1000,
+          // }}
         />
 
         <ValueAxis
@@ -200,7 +211,15 @@ Props) => {
           type="linear"
           pane="top"
           minorTickCount={20}
-          defaultVisualRange={{ startValue: 0, endValue: 100 }}
+          // autoBreaksEnabled
+          defaultVisualRange={{
+            startValue: 0,
+            endValue: 100,
+          }}
+          // visualRangeUpdateMode={{
+          //   startValue: 0,
+          //   endValue: 1000,
+          // }}
         />
 
         <Crosshair enabled color="#949494" width={3} dashStyle="dot">
