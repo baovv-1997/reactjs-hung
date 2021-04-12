@@ -24,11 +24,11 @@ export const BoxGroup = ({ dataBoxContent }: Props) => (
       color="#fe5e6a"
     />
     <LabelStatusV3
-      nameStatus={dataBoxContent?.year}
+      nameStatus={dataBoxContent?.sum}
       unit="MWh"
       title="누적 발전량"
-      keyStatus={3}
-      color="#ffb00d"
+      keyStatus={4}
+      color="#6d5ebd"
     />
   </div>
 );

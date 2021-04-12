@@ -103,6 +103,7 @@ const ItemContentTab = ({
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
         linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
+        text="Sampling Data다운"
       />
       <div>
         <Table
@@ -165,6 +166,7 @@ const ItemContentTab = ({
           <ButtonDownExcel
             linkDownTable={`operator/statistic?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
             keyName="test_mockup"
+            text="Sampling Data다운"
           />
         </div>
       </div>

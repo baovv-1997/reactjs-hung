@@ -176,6 +176,7 @@ const ItemContentTab = ({
           <ButtonDownExcel
             linkDownTable={`generator/event?inverter_id=${paramsSearch?.company}`}
             keyName="test_solar"
+            text="Sampling Data다운"
           />
         </div>
       </div>
