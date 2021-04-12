@@ -122,7 +122,7 @@ const OperationStatusPage = () => {
 
   useEffect(() => {
     if (paramsSearch?.company) {
-      getDevicesCallback({ com_id: paramsSearch?.company });
+      getDevicesCallback({ com_id: paramsSearch?.company, per_page: 9999 });
     }
   }, [getDevicesCallback, paramsSearch?.company]);
 
@@ -425,7 +425,8 @@ const OperationStatusPage = () => {
       ...paramsSearch,
       company: comList && comList[1] && comList[1].id,
     });
-  }, []);
+  }, [comList]);
+
   return (
     <>
       {isProcessing && <Loading />}

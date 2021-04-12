@@ -44,7 +44,7 @@ export const FilterSearch = ({
     month: 'yyyy-MM',
     year: 'yyyy',
   };
-
+  console.log('listInverter1', listInverter1);
   return (
     <div className="group-search">
       <div className="table-form">
@@ -96,7 +96,7 @@ export const FilterSearch = ({
                   isCompany ? '업체1 선택' : '인버터1 선택'
                 }`}</div>
                 <SelectDropdown
-                  placeholder="업체 선택"
+                  placeholder="선택되지 않음"
                   listItem={listInverter1.filter(
                     (inverter1) => inverter1.id !== paramsSearch?.inverter?.id
                   )}
@@ -104,7 +104,8 @@ export const FilterSearch = ({
                   option={paramsSearch?.inverter1 || null}
                   noOptionsMessage={() => '옵션 없음'}
                   disabled={
-                    paramsSearch?.inverter1 !== null && activeTab !== ''
+                    (paramsSearch?.inverter1 !== null && activeTab !== '') ||
+                    listInverter1.length === 0
                   }
                 />
               </div>
@@ -121,6 +122,7 @@ export const FilterSearch = ({
                   onChange={(option) => handleChangeSearch(option, 'inverter')}
                   option={paramsSearch?.inverter || null}
                   noOptionsMessage={() => '옵션 없음'}
+                  disabled={listInverter.length === 0}
                 />
               </div>
               <div className="title-label">검색기간</div>

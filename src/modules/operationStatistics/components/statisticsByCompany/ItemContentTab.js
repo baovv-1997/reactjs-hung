@@ -160,7 +160,7 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-      <TitleSubHeader title="실시간 계측정보 통계" />
+      <TitleSubHeader title="이벤트 통계  `" />
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
@@ -227,6 +227,7 @@ const ItemContentTab = ({
           <ButtonDownExcel
             linkDownTable={`operator/event?inverter_id=${tabActive}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}&type=${paramsSearch?.classification}`}
             keyName="solar"
+            text="Raw data 다운"
           />
         </div>
       </div>

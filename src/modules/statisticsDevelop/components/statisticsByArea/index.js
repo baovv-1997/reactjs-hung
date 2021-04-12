@@ -20,6 +20,7 @@ import {
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
+  const { userInfo } = useSelector((state) => state.account);
   const [menuTab, setMenuTab] = useState('');
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
@@ -72,12 +73,17 @@ const OperationStatusPage = () => {
   /**
    * get company list
    */
-  const getListCompanyCallback = useCallback(() => {
-    dispatch(getPosList());
-  }, [dispatch]);
+  const getListCompanyCallback = useCallback(
+    (params) => {
+      dispatch(getPosList(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getListCompanyCallback();
+    getListCompanyCallback({
+      com_id: userInfo?.com_id ? userInfo?.com_id : '',
+    });
   }, [getListCompanyCallback]);
 
   /**
@@ -380,7 +386,7 @@ const OperationStatusPage = () => {
       ...paramsSearch,
       posSelected: posList && posList[1] && posList[1].id,
     });
-  }, []);
+  }, [posList]);
 
   return (
     <>
