@@ -44,7 +44,7 @@ export const FilterSearch = ({
     month: 'yyyy-MM',
     year: 'yyyy',
   };
-  console.log('listInverter1', listInverter1);
+
   return (
     <div className="group-search">
       <div className="table-form">
