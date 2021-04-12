@@ -7,17 +7,17 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
 import { listPaginationType5PerPage } from 'constants/listKey';
 import IMAGES from 'themes/images';
+import FilterSearch from 'commons/components/FilterSearch';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import { LineChart } from 'commons/components/LineChart/lineChart';
+import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 import {
   headTestMockupStatistics,
   headTestMockupStatisticsOfModule,
 } from '../constant';
-import FilterSearch from 'commons/components/FilterSearch';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
-import { LineChart } from 'commons/components/LineChart/lineChart';
-import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 
 type Props = {
   dataTableStatisticsCompany: any,

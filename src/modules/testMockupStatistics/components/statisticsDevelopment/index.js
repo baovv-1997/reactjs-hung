@@ -7,9 +7,9 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
+import Loading from 'commons/components/Loading';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
-import Loading from 'commons/components/Loading';
 
 const OperationStatusPage = () => {
   const { deviceList } = useSelector((state) => state?.commons);
@@ -36,8 +36,8 @@ const OperationStatusPage = () => {
     page: 1,
     page2: 1,
     classification: 'minute',
-    from: new Date(),
-    to: new Date(),
+    from: new Date().setDate(new Date().getDate() - 1),
+    to: new Date().setDate(new Date().getDate() - 1),
     company:
       (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
       null,
@@ -81,35 +81,41 @@ const OperationStatusPage = () => {
     dispatch(CommonAction.getCompanyList());
   }, []);
 
-  let from = null;
-  let to = null;
-  const date = new Date();
+  useEffect(() => {
+    switch (paramsSearch?.classification) {
+      case 'minute':
+        setParamsSearch({
+          ...paramsSearch,
+          from: new Date().setDate(new Date().getDate() - 1),
+          to: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+      case 'hour':
+        setParamsSearch({
+          ...paramsSearch,
+          from: new Date().setDate(new Date().getDate() - 1),
+          to: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+      case 'day':
+        setParamsSearch({
+          ...paramsSearch,
+          from: new Date().setDate(new Date().getDate() - 7),
+          to: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
+      case 'month':
+        setParamsSearch({
+          ...paramsSearch,
+          from: new Date().setDate(new Date().getDate() - 366),
+          to: new Date().setDate(new Date().getDate() - 1),
+        });
+        break;
 
-  switch (paramsSearch?.classification) {
-    case 'month':
-      const dateOfMonth = new Date(paramsSearch?.from);
-      from = paramsSearch?.from
-        ? moment(
-            new Date(dateOfMonth.getFullYear(), dateOfMonth.getMonth(), 1)
-          ).format('YYYY-MM-DD')
-        : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
-            'YYYY-MM-DD'
-          );
-      to = paramsSearch?.to
-        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
-        : moment(new Date(date.getFullYear(), date.getMonth() + 1, 0)).format(
-            'YYYY-MM-DD'
-          );
-      break;
-    default:
-      from = paramsSearch?.from
-        ? moment(paramsSearch?.from).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      to = paramsSearch?.to
-        ? moment(paramsSearch?.to).format('YYYY-MM-DD')
-        : moment(date).format('YYYY-MM-DD');
-      break;
-  }
+      default:
+        break;
+    }
+  }, [paramsSearch?.classification]);
 
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
@@ -140,8 +146,14 @@ const OperationStatusPage = () => {
       handleGetDataTrendChart({
         inverter_id: paramsSearch?.company,
         type: paramsSearch?.classification || null,
-        from,
-        to,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.from).format('YYYY-MM')
+            : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.to).format('YYYY-MM')
+            : moment(paramsSearch?.to).format('YYYY-MM-DD'),
       });
     }
   }, [
@@ -164,8 +176,14 @@ const OperationStatusPage = () => {
       handleGetDataRawTable({
         inverter_id: paramsSearch?.company,
         type: paramsSearch?.classification || null,
-        from,
-        to,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.from).format('YYYY-MM')
+            : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.to).format('YYYY-MM')
+            : moment(paramsSearch?.to).format('YYYY-MM-DD'),
         per_page: paramsSearch?.pagination?.value,
         page: paramsSearch?.page,
       });
@@ -318,8 +336,14 @@ const OperationStatusPage = () => {
               perPage2={paramsSearch?.pagination2?.value}
               dataTableBottom={listDataTableRawMockup || []}
               timeDate={{
-                from,
-                to,
+                from:
+                  paramsSearch?.classification === 'month'
+                    ? moment(paramsSearch?.from).format('YYYY-MM')
+                    : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+                to:
+                  paramsSearch?.classification === 'month'
+                    ? moment(paramsSearch?.to).format('YYYY-MM')
+                    : moment(paramsSearch?.to).format('YYYY-MM-DD'),
               }}
             />
           </div>
