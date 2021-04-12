@@ -27,7 +27,11 @@ export const GroupActionDownload = ({
     />
     <div className="group-btn-download">
       <ButtonDownIMG />
-      <ButtonDownExcel linkDownTable={linkDownTable} keyName="solar" />
+      <ButtonDownExcel
+        linkDownTable={linkDownTable}
+        keyName="solar"
+        text="Sampling Data다운"
+      />
     </div>
   </div>
 );

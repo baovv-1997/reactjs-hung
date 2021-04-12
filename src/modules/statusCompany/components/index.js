@@ -199,7 +199,6 @@ const StatusByAreaCompany = () => {
         });
         break;
       case 'page':
-        console.log('item', item);
         setParamsSearch({
           ...paramsSearch,
           page: item,

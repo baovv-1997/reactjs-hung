@@ -116,7 +116,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
       ...paramsSearch,
       company: comList && comList[1] && comList[1].id,
     });
-  }, []);
+  }, [comList]);
 
   useEffect(() => {
     if (paramsSearch?.company) {

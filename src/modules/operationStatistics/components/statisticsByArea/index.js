@@ -347,7 +347,7 @@ const OperationStatusPage = () => {
       ...paramsSearch,
       posSelected: posList && posList[1] && posList[1].id,
     });
-  }, []);
+  }, [posList]);
 
   return (
     <>

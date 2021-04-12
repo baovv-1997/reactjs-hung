@@ -5,13 +5,13 @@ import Pagination from 'react-js-pagination';
 import LengthChart from 'commons/components/LengthChart';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
+// import Button from 'commons/components/Button';
 import { listPaginationType5PerPage } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
 import LineChart2 from 'commons/components/LineChart/LineChart2';
 
-import { useHistory } from 'react-router-dom';
-import ROUTERS from 'constants/routers';
+// import { useHistory } from 'react-router-dom';
+// import ROUTERS from 'constants/routers';
 import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 import IMAGES from 'themes/images';
 import {
@@ -76,7 +76,7 @@ const ItemContentTab = ({
   chartData,
   id,
 }: Props) => {
-  const history = useHistory();
+  // const history = useHistory();
   const dataLengthChart = [
     {
       id: 1,
@@ -158,7 +158,7 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-      <TitleSubHeader title="실시간 계측정보 통계" />
+      <TitleSubHeader title="이벤트 통계  `" />
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
@@ -225,6 +225,7 @@ const ItemContentTab = ({
           <ButtonDownExcel
             linkDownTable={`operator/event?inverter_id=${tabActive}&com_id=${paramsSearch?.company}&time_to=${dateTime?.to}&time_from=${dateTime?.from}&type=${paramsSearch?.classification}`}
             keyName="solar"
+            text="Raw data 다운"
           />
         </div>
       </div>
@@ -242,11 +243,11 @@ const ItemContentTab = ({
         listOption={operator_event_filter}
         optionDefault={optionFilters}
       />
-      <div className="group-btn-register text-right">
+      {/* <div className="group-btn-register text-right">
         <Button onClick={() => history.push(ROUTERS.EVENT_REGISTER)}>
           등록
         </Button>
-      </div>
+      </div> */}
       <div className="opacity d-block pagination mt-0">
         {totalPage > perPage && (
           <div className="wrapper-device__pagination mt-0">
