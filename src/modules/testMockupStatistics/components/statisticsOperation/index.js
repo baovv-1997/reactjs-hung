@@ -29,6 +29,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
     optionFilters,
     eventList,
     totalEventPage,
+    isProcessingDetail,
   } = useSelector((state) => state?.commons);
   const {
     isProcessing,
@@ -36,6 +37,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
+    isProcessingRaw,
   } = useSelector((state) => state?.testMockupStatistics);
   const { listInverter } = useSelector((state) => state?.account);
   const isLoading = useSelector((state) => state?.commons?.isProcessing);
@@ -336,7 +338,9 @@ const OperationStatusPage = ({ location, history }: Props) => {
 
   return (
     <>
-      {(isProcessing || isLoading) && <Loading />}
+      {(isProcessing || isProcessingRaw || isLoading || isProcessingDetail) && (
+        <Loading />
+      )}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 운영 통계" />
         <div className="content-body page-company">

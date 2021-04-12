@@ -20,6 +20,7 @@ const OperationStatusPage = () => {
     dataBoxOperation,
     totalMockup,
     listDataTableRawMockup,
+    isProcessingRaw,
   } = useSelector((state) => state?.testSolarMonitoringStatus);
 
   const [randomNumber, setRandomNumber] = useState(null);
@@ -223,10 +224,10 @@ const OperationStatusPage = () => {
         break;
     }
   };
-  console.log('sssssssssssssssssss');
+
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 운영 현황" />
         <div className="content-body page-company">

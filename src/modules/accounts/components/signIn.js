@@ -17,7 +17,6 @@ type Props = {
     value: any,
     label: string,
   }>,
-  texTerror: Object,
   listArea: Array<{
     id: number,
     value: any,
@@ -47,7 +46,6 @@ const SignIn = ({
   handleChangeRegister,
   handleChangeOptionCompany,
   listCompany,
-  texTerror,
   listArea,
   listInverter,
   handleRemove,
@@ -130,7 +128,6 @@ const SignIn = ({
                 value={email}
                 onChange={(e) => handleChangeRegister(e.target.value, 'email')}
                 onKeyPress={(e) => handleKeyDown(e)}
-                errorMsg={texTerror && texTerror?.email}
               />
             </div>
           </div>
@@ -149,7 +146,6 @@ const SignIn = ({
                   handleChangeRegister(e.target.value, 'username')
                 }
                 onKeyPress={(e) => handleKeyDown(e)}
-                errorMsg={texTerror && texTerror?.username}
               />
             </div>
           </div>
@@ -171,7 +167,6 @@ const SignIn = ({
                 onPaste={(e) => isOnPasteNumber(e)}
                 value={phone}
                 onChange={(e) => handleChangeRegister(e.target.value, 'phone')}
-                errorMsg={texTerror && texTerror?.phone}
               />
             </div>
           </div>
@@ -188,7 +183,6 @@ const SignIn = ({
                 value={person}
                 onChange={(e) => handleChangeRegister(e.target.value, 'person')}
                 onKeyPress={(e) => handleKeyDown(e)}
-                errorMsg={texTerror && texTerror?.person}
               />
             </div>
           </div>

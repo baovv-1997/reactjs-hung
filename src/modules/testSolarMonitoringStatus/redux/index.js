@@ -5,6 +5,7 @@ const testSolarMonitoringStatusSlide = createSlice({
   name: 'testSolarMonitoringStatus',
   initialState: {
     isProcessing: false,
+    isProcessingRaw: false,
     listDataTableRaw: [],
     total: 0,
     totalMockup: 0,
@@ -47,7 +48,7 @@ const testSolarMonitoringStatusSlide = createSlice({
 
     getDataRawTable: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataRawTableSuccess: (state, action) => {
@@ -76,14 +77,14 @@ const testSolarMonitoringStatusSlide = createSlice({
           performanceRatio: `${item.dm_performance_ratio || 0}%`,
         }));
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = (data && data.total) || 0;
       state.listDataTableRaw = listDataTableRaw;
     },
 
     getDataRawTableFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRaw = [];
     },
@@ -122,7 +123,7 @@ const testSolarMonitoringStatusSlide = createSlice({
 
     getDataRawTableOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataRawTableOperationSuccess: (state, action) => {
@@ -154,14 +155,14 @@ const testSolarMonitoringStatusSlide = createSlice({
             '0Hz',
         }));
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = (data && data.total) || 0;
       state.listDataTableRaw = listDataTableRaw;
     },
 
     getDataRawTableOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRaw = [];
     },
@@ -184,7 +185,7 @@ const testSolarMonitoringStatusSlide = createSlice({
 
     getDataRawTableMockupOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataRawTableMockupOperationSuccess: (state, action) => {
@@ -209,14 +210,14 @@ const testSolarMonitoringStatusSlide = createSlice({
             `${item?.ds_max_power.toLocaleString('en') || 0}W/㎡`, // TODO
         }));
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.totalMockup = (data && data.total) || 0;
       state.listDataTableRawMockup = listDataTableRaw;
     },
 
     getDataRawTableMockupOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.totalMockup = 0;
       state.listDataTableRawMockup = [];
     },

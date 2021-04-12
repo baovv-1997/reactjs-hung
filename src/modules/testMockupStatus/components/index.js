@@ -18,6 +18,7 @@ const StatusByAreaCompany = () => {
     listDataTableRaw,
     total,
     dataChart,
+    isProcessingRaw,
   } = useSelector((state) => state?.testMockupStatus);
   const dispatch = useDispatch();
 
@@ -234,14 +235,20 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(목업) 발전 현황" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listStatusCompanySelect={
+              listInverterTest &&
+              listInverterTest.map((item) => ({
+                id: item?.id,
+                label: item?.company.com_name,
+              }))
+            }
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

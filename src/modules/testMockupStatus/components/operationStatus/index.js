@@ -21,15 +21,20 @@ type Props = {
 
 const OperationStatusPage = ({ location }: Props) => {
   const history = useHistory();
-  const { deviceList, optionFilters, eventList, totalEventPage } = useSelector(
-    (state) => state?.commons
-  );
+  const {
+    deviceList,
+    optionFilters,
+    eventList,
+    totalEventPage,
+    isProcessingDetail,
+  } = useSelector((state) => state?.commons);
   const {
     isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
+    isProcessingRaw,
   } = useSelector((state) => state?.testMockupStatus);
   const [randomNumber, setRandomNumber] = useState(null);
   const listInverterTest =
@@ -259,7 +264,7 @@ const OperationStatusPage = ({ location }: Props) => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessing || isProcessingDetail || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 운영 통계" />
         <div className="content-body page-company">

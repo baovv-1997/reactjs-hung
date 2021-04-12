@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const testMockupStatisticsSlide = createSlice({
   name: 'testMockupStatistics',
   initialState: {
-    isLoading: false,
+    isProcessing: false,
+    isProcessingRaw: false,
     total: 0,
     dataBoxCard: {
       prod_day: 0,
@@ -59,7 +60,7 @@ const testMockupStatisticsSlide = createSlice({
 
     getDataTestMKRawTableGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataTestMKRawTableGeneratorSuccess: (state, action) => {
@@ -88,14 +89,14 @@ const testMockupStatisticsSlide = createSlice({
             item.dm_performance_ratio &&
             `${item.dm_performance_ratio.toLocaleString('en') || 0}%`,
         }));
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = (data && data.total) || 0;
       state.listDataTableRaw = listDataTableRaw;
       state.type = action.type;
     },
     getDataTestMKRawTableGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRaw = [];
     },
@@ -179,7 +180,7 @@ const testMockupStatisticsSlide = createSlice({
     // table bottom
     getDataRawTableMockupStatisticGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataRawTableMockupStatisticGeneratorSuccess: (state, action) => {
@@ -203,14 +204,14 @@ const testMockupStatisticsSlide = createSlice({
             `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`,
         }));
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.totalMockup = (data && data.total) || 0;
       state.listDataTableRawMockup = listDataTableRaw;
     },
 
     getDataRawTableMockupStatisticGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.totalMockup = 0;
       state.listDataTableRawMockup = [];
     },
