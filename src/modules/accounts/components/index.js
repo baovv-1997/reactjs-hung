@@ -9,7 +9,6 @@ import Loading from 'commons/components/Loading';
 import { API } from 'apis';
 import ROUTERS from 'constants/routers';
 import { listType } from 'constants/listKey';
-import { Validator } from '../../../helpers/validator';
 import SignIn from './signIn';
 import * as SignInAction from '../redux';
 
@@ -327,26 +326,6 @@ const SignUp = () => {
   };
 
   const handleRegisterSubmit = () => {
-    let validation = {};
-    const rules = {
-      username: ['required'],
-      email: ['required', 'email'],
-      phone: ['required', 'phoneNumber'],
-      person: ['required'],
-    };
-
-    const dataValidate = {
-      username: dataRegister.username,
-      email,
-      phone,
-      person,
-    };
-    validation = Validator(dataValidate, rules);
-    if (Object.keys(validation).length > 0) {
-      setError(validation);
-      return;
-    }
-
     const checkValidator = listItemDevice.filter(
       (item) =>
         item.type === null || item.company === null || item.inverter === null
@@ -401,6 +380,8 @@ const SignUp = () => {
     );
     setListItemDevice(removedItems);
   };
+
+  console.log(error, 'error');
   return (
     <div className="page-login">
       {isProcessing && <Loading />}
@@ -469,6 +450,7 @@ const SignUp = () => {
       >
         {modalLogin.content}
       </ModalPopup>
+
       <ModalPopup
         isOpen={isShowModalRegister}
         isShowHeader
@@ -487,7 +469,6 @@ const SignUp = () => {
           handleChangeRegister={handleChangeRegister}
           handleChangeOptionCompany={handleChangeOptionCompany}
           listCompany={listCompany}
-          texTerror={error}
           listItemDevice={listItemDevice}
           handleAddListDevice={handleAddListDevice}
           handleRemove={handleRemove}

@@ -7,6 +7,7 @@ import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import LineChart2 from 'commons/components/LineChart/LineChart2';
 import SelectDropdown from 'commons/components/Select';
 import Button from 'commons/components/Button';
+import { useSelector } from 'react-redux';
 import { listPaginationType } from 'constants/listKey';
 import ROUTERS from 'constants/routers';
 import { useHistory } from 'react-router-dom';
@@ -60,7 +61,8 @@ const ItemContentTab = ({
   chartData,
 }: Props) => {
   const history = useHistory();
-
+  const { userInfo } = useSelector((state) => state?.account);
+  const roles = userInfo?.roles[0]?.name || '';
   const dataLengthChart = [
     {
       id: 1,
@@ -220,11 +222,13 @@ const ItemContentTab = ({
         listOption={operator_event_filter}
         optionDefault={optionFilters}
       />
-      <div className="group-btn-register text-right">
-        <Button onClick={() => history.push(`${ROUTERS.EVENT}/register`)}>
-          등록
-        </Button>
-      </div>
+      {(roles === 'admin' || roles === 'company') && (
+        <div className="group-btn-register text-right">
+          <Button onClick={() => history.push(`${ROUTERS.EVENT}/register`)}>
+            등록
+          </Button>
+        </div>
+      )}
       <div className="opacity d-block pagination mt-0">
         {totalPage2 > perPage2 && (
           <div className="wrapper-device__pagination mt-0">

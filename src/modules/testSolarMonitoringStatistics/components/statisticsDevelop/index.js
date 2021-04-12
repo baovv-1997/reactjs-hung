@@ -19,6 +19,7 @@ const OperationStatusPage = () => {
     dataChart,
     listDataTableRaw,
     total,
+    isProcessingRaw,
   } = useSelector((state) => state?.testSMStatisticsGenerator);
 
   const [randomNumber, setRandomNumber] = useState(null);
@@ -252,7 +253,7 @@ const OperationStatusPage = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 발전 통계" />
         <div className="content-body page-company">

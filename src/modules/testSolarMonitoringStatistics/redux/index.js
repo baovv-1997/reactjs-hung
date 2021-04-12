@@ -5,7 +5,8 @@ import { any } from 'prop-types';
 const testSMStatisticsGeneratorSlide = createSlice({
   name: 'testSMStatisticsGenerator',
   initialState: {
-    isLoading: false,
+    isProcessing: false,
+    isProcessingRaw: false,
     total: 0,
     dataBoxCard: {
       prod_day: 0,
@@ -58,7 +59,7 @@ const testSMStatisticsGeneratorSlide = createSlice({
 
     getDataRawTableGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
 
     getDataRawTableGeneratorSuccess: (state, action) => {
@@ -87,14 +88,14 @@ const testSMStatisticsGeneratorSlide = createSlice({
             item.dm_performance_ratio &&
             `${item.dm_performance_ratio.toLocaleString('en') || 0}%`,
         }));
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = (data && data.total) || 0;
       state.listDataTableRaw = listDataTableRaw;
       state.type = action.type;
     },
     getDataRawTableGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRaw = [];
     },
@@ -132,7 +133,7 @@ const testSMStatisticsGeneratorSlide = createSlice({
 
     getDataRawTableOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
     getDataRawTableOperationSuccess: (state, action) => {
       const { data, params } = action;
@@ -171,11 +172,11 @@ const testSMStatisticsGeneratorSlide = createSlice({
       state.total = (data && data.total) || 0;
       state.listDataTableRawOperation = listDataTableRaw;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
     },
     getDataRawTableOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRawOperation = [];
     },

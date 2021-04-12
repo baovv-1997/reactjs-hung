@@ -95,6 +95,24 @@ Props) => {
       text,
     };
   };
+  let visibleAxis3 = false;
+  let positionAxis3 = 'left';
+  if (optionLine?.line1 && optionLine?.line2) {
+    visibleAxis3 = false;
+  }
+  if (optionLine?.line1 && !optionLine?.line2) {
+    visibleAxis3 = true;
+    positionAxis3 = 'right';
+  }
+  if (!optionLine?.line1 && !optionLine?.line2) {
+    visibleAxis3 = true;
+    positionAxis3 = 'left';
+  }
+
+  if (!optionLine?.line1 && optionLine?.line2) {
+    visibleAxis3 = true;
+    positionAxis3 = 'left';
+  }
 
   return (
     <>
@@ -143,6 +161,7 @@ Props) => {
             color="#ff7913"
             width={widthLine}
             name={unitLine3}
+            axis={visibleAxis3 ? 'frequency3' : ''}
           >
             <Point visible={showPoint3} size={10} />
             <Label visible={showLabel3}>
@@ -150,6 +169,7 @@ Props) => {
             </Label>
           </Series>
         )}
+
         <ValueAxis
           title=""
           type="linear"
@@ -168,10 +188,21 @@ Props) => {
           type="linear"
           pane="top"
           minorTickCount={20}
-          // autoBreaksEnabled
           visible={optionLine?.line2}
+          defaultVisualRange={{ startValue: 0, endValue: 150 }}
+        />
+
+        <ValueAxis
+          name="frequency3"
+          tickInterval={20}
+          showZero
+          position={positionAxis3}
+          type="linear"
+          pane="top"
+          minorTickCount={20}
           defaultVisualRange={{ startValue: 0, endValue: 100 }}
         />
+
         <Crosshair enabled color="#949494" width={3} dashStyle="dot">
           <Label visible backgroundColor="#000000" />
           <VerticalLine visible />
@@ -207,6 +238,15 @@ Props) => {
         <div className="unit-chart">
           {optionLine?.line1 && <div className="unit-left">{unitLeft}</div>}
           {optionLine?.line2 && <div className="unit-right">{unitRight}</div>}
+          {visibleAxis3 && (
+            <div
+              className={`${
+                positionAxis3 === 'right' ? 'unit-right' : 'unit-left'
+              }`}
+            >
+              {unitLine3}
+            </div>
+          )}
         </div>
       )}
     </>

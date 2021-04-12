@@ -209,7 +209,7 @@ const ItemContentTab = ({
               dateTime: moment(event?.created_at).format('YYYY-MM-DD hh:mm:ss'),
               comName: event?.com_name,
               inverterID: event?.ds_id,
-              inverterName: event?.ds_name,
+              eventName: event?.evt_type_label,
               contents: event?.evt_content,
             }))) ||
           []

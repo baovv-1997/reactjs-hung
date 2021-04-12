@@ -35,7 +35,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   const [menuTab, setMenuTab] = useState('');
   const {
     comList,
-    // isProcessing,
+    isProcessingDetail,
     deviceList,
     optionFilters,
     eventList,
@@ -441,7 +441,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessing || isProcessingDetail) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 운영 현황" />
         <div className="content-body page-company">

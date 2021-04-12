@@ -18,6 +18,7 @@ const StatusByAreaCompany = () => {
     listDataTableRaw,
     total,
     dataChart,
+    isProcessingRaw,
   } = useSelector((state) => state?.testSolarMonitoringStatus);
   const { companyId } = useSelector((state) => state?.solarDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
@@ -217,7 +218,7 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 발전 현황" />
         <div className="content-body page-company">
