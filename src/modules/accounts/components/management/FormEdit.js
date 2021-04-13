@@ -40,6 +40,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [devices, setDevices] = useState([]);
+  const [comSelected, setComSelected] = useState({});
 
   const [inputValue, setInputValue] = useState({
     name: accountDetail?.name,
@@ -61,8 +62,22 @@ const FormDetail = ({ accountDetail, history }: Props) => {
 
   useEffect(() => {
     dispatch(getListCompany());
-    // dispatch(getListPosition());
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      getListPosition({
+        com_id:
+          accountDetail &&
+          accountDetail?.devices &&
+          accountDetail?.devices[0] &&
+          accountDetail?.devices[0].com_id
+            ? accountDetail?.devices[0].com_id
+            : '',
+      })
+    );
+  }, []);
+
   // handle select change
   const handleSelectChange = (option, name, id) => {
     const listDeviceUpdate =
@@ -95,9 +110,19 @@ const FormDetail = ({ accountDetail, history }: Props) => {
       />
     ));
 
+  const getCompanySelected = (com) => {
+    setComSelected(com);
+    const deviceUpdate = devices.map((item) => ({
+      ...item,
+      company: com,
+    }));
+
+    setDevices(deviceUpdate);
+  };
+
   const handleAddNewDevice = () => {
     const initDevice = {
-      company: null,
+      company: comSelected,
 
       inverter: null,
       position: null,
@@ -114,7 +139,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
 
   const renderListDeviceMaintain =
     devices &&
-    devices.map((item) => {
+    devices.map((item, index) => {
       return (
         <DeviceMaintain
           posOptionList={posOptionList}
@@ -123,6 +148,9 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           listInverter={devices}
           itemDevice={item}
           handleRemove={handleRemoveDevice}
+          getCompanySelected={getCompanySelected}
+          index={index}
+          comSelected={comSelected}
         />
       );
     });
