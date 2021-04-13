@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 
 const IMAGES = {
-  iconGraph: require('assets/images/icon_graph.png'),
+  iconGraph: require('assets/images/icon_graph.svg'),
   icon_close: require('assets/images/icon_closed.svg'),
-  mockUp: require('assets/images/m_icon_02.png'),
+  mockUp: require('assets/images/m_icon_02.svg'),
   icon_radio_on: require('assets/images/icon_radio_on.svg'),
   icon_next: require('assets/images/icon_arrow_list_r.svg'),
   icon_power: require('assets/images/icon_label/icon_power.svg'),
@@ -11,7 +11,7 @@ const IMAGES = {
   icon_insolation: require('assets/images/icon_label/icon_insolation.svg'),
   icon_event: require('assets/images/icon-event.png'),
   icon_search: require('assets/images/icon-search.png'),
-  setup: require('assets/images/setup.png'),
+  setup: require('assets/images/setup.svg'),
   iconTitle: require('assets/images/icon_title.svg'),
   icon_title: require('assets/images/icon_main/icon_title.png'),
   icon_day: require('assets/images/icon_main/icon_day.png'),

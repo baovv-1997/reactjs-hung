@@ -14,6 +14,8 @@ import {
   getCardMeasureSearchCompany,
   getTotalMetric,
 } from 'modules/main/redux';
+// import { fixedPointX } from 'helpers';
+// import { mockDataMainCompany } from 'mockData/mainData';
 import { Card } from 'commons/components/Card';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
