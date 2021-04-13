@@ -120,7 +120,8 @@ const EventDetail = ({ match, location }: Props) => {
           </div>
         </div>
         <div className="group-btn-delete text-right mb-4">
-          {(roleName === 'admin' || roleName === 'company') && (
+          {((roleName === 'admin' && eventList?.evt_type !== '0') ||
+            (roleName === 'company' && eventList?.evt_type !== '0')) && (
             <Button
               onClick={() =>
                 setModalConfirm({
@@ -135,7 +136,8 @@ const EventDetail = ({ match, location }: Props) => {
           )}
         </div>
         <div className="group-btn-bottom">
-          {(roleName === 'admin' || roleName === 'company') && (
+          {((roleName === 'admin' && eventList?.evt_type !== '0') ||
+            (roleName === 'company' && eventList?.evt_type !== '0')) && (
             <Button
               onClick={() =>
                 history.push({
@@ -147,12 +149,16 @@ const EventDetail = ({ match, location }: Props) => {
               수정
             </Button>
           )}
-          <Button onClick={() => history.push(location?.state?.prevRoute)}>
+          <Button
+            onClick={() =>
+              history.push(location?.state?.prevRoute) ||
+              history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)
+            }
+          >
             목록
           </Button>
         </div>
       </div>
-
       <ModalPopup
         isOpen={modalConform.isShow}
         isShowHeader

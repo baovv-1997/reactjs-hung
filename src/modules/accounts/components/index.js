@@ -69,10 +69,7 @@ const SignUp = () => {
     Object.values(errorMsg).map((item, index) => {
       return (
         <ul className="error-list" key={index}>
-          <li>
-            <span className="text-danger top-2 mr-1">*</span>
-            {item && item[0]}
-          </li>
+          <li>{item && item[0]}</li>
         </ul>
       );
     });
@@ -252,14 +249,12 @@ const SignUp = () => {
       };
     });
     const listItemCompany = listItemDevice.map((item) => {
-      return item.idx === itemChange?.idx
-        ? {
-            ...item,
-            area: null,
-            company: (name === 'company' ? option : item.company) || null,
-            inverter: null,
-          }
-        : item;
+      return {
+        ...item,
+        area: null,
+        company: (name === 'company' ? option : item.company) || null,
+        inverter: null,
+      };
     });
 
     const listItemArea = listItemDevice.map((item) => {
@@ -363,7 +358,8 @@ const SignUp = () => {
       ...listItemDevice,
       {
         idx: Math.random(),
-        company: null,
+        company:
+          listItemDevice && listItemDevice[0] && listItemDevice[0].company,
         area: null,
         type:
           (listItemDevice && listItemDevice[0] && listItemDevice[0].type) ||
@@ -381,7 +377,6 @@ const SignUp = () => {
     setListItemDevice(removedItems);
   };
 
-  console.log(error, 'error');
   return (
     <div className="page-login">
       {isProcessing && <Loading />}

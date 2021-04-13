@@ -10,12 +10,14 @@ type Props = {
   paramsSearch: Object,
   handleChangeSearch: Function,
   linkDownTable: string,
+  text: string,
 };
 
 export const GroupActionDownload = ({
   paramsSearch,
   handleChangeSearch,
   linkDownTable,
+  text,
 }: Props) => (
   <div className="group-option-table d-flex  justify-content-between">
     <SelectDropdown
@@ -27,7 +29,11 @@ export const GroupActionDownload = ({
     />
     <div className="group-btn-download">
       <ButtonDownIMG />
-      <ButtonDownExcel linkDownTable={linkDownTable} keyName="test_mockup" />
+      <ButtonDownExcel
+        linkDownTable={linkDownTable}
+        keyName="test_mockup"
+        text={text}
+      />
     </div>
   </div>
 );

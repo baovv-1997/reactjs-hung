@@ -279,3 +279,33 @@ export const checkIsNumber = (field) => {
   }
   return classTd;
 };
+
+export const fixedPointX = (listCard) => {
+  let differenceX = listCard[0]?.position?.pos_map_x;
+  let position = 0;
+
+  for (let i = 1; i < listCard.length; i++) {
+    differenceX -= listCard[i].position?.pos_map_x;
+  }
+
+  if (Math.abs(differenceX) / 2 < 150) {
+    position = 150 - Math.abs(differenceX) / 2;
+  }
+
+  return position;
+};
+
+export const fixedPointY = (listCard) => {
+  let differenceY = listCard[0]?.position?.pos_map_y;
+  let position = 0;
+
+  for (let i = 1; i < listCard.length; i++) {
+    differenceY -= listCard[i].position?.pos_map_y;
+  }
+
+  if (Math.abs(differenceY) / 2 < 142) {
+    position = 142 - Math.abs(differenceY) / 2;
+  }
+
+  return position;
+};

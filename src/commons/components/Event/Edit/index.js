@@ -12,6 +12,7 @@ import Radio from 'commons/components/Radio';
 import Button from 'commons/components/Button';
 import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
+import * as EventAction from 'commons/redux';
 import { useHistory } from 'react-router-dom';
 import { getEventList, updateEvent } from 'commons/redux';
 
@@ -31,16 +32,19 @@ type Props = {
 const EditEvent = ({ match, location }: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { listCompany, listArea, listInverter } = useSelector(
-    (state) => state?.account
-  );
-  const { eventList, type, isProcessingDetail, deviceList } = useSelector(
-    (state) => state.commons
-  );
+  const {
+    type,
+    deviceList,
+    comList,
+    posList,
+    isProcessingDetail,
+    eventList,
+  } = useSelector((state) => state?.commons);
 
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
-
+  const listInverterSolar =
+    (deviceList && deviceList.filter((item) => item.ds_type === '0')) || [];
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -60,9 +64,28 @@ const EditEvent = ({ match, location }: Props) => {
   });
 
   useEffect(() => {
-    dispatch(SignInAction.getListCompany());
+    dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      EventAction.getListDevice({
+        per_page: 999999,
+        com_id: dataSubmit?.company?.value,
+        pos_id: dataSubmit?.area?.value,
+      })
+    );
+  }, [dataSubmit?.company, dataSubmit?.area]);
+
+  useEffect(() => {
+    dispatch(
+      EventAction.getPosList({
+        per_page: 99999999,
+        com_id: dataSubmit?.company?.value,
+      })
+    );
+  }, [dataSubmit?.company]);
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
   const { id } = match.params;
@@ -131,19 +154,6 @@ const EditEvent = ({ match, location }: Props) => {
           inverter: null,
           area: null,
         });
-
-        dispatch(
-          SignInAction.getListArea({
-            per_page: 99999999,
-            com_id: dataSubmit?.company?.value,
-          })
-        );
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 99999,
-            com_id: value && value.value,
-          })
-        );
         break;
       case 'area':
         setDataSubmit({
@@ -151,13 +161,6 @@ const EditEvent = ({ match, location }: Props) => {
           area: value,
           inverter: null,
         });
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 999999,
-            com_id: company && company.value,
-            pos_id: value && value.value,
-          })
-        );
         break;
       case 'inverter':
         setDataSubmit({
@@ -212,25 +215,27 @@ const EditEvent = ({ match, location }: Props) => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '0',
+                      typeEvent: '1',
                     })
                   }
-                  isChecked={typeEvent === '0'}
+                  isChecked={typeEvent === '1'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
+                  disabled={typeEvent === '0'}
                 />
                 <Radio
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '1',
+                      typeEvent: '2',
                     })
                   }
-                  isChecked={typeEvent === '1'}
+                  isChecked={typeEvent === '2'}
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"
+                  disabled={typeEvent === '0'}
                 />
               </div>
             </div>
@@ -244,10 +249,11 @@ const EditEvent = ({ match, location }: Props) => {
                     <div className="group-item">
                       <SelectDropdown
                         placeholder="업체 선택"
-                        listItem={listCompany}
+                        listItem={(comList && comList.slice(1)) || []}
                         onChange={(option) => handleChange(option, 'company')}
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
+                        disabled={typeEvent === '0'}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -256,10 +262,11 @@ const EditEvent = ({ match, location }: Props) => {
                     <div className="group-item">
                       <SelectDropdown
                         placeholder="구역 선택"
-                        listItem={listArea}
+                        listItem={(posList && posList.slice()) || []}
                         onChange={(option) => handleChange(option, 'area')}
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
+                        disabled={typeEvent === '0'}
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -269,13 +276,14 @@ const EditEvent = ({ match, location }: Props) => {
                     <SelectDropdown
                       placeholder="구역 선택"
                       listItem={
-                        eventList?.ds_type !== '3'
-                          ? listInverter
-                          : listInverterTest
+                        eventList?.ds_type === '3'
+                          ? listInverterTest
+                          : (area && listInverterSolar) || []
                       }
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
+                      disabled={typeEvent === '0'}
                     />
                   </div>
                 </div>
@@ -292,6 +300,7 @@ const EditEvent = ({ match, location }: Props) => {
                 maxLength="5000"
                 className="form-control"
                 value={content}
+                disabled={typeEvent === '0'}
                 onChange={(e) => handleChange(e.target.value, 'content')}
               />
             </div>

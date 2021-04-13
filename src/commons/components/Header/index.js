@@ -77,14 +77,16 @@ const Header = ({ location }: Props) => {
     <div className="header">
       <div className="header__left"> </div>
       <div className="header__right">
-        <div className="header__event">
+        <div
+          className="header__event"
+          onClick={() => setIsShow(!isShow)}
+          role="presentation"
+          ref={iconRef}
+        >
           <img
             src={images.icon_event}
             alt="Icon Event"
             className="header__icon"
-            onClick={() => setIsShow(!isShow)}
-            role="presentation"
-            ref={iconRef}
           />
           {notifications.length > 0 ? (
             <span className="header__notification">{notifications.length}</span>

@@ -252,4 +252,103 @@ const mockDataArea = [
   },
 ];
 
-export { mockDataMain, mockLocationArea, mockDataArea };
+const mockDataMainCompany = [
+  {
+    card: {
+      prod_realtime: 10,
+      prod_today: 492,
+      prod_inmonth: 336,
+      performance_ratio: 81,
+      prod_sum: 312,
+      event: null,
+      output_voltage: 4004,
+      output_current: 313,
+      radiance: 22,
+      temperature: 32,
+    },
+    position: {
+      id: 4,
+      pos_name: '발전동 서측',
+      pos_sort: 4,
+      pos_state: '1',
+      pos_map_bg: 'map_4.png',
+      pos_map_x: 831,
+      pos_map_y: 371,
+      created_at: '2021-03-21T19:39:13.000000Z',
+      updated_at: '2021-03-21T19:39:13.000000Z',
+      deleted_at: null,
+      pos_map_path: {
+        original: 'http://52.220.208.178:8081/storage/position/original',
+        thumbnail: 'http://52.220.208.178:8081/storage/position/thumbnail',
+      },
+    },
+    company: [
+      {
+        id: 2,
+        com_name: '에스지에너지',
+        com_logo: 'logo_2.png',
+        com_sort: 2,
+        com_state: '1',
+        updated_at: '2021-03-21T19:39:13.000000Z',
+        created_at: '2021-03-21T19:39:13.000000Z',
+        deleted_at: null,
+        com_logo_path: {
+          original:
+            'http://52.220.208.178:8081/storage/company/original/logo_2.png',
+          thumbnail:
+            'http://52.220.208.178:8081/storage/company/thumbnail/logo_2.png',
+        },
+      },
+    ],
+  },
+  {
+    card: {
+      prod_realtime: 10,
+      prod_today: 417,
+      prod_inmonth: 331,
+      performance_ratio: 85,
+      prod_sum: 409,
+      event: null,
+      output_voltage: 4004,
+      output_current: 313,
+      radiance: 22,
+      temperature: 32,
+    },
+    position: {
+      id: 1,
+      pos_name: '본관 남측',
+      pos_sort: 1,
+      pos_state: '1',
+      pos_map_bg: 'map_1.png',
+      pos_map_x: 646,
+      pos_map_y: 575,
+      created_at: '2021-03-21T19:39:13.000000Z',
+      updated_at: '2021-03-21T19:39:13.000000Z',
+      deleted_at: null,
+      pos_map_path: {
+        original: 'http://52.220.208.178:8081/storage/position/original',
+        thumbnail: 'http://52.220.208.178:8081/storage/position/thumbnail',
+      },
+    },
+    company: [
+      {
+        id: 2,
+        com_name: '에스지에너지',
+        com_logo: 'logo_2.png',
+        com_sort: 2,
+        com_state: '1',
+        updated_at: '2021-03-21T19:39:13.000000Z',
+        created_at: '2021-03-21T19:39:13.000000Z',
+        deleted_at: null,
+        com_logo_path: {
+          original:
+            'http://52.220.208.178:8081/storage/company/original/logo_2.png',
+          thumbnail:
+            'http://52.220.208.178:8081/storage/company/thumbnail/logo_2.png',
+        },
+      },
+    ],
+  },
+];
+
+export { mockDataMain, mockLocationArea, mockDataArea, mockDataMainCompany };

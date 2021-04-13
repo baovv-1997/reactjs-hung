@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loading from 'commons/components/Loading';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
@@ -12,6 +11,7 @@ import Radio from 'commons/components/Radio';
 import Button from 'commons/components/Button';
 import { Validator } from 'helpers/validator';
 import * as SignInAction from 'modules/accounts/redux';
+import * as EventAction from 'commons/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import { addNewEvent } from 'commons/redux';
@@ -30,15 +30,14 @@ const EventRegister = ({ location }: Props) => {
   const stateTypeEvent = location?.state && location?.state.typeEvent;
   const history = useHistory();
   const dispatch = useDispatch();
-  const { listCompany, listArea, listInverter } = useSelector(
-    (state) => state?.account
-  );
 
-  const { isProcessing, type, deviceList } = useSelector(
+  const { type, deviceList, comList, posList } = useSelector(
     (state) => state.commons
   );
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
+  const listInverterSolar =
+    (deviceList && deviceList.filter((item) => item.ds_type === '0')) || [];
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -50,7 +49,7 @@ const EventRegister = ({ location }: Props) => {
   });
 
   const [dataSubmit, setDataSubmit] = useState({
-    typeEvent: '0',
+    typeEvent: '1',
     content: '',
     company: null,
     area: null,
@@ -58,28 +57,19 @@ const EventRegister = ({ location }: Props) => {
   });
 
   useEffect(() => {
-    dispatch(SignInAction.getListCompany());
+    dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     dispatch(
-      SignInAction.getListInverter({
-        per_page: 100,
+      EventAction.getListDevice({
+        per_page: 999999,
         com_id: dataSubmit?.company?.value,
         pos_id: dataSubmit?.area?.value,
       })
     );
   }, [dataSubmit?.company, dataSubmit?.area]);
-
-  useEffect(() => {
-    dispatch(
-      SignInAction.getListArea({
-        per_page: 99999999,
-        com_id: dataSubmit?.company?.value,
-      })
-    );
-  }, [dataSubmit?.company]);
 
   useEffect(() => {
     switch (type) {
@@ -139,6 +129,12 @@ const EventRegister = ({ location }: Props) => {
           inverter: null,
           area: null,
         });
+        dispatch(
+          EventAction.getPosList({
+            per_page: 99999999,
+            com_id: value?.id,
+          })
+        );
         break;
       case 'area':
         setDataSubmit({
@@ -146,6 +142,7 @@ const EventRegister = ({ location }: Props) => {
           area: value,
           inverter: null,
         });
+
         break;
       case 'inverter':
         setDataSubmit({
@@ -182,9 +179,9 @@ const EventRegister = ({ location }: Props) => {
 
     return title;
   };
+
   return (
     <>
-      {isProcessing && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title={renderTitle()}
@@ -200,10 +197,10 @@ const EventRegister = ({ location }: Props) => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '0',
+                      typeEvent: '1',
                     })
                   }
-                  isChecked={typeEvent === '0'}
+                  isChecked={typeEvent === '1'}
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
@@ -212,10 +209,10 @@ const EventRegister = ({ location }: Props) => {
                   onChange={() =>
                     setDataSubmit({
                       ...dataSubmit,
-                      typeEvent: '1',
+                      typeEvent: '2',
                     })
                   }
-                  isChecked={typeEvent === '1'}
+                  isChecked={typeEvent === '2'}
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"
@@ -232,7 +229,7 @@ const EventRegister = ({ location }: Props) => {
                     <div className="group-item">
                       <SelectDropdown
                         placeholder="업체 선택"
-                        listItem={listCompany}
+                        listItem={(comList && comList.slice(1)) || []}
                         onChange={(option) => handleChange(option, 'company')}
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
@@ -244,7 +241,7 @@ const EventRegister = ({ location }: Props) => {
                     <div className="group-item">
                       <SelectDropdown
                         placeholder="구역 선택"
-                        listItem={listArea}
+                        listItem={(posList && posList.slice(1)) || []}
                         onChange={(option) => handleChange(option, 'area')}
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
@@ -258,7 +255,7 @@ const EventRegister = ({ location }: Props) => {
                       listItem={
                         stateTypeEvent === 'mockup'
                           ? listInverterTest
-                          : listInverter
+                          : (area && listInverterSolar) || []
                       }
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
