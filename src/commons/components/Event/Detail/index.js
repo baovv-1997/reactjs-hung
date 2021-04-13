@@ -48,6 +48,8 @@ const EventDetail = ({ match, location }: Props) => {
     userInfo.roles[0] &&
     userInfo.roles[0] &&
     userInfo.roles[0].name;
+
+  const userId = userInfo && userInfo?.id;
   const { id } = match.params;
 
   useEffect(() => {
@@ -121,7 +123,9 @@ const EventDetail = ({ match, location }: Props) => {
         </div>
         <div className="group-btn-delete text-right mb-4">
           {((roleName === 'admin' && eventList?.evt_type !== '0') ||
-            (roleName === 'company' && eventList?.evt_type !== '0')) && (
+            (roleName === 'company' &&
+              userId === eventList?.user_id &&
+              eventList?.evt_type !== '0')) && (
             <Button
               onClick={() =>
                 setModalConfirm({
@@ -137,7 +141,9 @@ const EventDetail = ({ match, location }: Props) => {
         </div>
         <div className="group-btn-bottom">
           {((roleName === 'admin' && eventList?.evt_type !== '0') ||
-            (roleName === 'company' && eventList?.evt_type !== '0')) && (
+            (roleName === 'company' &&
+              userId === eventList?.user_id &&
+              eventList?.evt_type !== '0')) && (
             <Button
               onClick={() =>
                 history.push({

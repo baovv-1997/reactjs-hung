@@ -28,7 +28,6 @@ type Props = {
 };
 
 const FormDetail = ({ accountDetail, history }: Props) => {
-  console.log(accountDetail, 'accountDetail');
   const dispatch = useDispatch();
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
@@ -62,6 +61,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
 
   useEffect(() => {
     dispatch(getListCompany());
+    // dispatch(getListPosition());
   }, []);
 
   useEffect(() => {

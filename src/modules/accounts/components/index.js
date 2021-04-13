@@ -376,7 +376,7 @@ const SignUp = () => {
     );
     setListItemDevice(removedItems);
   };
-
+  console.log(dataRegister, 'dataRegister');
   return (
     <div className="page-login">
       {isProcessing && <Loading />}
@@ -452,7 +452,10 @@ const SignUp = () => {
         size="lg"
         title="실증단지 계정 등록 양식"
         isShowIconClose
-        handleCloseIcon={() => setIsShowModalRegister(false)}
+        handleCloseIcon={() => {
+          setIsShowModalRegister(false);
+          setDataRegister(dataRegisterDefault);
+        }}
         isShowFooter
         isProcessing={isProcessing}
         handleClose={() => handleRegisterSubmit()}
@@ -484,7 +487,7 @@ const SignUp = () => {
           setIsModalRegisterSuccess(false);
           setIsShowModalRegister(false);
           setListItemDevice([itemDeviceDefault]);
-          setDataRegister([dataRegisterDefault]);
+          setDataRegister(dataRegisterDefault);
         }}
         handleClose={() => {
           setIsModalRegisterSuccess(false);
