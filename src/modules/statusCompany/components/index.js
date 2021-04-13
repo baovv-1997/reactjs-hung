@@ -23,14 +23,16 @@ const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
 
   const { comList, deviceList } = useSelector((state) => state?.commons);
-
+  const isProcessingCommons = useSelector(
+    (state) => state?.commons?.isProcessing
+  );
   const {
     totalRawData,
     rawData,
     cardInfo,
     chartData,
     isProcessing,
-  } = useSelector((state) => state.statusCompany);
+  } = useSelector((state) => state?.statusCompany);
   const { companyId } = useSelector((state) => state?.main);
 
   const defaultOption = {
@@ -224,7 +226,7 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessing || isProcessingCommons) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
@@ -253,7 +255,7 @@ const StatusByAreaCompany = () => {
                       title={
                         <div className="tab-name">
                           {device?.label === '전체'
-                            ? `전체(${paramsSearch?.comName})`
+                            ? `전체(${paramsSearch?.comName || ''})`
                             : device?.id}
                           {device?.label !== '전체' && (
                             <span>{device?.position?.pos_name}</span>
