@@ -33,6 +33,8 @@ type Props = {
   },
   handleChange: Function,
   handleRemove: Function,
+  getCompanySelected: Function,
+  index: Number,
 };
 const DeviceMaintain = ({
   listCompany,
@@ -40,6 +42,8 @@ const DeviceMaintain = ({
   itemDevice,
   handleChange,
   handleRemove,
+  getCompanySelected,
+  index,
 }: Props) => {
   const dispatch = useDispatch();
   const deviceList = useSelector((state) => state?.device?.deviceList);
@@ -56,6 +60,7 @@ const DeviceMaintain = ({
         pos_id: positionSelected?.value,
       })
     );
+    getCompanySelected(companySelected);
   }, [companySelected, positionSelected]);
 
   return (
@@ -70,7 +75,9 @@ const DeviceMaintain = ({
           onChange={(option) => {
             handleChange(option, 'company', itemDevice.id);
             setCompanySelected(option);
+            getCompanySelected(itemDevice?.company);
           }}
+          disabled={index !== 0}
         />
         <img src={images.icon_next} alt="" className="mx-2" />
       </div>
