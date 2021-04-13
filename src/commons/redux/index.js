@@ -68,6 +68,7 @@ const commonSilice = createSlice({
         ...pos,
         id: pos.id,
         label: pos.pos_name,
+        value: pos.id,
       }));
       state.type = action.type;
       state.isProcessing = false;
