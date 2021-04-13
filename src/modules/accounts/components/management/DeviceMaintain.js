@@ -35,6 +35,7 @@ type Props = {
   handleRemove: Function,
   getCompanySelected: Function,
   index: Number,
+  currentOption: string,
 };
 const DeviceMaintain = ({
   listCompany,
@@ -44,6 +45,7 @@ const DeviceMaintain = ({
   handleRemove,
   getCompanySelected,
   index,
+  currentOption,
 }: Props) => {
   const dispatch = useDispatch();
   const deviceList = useSelector((state) => state?.device?.deviceList);
@@ -77,7 +79,7 @@ const DeviceMaintain = ({
             setCompanySelected(option);
             getCompanySelected(itemDevice?.company);
           }}
-          disabled={index !== 0}
+          disabled={index !== 0 || currentOption !== 'company'}
         />
         <img src={images.icon_next} alt="" className="mx-2" />
       </div>
@@ -92,6 +94,7 @@ const DeviceMaintain = ({
             setPositionSelected(option);
             handleChange(option, 'position', itemDevice.id);
           }}
+          disabled={currentOption !== 'company'}
         />
         <img src={images.icon_next} alt="" className="mx-2" />
       </div>
@@ -109,6 +112,7 @@ const DeviceMaintain = ({
           noOptionsMessage={() => '옵션 없음'}
           onChange={(option) => handleChange(option, 'inverter', itemDevice.id)}
           className="cus-select"
+          disabled={currentOption !== 'company'}
         />
       </div>
       <Button

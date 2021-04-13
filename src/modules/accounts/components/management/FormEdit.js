@@ -151,6 +151,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           getCompanySelected={getCompanySelected}
           index={index}
           comSelected={comSelected}
+          currentOption={currentOption}
         />
       );
     });
@@ -221,6 +222,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     }
   }, []);
 
+  console.log('currentOption', currentOption);
   return (
     <div>
       <div className="table">
@@ -301,6 +303,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
               <Button
                 onClick={handleAddNewDevice}
                 customClass="btn-add-device mb-2"
+                isDisabled={currentOption !== 'company'}
               >
                 추가
               </Button>
