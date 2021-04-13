@@ -217,7 +217,11 @@ const StatusByAreaCompany = () => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch({ ...defaultSearch, company: paramsSearch?.company });
+    setParamsSearch({
+      ...defaultSearch,
+      company: paramsSearch?.company,
+      comName: paramsSearch?.comName,
+    });
   };
 
   const deviceWithtype0 =
@@ -255,11 +259,14 @@ const StatusByAreaCompany = () => {
                       title={
                         <div className="tab-name">
                           {device?.label === '전체'
-                            ? `전체(${paramsSearch?.comName || ''})`
+                            ? paramsSearch?.comName
                             : device?.id}
-                          {device?.label !== '전체' && (
-                            <span>{device?.position?.pos_name}</span>
-                          )}
+
+                          <span>
+                            {device?.label === '전체'
+                              ? '전체'
+                              : device?.position?.pos_name}
+                          </span>
                         </div>
                       }
                       key={device.id}

@@ -153,7 +153,8 @@ const OperationStatusPage = () => {
       case 'statusCompany':
         setParamsSearch({
           ...defaultSearch,
-          company: item.id,
+          posSelected: item.id,
+          posName: item.pos_name,
         });
         break;
       case 'mockupType':
@@ -280,6 +281,7 @@ const OperationStatusPage = () => {
       ...defaultSearch,
       inverter1: inverter1Selected,
       posSelected: paramsSearch?.posSelected,
+      posName: paramsSearch?.posName,
     });
   };
 
@@ -415,8 +417,10 @@ const OperationStatusPage = () => {
                       title={
                         <div className="tab-name">
                           {com?.label === '전체'
-                            ? `전체(${paramsSearch?.posName})`
+                            ? paramsSearch?.posName
                             : com?.label}
+
+                          {com?.label === '전체' && <span>전체</span>}
                         </div>
                       }
                     >

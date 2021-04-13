@@ -138,6 +138,7 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...defaultSearch,
           posSelected: item.id,
+          posName: item.pos_name,
         });
         setMenuTab(1);
         break;
@@ -206,6 +207,7 @@ const OperationStatusPage = () => {
     setParamsSearch({
       ...defaultSearch,
       posSelected: paramsSearch?.posSelected,
+      posName: paramsSearch?.posName,
     });
   };
 
@@ -243,8 +245,10 @@ const OperationStatusPage = () => {
                     title={
                       <div className="tab-name">
                         {item?.label === '전체'
-                          ? `전체(${paramsSearch?.posName})`
+                          ? paramsSearch?.posName
                           : item?.label}
+
+                        {item?.label === '전체' && <span>전체</span>}
                       </div>
                     }
                   >
