@@ -217,6 +217,7 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
+          page: 1,
         });
         break;
 

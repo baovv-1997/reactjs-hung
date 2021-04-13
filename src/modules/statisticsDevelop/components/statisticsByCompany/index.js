@@ -229,12 +229,14 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
+          page: 1
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
+          page2: 1
         });
         break;
       case 'inverter':
