@@ -18,7 +18,7 @@ export const BoxGroup = ({ dataBoxContent }: Props) => (
     />
     <LabelStatusV3
       nameStatus={dataBoxContent?.month}
-      unit="kWh"
+      unit="MWh"
       title="금월 발전량"
       keyStatus={2}
       color="#fe5e6a"
