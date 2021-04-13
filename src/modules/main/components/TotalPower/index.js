@@ -33,7 +33,7 @@ export const TotalPower = ({
           name="금월 발전량"
           value={amountElectricMonth}
           customClass="bg-color-month"
-          unit="kWh"
+          unit="MWh"
         />
         <TotalPowerItem
           icon={images.icon_plus}
