@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loading from 'commons/components/LineChart';
+import Loading from 'commons/components/Loading';
 import TitleHeader from 'commons/components/TitleHeader';
 import TitleSubHeader from 'commons/components/TitleHeader/titleSub';
 import SelectDropdown from 'commons/components/Select';
@@ -40,7 +40,14 @@ const EditEvent = ({ match, location }: Props) => {
     isProcessingDetail,
     eventList,
   } = useSelector((state) => state?.commons);
-
+  const userInfo = useSelector((state) => state?.account?.userInfo);
+  const userId = userInfo && userInfo?.id;
+  const roleName =
+    userInfo &&
+    userInfo.roles &&
+    userInfo.roles[0] &&
+    userInfo.roles[0] &&
+    userInfo.roles[0].name;
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
   const listInverterSolar =
@@ -222,7 +229,12 @@ const EditEvent = ({ match, location }: Props) => {
                   name="typeEvent"
                   labelRadio="설비 이력"
                   id="event"
-                  disabled={typeEvent === '0'}
+                  disabled={
+                    (roleName !== 'admin' && eventList?.evt_type === '0') ||
+                    (roleName !== 'company' &&
+                      userId !== eventList?.user_id &&
+                      eventList?.evt_type === '0')
+                  }
                 />
                 <Radio
                   onChange={() =>
@@ -235,7 +247,12 @@ const EditEvent = ({ match, location }: Props) => {
                   labelRadio="보수 이력"
                   name="typeEvent"
                   id="history"
-                  disabled={typeEvent === '0'}
+                  disabled={
+                    (roleName !== 'admin' && eventList?.evt_type === '0') ||
+                    (roleName !== 'company' &&
+                      userId !== eventList?.user_id &&
+                      eventList?.evt_type === '0')
+                  }
                 />
               </div>
             </div>
@@ -253,7 +270,13 @@ const EditEvent = ({ match, location }: Props) => {
                         onChange={(option) => handleChange(option, 'company')}
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
-                        disabled={typeEvent === '0'}
+                        disabled={
+                          (roleName !== 'admin' &&
+                            eventList?.evt_type === '0') ||
+                          (roleName !== 'company' &&
+                            userId !== eventList?.user_id &&
+                            eventList?.evt_type === '0')
+                        }
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -262,11 +285,17 @@ const EditEvent = ({ match, location }: Props) => {
                     <div className="group-item">
                       <SelectDropdown
                         placeholder="구역 선택"
-                        listItem={(posList && posList.slice()) || []}
+                        listItem={(posList && posList.slice(1)) || []}
                         onChange={(option) => handleChange(option, 'area')}
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
-                        disabled={typeEvent === '0'}
+                        disabled={
+                          (roleName !== 'admin' &&
+                            eventList?.evt_type === '0') ||
+                          (roleName !== 'company' &&
+                            userId !== eventList?.user_id &&
+                            eventList?.evt_type === '0')
+                        }
                       />
                       <img src={images.icon_next} alt="" />
                     </div>
@@ -274,7 +303,7 @@ const EditEvent = ({ match, location }: Props) => {
 
                   <div className="group-item">
                     <SelectDropdown
-                      placeholder="구역 선택"
+                      placeholder="모듈 선택"
                       listItem={
                         eventList?.ds_type === '3'
                           ? listInverterTest
@@ -283,7 +312,12 @@ const EditEvent = ({ match, location }: Props) => {
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
-                      disabled={typeEvent === '0'}
+                      disabled={
+                        (roleName !== 'admin' && eventList?.evt_type === '0') ||
+                        (roleName !== 'company' &&
+                          userId !== eventList?.user_id &&
+                          eventList?.evt_type === '0')
+                      }
                     />
                   </div>
                 </div>
@@ -300,7 +334,12 @@ const EditEvent = ({ match, location }: Props) => {
                 maxLength="5000"
                 className="form-control"
                 value={content}
-                disabled={typeEvent === '0'}
+                disabled={
+                  (roleName !== 'admin' && eventList?.evt_type === '0') ||
+                  (roleName !== 'company' &&
+                    userId !== eventList?.user_id &&
+                    eventList?.evt_type === '0')
+                }
                 onChange={(e) => handleChange(e.target.value, 'content')}
               />
             </div>
@@ -313,6 +352,12 @@ const EditEvent = ({ match, location }: Props) => {
                 ...modalConform,
                 isShow: true,
               })
+            }
+            isDisabled={
+              (roleName !== 'admin' && eventList?.evt_type === '0') ||
+              (roleName !== 'company' &&
+                userId !== eventList?.user_id &&
+                eventList?.evt_type === '0')
             }
           >
             수정 완료

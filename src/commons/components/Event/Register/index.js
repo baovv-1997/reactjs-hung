@@ -251,7 +251,7 @@ const EventRegister = ({ location }: Props) => {
                   )}
                   <div className="group-item">
                     <SelectDropdown
-                      placeholder="구역 선택"
+                      placeholder="모듈 선택"
                       listItem={
                         stateTypeEvent === 'mockup'
                           ? listInverterTest
