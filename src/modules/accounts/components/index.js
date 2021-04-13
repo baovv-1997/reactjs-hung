@@ -159,6 +159,7 @@ const SignUp = () => {
         isShow: true,
         content: '비밀번호 를 입력 해주세요.',
       });
+      return;
     }
     dispatch(SignInAction.signInRequest(dataLogin));
   };
@@ -376,7 +377,7 @@ const SignUp = () => {
     );
     setListItemDevice(removedItems);
   };
-  console.log(dataRegister, 'dataRegister');
+
   return (
     <div className="page-login">
       {isProcessing && <Loading />}

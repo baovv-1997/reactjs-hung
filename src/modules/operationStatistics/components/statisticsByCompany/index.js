@@ -48,7 +48,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     cardInfo,
     isProcessing,
     chartData,
-  } = useSelector((state) => state.operationStatistics);
+    isProcessingRaw,
+  } = useSelector((state) => state?.operationStatistics);
   // const { listInverter } = useSelector((state) => state?.account);
   const defaultOption = {
     id: 1,
@@ -445,7 +446,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
 
   return (
     <>
-      {(isProcessing || isProcessingDetail) && <Loading />}
+      {(isProcessing || isProcessingDetail || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 운영 현황" />
         <div className="content-body page-company">

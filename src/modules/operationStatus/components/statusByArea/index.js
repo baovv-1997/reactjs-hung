@@ -17,12 +17,17 @@ import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { posList, comList, isProcessing } = useSelector(
+  const { posList, comList, isProcessingDetail } = useSelector(
     (state) => state?.commons
   );
-  const { rawData, totalRawData, cardInfo, dataChart } = useSelector(
-    (operator) => operator.operationStatus
-  );
+  const {
+    rawData,
+    totalRawData,
+    cardInfo,
+    dataChart,
+    isProcessing,
+    isProcessingTrend,
+  } = useSelector((operator) => operator?.operationStatus);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -220,7 +225,7 @@ const OperationStatusPage = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingTrend || isProcessing || isProcessingDetail) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
