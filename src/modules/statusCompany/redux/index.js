@@ -5,6 +5,7 @@ const statusCompanySlide = createSlice({
   name: 'statusCompany',
   initialState: {
     isProcessing: false,
+    isProcessingRaw: false,
     listStatusCompany: [],
     listStatusCompanySelect: [],
     total: 0,
@@ -42,46 +43,48 @@ const statusCompanySlide = createSlice({
 
     getStatusGeneratorRaw: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
     getStatusGeneratorRawSuccess: (state, action) => {
       const { data } = action.data;
 
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessingRaw = false;
       state.rawData = data;
       state.totalRawData = action.data.total;
     },
     getStatusGeneratorRawFailed: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessingRaw = false;
     },
 
     getStatusGeneratorCard: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = true;
     },
     getStatusGeneratorCardSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
       state.cardInfo = data;
+      state.isProcessing = false;
     },
     getStatusGeneratorCardFailed: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = false;
     },
 
     getStatusGeneratorChartData: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = true;
     },
     getStatusGeneratorChartDataSuccess: (state, action) => {
       state.type = action.type;
       state.chartData = action.data;
+      state.isProcessing = false;
     },
     getStatusGeneratorChartDataFailed: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = false;
     },
   },
 });

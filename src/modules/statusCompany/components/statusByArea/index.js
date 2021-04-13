@@ -22,13 +22,16 @@ const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
 
   const { posList, comList } = useSelector((state) => state?.commons);
-
+  const isProcessingCommons = useSelector(
+    (state) => state?.commons?.isProcessing
+  );
   const {
     totalRawData,
     rawData,
     cardInfo,
     chartData,
     isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state.statusCompany);
 
   const defaultOption = {
@@ -209,7 +212,7 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingCommons || isProcessing || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">

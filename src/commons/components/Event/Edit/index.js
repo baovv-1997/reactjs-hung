@@ -204,6 +204,7 @@ const EditEvent = ({ match, location }: Props) => {
     });
   }, [eventList]);
 
+  console.log(eventList, 'eventList');
   return (
     <>
       {isProcessingDetail && <Loading />}

@@ -32,6 +32,7 @@ const StatusByAreaCompany = () => {
     cardInfo,
     chartData,
     isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state?.statusCompany);
   const { companyId } = useSelector((state) => state?.main);
 
@@ -231,7 +232,7 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {(isProcessing || isProcessingCommons) && <Loading />}
+      {(isProcessing || isProcessingCommons || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">

@@ -21,12 +21,15 @@ import ItemContentTab from './ItemContentTab';
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { posList, comList } = useSelector((state) => state.commons);
+  const { posList, comList, isProcessingDetail } = useSelector(
+    (state) => state.commons
+  );
   const {
     rawData,
     totalRawData,
     cardInfo,
     isProcessing,
+    isProcessingRaw,
     chartData,
   } = useSelector((state) => state.operationStatistics);
 
@@ -356,7 +359,7 @@ const OperationStatusPage = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing || isProcessingDetail) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 운영 통계" />
         <div className="content-body page-company">

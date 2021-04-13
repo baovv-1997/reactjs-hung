@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const operationStatusSlide = createSlice({
   name: 'operationStatus',
   initialState: {
-    isLoading: false,
+    isProcessing: false,
+    isProcessingTrend: false,
     total: 0,
     eventList: [],
     deviceList: [],
@@ -16,16 +17,16 @@ const operationStatusSlide = createSlice({
   reducers: {
     getListOperationStatus: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = true;
     },
     getListDevice: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = true;
     },
 
     getListDeviceSuccess: (state, action) => {
       const allOption = [{ ds_name: '전체', id: '' }];
-      // state.isProcessing = false;
+      state.isProcessing = false;
 
       state.deviceList =
         action.data && action.data && action.data.length > 1
@@ -36,7 +37,7 @@ const operationStatusSlide = createSlice({
       state.type = action.type;
     },
     getListDeviceFailed: (state, action) => {
-      // state.isProcessing = false;
+      state.isProcessing = false;
       state.type = action.type;
     },
 
@@ -55,33 +56,33 @@ const operationStatusSlide = createSlice({
 
     getDataChart: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessing = true;
     },
     getDataChartSuccess: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = false;
+      state.isProcessing = false;
       state.dataChart = action.data;
     },
     getDataChartFailed: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = false;
+      state.isProcessing = false;
       state.dataChart = [];
     },
 
     getTrendChart: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = true;
+      state.isProcessingTrend = true;
     },
     getTrendChartSuccess: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = false;
+      state.isProcessingTrend = false;
       state.rawData = action.data;
       state.totalRawData = action.total;
       state.currentPage = action.currentPage;
     },
     getTrendChartFailed: (state, action) => {
       state.type = action.type;
-      // state.isProcessing = false;
+      state.isProcessingTrend = false;
       state.rawData = [];
     },
 

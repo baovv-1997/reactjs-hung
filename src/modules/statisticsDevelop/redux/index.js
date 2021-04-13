@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const statisticsDevelopSlide = createSlice({
   name: 'statisticsDevelopStatus',
   initialState: {
-    isLoading: false,
+    isProcessing: false,
+    isProcessingRaw: false,
     total: 0,
     radiationList: [],
     rawData: [],
@@ -27,25 +28,27 @@ const statisticsDevelopSlide = createSlice({
       state.type = action.type;
       state.rawData = data;
       state.totalRawData = action.data.total;
+      state.isProcessing = false;
     },
     getStatisticsDevelopRawFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessing = false;
     },
 
     getRadiationRaw: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
     getRadiationRawSuccess: (state, action) => {
       const { data } = action.data;
       state.type = action.type;
       state.radiationList = data;
       state.totalRadiationRawData = action.data.total;
+      state.isProcessingRaw = false;
     },
     getRadiationRawFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = false;
     },
 
     getStatisticDevelopChartData: (state, action) => {
@@ -55,10 +58,11 @@ const statisticsDevelopSlide = createSlice({
     getStatisticDevelopChartDataSuccess: (state, action) => {
       state.type = action.type;
       state.dataChart = action.data;
+      state.isProcessing = false;
     },
     getStatisticDevelopChartDataFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessing = false;
       state.dataChart = [];
     },
 
@@ -70,10 +74,11 @@ const statisticsDevelopSlide = createSlice({
       const { data } = action;
       state.type = action.type;
       state.cardInfo = data;
+      state.isProcessing = false;
     },
     getStatisticDevelopCardFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessing = false;
       state.cardInfo = {};
     },
   },

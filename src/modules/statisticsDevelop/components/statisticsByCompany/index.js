@@ -25,10 +25,10 @@ import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
-  const { comList, isProcessing, deviceList } = useSelector(
-    (state) => state?.commons
+  const { comList, deviceList } = useSelector((state) => state?.commons);
+  const isProcessingCommons = useSelector(
+    (state) => state?.commons?.isProcessing
   );
-
   const {
     rawData,
     totalRawData,
@@ -36,6 +36,8 @@ const OperationStatusPage = () => {
     totalRadiationRawData,
     radiationList,
     dataChart,
+    isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state.statisticsDevelop);
 
   const { listStatusCompanySelect } = useSelector(
@@ -229,14 +231,14 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1
+          page: 1,
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1
+          page2: 1,
         });
         break;
       case 'inverter':
@@ -437,7 +439,7 @@ const OperationStatusPage = () => {
     deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing || isProcessingCommons) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">
