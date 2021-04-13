@@ -36,6 +36,8 @@ const EventRegister = ({ location }: Props) => {
   );
   const listInverterTest =
     (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
+  const listInverterSolar =
+    (deviceList && deviceList.filter((item) => item.ds_type === '0')) || [];
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -253,7 +255,7 @@ const EventRegister = ({ location }: Props) => {
                       listItem={
                         stateTypeEvent === 'mockup'
                           ? listInverterTest
-                          : (area && deviceList && deviceList.slice(1)) || []
+                          : (area && listInverterSolar) || []
                       }
                       onChange={(option) => handleChange(option, 'inverter')}
                       option={inverter || null}
