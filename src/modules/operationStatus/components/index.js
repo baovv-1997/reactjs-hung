@@ -148,7 +148,11 @@ const OperationStatusPage = ({ location }: Props) => {
   const handleChangeSearch = (item, name) => {
     switch (name) {
       case 'statusCompany':
-        setParamsSearch({ ...defaultSearch, company: item.id });
+        setParamsSearch({
+          ...defaultSearch,
+          company: item.id,
+          comName: item?.com_name,
+        });
         setMenuTab('');
 
         break;
@@ -318,7 +322,11 @@ const OperationStatusPage = ({ location }: Props) => {
   const onSelect = (eventKey) => {
     window.scrollTo(0, 0);
     setMenuTab(eventKey);
-    setParamsSearch({ ...defaultSearch, company: paramsSearch?.company });
+    setParamsSearch({
+      ...defaultSearch,
+      company: paramsSearch?.company,
+      comName: paramsSearch?.comName,
+    });
   };
   const deviceWithtype0 =
     deviceList &&
@@ -352,13 +360,17 @@ const OperationStatusPage = ({ location }: Props) => {
                       title={
                         <div className="tab-name">
                           {device?.label === '전체'
-                            ? `전체(${paramsSearch?.comName})`
+                            ? paramsSearch?.comName
                             : device?.id}
-                          {device?.label !== '전체' && (
-                            <span>{device?.position?.pos_name}</span>
-                          )}
+
+                          <span>
+                            {device?.label === '전체'
+                              ? '전체'
+                              : device?.position?.pos_name}
+                          </span>
                         </div>
                       }
+                      key={device.id}
                     >
                       <ItemContentTab
                         dataBoxContent={dataBoxContent}

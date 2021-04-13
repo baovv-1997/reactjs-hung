@@ -202,6 +202,7 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...defaultSearch,
       posSelected: paramsSearch?.posSelected,
+      posName: paramsSearch?.posName,
     });
   };
 
@@ -236,8 +237,10 @@ const StatusByAreaCompany = () => {
                       title={
                         <div className="tab-name">
                           {item?.label === '전체'
-                            ? `전체(${paramsSearch?.posName})`
+                            ? paramsSearch?.posName
                             : item?.label}
+
+                          {item?.label === '전체' && <span>전체</span>}
                         </div>
                       }
                     >

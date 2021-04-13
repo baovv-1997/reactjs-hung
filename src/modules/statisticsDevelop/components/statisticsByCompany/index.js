@@ -187,6 +187,7 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...defaultSearch,
           company: item.id,
+          comName: item.com_name,
         });
         break;
       case 'mockupType':
@@ -325,6 +326,7 @@ const OperationStatusPage = () => {
       ...defaultSearch,
       inverter1: inverter1Selected,
       company: paramsSearch?.company,
+      comName: paramsSearch?.comName,
     });
   };
 
@@ -460,13 +462,17 @@ const OperationStatusPage = () => {
                         title={
                           <div className="tab-name">
                             {dev?.label === '전체'
-                              ? `전체(${paramsSearch?.comName})`
+                              ? paramsSearch?.comName
                               : dev?.id}
-                            {dev?.label !== '전체' && (
-                              <span>{dev?.position?.pos_name}</span>
-                            )}
+
+                            <span>
+                              {dev?.label === '전체'
+                                ? '전체'
+                                : dev?.position?.pos_name}
+                            </span>
                           </div>
                         }
+                        key={dev.id}
                       >
                         <ItemContentTab
                           dataBoxContent={dataBoxContent}
