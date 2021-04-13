@@ -48,7 +48,7 @@ const Header = ({ location }: Props) => {
           break;
       }
     }
-  }, [type, roleUser]);
+  }, [type]);
 
   useEffect(() => {
     const interval = setInterval(() => {
