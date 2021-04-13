@@ -169,10 +169,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     Object.values(errors).map((item, index) => {
       return (
         <ul className="error-list" key={index}>
-          <li>
-            <span className="text-danger top-2 mr-1">*</span>
-            {item && item[0]}
-          </li>
+          <li>{item && item[0]}</li>
         </ul>
       );
     });

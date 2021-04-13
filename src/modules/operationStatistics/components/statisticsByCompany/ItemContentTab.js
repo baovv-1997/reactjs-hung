@@ -160,7 +160,7 @@ const ItemContentTab = ({
           )}
         </div>
       </div>
-      <TitleSubHeader title="이벤트 통계  `" />
+      <TitleSubHeader title="이벤트 통계" />
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}

@@ -252,11 +252,10 @@ Props) => {
         <Legend visible={false} />
         <ZoomAndPan argumentAxis="both" />
       </Chart>
-
       {dataChart && (
         <div className="unit-chart">
-          {optionLine?.line1 && <div className="unit-left">{unitLeft}</div>}
-          {optionLine?.line2 && <div className="unit-right">{unitRight}</div>}
+          {optionLine?.line1 && <div className="unit-left">{unitLine1}</div>}
+          {optionLine?.line2 && <div className="unit-right">{unitLine2}</div>}
           {visibleAxis3 && (
             <div
               className={`${
