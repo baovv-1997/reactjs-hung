@@ -257,10 +257,12 @@
 .group-option-table {
   .customer-select {
     width: pxToRem(140);
+
     .css-1uccc91-singleValue {
-      max-width: calc(100% - #{pxToRem(15)});
+      max-width: calc(100% - #{pxToRem(10)});
     }
   }
+
   margin-bottom: pxToRem(10);
 }
 
