@@ -28,7 +28,8 @@ const Header = ({ location }: Props) => {
   const solarEvent = notifications.filter((item) => item.ds_type === '0');
   const testMockupEvent = notifications.filter((item) => item.ds_type === '2');
   const testSolarEvent = notifications.filter((item) => item.ds_type === '3');
-  const roleUser = userInfo?.roles[0]?.id;
+  const roleUser =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.id;
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
   useEffect(() => {

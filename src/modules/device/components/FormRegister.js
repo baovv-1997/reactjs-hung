@@ -12,13 +12,13 @@ import Button from 'commons/components/Button';
 import ModalPopup from 'commons/components/Modal';
 import { isNumberKey } from 'helpers';
 import ROUTERS from 'constants/routers';
+import InputPhone from 'commons/components/Input/InputPhone';
 import {
   addDevice,
   resetDeviceType,
   getListCompany,
   getListPosition,
 } from '../redux';
-import InputPhone from 'commons/components/Input/InputPhone';
 
 type Props = {
   history: {
@@ -33,6 +33,7 @@ const FormRegister = ({ history }: Props) => {
   //   (state) => state?.device?.errorsAddDevice
   // );
   const dataAddNew = useSelector((state) => state?.device?.dataAddNew);
+  const { userInfo } = useSelector((state) => state.account);
   const type = useSelector((state) => state?.device?.type);
   const [startDate, setStartDate] = useState(new Date());
   const [currentType, setCurrentType] = useState('0');
@@ -51,6 +52,10 @@ const FormRegister = ({ history }: Props) => {
     color: '',
     azimuthAngle: '',
   });
+
+  const roleName =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo.roles[0].name;
+
   useEffect(() => {
     dispatch(
       getListCompany({
@@ -60,6 +65,7 @@ const FormRegister = ({ history }: Props) => {
     dispatch(
       getListPosition({
         per_page: 9999,
+        com_id: roleName === 'company' ? userInfo?.com_id : '',
       })
     );
   }, []);
