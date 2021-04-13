@@ -34,7 +34,15 @@
       line-height: pxToRem(34);
       letter-spacing: pxToRem(-0.78);
       text-align: right;
-      margin-top: pxToRem(45);
+      margin: pxToRem(20) 0 pxToRem(10);
+    }
+
+    &-unit {
+      font-family: $Roboto-Font;
+      font-size: pxToRem(14);
+      line-height: 1.43;
+      opacity: 0.7;
+      letter-spacing: pxToRem(-0.42);
     }
   }
 
