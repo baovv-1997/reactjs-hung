@@ -64,7 +64,7 @@ const EditEvent = ({ match, location }: Props) => {
   });
 
   useEffect(() => {
-    dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'desc' }));
+    dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
     // eslint-disable-next-line
   }, []);
 

@@ -78,6 +78,7 @@ const ItemContentTab = ({
             showPoint3
             showPoint1
             showPoint2
+            unitRight="W/㎡"
           />
         </div>
       </div>

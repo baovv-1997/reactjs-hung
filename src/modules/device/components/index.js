@@ -58,7 +58,7 @@ const DeviceManagement = ({ history }: Props) => {
         [currentOption]: selectOption?.value,
         page: 1,
         com_id: roleName === 'company' ? userInfo?.com_id : '',
-        per_page: 9999,
+        per_page: 16,
       })
     );
   }, [selectOption, selectOption?.value]);
@@ -101,6 +101,7 @@ const DeviceManagement = ({ history }: Props) => {
         [currentOption]: selectOption?.value,
         keyword: valueSearch,
         page: 1,
+        per_page: 16,
       })
     );
   };
@@ -140,6 +141,7 @@ const DeviceManagement = ({ history }: Props) => {
         [currentOption]: selectOption?.value,
         keyword: valueSearch,
         page,
+        per_page: 16,
       })
     );
   };

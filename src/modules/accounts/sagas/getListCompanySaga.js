@@ -8,7 +8,7 @@ import * as AccountAction from '../redux';
 function* getListCompany() {
   try {
     const response = yield call(() =>
-      API.get(ROUTES.API_GET_LIST_COMPANY, { sort_by: 'id', sort_dir: 'desc' })
+      API.get(ROUTES.API_GET_LIST_COMPANY, { sort_by: 'id', sort_dir: 'asc' })
     );
 
     if (response.ok) {

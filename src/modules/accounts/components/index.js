@@ -69,10 +69,7 @@ const SignUp = () => {
     Object.values(errorMsg).map((item, index) => {
       return (
         <ul className="error-list" key={index}>
-          <li>
-            <span className="text-danger top-2 mr-1">*</span>
-            {item && item[0]}
-          </li>
+          <li>{item && item[0]}</li>
         </ul>
       );
     });
@@ -380,7 +377,6 @@ const SignUp = () => {
     setListItemDevice(removedItems);
   };
 
-  console.log(error, 'error');
   return (
     <div className="page-login">
       {isProcessing && <Loading />}

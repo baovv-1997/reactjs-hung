@@ -70,6 +70,7 @@ const AccountManagement = ({ history }: Props) => {
       getAccountList({
         role: currentOption,
         page: 1,
+        per_page: 16,
       })
     );
   }, [currentOption]);
@@ -81,6 +82,7 @@ const AccountManagement = ({ history }: Props) => {
         role: currentOption,
         keyword: valueSearch,
         page: 1,
+        per_page: 16,
       })
     );
   };
@@ -96,6 +98,7 @@ const AccountManagement = ({ history }: Props) => {
         role: currentOption,
         keyword: valueSearch,
         page,
+        per_page: 16,
       })
     );
   };
