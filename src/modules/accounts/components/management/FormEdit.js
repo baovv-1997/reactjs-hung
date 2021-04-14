@@ -396,17 +396,13 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         title="알림"
         isShowFooter
         handleClose={() => {
-          history.push(
-            `${ROUTERS.ACCOUNT_MANAGEMENT}/detail/${accountDetail?.id}`
-          );
+          history.push(ROUTERS.ACCOUNT_MANAGEMENT);
         }}
         textBtnRight="확인"
         isShowTwoBtn={false}
         customClassButton="btn-custom"
         handleSubmit={() => {
-          history.push(
-            `${ROUTERS.ACCOUNT_MANAGEMENT}/detail/${accountDetail?.id}`
-          );
+          history.push(ROUTERS.ACCOUNT_MANAGEMENT);
         }}
       >
         수정 완료되었습니다.

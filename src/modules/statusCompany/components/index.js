@@ -234,7 +234,9 @@ const StatusByAreaCompany = () => {
 
   const deviceWithtype0 =
     deviceList &&
-    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
+    deviceList
+      .filter((item) => item.ds_type === '0' || !item?.ds_type)
+      .sort((a, b) => a.id - b.id);
 
   return (
     <>
@@ -266,15 +268,15 @@ const StatusByAreaCompany = () => {
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {device?.label === '전체'
-                            ? paramsSearch?.comName
-                            : device?.id}
-
-                          <span>
-                            {device?.label === '전체'
+                          {`${
+                            device?.label === '전체'
+                              ? paramsSearch?.comName
+                              : device?.id
+                          }(${
+                            device?.label === '전체'
                               ? '전체'
-                              : device?.position?.pos_name}
-                          </span>
+                              : device?.position?.pos_name
+                          })`}
                         </div>
                       }
                       key={device.id}
@@ -292,18 +294,18 @@ const StatusByAreaCompany = () => {
                                 index
                               }` || '',
                             dateTime: moment(raw.dm_datetime).format(
-                              'YYYY-MM-DD'
+                              'YYYY-MM-DD HH:mm:ss'
                             ),
+                            comName: raw?.com_name,
                             inverterID: raw?.ds_id,
                             installationLocation: raw?.pos_name,
                             inverterName: raw?.ds_name,
-                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
-                            outsideTemperature: `${raw?.dm_pv_current}A`,
-                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
-                            gradientInsolation: `${raw?.dm_o_current}A`,
-                            powerGeneration: `${raw?.dm_power}KW`,
-                            cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
-                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                            moduleTemperature: `${raw?.dm_module_temp}℃`,
+                            outsideTemperature: `${raw?.dm_env_temp}℃`,
+                            gradientInsolation: `${raw?.dm_rad}W/㎡`,
+                            powerGeneration: `${raw?.dm_prod}kWh`,
+                            cumulativePowerGeneration: `${raw?.dm_prod_sum}kW`,
+                            rateOfPowerGeneration: `${raw?.dm_performance_ratio}%`,
                           }))
                         }
                         powerData={{
