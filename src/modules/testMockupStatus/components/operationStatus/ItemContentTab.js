@@ -22,6 +22,7 @@ import {
   headTestMockupOperationStatus,
   headOperationStatusByAreaCompany,
 } from '../constant';
+import { ROLE_ADMIN, ROLE_COMPANY } from 'constants/index';
 
 type Props = {
   listMockupDataCompany: any,
@@ -206,7 +207,7 @@ const ItemContentTab = ({
         listOption={test_modal_search}
         optionDefault={optionFilters}
       />
-      {(roles === 'admin' || roles === 'company') && (
+      {(roles === ROLE_ADMIN || roles === ROLE_COMPANY) && (
         <div className="group-btn-register text-right">
           <Button
             onClick={() =>

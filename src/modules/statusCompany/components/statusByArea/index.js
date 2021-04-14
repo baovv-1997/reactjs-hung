@@ -22,13 +22,16 @@ const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
 
   const { posList, comList } = useSelector((state) => state?.commons);
-
+  const isProcessingCommons = useSelector(
+    (state) => state?.commons?.isProcessing
+  );
   const {
     totalRawData,
     rawData,
     cardInfo,
     chartData,
     isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state.statusCompany);
 
   const defaultOption = {
@@ -209,7 +212,7 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingCommons || isProcessing || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
@@ -254,18 +257,18 @@ const StatusByAreaCompany = () => {
                                 index
                               }` || '',
                             dateTime: moment(raw.dm_datetime).format(
-                              'YYYY-MM-DD'
+                              'YYYY-MM-DD HH:mm:ss'
                             ),
+                            comName: raw?.com_name,
                             inverterID: raw?.ds_id,
                             installationLocation: raw?.pos_name,
                             inverterName: raw?.ds_name,
-                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
-                            outsideTemperature: `${raw?.dm_pv_current}A`,
-                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
-                            gradientInsolation: `${raw?.dm_o_current}A`,
-                            powerGeneration: `${raw?.dm_power}KW`,
-                            cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
-                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
+                            moduleTemperature: `${raw?.dm_module_temp}℃`,
+                            outsideTemperature: `${raw?.dm_env_temp}℃`,
+                            gradientInsolation: `${raw?.dm_rad}W/㎡`,
+                            powerGeneration: `${raw?.dm_prod}kWh`,
+                            cumulativePowerGeneration: `${raw?.dm_prod_sum}kW`,
+                            rateOfPowerGeneration: `${raw?.dm_performance_ratio}%`,
                           }))
                         }
                         powerData={{
@@ -308,7 +311,7 @@ const StatusByAreaCompany = () => {
                               value: cardInfo?.current_rad,
                             },
                             {
-                              title: '일일 최고 일사량',
+                              title: '최고 일사량',
                               value: cardInfo?.max_rad,
                             },
                           ],

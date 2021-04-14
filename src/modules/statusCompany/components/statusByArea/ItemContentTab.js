@@ -40,17 +40,17 @@ const ItemContentTab = ({
   const dataLengthChart = [
     {
       id: 1,
-      name: '발전량 kWh',
+      name: '발전량(kWh)',
       color: '#8567b4',
     },
     {
       id: 2,
-      name: '일사량 ℃',
+      name: '일사량(W/㎡)',
       color: '#c05e13',
     },
     {
       id: 3,
-      name: '성능비 kWh/㎡·10초',
+      name: '성능비(%)',
       color: '#fe8224',
     },
   ];

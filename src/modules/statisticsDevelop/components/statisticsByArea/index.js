@@ -26,12 +26,18 @@ const OperationStatusPage = () => {
     (state) => state?.statusCompany
   );
 
-  const { posList, isProcessing, comList } = useSelector(
-    (state) => state?.commons
+  const { posList, comList } = useSelector((state) => state?.commons);
+  const isProcessingCommons = useSelector(
+    (state) => state?.commons?.isProcessing
   );
-  const { rawData, totalRawData, cardInfo, dataChart } = useSelector(
-    (state) => state.statisticsDevelop
-  );
+  const {
+    rawData,
+    totalRawData,
+    cardInfo,
+    dataChart,
+    isProcessing,
+    isProcessingRaw,
+  } = useSelector((state) => state?.statisticsDevelop);
 
   const defaultOption = {
     id: 1,
@@ -394,7 +400,7 @@ const OperationStatusPage = () => {
 
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingCommons || isProcessing || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">

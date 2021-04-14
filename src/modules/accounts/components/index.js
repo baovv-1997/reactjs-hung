@@ -11,6 +11,7 @@ import ROUTERS from 'constants/routers';
 import { listType } from 'constants/listKey';
 import SignIn from './signIn';
 import * as SignInAction from '../redux';
+import { ROLE_COMPANY } from 'constants/index';
 
 const SignUp = () => {
   const history = useHistory();
@@ -159,6 +160,7 @@ const SignUp = () => {
         isShow: true,
         content: '비밀번호 를 입력 해주세요.',
       });
+      return;
     }
     dispatch(SignInAction.signInRequest(dataLogin));
   };
@@ -326,7 +328,7 @@ const SignUp = () => {
         item.type === null || item.company === null || item.inverter === null
     );
 
-    if (role === 'company' && checkValidator && checkValidator.length > 0) {
+    if (role === ROLE_COMPANY && checkValidator && checkValidator.length > 0) {
       setModalLogin({
         ...modalLogin,
         isShow: true,
@@ -376,7 +378,7 @@ const SignUp = () => {
     );
     setListItemDevice(removedItems);
   };
-  console.log(dataRegister, 'dataRegister');
+
   return (
     <div className="page-login">
       {isProcessing && <Loading />}

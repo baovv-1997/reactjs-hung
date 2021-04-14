@@ -4,7 +4,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import moment from 'moment';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listParkingLot, listMockupType } from 'mockData/listCompany';
 import { getCompanyList, getListDevice } from 'commons/redux';
@@ -32,6 +31,7 @@ const StatusByAreaCompany = () => {
     cardInfo,
     chartData,
     isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state?.statusCompany);
   const { companyId } = useSelector((state) => state?.main);
 
@@ -86,7 +86,13 @@ const StatusByAreaCompany = () => {
 
   useEffect(() => {
     if (paramsSearch?.company) {
-      getDevices({ com_id: paramsSearch?.company });
+      getDevices({
+        com_id: paramsSearch?.company,
+        per_page: 9999999,
+        type: '0',
+        sort_dir: 'asc',
+        sort_by: 'id',
+      });
     }
   }, [getDevices, paramsSearch?.company]);
 
@@ -227,11 +233,13 @@ const StatusByAreaCompany = () => {
 
   const deviceWithtype0 =
     deviceList &&
-    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
+    deviceList
+      .filter((item) => item.ds_type === '0' || !item?.ds_type)
+      .sort((a, b) => a.id - b.id);
 
   return (
     <>
-      {(isProcessing || isProcessingCommons) && <Loading />}
+      {(isProcessing || isProcessingCommons || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 현황" />
         <div className="content-body page-company">
@@ -255,46 +263,22 @@ const StatusByAreaCompany = () => {
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {device?.label === '전체'
-                            ? paramsSearch?.comName
-                            : device?.id}
-
-                          <span>
-                            {device?.label === '전체'
+                          {`${
+                            device?.label === '전체'
+                              ? paramsSearch?.comName
+                              : device?.id
+                          }(${
+                            device?.label === '전체'
                               ? '전체'
-                              : device?.position?.pos_name}
-                          </span>
+                              : device?.position?.pos_name
+                          })`}
                         </div>
                       }
                       key={device.id}
                     >
                       <ItemContentTab
                         chartData={chartData}
-                        rawData={
-                          rawData &&
-                          rawData.map((raw, index) => ({
-                            rowId:
-                              `${
-                                totalRawData -
-                                (paramsSearch?.page - 1) *
-                                  paramsSearch.pagination.value -
-                                index
-                              }` || '',
-                            dateTime: moment(raw.dm_datetime).format(
-                              'YYYY-MM-DD'
-                            ),
-                            inverterID: raw?.ds_id,
-                            installationLocation: raw?.pos_name,
-                            inverterName: raw?.ds_name,
-                            moduleTemperature: `${raw?.dm_pv_voltage}V`,
-                            outsideTemperature: `${raw?.dm_pv_current}A`,
-                            horizontalInsolation: `${raw?.dm_o_voltage}V`,
-                            gradientInsolation: `${raw?.dm_o_current}A`,
-                            powerGeneration: `${raw?.dm_power}KW`,
-                            cumulativePowerGeneration: `${raw?.dm_performance_ratio}%`,
-                            rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
-                          }))
-                        }
+                        rawData={rawData || []}
                         powerData={{
                           type: 'power',
                           data: [

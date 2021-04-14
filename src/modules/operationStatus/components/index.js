@@ -33,14 +33,18 @@ type Props = {
 const OperationStatusPage = ({ location }: Props) => {
   const history = useHistory();
 
-  const { dataChart, rawData, totalRawData, cardInfo } = useSelector(
-    (state) => state.operationStatus
-  );
+  const {
+    dataChart,
+    rawData,
+    totalRawData,
+    cardInfo,
+    isProcessingTrend,
+    isProcessing,
+  } = useSelector((state) => state?.operationStatus);
 
   const {
     eventList,
     comList,
-    isProcessing,
     deviceList,
     totalEventPage,
     isProcessingDetail,
@@ -115,7 +119,13 @@ const OperationStatusPage = ({ location }: Props) => {
 
   useEffect(() => {
     if (paramsSearch?.company) {
-      getDevicesCallback({ com_id: paramsSearch?.company });
+      getDevicesCallback({
+        com_id: paramsSearch?.company,
+        per_page: 9999999,
+        type: '0',
+        sort_dir: 'asc',
+        sort_by: 'id',
+      });
     }
   }, [getDevicesCallback, paramsSearch?.company]);
 
@@ -335,7 +345,7 @@ const OperationStatusPage = ({ location }: Props) => {
     deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
     <div>
-      {(isProcessing || isProcessingDetail) && <Loading />}
+      {(isProcessing || isProcessingDetail || isProcessingTrend) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 운영 현황" />
         <div className="content-body page-company">

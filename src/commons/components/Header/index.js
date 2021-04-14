@@ -48,7 +48,7 @@ const Header = ({ location }: Props) => {
           break;
       }
     }
-  }, [type, roleUser]);
+  }, [type]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -72,7 +72,6 @@ const Header = ({ location }: Props) => {
   );
 
   const handleEventClick = (id) => {
-    console.log(id);
     // GOIT API
     dispatch(updateCheckEvent({ event_id: id }));
     setNotifications(notifications.filter((x) => x.id !== id));

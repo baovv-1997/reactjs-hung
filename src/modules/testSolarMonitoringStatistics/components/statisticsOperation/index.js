@@ -39,9 +39,6 @@ const OperationStatusPage = ({ location, history }: Props) => {
     isProcessingRaw,
   } = useSelector((state) => state?.testSMStatisticsGenerator);
   const [randomNumber, setRandomNumber] = useState(null);
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
-
   const defaultOption = {
     id: 1,
     value: 5,
@@ -50,9 +47,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
 
   const defaultSearch = {
     page: 1,
-    company:
-      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-      null,
+    company: null,
     page2: 1,
     PVVoltage: true,
     PVCurrent: true,
@@ -89,10 +84,25 @@ const OperationStatusPage = ({ location, history }: Props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '2',
+      })
+    );
     dispatch(CommonAction.getCompanyList());
   }, []);
-
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
   useEffect(() => {
     const interval = setInterval(() => {
       setRandomNumber(Math.random());
@@ -148,7 +158,9 @@ const OperationStatusPage = ({ location, history }: Props) => {
     [dispatch]
   );
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
   // call api getDataTrend chart
   const handleGetDataTrendChart = useCallback(
@@ -159,18 +171,20 @@ const OperationStatusPage = ({ location, history }: Props) => {
   );
 
   useEffect(() => {
-    handleGetDataTrendChart({
-      inverter_id: paramsSearch?.company,
-      type: paramsSearch?.classification || null,
-      from:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.from).format('YYYY-MM')
-          : moment(paramsSearch?.from).format('YYYY-MM-DD'),
-      to:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.to).format('YYYY-MM')
-          : moment(paramsSearch?.to).format('YYYY-MM-DD'),
-    });
+    if (paramsSearch?.company) {
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+        type: paramsSearch?.classification || null,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.from).format('YYYY-MM')
+            : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.to).format('YYYY-MM')
+            : moment(paramsSearch?.to).format('YYYY-MM-DD'),
+      });
+    }
   }, [
     handleGetDataTrendChart,
     paramsSearch?.company,
@@ -187,20 +201,22 @@ const OperationStatusPage = ({ location, history }: Props) => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      inverter_id: paramsSearch?.company,
-      type: paramsSearch?.classification || null,
-      from:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.from).format('YYYY-MM')
-          : moment(paramsSearch?.from).format('YYYY-MM-DD'),
-      to:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.to).format('YYYY-MM')
-          : moment(paramsSearch?.to).format('YYYY-MM-DD'),
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        inverter_id: paramsSearch?.company,
+        type: paramsSearch?.classification || null,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.from).format('YYYY-MM')
+            : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.to).format('YYYY-MM')
+            : moment(paramsSearch?.to).format('YYYY-MM-DD'),
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.company,
@@ -212,14 +228,16 @@ const OperationStatusPage = ({ location, history }: Props) => {
 
   // get event list when inverter, page, perpage have change
   useEffect(() => {
-    dispatch(
-      getEventList({
-        inverter_id: paramsSearch?.company || null,
-        per_page: paramsSearch?.pagination2?.value,
-        page: paramsSearch?.page2,
-        type: optionFilters,
-      })
-    );
+    if (paramsSearch?.company) {
+      dispatch(
+        getEventList({
+          inverter_id: paramsSearch?.company || null,
+          per_page: paramsSearch?.pagination2?.value,
+          page: paramsSearch?.page2,
+          type: optionFilters,
+        })
+      );
+    }
   }, [
     paramsSearch?.pagination2,
     paramsSearch?.page2,
@@ -349,7 +367,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listStatusCompanySelect={deviceList && deviceList.slice(1)}
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

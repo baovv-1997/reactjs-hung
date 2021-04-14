@@ -28,17 +28,13 @@ const OperationStatusPage = () => {
     value: 5,
     label: '5 개씩 보기',
   };
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
 
   const defaultSearch = {
     page: 1,
     classification: 'minute',
     from: new Date().setDate(new Date().getDate() - 1),
     to: new Date().setDate(new Date().getDate() - 1),
-    company:
-      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-      null,
+    company: null,
     insolation: true,
     performance: true,
     generation: true,
@@ -110,9 +106,26 @@ const OperationStatusPage = () => {
   }, [paramsSearch?.classification]);
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '2',
+      })
+    );
     dispatch(CommonAction.getCompanyList());
   }, []);
+
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
     (company) => {
@@ -125,7 +138,9 @@ const OperationStatusPage = () => {
     [dispatch]
   );
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
   // call api getDataTrend chart
   const handleGetDataTrendChart = useCallback(
@@ -136,19 +151,21 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataTrendChart({
-      inverter_id: paramsSearch?.company,
-      type: paramsSearch?.classification || null,
-      from:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.from).format('YYYY-MM')
-          : moment(paramsSearch?.from).format('YYYY-MM-DD'),
-      to:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.to).format('YYYY-MM')
-          : moment(paramsSearch?.to).format('YYYY-MM-DD'),
-      compare_inverter_id: paramsSearch?.inverter?.id,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+        type: paramsSearch?.classification || null,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.from).format('YYYY-MM')
+            : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.to).format('YYYY-MM')
+            : moment(paramsSearch?.to).format('YYYY-MM-DD'),
+        compare_inverter_id: paramsSearch?.inverter?.id,
+      });
+    }
   }, [
     handleGetDataTrendChart,
     paramsSearch?.company,
@@ -165,20 +182,22 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      inverter_id: paramsSearch?.company,
-      type: paramsSearch?.classification || null,
-      from:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.from).format('YYYY-MM')
-          : moment(paramsSearch?.from).format('YYYY-MM-DD'),
-      to:
-        paramsSearch?.classification === 'month'
-          ? moment(paramsSearch?.to).format('YYYY-MM')
-          : moment(paramsSearch?.to).format('YYYY-MM-DD'),
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        inverter_id: paramsSearch?.company,
+        type: paramsSearch?.classification || null,
+        from:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.from).format('YYYY-MM')
+            : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+        to:
+          paramsSearch?.classification === 'month'
+            ? moment(paramsSearch?.to).format('YYYY-MM')
+            : moment(paramsSearch?.to).format('YYYY-MM-DD'),
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.company,
@@ -260,15 +279,6 @@ const OperationStatusPage = () => {
     }
   };
 
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-        null,
-    });
-  }, []);
-
   return (
     <>
       {(isProcessingRaw || isProcessing) && <Loading />}
@@ -279,8 +289,8 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={
-              listInverterTest &&
-              listInverterTest.map((item) => ({
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
                 id: item?.id,
                 label: item?.company.com_name,
               }))

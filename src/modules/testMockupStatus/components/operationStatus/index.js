@@ -37,8 +37,6 @@ const OperationStatusPage = ({ location }: Props) => {
     isProcessingRaw,
   } = useSelector((state) => state?.testMockupStatus);
   const [randomNumber, setRandomNumber] = useState(null);
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
 
   const defaultOption = {
     id: 1,
@@ -80,9 +78,24 @@ const OperationStatusPage = ({ location }: Props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '3',
+      })
+    );
   }, []);
-
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
   useEffect(() => {
     const interval = setInterval(() => {
       setRandomNumber(Math.random());
@@ -254,24 +267,22 @@ const OperationStatusPage = ({ location }: Props) => {
     });
   };
 
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        listInverterTest && listInverterTest[0] && listInverterTest[0].id,
-    });
-  }, []);
-
   return (
     <>
       {(isProcessing || isProcessingDetail || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 통계" />
+        <TitleHeader title="테스트(목업) 운영 현황" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listStatusCompanySelect={
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
+                id: item?.id,
+                label: item?.company.com_name,
+              }))
+            }
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

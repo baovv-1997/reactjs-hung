@@ -14,6 +14,7 @@ import {
   getCardMeasureSearchCompany,
   getTotalMetric,
 } from 'modules/main/redux';
+import Draggable from 'react-draggable';
 // import { fixedPointX } from 'helpers';
 // import { mockDataMainCompany } from 'mockData/mainData';
 import { Card } from 'commons/components/Card';
@@ -52,6 +53,7 @@ const MainPage = () => {
   const [modal, setModal] = useState({ isShow: false, content: '' });
   const [typeSearch, setTypeSearch] = useState({ type: '', id: null });
   const [labelMatric, setLabelMatric] = useState('전체');
+  const [searchCompany, setSearchCompany] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm.label, 500);
 
@@ -139,6 +141,7 @@ const MainPage = () => {
             pos_id: searchTerm.id,
           })
         );
+        setSearchCompany(false);
         dispatch(getTotalMetric({ pos_id: searchTerm.id }));
         setTypeSearch({ type: 'posId', id: searchTerm.id });
         setLabelMatric(searchTerm.label);
@@ -150,6 +153,7 @@ const MainPage = () => {
             com_id: searchTerm.id,
           })
         );
+        setSearchCompany(true);
         dispatch(getTotalMetric({ com_id: searchTerm.id }));
         setTypeSearch({ type: 'comId', id: searchTerm.id });
         setLabelMatric(searchTerm.label);
@@ -251,27 +255,29 @@ const MainPage = () => {
 
         {cardPositionMain &&
           cardPositionMain?.map((posItem) => (
-            <div
-              // key={posItem?.position?.id}
-              className="display-main-card"
-              style={{
-                top: `${posItem?.position?.pos_map_y - 300}px`,
-                left: `${posItem?.position?.pos_map_x - 300}px`,
-              }}
-            >
-              <Card
-                title={posItem?.position?.pos_name}
-                listCompany={posItem?.company}
-                amountElectricDay={posItem?.card?.prod_today}
-                amountElectricMonth={posItem?.card?.prod_inmonth}
-                electricRealtime={posItem?.card?.prod_realtime}
-                cumulativeElectric={posItem?.card?.prod_sum}
-                ratePower={posItem?.card?.performance_ratio}
-                isEvent={!!posItem?.card?.event}
-                titleClick={() => handleTitleClick(posItem?.position?.id)}
-                logoClick={handleLogoClick}
-              />
-            </div>
+            <Draggable disabled={!searchCompany} bounds="parent">
+              <div
+                // key={posItem?.position?.id}
+                className={`display-main-card ${searchCompany && 'card-drag'}`}
+                style={{
+                  top: `${posItem?.position?.pos_map_y - 300}px`,
+                  left: `${posItem?.position?.pos_map_x - 300}px`,
+                }}
+              >
+                <Card
+                  title={posItem?.position?.pos_name}
+                  listCompany={posItem?.company}
+                  amountElectricDay={posItem?.card?.prod_today}
+                  amountElectricMonth={posItem?.card?.prod_inmonth}
+                  electricRealtime={posItem?.card?.prod_realtime}
+                  cumulativeElectric={posItem?.card?.prod_sum}
+                  ratePower={posItem?.card?.performance_ratio}
+                  isEvent={!!posItem?.card?.event}
+                  titleClick={() => handleTitleClick(posItem?.position?.id)}
+                  logoClick={handleLogoClick}
+                />
+              </div>
+            </Draggable>
           ))}
         <ModalPopup
           isOpen={modal.isShow}

@@ -126,7 +126,7 @@ const accountSlice = createSlice({
 
     signUpRequest: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      // state.isProcessing = true;
       state.errorMsg = null;
     },
     signUpRequestSuccess: (state, action) => {

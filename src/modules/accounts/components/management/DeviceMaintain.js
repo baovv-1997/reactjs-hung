@@ -6,6 +6,7 @@ import SelectDropdown from 'commons/components/Select';
 import images from 'themes/images';
 import Button from 'commons/components/Button';
 import { getListDevice } from '../../../device/redux';
+import { ROLE_COMPANY } from 'constants/index';
 
 type Props = {
   listCompany: {
@@ -79,7 +80,7 @@ const DeviceMaintain = ({
             setCompanySelected(option);
             getCompanySelected(itemDevice?.company);
           }}
-          disabled={index !== 0 || currentOption !== 'company'}
+          disabled={index !== 0 || currentOption !== ROLE_COMPANY}
         />
         <img src={images.icon_next} alt="" className="mx-2" />
       </div>
@@ -94,7 +95,7 @@ const DeviceMaintain = ({
             setPositionSelected(option);
             handleChange(option, 'position', itemDevice.id);
           }}
-          disabled={currentOption !== 'company'}
+          disabled={currentOption !== ROLE_COMPANY}
         />
         <img src={images.icon_next} alt="" className="mx-2" />
       </div>
@@ -112,7 +113,7 @@ const DeviceMaintain = ({
           noOptionsMessage={() => '옵션 없음'}
           onChange={(option) => handleChange(option, 'inverter', itemDevice.id)}
           className="cus-select"
-          disabled={currentOption !== 'company'}
+          disabled={currentOption !== ROLE_COMPANY}
         />
       </div>
       <Button

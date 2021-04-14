@@ -20,7 +20,6 @@ type Props = {
 const LineSeriesChart = ({ dataChart, width, height }: Props) => {
   //   const { height, width } = useWindowDimensions();
   const chartRef = useRef(null);
-  console.log('dataChart', dataChart);
 
   const [chart, setChart] = useState(null);
   useEffect(() => {
@@ -35,8 +34,6 @@ const LineSeriesChart = ({ dataChart, width, height }: Props) => {
         timeScale: {
           tickMarkFormatter: (time) => {
             const date = new Date(time);
-            console.log('time', time);
-            console.log('date', date);
             return date.getSeconds();
           },
         },

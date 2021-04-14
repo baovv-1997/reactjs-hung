@@ -25,10 +25,10 @@ import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
-  const { comList, isProcessing, deviceList } = useSelector(
-    (state) => state?.commons
+  const { comList, deviceList } = useSelector((state) => state?.commons);
+  const isProcessingCommons = useSelector(
+    (state) => state?.commons?.isProcessing
   );
-
   const {
     rawData,
     totalRawData,
@@ -36,6 +36,8 @@ const OperationStatusPage = () => {
     totalRadiationRawData,
     radiationList,
     dataChart,
+    isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state.statisticsDevelop);
 
   const { listStatusCompanySelect } = useSelector(
@@ -122,7 +124,13 @@ const OperationStatusPage = () => {
 
   useEffect(() => {
     if (paramsSearch?.company) {
-      getDevicesCallback({ com_id: paramsSearch?.company, per_page: 9999 });
+      getDevicesCallback({
+        com_id: paramsSearch?.company,
+        per_page: 9999999,
+        type: '0',
+        sort_dir: 'asc',
+        sort_by: 'id',
+      });
     }
   }, [getDevicesCallback, paramsSearch?.company]);
 
@@ -437,7 +445,7 @@ const OperationStatusPage = () => {
     deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
     <>
-      {isProcessing && <Loading />}
+      {(isProcessingRaw || isProcessing || isProcessingCommons) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="실증단지 발전 통계" />
         <div className="content-body page-company">

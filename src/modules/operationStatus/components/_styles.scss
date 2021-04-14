@@ -15,6 +15,7 @@
     flex-wrap: wrap;
     border-top: 0;
     background-color: $bg-light10;
+    white-space: pre-line;
 
     &:first-child {
       border-top: solid pxToRem(1) $color-light10;
