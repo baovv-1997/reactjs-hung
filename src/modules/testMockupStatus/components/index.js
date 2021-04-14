@@ -25,9 +25,6 @@ const StatusByAreaCompany = () => {
   const { inverterId } = useSelector((state) => state?.testDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { deviceList } = useSelector((state) => state?.commons);
-  // const {companyId}
-  const listInverterTest =
-    deviceList && deviceList.filter((item) => item.ds_type === '3');
   const defaultOption = {
     id: 1,
     value: 6,
@@ -120,9 +117,24 @@ const StatusByAreaCompany = () => {
   };
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '3',
+      })
+    );
   }, []);
-
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
     (company) => {
@@ -158,14 +170,6 @@ const StatusByAreaCompany = () => {
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        listInverterTest && listInverterTest[0] && listInverterTest[0].id,
-    });
-  }, []);
 
   useEffect(() => {
     if (paramsSearch?.company) {
@@ -233,14 +237,6 @@ const StatusByAreaCompany = () => {
     }
   };
 
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      company:
-        listInverterTest && listInverterTest[0] && listInverterTest[0].id,
-    });
-  }, [deviceList]);
-
   return (
     <>
       {(isProcessingRaw || isProcessing) && <Loading />}
@@ -251,8 +247,8 @@ const StatusByAreaCompany = () => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={
-              listInverterTest &&
-              listInverterTest.map((item) => ({
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
                 id: item?.id,
                 label: item?.company.com_name,
               }))
