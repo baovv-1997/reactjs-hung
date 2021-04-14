@@ -370,7 +370,7 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey=""
+                defaultActiveKey={comList && comList[0]}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
@@ -419,7 +419,11 @@ const OperationStatusPage = () => {
                           }))
                         }
                         dataContent={{}}
-                        listInverter={comList.slice(1)}
+                        listInverter={
+                          comList && comList.length > 1
+                            ? comList.slice(1)
+                            : comList
+                        }
                         paramsSearch={paramsSearch}
                         handleChangeSearch={handleChangeSearch}
                         listStatusCompanySelect={comList.slice(1)}

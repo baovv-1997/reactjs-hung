@@ -350,7 +350,7 @@ const OperationStatusPage = ({ location }: Props) => {
             <div className="h-100">
               <Tabs
                 // set active tab
-                defaultActiveKey=""
+                defaultActiveKey={deviceWithtype0 && deviceWithtype0[0]}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

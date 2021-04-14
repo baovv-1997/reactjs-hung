@@ -74,7 +74,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     endDate: new Date().setDate(new Date().getDate() - 1),
     vendorCompany: null,
     inverter: null,
-    inverter1: menuTab === '' ? null : [deviceList[1]],
+    inverter1: menuTab === '' ? null : [deviceList[0]],
     comName: '',
   };
 
@@ -455,13 +455,15 @@ const OperatorStatisticCompany = ({ location }: Props) => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList.slice(1)}
+            listStatusCompanySelect={
+              comList && comList.length > 1 ? comList.slice(1) : comList
+            }
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey=""
+                defaultActiveKey={deviceList && deviceList[0] && deviceList[0]}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
@@ -537,11 +539,19 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                         }
                         isShowModalSorting={isShowModalSorting}
                         paramsSearch={paramsSearch}
-                        listInverter={deviceList.slice(1)}
+                        listInverter={
+                          deviceList && deviceList.length > 1
+                            ? deviceList.slice(1)
+                            : deviceList
+                        }
                         handleClickDetail={handleClickDetail}
                         handleChangeSearch={handleChangeSearch}
                         optionFilters={optionFilters}
-                        listStatusCompanySelect={deviceList.slice(1)}
+                        listStatusCompanySelect={
+                          deviceList && deviceList.length > 1
+                            ? deviceList.slice(1)
+                            : deviceList
+                        }
                         handleSubmitSearch={handleSubmitSearch}
                         tabActive={menuTab}
                         dateTime={{

@@ -223,11 +223,7 @@ const StatusByAreaCompany = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={
-                  comList && comList.length > 1
-                    ? ''
-                    : comList && comList[0] && comList[0].id
-                }
+                defaultActiveKey={comList && comList[0]}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

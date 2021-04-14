@@ -407,7 +407,7 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey=""
+                defaultActiveKey={comList && comList[0]}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

@@ -229,14 +229,14 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1
+          page: 1,
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1
+          page2: 1,
         });
         break;
       case 'inverter':
@@ -452,7 +452,7 @@ const OperationStatusPage = () => {
             <div className="h-100">
               <div className="h-100">
                 <Tabs
-                  defaultActiveKey=""
+                  defaultActiveKey={deviceWithtype0 && deviceWithtype0[0]}
                   className="list-order tab-list"
                   onSelect={(eventKey) => onSelect(eventKey)}
                 >
