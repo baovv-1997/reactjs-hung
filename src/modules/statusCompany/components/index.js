@@ -228,7 +228,9 @@ const StatusByAreaCompany = () => {
 
   const deviceWithtype0 =
     deviceList &&
-    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
+    deviceList
+      .filter((item) => item.ds_type === '0' || !item?.ds_type)
+      .sort((a, b) => a.id - b.id);
 
   return (
     <>
@@ -260,15 +262,15 @@ const StatusByAreaCompany = () => {
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {device?.label === '전체'
-                            ? paramsSearch?.comName
-                            : device?.id}
-
-                          <span>
-                            {device?.label === '전체'
+                          {`${
+                            device?.label === '전체'
+                              ? paramsSearch?.comName
+                              : device?.id
+                          }(${
+                            device?.label === '전체'
                               ? '전체'
-                              : device?.position?.pos_name}
-                          </span>
+                              : device?.position?.pos_name
+                          })`}
                         </div>
                       }
                       key={device.id}
