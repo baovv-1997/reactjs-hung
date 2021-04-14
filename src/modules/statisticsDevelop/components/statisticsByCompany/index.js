@@ -128,6 +128,8 @@ const OperationStatusPage = () => {
         com_id: paramsSearch?.company,
         per_page: 9999999,
         type: '0',
+        sort_dir: 'asc',
+        sort_by: 'id',
       });
     }
   }, [getDevicesCallback, paramsSearch?.company]);
