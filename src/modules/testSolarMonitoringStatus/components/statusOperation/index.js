@@ -24,9 +24,6 @@ const OperationStatusPage = () => {
   } = useSelector((state) => state?.testSolarMonitoringStatus);
 
   const [randomNumber, setRandomNumber] = useState(null);
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '2')) || [];
-
   const defaultOption = {
     id: 1,
     value: 6,
@@ -35,9 +32,7 @@ const OperationStatusPage = () => {
 
   const defaultSearch = {
     page: 1,
-    company:
-      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-      null,
+    company: null,
     page2: 1,
     PVVoltage: true,
     PVCurrent: true,
@@ -69,9 +64,24 @@ const OperationStatusPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '2',
+      })
+    );
   }, []);
-
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
   useEffect(() => {
     const interval = setInterval(() => {
       setRandomNumber(Math.random());
@@ -92,7 +102,9 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
 
   // call api getDataTrend chart
@@ -104,9 +116,11 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataTrendChart({
-      inverter_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+      });
+    }
   }, [handleGetDataTrendChart, paramsSearch?.company, randomNumber]);
 
   // call api getDataTrend table
@@ -118,11 +132,13 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      inverter_id: paramsSearch?.company,
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        inverter_id: paramsSearch?.company,
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.company,
@@ -140,11 +156,13 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTableMockup({
-      inverter_id: paramsSearch?.company,
-      per_page: paramsSearch?.pagination2?.value,
-      page: paramsSearch?.page2,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTableMockup({
+        inverter_id: paramsSearch?.company,
+        per_page: paramsSearch?.pagination2?.value,
+        page: paramsSearch?.page2,
+      });
+    }
   }, [
     handleGetDataRawTableMockup,
     paramsSearch?.company,
@@ -234,7 +252,13 @@ const OperationStatusPage = () => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listStatusCompanySelect={
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
+                id: item?.id,
+                label: item?.company.com_name,
+              }))
+            }
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

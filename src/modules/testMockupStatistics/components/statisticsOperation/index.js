@@ -42,8 +42,6 @@ const OperationStatusPage = ({ location, history }: Props) => {
   const { listInverter } = useSelector((state) => state?.account);
   const isLoading = useSelector((state) => state?.commons?.isProcessing);
   const [randomNumber, setRandomNumber] = useState(null);
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
 
   const defaultOption = {
     id: 1,
@@ -54,7 +52,10 @@ const OperationStatusPage = ({ location, history }: Props) => {
   const defaultSearch = {
     page: 1,
     company:
-      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
+      (deviceList &&
+        deviceList.slice(1) &&
+        deviceList.slice(1)[0] &&
+        deviceList.slice(1)[0].id) ||
       null,
     page2: 1,
     ACVoltage: true,
@@ -89,9 +90,25 @@ const OperationStatusPage = ({ location, history }: Props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '3',
+      })
+    );
     dispatch(CommonAction.getCompanyList());
   }, []);
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -347,7 +364,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={listInverterTest}
+            listStatusCompanySelect={deviceList && deviceList.slice(1)}
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

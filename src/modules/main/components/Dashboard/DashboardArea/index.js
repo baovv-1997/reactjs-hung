@@ -94,8 +94,6 @@ const DashboardArea = () => {
     dispatch(setCompanyId({ id }));
   };
 
-  console.log(cardMeasureArea, 'cardMeasureArea');
-
   return (
     <>
       {isLoading && <Loading />}

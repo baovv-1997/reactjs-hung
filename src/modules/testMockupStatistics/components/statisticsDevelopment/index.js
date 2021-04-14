@@ -30,18 +30,13 @@ const OperationStatusPage = () => {
     value: 5,
     label: '5 개씩 보기',
   };
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
-
   const defaultSearch = {
     page: 1,
     page2: 1,
     classification: 'minute',
     from: new Date().setDate(new Date().getDate() - 1),
     to: new Date().setDate(new Date().getDate() - 1),
-    company:
-      (listInverterTest && listInverterTest[0] && listInverterTest[0].id) ||
-      null,
+    company: null,
     power: true,
     insolation: true,
     ratio: true,
@@ -78,10 +73,25 @@ const OperationStatusPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(CommonAction.getListDevice());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '3',
+      })
+    );
     dispatch(CommonAction.getCompanyList());
   }, []);
-
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        (deviceList &&
+          deviceList.slice(1) &&
+          deviceList.slice(1)[0] &&
+          deviceList.slice(1)[0].id) ||
+        null,
+    });
+  }, [deviceList]);
   useEffect(() => {
     switch (paramsSearch?.classification) {
       case 'minute':
@@ -316,10 +326,10 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={
-              listInverterTest &&
-              listInverterTest.map((item) => ({
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
                 id: item?.id,
-                label: item?.company.com_name,
+                label: item?.company?.com_name,
               }))
             }
             subTitle={false}

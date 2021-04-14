@@ -222,7 +222,6 @@ const FormDetail = ({ accountDetail, history }: Props) => {
     }
   }, []);
 
-  console.log('currentOption', currentOption);
   return (
     <div>
       <div className="table">

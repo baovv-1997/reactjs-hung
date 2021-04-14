@@ -87,7 +87,11 @@ const StatusByAreaCompany = () => {
 
   useEffect(() => {
     if (paramsSearch?.company) {
-      getDevices({ com_id: paramsSearch?.company });
+      getDevices({
+        com_id: paramsSearch?.company,
+        per_page: 9999999,
+        type: '0',
+      });
     }
   }, [getDevices, paramsSearch?.company]);
 

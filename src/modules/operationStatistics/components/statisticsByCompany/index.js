@@ -110,10 +110,13 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     },
     [dispatch]
   );
-
   useEffect(() => {
     if (paramsSearch?.company) {
-      getDevicesCallback({ com_id: paramsSearch?.company });
+      getDevicesCallback({
+        com_id: paramsSearch?.company,
+        per_page: 9999999,
+        type: '0',
+      });
     }
   }, [getDevicesCallback, paramsSearch?.company]);
 
