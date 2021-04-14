@@ -315,7 +315,7 @@ const StatusByAreaCompany = () => {
                               value: cardInfo?.current_rad,
                             },
                             {
-                              title: '일일 최고 일사량',
+                              title: '최고 일사량',
                               value: cardInfo?.max_rad,
                             },
                           ],
