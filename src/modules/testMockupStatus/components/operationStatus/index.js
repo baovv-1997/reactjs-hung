@@ -271,12 +271,18 @@ const OperationStatusPage = ({ location }: Props) => {
     <>
       {(isProcessing || isProcessingDetail || isProcessingRaw) && <Loading />}
       <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 통계" />
+        <TitleHeader title="테스트(목업) 운영 현황" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={deviceList && deviceList.slice(1)}
+            listStatusCompanySelect={
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
+                id: item?.id,
+                label: item?.company.com_name,
+              }))
+            }
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

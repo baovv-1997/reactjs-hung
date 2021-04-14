@@ -298,7 +298,7 @@ const EventRegister = ({ location }: Props) => {
               })
             }
           >
-            수정 완료
+            완료
           </Button>
           <Button
             onClick={() => history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)}
