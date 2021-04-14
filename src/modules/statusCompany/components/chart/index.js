@@ -22,7 +22,6 @@ const LineSeriesChart = () => {
         },
         timeScale: {
           tickMarkFormatter: (time) => {
-            console.log('time', time);
             const date = new Date(time);
             return date.getHours();
           },
