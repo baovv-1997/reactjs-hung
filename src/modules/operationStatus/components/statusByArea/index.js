@@ -75,6 +75,10 @@ const OperationStatusPage = () => {
   useEffect(() => {
     getCompanyListCallback({
       pos_id: paramsSearch?.posSelected,
+      type: '0',
+      sort_dir: 'asc',
+      sort_by: 'id',
+      per_page: 999,
     });
   }, [getCompanyListCallback, paramsSearch?.posSelected]);
 
@@ -241,7 +245,7 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey=""
+                defaultActiveKey={comList && comList[0] && comList[0].id}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

@@ -460,28 +460,30 @@ const OperationStatusPage = () => {
             <div className="h-100">
               <div className="h-100">
                 <Tabs
-                  defaultActiveKey=""
+                  defaultActiveKey={
+                    deviceWithtype0 &&
+                    deviceWithtype0[0] &&
+                    deviceWithtype0[0].id
+                  }
                   className="list-order tab-list"
                   onSelect={(eventKey) => onSelect(eventKey)}
                 >
                   {deviceWithtype0 &&
-                    deviceWithtype0.map((dev) => (
+                    deviceWithtype0.map((device) => (
                       <Tab
-                        eventKey={dev.id}
+                        eventKey={device.id}
                         title={
                           <div className="tab-name">
-                            {dev?.label === '전체'
+                            {device?.label === '전체'
                               ? paramsSearch?.comName
-                              : dev?.id}
+                              : device?.position?.pos_name}
 
                             <span>
-                              {dev?.label === '전체'
-                                ? '전체'
-                                : dev?.position?.pos_name}
+                              {device?.label === '전체' ? '전체' : device?.id}
                             </span>
                           </div>
                         }
-                        key={dev.id}
+                        key={device.id}
                       >
                         <ItemContentTab
                           dataBoxContent={dataBoxContent}
@@ -565,7 +567,7 @@ const OperationStatusPage = () => {
                                     'YYYY-MM-DD'
                                   ),
                           }}
-                          id={dev?.id}
+                          id={device?.id}
                           chartData={dataChart}
                         />
                       </Tab>

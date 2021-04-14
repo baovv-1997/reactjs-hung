@@ -99,7 +99,8 @@ const commonSilice = createSlice({
         }));
       state.type = action.type;
       state.isProcessing = false;
-      state.comList = [...allOption, ...listCompany];
+      state.comList =
+        listCompany.length > 1 ? [...allOption, ...listCompany] : listCompany;
     },
     getCompanyListFailed: (state, action) => {
       state.type = action.type;
@@ -129,7 +130,8 @@ const commonSilice = createSlice({
         }));
       state.type = action.type;
       state.isProcessing = false;
-      state.deviceList = [...allOption, ...deviceList];
+      state.deviceList =
+        deviceList.length > 1 ? [...allOption, ...deviceList] : deviceList;
     },
     getListDeviceFailed: (state, action) => {
       state.type = action.type;

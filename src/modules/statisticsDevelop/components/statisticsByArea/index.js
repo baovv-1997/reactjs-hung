@@ -20,7 +20,7 @@ import {
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const { userInfo } = useSelector((state) => state.account);
+  // const { userInfo } = useSelector((state) => state.account);
   const [menuTab, setMenuTab] = useState('');
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
@@ -49,8 +49,8 @@ const OperationStatusPage = () => {
     posSelected: posList && posList[1] && posList[1].id,
     page: 1,
     classification: 'minute',
-    startDate: new Date() || null,
-    endDate: new Date() || null,
+    startDate: new Date().setDate(new Date().getDate() - 1),
+    endDate: new Date().setDate(new Date().getDate() - 1),
     vendorCompany: null,
     inverter: null,
     company: null,
@@ -88,7 +88,11 @@ const OperationStatusPage = () => {
 
   useEffect(() => {
     getListCompanyCallback({
-      com_id: userInfo?.com_id ? userInfo?.com_id : '',
+      pos_id: paramsSearch?.posSelected,
+      type: '0',
+      sort_dir: 'asc',
+      sort_by: 'id',
+      per_page: 999,
     });
   }, [getListCompanyCallback]);
 
@@ -413,7 +417,7 @@ const OperationStatusPage = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey=""
+                defaultActiveKey={comList && comList[0] && comList[0].id}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >

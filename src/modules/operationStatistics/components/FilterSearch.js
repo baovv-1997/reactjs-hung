@@ -105,7 +105,7 @@ export const FilterSearch = ({
                   noOptionsMessage={() => '옵션 없음'}
                   disabled={
                     (paramsSearch?.inverter1 !== null && activeTab !== '') ||
-                    listInverter1.length === 0
+                    listInverter1.length < 2
                   }
                 />
               </div>
@@ -122,7 +122,7 @@ export const FilterSearch = ({
                   onChange={(option) => handleChangeSearch(option, 'inverter')}
                   option={paramsSearch?.inverter || null}
                   noOptionsMessage={() => '옵션 없음'}
-                  disabled={listInverter.length === 0}
+                  disabled={listInverter.length < 2}
                 />
               </div>
               <div className="title-label">검색기간</div>

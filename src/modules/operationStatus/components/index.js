@@ -102,8 +102,14 @@ const OperationStatusPage = ({ location }: Props) => {
   useEffect(() => {
     setParamsSearch({
       ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
-      comName: comList && comList[1] && comList[1].com_name,
+      company:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].id
+          : comList && comList[0] && comList[0].id,
+      comName:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].com_name
+          : comList && comList[0] && comList[0].com_name,
     });
   }, [comList]);
 
@@ -340,9 +346,7 @@ const OperationStatusPage = ({ location }: Props) => {
       comName: paramsSearch?.comName,
     });
   };
-  const deviceWithtype0 =
-    deviceList &&
-    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
+
   return (
     <div>
       {(isProcessing || isProcessingDetail || isProcessingTrend) && <Loading />}
@@ -353,32 +357,34 @@ const OperationStatusPage = ({ location }: Props) => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList.slice(1)}
+            listStatusCompanySelect={
+              comList && comList.length > 1 ? comList.slice(1) : comList
+            }
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
                 // set active tab
-                defaultActiveKey=""
+                defaultActiveKey={
+                  deviceList && deviceList[0] && deviceList[0].id
+                }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                {deviceWithtype0 &&
-                  deviceWithtype0.length > 0 &&
-                  deviceWithtype0.map((device) => (
+                {deviceList &&
+                  deviceList.length > 0 &&
+                  deviceList.map((device) => (
                     <Tab
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
                           {device?.label === '전체'
                             ? paramsSearch?.comName
-                            : device?.id}
+                            : device?.position?.pos_name}
 
                           <span>
-                            {device?.label === '전체'
-                              ? '전체'
-                              : device?.position?.pos_name}
+                            {device?.label === '전체' ? '전체' : device?.id}
                           </span>
                         </div>
                       }
