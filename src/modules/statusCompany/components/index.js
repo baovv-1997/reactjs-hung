@@ -4,7 +4,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import moment from 'moment';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listParkingLot, listMockupType } from 'mockData/listCompany';
 import { getCompanyList, getListDevice } from 'commons/redux';
@@ -283,31 +282,7 @@ const StatusByAreaCompany = () => {
                     >
                       <ItemContentTab
                         chartData={chartData}
-                        rawData={
-                          rawData &&
-                          rawData.map((raw, index) => ({
-                            rowId:
-                              `${
-                                totalRawData -
-                                (paramsSearch?.page - 1) *
-                                  paramsSearch.pagination.value -
-                                index
-                              }` || '',
-                            dateTime: moment(raw.dm_datetime).format(
-                              'YYYY-MM-DD HH:mm:ss'
-                            ),
-                            comName: raw?.com_name,
-                            inverterID: raw?.ds_id,
-                            installationLocation: raw?.pos_name,
-                            inverterName: raw?.ds_name,
-                            moduleTemperature: `${raw?.dm_module_temp}℃`,
-                            outsideTemperature: `${raw?.dm_env_temp}℃`,
-                            gradientInsolation: `${raw?.dm_rad}W/㎡`,
-                            powerGeneration: `${raw?.dm_prod}kWh`,
-                            cumulativePowerGeneration: `${raw?.dm_prod_sum}kW`,
-                            rateOfPowerGeneration: `${raw?.dm_performance_ratio}%`,
-                          }))
-                        }
+                        rawData={rawData || []}
                         powerData={{
                           type: 'power',
                           data: [

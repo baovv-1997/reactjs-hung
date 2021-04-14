@@ -15,6 +15,7 @@ import * as SignInAction from 'modules/accounts/redux';
 import * as EventAction from 'commons/redux';
 import { useHistory } from 'react-router-dom';
 import { getEventList, updateEvent } from 'commons/redux';
+import { ROLE_COMPANY, ROLE_ADMIN } from 'constants/index';
 
 type Props = {
   match: {
@@ -242,8 +243,8 @@ const EditEvent = ({ match, location }: Props) => {
                   labelRadio="설비 이력"
                   id="event"
                   disabled={
-                    (roleName !== 'admin' && eventList?.evt_type === '0') ||
-                    (roleName !== 'company' &&
+                    (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
+                    (roleName !== ROLE_COMPANY &&
                       userId !== eventList?.user_id &&
                       eventList?.evt_type === '0')
                   }
@@ -260,8 +261,8 @@ const EditEvent = ({ match, location }: Props) => {
                   name="typeEvent"
                   id="history"
                   disabled={
-                    (roleName !== 'admin' && eventList?.evt_type === '0') ||
-                    (roleName !== 'company' &&
+                    (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
+                    (roleName !== ROLE_COMPANY &&
                       userId !== eventList?.user_id &&
                       eventList?.evt_type === '0')
                   }
@@ -283,9 +284,9 @@ const EditEvent = ({ match, location }: Props) => {
                         option={company || null}
                         noOptionsMessage={() => '옵션 없음'}
                         disabled={
-                          (roleName !== 'admin' &&
+                          (roleName !== ROLE_ADMIN &&
                             eventList?.evt_type === '0') ||
-                          (roleName !== 'company' &&
+                          (roleName !== ROLE_COMPANY &&
                             userId !== eventList?.user_id &&
                             eventList?.evt_type === '0')
                         }
@@ -302,9 +303,9 @@ const EditEvent = ({ match, location }: Props) => {
                         option={area || null}
                         noOptionsMessage={() => '옵션 없음'}
                         disabled={
-                          (roleName !== 'admin' &&
+                          (roleName !== ROLE_ADMIN &&
                             eventList?.evt_type === '0') ||
-                          (roleName !== 'company' &&
+                          (roleName !== ROLE_COMPANY &&
                             userId !== eventList?.user_id &&
                             eventList?.evt_type === '0')
                         }
@@ -325,8 +326,9 @@ const EditEvent = ({ match, location }: Props) => {
                       option={inverter || null}
                       noOptionsMessage={() => '옵션 없음'}
                       disabled={
-                        (roleName !== 'admin' && eventList?.evt_type === '0') ||
-                        (roleName !== 'company' &&
+                        (roleName !== ROLE_ADMIN &&
+                          eventList?.evt_type === '0') ||
+                        (roleName !== ROLE_COMPANY &&
                           userId !== eventList?.user_id &&
                           eventList?.evt_type === '0')
                       }
@@ -347,8 +349,8 @@ const EditEvent = ({ match, location }: Props) => {
                 className="form-control"
                 value={content}
                 disabled={
-                  (roleName !== 'admin' && eventList?.evt_type === '0') ||
-                  (roleName !== 'company' &&
+                  (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
+                  (roleName !== ROLE_COMPANY &&
                     userId !== eventList?.user_id &&
                     eventList?.evt_type === '0')
                 }
@@ -366,8 +368,8 @@ const EditEvent = ({ match, location }: Props) => {
               })
             }
             isDisabled={
-              (roleName !== 'admin' && eventList?.evt_type === '0') ||
-              (roleName !== 'company' &&
+              (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
+              (roleName !== ROLE_COMPANY &&
                 userId !== eventList?.user_id &&
                 eventList?.evt_type === '0')
             }

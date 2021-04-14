@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import { getEventList, deleteEvent } from 'commons/redux';
 import { getEventNotification } from 'modules/accounts/redux';
+import { ROLE_COMPANY, ROLE_ADMIN } from 'constants/index';
 
 type Props = {
   match: {
@@ -122,8 +123,8 @@ const EventDetail = ({ match, location }: Props) => {
           </div>
         </div>
         <div className="group-btn-delete text-right mb-4">
-          {((roleName === 'admin' && eventList?.evt_type !== '0') ||
-            (roleName === 'company' &&
+          {((roleName === ROLE_ADMIN && eventList?.evt_type !== '0') ||
+            (roleName === ROLE_COMPANY &&
               userId === eventList?.user_id &&
               eventList?.evt_type !== '0')) && (
             <Button
@@ -140,8 +141,8 @@ const EventDetail = ({ match, location }: Props) => {
           )}
         </div>
         <div className="group-btn-bottom">
-          {((roleName === 'admin' && eventList?.evt_type !== '0') ||
-            (roleName === 'company' &&
+          {((roleName === ROLE_ADMIN && eventList?.evt_type !== '0') ||
+            (roleName === ROLE_COMPANY &&
               userId === eventList?.user_id &&
               eventList?.evt_type !== '0')) && (
             <Button

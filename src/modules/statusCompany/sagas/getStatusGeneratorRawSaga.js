@@ -10,7 +10,11 @@ function* getStatusGeneratorRaw(action) {
     if (response.ok) {
       const { data } = response;
 
-      yield put({ type: 'statusCompany/getStatusGeneratorRawSuccess', data });
+      yield put({
+        type: 'statusCompany/getStatusGeneratorRawSuccess',
+        data,
+        params: action.payload,
+      });
     } else {
       yield put({
         type: 'statusCompany/getStatusGeneratorRawFailed',

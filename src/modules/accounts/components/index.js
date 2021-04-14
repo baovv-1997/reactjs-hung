@@ -11,6 +11,7 @@ import ROUTERS from 'constants/routers';
 import { listType } from 'constants/listKey';
 import SignIn from './signIn';
 import * as SignInAction from '../redux';
+import { ROLE_COMPANY } from 'constants/index';
 
 const SignUp = () => {
   const history = useHistory();
@@ -327,7 +328,7 @@ const SignUp = () => {
         item.type === null || item.company === null || item.inverter === null
     );
 
-    if (role === 'company' && checkValidator && checkValidator.length > 0) {
+    if (role === ROLE_COMPANY && checkValidator && checkValidator.length > 0) {
       setModalLogin({
         ...modalLogin,
         isShow: true,

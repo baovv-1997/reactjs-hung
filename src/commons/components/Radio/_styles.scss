@@ -38,6 +38,10 @@
     color: $black-active;
   }
 
+  input:disabled~.checkmark {
+    opacity: 0.6;
+  }
+
   &:hover input~.checkmark {
     background-color: $white;
   }

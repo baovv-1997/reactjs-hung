@@ -11,6 +11,7 @@ import { DASHBOARD, SETUP, MOCKUP } from 'constants/listMenu';
 import IMAGES from 'themes/images';
 import { Button } from 'commons/components/Button';
 import MenuItem from './MenuItem';
+import { ROLE_ADMIN, ROLE_COMPANY } from 'constants/index';
 
 type Props = {
   location: {
@@ -88,7 +89,7 @@ const Menu = ({ location }: Props) => {
         </div>
         <ul className="menu__list">{renderMenuList(MOCKUP)}</ul>
 
-        {(roleName === 'admin' || roleName === 'company') && (
+        {(roleName === ROLE_ADMIN || roleName === ROLE_COMPANY) && (
           <>
             <div className="menu__line"> </div>
             <div className="menu__wraper-head">

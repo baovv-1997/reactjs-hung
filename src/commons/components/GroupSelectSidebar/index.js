@@ -32,7 +32,6 @@ export const GroupSelect = ({
   handleChangeSearch,
   subTitle = true,
 }: Props) => {
-  console.log(paramsSearch?.company, 'paramsSearch?.company');
   const renderListCompany =
     listStatusCompanySelect &&
     listStatusCompanySelect.map((item) => (

@@ -6,6 +6,8 @@ import { isNumberKey, isOnPasteNumber } from 'helpers/index';
 import ItemDevice from './ItemDevice';
 import Loading from 'commons/components/Loading';
 import { Button } from 'commons/components/Button';
+import { ROLE_COMPANY } from 'constants/index';
+import { ROLE_ADMIN } from 'constants/index';
 
 type Props = {
   dataRegister: Object,
@@ -91,14 +93,14 @@ const SignIn = ({
               <div className="group-radio">
                 <Radio
                   onChange={() => handleChangeRegister('admin', 'admin')}
-                  isChecked={role === 'admin'}
+                  isChecked={role === ROLE_ADMIN}
                   name="role"
                   labelRadio="최고 관리자"
                   id="admin"
                 />
                 <Radio
                   onChange={() => handleChangeRegister('company', 'company')}
-                  isChecked={role === 'company'}
+                  isChecked={role === ROLE_COMPANY}
                   labelRadio="업체"
                   name="role"
                   id="company"
@@ -187,7 +189,7 @@ const SignIn = ({
             </div>
           </div>
 
-          <div className={`item ${role !== 'company' ? 'disabled' : ''}`}>
+          <div className={`item ${role !== ROLE_COMPANY ? 'disabled' : ''}`}>
             <div className="item-label">
               관리기기<span>*</span>
             </div>
@@ -196,7 +198,7 @@ const SignIn = ({
               <div className="mt-2 text-left">
                 <Button
                   onClick={handleAddListDevice}
-                  isDisabled={role !== 'company'}
+                  isDisabled={role !== ROLE_COMPANY}
                 >
                   추가
                 </Button>
