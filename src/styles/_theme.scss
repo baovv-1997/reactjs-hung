@@ -342,3 +342,31 @@ button.h-32 {
     }
   }
 }
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+
+  .react-datepicker__navigation--previous {
+    left: 10px;
+    border-right-color: #ccc;
+
+    &:focus {
+      border: 0.45rem solid transparent;
+      box-shadow: none;
+      border-left-color: #ccc;
+
+    }
+  }
+
+  .react-datepicker__navigation--next {
+    right: 10px;
+    border-left-color: #ccc;
+
+    &:focus {
+      border: 0.45rem solid transparent;
+      box-shadow: none;
+      border-left-color: #ccc;
+
+    }
+  }
+}

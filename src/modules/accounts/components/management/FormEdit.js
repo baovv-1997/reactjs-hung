@@ -346,7 +346,8 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           history.push(ROUTERS.ACCOUNT_MANAGEMENT);
         }}
       >
-        취소 시 수정 내역은 전부 사라집니다. 그래도 취소하시겠습니까?.
+        취소 시 수정 내역은 전부 사라집니다.
+        <br /> 그래도 취소하시겠습니까?
       </ModalPopup>
       <ModalPopup
         isOpen={isUpdateFailed}
