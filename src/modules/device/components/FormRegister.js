@@ -19,6 +19,7 @@ import {
   getListCompany,
   getListPosition,
 } from '../redux';
+import { ROLE_COMPANY } from 'constants/index';
 
 type Props = {
   history: {
@@ -65,7 +66,7 @@ const FormRegister = ({ history }: Props) => {
     dispatch(
       getListPosition({
         per_page: 9999,
-        com_id: roleName === 'company' ? userInfo?.com_id : '',
+        com_id: roleName === ROLE_COMPANY ? userInfo?.com_id : '',
       })
     );
   }, []);

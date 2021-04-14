@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import moment from 'moment';
+import moment from 'moment';
 
 const statusCompanySlide = createSlice({
   name: 'statusCompany',
@@ -46,12 +46,37 @@ const statusCompanySlide = createSlice({
       state.isProcessingRaw = true;
     },
     getStatusGeneratorRawSuccess: (state, action) => {
-      const { data } = action.data;
+      const { params } = action;
+      const { data } = action?.data;
+      const dataTable =
+        data &&
+        data.map((item, index) => ({
+          rowId:
+            `${
+              action?.data?.total -
+              (parseInt(params?.page, 10) - 1) * parseInt(params.per_page, 10) -
+              index
+            }` || '',
+          dateTime:
+            (item.dm_datetime &&
+              moment(item.dm_datetime).format('YYYY-MM-DD HH:mm:ss')) ||
+            '',
+          comName: item?.com_name,
+          inverterID: item?.ds_id,
+          installationLocation: item?.pos_name,
+          inverterName: item?.ds_name,
+          moduleTemperature: `${item?.dm_module_temp}℃`,
+          outsideTemperature: `${item?.dm_env_temp}℃`,
+          gradientInsolation: `${item?.dm_rad}W/㎡`,
+          powerGeneration: `${item?.dm_prod}kWh`,
+          cumulativePowerGeneration: `${item?.dm_prod_sum}kW`,
+          rateOfPowerGeneration: `${item?.dm_performance_ratio}%`,
+        }));
 
       state.type = action.type;
       state.isProcessingRaw = false;
-      state.rawData = data;
-      state.totalRawData = action.data.total;
+      state.rawData = dataTable;
+      state.totalRawData = action?.data?.total;
     },
     getStatusGeneratorRawFailed: (state, action) => {
       state.type = action.type;

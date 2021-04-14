@@ -6,5 +6,7 @@ const CONTRACT_FORMAT_TIME_CHART = {
   day: 'hours',
   month: 'days',
 };
+const ROLE_ADMIN = 'admin';
+const ROLE_COMPANY = 'company';
 
-export { TIME_REQUEST, CONTRACT_FORMAT_TIME_CHART };
+export { TIME_REQUEST, CONTRACT_FORMAT_TIME_CHART, ROLE_ADMIN, ROLE_COMPANY };

@@ -21,6 +21,7 @@ import {
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from './GroupActionDownload';
+import { ROLE_COMPANY, ROLE_ADMIN } from 'constants/index';
 
 type Props = {
   listMockupDataCompany: any,
@@ -222,7 +223,7 @@ const ItemContentTab = ({
         listOption={operator_event_filter}
         optionDefault={optionFilters}
       />
-      {(roles === 'admin' || roles === 'company') && (
+      {(roles === ROLE_ADMIN || roles === ROLE_COMPANY) && (
         <div className="group-btn-register text-right">
           <Button onClick={() => history.push(`${ROUTERS.EVENT}/register`)}>
             등록

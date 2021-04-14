@@ -14,6 +14,7 @@ import Table from 'commons/components/Table';
 import { DEVICE_HEAD_TABLE } from 'constants/tableHeadData';
 import Loading from 'commons/components/Loading';
 import { getListCompany, getListDevice, getListPosition } from '../redux';
+import { ROLE_COMPANY } from 'constants/index';
 
 type Props = {
   history: {
@@ -47,7 +48,7 @@ const DeviceManagement = ({ history }: Props) => {
     dispatch(
       getListPosition({
         per_page: 9999,
-        com_id: roleName === 'company' ? userInfo?.com_id : '',
+        com_id: roleName === ROLE_COMPANY ? userInfo?.com_id : '',
       })
     );
   }, []);
@@ -57,7 +58,7 @@ const DeviceManagement = ({ history }: Props) => {
       getListDevice({
         [currentOption]: selectOption?.value,
         page: 1,
-        com_id: roleName === 'company' ? userInfo?.com_id : '',
+        com_id: roleName === ROLE_COMPANY ? userInfo?.com_id : '',
         per_page: 16,
       })
     );
@@ -117,7 +118,7 @@ const DeviceManagement = ({ history }: Props) => {
     switch (currentOption) {
       case 'all':
         listOptions =
-          roleName === 'company'
+          roleName === ROLE_COMPANY
             ? posOptionList
             : [...companyOptions, ...posOptionList];
         break;
@@ -171,7 +172,7 @@ const DeviceManagement = ({ history }: Props) => {
             </span>
           </div>
           <div className="wrapper-device__head-menu__search">
-            {roleName !== 'company' && (
+            {roleName !== ROLE_COMPANY && (
               <div className="wrapper-device__head-menu__search__options">
                 <p className="search-option-title">분류</p>{' '}
                 <span className="search-option-character">|</span>{' '}

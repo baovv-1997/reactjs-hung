@@ -12,6 +12,7 @@ import ModalPopup from 'commons/components/Modal';
 import { getListCompany, getListPosition } from '../../../device/redux';
 import { updateAccount, resetAccountType } from '../../redux';
 import DeviceMaintain from './DeviceMaintain';
+import { ROLE_COMPANY, ROLE_ADMIN } from 'constants/index';
 
 type Props = {
   accountDetail: {
@@ -31,8 +32,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
   const dispatch = useDispatch();
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
-  const errors = useSelector((state) => state?.account?.errors);
-  const type = useSelector((state) => state?.account?.type);
+  const { type, errors, userInfo } = useSelector((state) => state?.account);
   const [currentOption, setCurrentOption] = useState('admin');
   const [isUpdateFailed, setIsUpdateFailed] = useState(false);
   const [isCancel, setIsCancel] = useState(false);
@@ -40,7 +40,8 @@ const FormDetail = ({ accountDetail, history }: Props) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [devices, setDevices] = useState([]);
   const [comSelected, setComSelected] = useState({});
-
+  // const comID = userInfo?.com_id;
+  const roles = userInfo?.roles?.name;
   const [inputValue, setInputValue] = useState({
     name: accountDetail?.name,
     phone: accountDetail?.phone,
@@ -88,7 +89,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           : item
       );
     setDevices(listDeviceUpdate);
-    if (name === 'company') {
+    if (name === ROLE_COMPANY) {
       dispatch(
         getListPosition({
           com_id: option.value,
@@ -107,6 +108,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         onChange={onChangeOption}
         isChecked={currentOption === item.key}
         labelRadio={item.label}
+        disabled={roles !== ROLE_ADMIN}
       />
     ));
 
@@ -227,7 +229,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
       <div className="table">
         <div className="row">
           <div className="col-2">권한</div>
-          <div className="col-4">
+          <div className={`col-4 ${roles !== ROLE_ADMIN ? 'disable' : ''} `}>
             <div className="wrapper-radio">{renderRadioList}</div>
           </div>
           <div className="col-2">전화번호</div>
@@ -302,7 +304,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
               <Button
                 onClick={handleAddNewDevice}
                 customClass="btn-add-device mb-2"
-                isDisabled={currentOption !== 'company'}
+                isDisabled={currentOption !== ROLE_COMPANY}
               >
                 추가
               </Button>
