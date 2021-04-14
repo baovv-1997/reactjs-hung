@@ -48,10 +48,8 @@ const EditEvent = ({ match, location }: Props) => {
     userInfo.roles[0] &&
     userInfo.roles[0] &&
     userInfo.roles[0].name;
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
-  const listInverterSolar =
-    (deviceList && deviceList.filter((item) => item.ds_type === '0')) || [];
+
+  const listInverterSolar = (deviceList && deviceList.slice(1)) || [];
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -71,27 +69,41 @@ const EditEvent = ({ match, location }: Props) => {
   });
 
   useEffect(() => {
-    dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
+    if (eventList?.ds_type === '1' || eventList?.ds_type === '2') {
+      dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
+    }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    dispatch(
-      EventAction.getListDevice({
-        per_page: 999999,
-        com_id: dataSubmit?.company?.value,
-        pos_id: dataSubmit?.area?.value,
-      })
-    );
+    if (eventList?.ds_type === '1' || eventList?.ds_type === '2') {
+      dispatch(
+        EventAction.getListDevice({
+          per_page: 999999,
+          com_id: dataSubmit?.company?.value,
+          pos_id: dataSubmit?.area?.value,
+          type: '0',
+        })
+      );
+    } else {
+      dispatch(
+        EventAction.getListDevice({
+          per_page: 999999,
+          type: '3',
+        })
+      );
+    }
   }, [dataSubmit?.company, dataSubmit?.area]);
 
   useEffect(() => {
-    dispatch(
-      EventAction.getPosList({
-        per_page: 99999999,
-        com_id: dataSubmit?.company?.value,
-      })
-    );
+    if (eventList?.ds_type === '1' || eventList?.ds_type === '2') {
+      dispatch(
+        EventAction.getPosList({
+          per_page: 99999999,
+          com_id: dataSubmit?.company?.value,
+        })
+      );
+    }
   }, [dataSubmit?.company]);
 
   const { typeEvent, content, company, area, inverter } = dataSubmit;
@@ -204,7 +216,6 @@ const EditEvent = ({ match, location }: Props) => {
     });
   }, [eventList]);
 
-  console.log(eventList, 'eventList');
   return (
     <>
       {isProcessingDetail && <Loading />}
@@ -306,8 +317,8 @@ const EditEvent = ({ match, location }: Props) => {
                     <SelectDropdown
                       placeholder="모듈 선택"
                       listItem={
-                        eventList?.ds_type === '3'
-                          ? listInverterTest
+                        eventList?.evt_type === '3'
+                          ? listInverterSolar
                           : (area && listInverterSolar) || []
                       }
                       onChange={(option) => handleChange(option, 'inverter')}

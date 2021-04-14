@@ -34,10 +34,8 @@ const EventRegister = ({ location }: Props) => {
   const { type, deviceList, comList, posList } = useSelector(
     (state) => state.commons
   );
-  const listInverterTest =
-    (deviceList && deviceList.filter((item) => item.ds_type === '3')) || [];
-  const listInverterSolar =
-    (deviceList && deviceList.filter((item) => item.ds_type === '0')) || [];
+  const listInverterSolar = deviceList && deviceList.slice(1);
+
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
@@ -57,18 +55,28 @@ const EventRegister = ({ location }: Props) => {
   });
 
   useEffect(() => {
-    dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
+    if (stateTypeEvent !== 'mockup') {
+      dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
+    }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    dispatch(
+    if (stateTypeEvent === 'mockup') {
+      dispatch(
+        EventAction.getListDevice({
+          per_page: 999999,
+          type: '3',
+        })
+      );
+    } else {
       EventAction.getListDevice({
         per_page: 999999,
         com_id: dataSubmit?.company?.value,
         pos_id: dataSubmit?.area?.value,
-      })
-    );
+        type: '0',
+      });
+    }
   }, [dataSubmit?.company, dataSubmit?.area]);
 
   useEffect(() => {
@@ -254,7 +262,7 @@ const EventRegister = ({ location }: Props) => {
                       placeholder="모듈 선택"
                       listItem={
                         stateTypeEvent === 'mockup'
-                          ? listInverterTest
+                          ? listInverterSolar
                           : (area && listInverterSolar) || []
                       }
                       onChange={(option) => handleChange(option, 'inverter')}
