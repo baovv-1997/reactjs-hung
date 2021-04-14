@@ -171,8 +171,14 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   useEffect(() => {
     setParamsSearch({
       ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
-      comName: comList && comList[1] && comList[1].com_name,
+      company:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].id
+          : comList && comList[0] && comList[0].id,
+      comName:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].com_name
+          : comList && comList[0] && comList[0].com_name,
     });
   }, [comList]);
   /**
@@ -469,28 +475,28 @@ const OperatorStatisticCompany = ({ location }: Props) => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={deviceList && deviceList[0] && deviceList[0]}
+                defaultActiveKey={
+                  deviceList && deviceList[0] && deviceList[0].id
+                }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
                 {deviceList &&
-                  deviceList.map((dev) => (
+                  deviceList.map((device) => (
                     <Tab
-                      eventKey={dev.id}
+                      eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {dev?.label === '전체'
+                          {device?.label === '전체'
                             ? paramsSearch?.comName
-                            : dev?.id}
+                            : device?.position?.pos_name}
 
                           <span>
-                            {dev?.label === '전체'
-                              ? '전체'
-                              : dev?.position?.pos_name}
+                            {device?.label === '전체' ? '전체' : device?.id}
                           </span>
                         </div>
                       }
-                      key={dev.id}
+                      key={device.id}
                     >
                       <ItemContentTab
                         dataBoxContent={dataBoxContent}
@@ -577,7 +583,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                                 ),
                         }}
                         chartData={chartData}
-                        id={dev.id}
+                        id={device.id}
                       />
                     </Tab>
                   ))}

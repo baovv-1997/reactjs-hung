@@ -69,8 +69,15 @@ const StatusByAreaCompany = () => {
   useEffect(() => {
     setParamsSearch({
       ...paramsSearch,
-      company: companyId || (comList && comList[1] && comList[1].id),
-      comName: comList && comList[1] && comList[1].com_name,
+      company:
+        companyId || (comList && comList.length > 1)
+          ? comList && comList[1] && comList[1].id
+          : comList && comList[0] && comList[0].id,
+
+      comName:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].com_name
+          : comList && comList[0] && comList[0].com_name,
     });
   }, [comList]);
 
@@ -231,12 +238,6 @@ const StatusByAreaCompany = () => {
     });
   };
 
-  const deviceWithtype0 =
-    deviceList &&
-    deviceList
-      .filter((item) => item.ds_type === '0' || !item?.ds_type)
-      .sort((a, b) => a.id - b.id);
-
   return (
     <>
       {(isProcessing || isProcessingCommons || isProcessingRaw) && <Loading />}
@@ -247,31 +248,33 @@ const StatusByAreaCompany = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList.slice(1)}
+            listStatusCompanySelect={
+              comList.length > 1 ? comList.slice(1) : comList
+            }
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={deviceList[0]}
+                defaultActiveKey={
+                  deviceList && deviceList[0] && deviceList[0].id
+                }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
-                {deviceWithtype0 &&
-                  deviceWithtype0.map((device) => (
+                {deviceList &&
+                  deviceList.map((device) => (
                     <Tab
                       eventKey={device.id}
                       title={
                         <div className="tab-name">
-                          {`${
-                            device?.label === '전체'
-                              ? paramsSearch?.comName
-                              : device?.id
-                          }(${
-                            device?.label === '전체'
-                              ? '전체'
-                              : device?.position?.pos_name
-                          })`}
+                          {device?.label === '전체'
+                            ? paramsSearch?.comName
+                            : device?.position?.pos_name}
+
+                          <span>
+                            {device?.label === '전체' ? '전체' : device?.id}
+                          </span>
                         </div>
                       }
                       key={device.id}

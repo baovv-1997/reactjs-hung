@@ -25,6 +25,9 @@ const StatusByAreaCompany = () => {
   const isProcessingCommons = useSelector(
     (state) => state?.commons?.isProcessing
   );
+
+  const { userInfo } = useSelector((state) => state.account);
+
   const {
     totalRawData,
     rawData,
@@ -57,20 +60,19 @@ const StatusByAreaCompany = () => {
    * get position list list
    */
   const getPosListCallback = useCallback(() => {
-    dispatch(getPosList());
+    dispatch(
+      getPosList({
+        com_id: userInfo?.com_id ? userInfo?.com_id : '',
+      })
+    );
   }, [dispatch]);
 
   useEffect(() => {
-    getPosListCallback();
+    getPosListCallback({
+      com_id: userInfo && userInfo.com_id ? userInfo.com_id : '',
+    });
   }, [getPosListCallback]);
 
-  useEffect(() => {
-    setParamsSearch({
-      ...paramsSearch,
-      posSelected: posList && posList[1] && posList[1].id,
-      posName: posList && posList[1] && posList[1].pos_name,
-    });
-  }, [posList]);
   /**
    * get company list list
    */
@@ -85,6 +87,10 @@ const StatusByAreaCompany = () => {
     if (paramsSearch?.posSelected) {
       getCompanyListCallback({
         pos_id: paramsSearch?.posSelected,
+        per_page: 9999999,
+        type: '0',
+        sort_dir: 'asc',
+        sort_by: 'id',
       });
     }
   }, [getCompanyListCallback, paramsSearch?.posSelected]);
@@ -210,6 +216,14 @@ const StatusByAreaCompany = () => {
     });
   };
 
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      posSelected: posList && posList[1] && posList[1].id,
+      posName: posList && posList[1] && posList[1].pos_name,
+    });
+  }, [posList]);
+  console.log('comList[0]', comList[0]);
   return (
     <>
       {(isProcessingCommons || isProcessing || isProcessingRaw) && <Loading />}
@@ -226,7 +240,7 @@ const StatusByAreaCompany = () => {
           <div className="content-body-left w-100">
             <div className="h-100">
               <Tabs
-                defaultActiveKey={comList && comList[0]}
+                defaultActiveKey={comList && comList[0] && comList[0].id}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
               >
