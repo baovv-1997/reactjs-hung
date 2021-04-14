@@ -367,7 +367,13 @@ const OperationStatusPage = ({ location, history }: Props) => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={deviceList && deviceList.slice(1)}
+            listStatusCompanySelect={
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
+                id: item?.id,
+                label: item?.company?.com_name,
+              }))
+            }
             subTitle={false}
           />
           <div className="content-body-left w-100 border-pd-20">

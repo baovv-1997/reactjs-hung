@@ -320,7 +320,7 @@ const OperationStatusPage = () => {
     <>
       {(isProcessing || isProcessingRaw || isLoading) && <Loading />}
       <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 발전 통계" />
+        <TitleHeader title="테스트(목업) 발전 통계" />
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}

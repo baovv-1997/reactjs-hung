@@ -13,6 +13,7 @@ const statusCompanySlide = createSlice({
     rawData: [],
     cardInfo: {},
     chartData: [],
+    totalRawData: 0,
   },
 
   reducers: {
