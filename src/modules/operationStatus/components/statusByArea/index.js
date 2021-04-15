@@ -15,6 +15,8 @@ import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
+  const { userInfo } = useSelector((state) => state.account);
+
   const { posList, comList, isProcessingCompany } = useSelector(
     (state) => state?.commons
   );
@@ -51,12 +53,21 @@ const OperationStatusPage = () => {
   /**
    * get position list list
    */
-  const getPosListCallback = useCallback(() => {
-    dispatch(getPosList());
-  }, [dispatch]);
+  const getPosListCallback = useCallback(
+    (params) => {
+      dispatch(getPosList(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getPosListCallback();
+    getPosListCallback({
+      com_id: userInfo?.com_id ? userInfo?.com_id : '',
+      type: '0',
+      sort_dir: 'asc',
+      sort_by: 'id',
+      per_page: 999,
+    });
   }, [getPosListCallback]);
 
   /**

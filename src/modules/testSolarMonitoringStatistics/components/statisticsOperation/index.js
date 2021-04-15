@@ -95,13 +95,12 @@ const OperationStatusPage = ({ location, history }: Props) => {
     setParamsSearch({
       ...paramsSearch,
       company:
-        (deviceList &&
-          deviceList.slice(1) &&
-          deviceList.slice(1)[0] &&
-          deviceList.slice(1)[0].id) ||
-        null,
+        deviceList && deviceList.length > 1
+          ? deviceList && deviceList[1] && deviceList[1].id
+          : deviceList && deviceList[0] && deviceList[0].id,
     });
   }, [deviceList]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setRandomNumber(Math.random());
@@ -371,11 +370,12 @@ const OperationStatusPage = ({ location, history }: Props) => {
           handleChangeSearch={handleChangeSearch}
           paramsSearch={paramsSearch}
           listStatusCompanySelect={
-            deviceList &&
-            deviceList.slice(1).map((item) => ({
-              id: item?.id,
-              label: item?.company?.com_name,
-            }))
+            deviceList && deviceList.length > 1
+              ? deviceList.slice(1).map((item) => ({
+                  id: item?.id,
+                  label: item?.company?.com_name,
+                }))
+              : deviceList
           }
           subTitle={false}
           isProcessing={isProcessing}
