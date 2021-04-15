@@ -10,6 +10,7 @@ import { formatValue } from 'helpers/';
 import IMAGES from 'themes/images';
 import { getListCompany, getListPosition } from '../../../device/redux';
 import { resetAccountType, deleteAccount } from '../../redux';
+import { ROLE_ADMIN } from 'constants/index';
 
 type Props = {
   accountDetail: {
@@ -139,14 +140,19 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         </div>
 
         <div className="account__btn-group">
-          <Button
-            customClass="btn-delete"
-            onClick={() => {
-              setIsDelete(true);
-            }}
-          >
-            삭제
-          </Button>
+          {accountDetail &&
+            accountDetail.roles &&
+            accountDetail.roles[0] &&
+            accountDetail?.roles[0] === ROLE_ADMIN && (
+              <Button
+                customClass="btn-delete"
+                onClick={() => {
+                  setIsDelete(true);
+                }}
+              >
+                삭제
+              </Button>
+            )}
           <Button
             customClass="btn-modify"
             onClick={() => {

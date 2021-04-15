@@ -98,22 +98,26 @@ const EventDetail = ({ match, location }: Props) => {
           <div className="item-row d-flex">
             <div className="colum-left">모듈정보</div>
             <div className="colum-right">
-              <span>{eventList?.com_name}</span>
-              {eventList?.com_name && eventList?.pos_name && (
-                <img
-                  src={images.arrow_right}
-                  alt=""
-                  className="mx-2 position-top-1"
-                />
-              )}
-              <span>{eventList?.pos_name}</span>
-              {eventList?.com_name && eventList?.pos_name && (
-                <img
-                  src={images.arrow_right}
-                  alt=""
-                  className="mx-2 position-top-1"
-                />
-              )}
+              {eventList?.ds_type !== '3' && <span>{eventList?.com_name}</span>}
+              {eventList?.com_name &&
+                eventList?.pos_name &&
+                eventList?.ds_type !== '3' && (
+                  <img
+                    src={images.arrow_right}
+                    alt=""
+                    className="mx-2 position-top-1"
+                  />
+                )}
+              {eventList?.ds_type !== '3' && <span>{eventList?.pos_name}</span>}
+              {eventList?.com_name &&
+                eventList?.pos_name &&
+                eventList?.ds_type !== '3' && (
+                  <img
+                    src={images.arrow_right}
+                    alt=""
+                    className="mx-2 position-top-1"
+                  />
+                )}
               <span>{eventList?.ds_name}</span>
             </div>
           </div>
