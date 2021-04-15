@@ -89,6 +89,8 @@ const EventDetail = ({ match, location }: Props) => {
         />
         <TitleSubHeader title="이벤트 상세 내용" />
         {isProcessingDetail ? (
+          <Loading />
+        ) : (
           <>
             <div className="table-form">
               <div className="item-row d-flex">
@@ -174,8 +176,6 @@ const EventDetail = ({ match, location }: Props) => {
               </Button>
             </div>
           </>
-        ) : (
-          <Loading />
         )}
       </div>
       <ModalPopup
