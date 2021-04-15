@@ -193,7 +193,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     if (paramsSearch?.company) {
       getEventListCallback({
         com_id: paramsSearch?.company,
-        inverter_ids: menuTab,
+        ds_id: menuTab,
         page: paramsSearch?.page2,
         per_page: paramsSearch?.pagination2?.value,
         type: optionFilters,
@@ -309,9 +309,10 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
-          ? paramsSearch.page2
-          : Math.ceil(totalEventPage / item.value),
+          page2:
+            paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalEventPage / item.value),
         });
         break;
       case 'page':
