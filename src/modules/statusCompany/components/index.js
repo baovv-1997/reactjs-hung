@@ -212,7 +212,10 @@ const StatusByAreaCompany = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(totalRawData / item.value)
+              ? paramsSearch.page
+              : Math.ceil(totalRawData / item.value),
         });
         break;
       case 'page':
@@ -235,7 +238,6 @@ const StatusByAreaCompany = () => {
       comName: paramsSearch?.comName,
     });
   };
-
   return (
     <div className="content-wrap">
       <TitleHeader title="실증단지 발전 현황" />

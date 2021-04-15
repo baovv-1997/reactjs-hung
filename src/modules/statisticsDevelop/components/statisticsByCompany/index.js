@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import moment from 'moment';
 import Loading from 'commons/components/Loading';
 import { Tabs, Tab } from 'react-bootstrap';
-import { getListInverter } from 'modules/accounts/redux';
+// import { getListInverter } from 'modules/accounts/redux';
 
 import { useDispatch, useSelector } from 'react-redux';
 // import MainLayout from 'layout/MainLayout';
@@ -12,7 +12,7 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
 import { getCompanyList, getListDevice } from 'commons/redux';
 
-import * as SignInAction from 'modules/accounts/redux';
+// import * as SignInAction from 'modules/accounts/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import {
   getStatisticsDevelopRaw,
@@ -42,7 +42,7 @@ const OperationStatusPage = () => {
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
-  const { listInverter } = useSelector((state) => state?.account);
+  // const { listInverter } = useSelector((state) => state?.account);
 
   const defaultOption = {
     id: 1,
@@ -95,21 +95,21 @@ const OperationStatusPage = () => {
   /**
    * get Event List data
    */
-  const getListInverterCallback = useCallback(
-    (params) => {
-      dispatch(getListInverter(params));
-    },
-    [dispatch]
-  );
+  // const getListInverterCallback = useCallback(
+  //   (params) => {
+  //     dispatch(getListInverter(params));
+  //   },
+  //   [dispatch]
+  // );
 
-  useEffect(() => {
-    if (paramsSearch?.company) {
-      getListInverterCallback({
-        per_page: 9999,
-        com_id: paramsSearch?.company,
-      });
-    }
-  }, [getListInverterCallback, paramsSearch?.company]);
+  // useEffect(() => {
+  //   if (paramsSearch?.company) {
+  //     getListInverterCallback({
+  //       per_page: 9999,
+  //       com_id: paramsSearch?.company,
+  //     });
+  //   }
+  // }, [getListInverterCallback, paramsSearch?.company]);
 
   /**
    * get Device list
@@ -236,14 +236,20 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(totalRawData / item.value)
+              ? paramsSearch.page
+              : Math.ceil(totalRawData / item.value),
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1,
+          page2:
+            paramsSearch.page2 < Math.ceil(totalRadiationRawData / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalRadiationRawData / item.value),
         });
         break;
       case 'inverter':
@@ -265,12 +271,12 @@ const OperationStatusPage = () => {
           inverter: null,
         });
 
-        dispatch(
-          SignInAction.getListInverter({
-            per_page: 0,
-            com_id: item?.value,
-          })
-        );
+        // dispatch(
+        //   SignInAction.getListInverter({
+        //     per_page: 0,
+        //     com_id: item?.value,
+        //   })
+        // );
         break;
       case 'page':
         setParamsSearch({
@@ -434,14 +440,18 @@ const OperationStatusPage = () => {
   useEffect(() => {
     setParamsSearch({
       ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
-      comName: comList && comList[1] && comList[1].com_name,
+      company:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].id
+          : comList && comList[0] && comList[0].id,
+
+      comName:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].com_name
+          : comList && comList[0] && comList[0].com_name,
     });
   }, [comList]);
 
-  const deviceWithtype0 =
-    deviceList &&
-    deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
     <div className="content-wrap">
       <TitleHeader title="실증단지 발전 통계" />
@@ -453,7 +463,9 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList.slice(1)}
+            listStatusCompanySelect={
+              comList.length > 1 ? comList.slice(1) : comList
+            }
             listMockupType={listMockupType}
             isProcessing={isProcessingCompany}
           />
@@ -462,15 +474,13 @@ const OperationStatusPage = () => {
               <div className="h-100">
                 <Tabs
                   defaultActiveKey={
-                    deviceWithtype0 &&
-                    deviceWithtype0[0] &&
-                    deviceWithtype0[0].id
+                    deviceList && deviceList[0] && deviceList[0].id
                   }
                   className="list-order tab-list"
                   onSelect={(eventKey) => onSelect(eventKey)}
                 >
-                  {deviceWithtype0 &&
-                    deviceWithtype0.map((device) => (
+                  {deviceList &&
+                    deviceList.map((device) => (
                       <Tab
                         eventKey={device.id}
                         title={
@@ -544,7 +554,11 @@ const OperationStatusPage = () => {
                               dmRad: `${radiation?.dm_rad}W/㎡`,
                             }))
                           }
-                          listInverter={listInverter}
+                          listInverter={
+                            deviceList && deviceList.length > 1
+                              ? deviceList.slice(1)
+                              : deviceList
+                          }
                           listStatusCompanySelect={listStatusCompanySelect}
                           paramsSearch={paramsSearch}
                           handleChangeSearch={handleChangeSearch}

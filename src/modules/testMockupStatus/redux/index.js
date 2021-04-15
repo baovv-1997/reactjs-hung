@@ -9,6 +9,7 @@ const testMockupStatusSlide = createSlice({
     isProcessingRaw: false,
     isProcessingChart: false,
     total: 0,
+    totalRawOperation: 0,
     dataCardOperation: {
       azimuth_angle: 0,
       color: '',
@@ -124,6 +125,7 @@ const testMockupStatusSlide = createSlice({
       state.type = action.type;
       state.isProcessingChart = false;
       state.dataChartOperation = data;
+      state.totalRawOperation = data?.total;
     },
     getDataTestMKChartStatusOperationFailed: (state, action) => {
       state.type = action.type;

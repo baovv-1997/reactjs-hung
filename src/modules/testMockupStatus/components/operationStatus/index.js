@@ -29,7 +29,7 @@ const OperationStatusPage = ({ location }: Props) => {
     isProcessing,
   } = useSelector((state) => state?.commons);
   const {
-    total,
+    totalRawOperation,
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
@@ -215,14 +215,20 @@ const OperationStatusPage = ({ location }: Props) => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(totalRawOperation / item.value)
+              ? paramsSearch.page
+              : Math.ceil(totalRawOperation / item.value),
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1,
+          page2:
+            paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalEventPage / item.value),
         });
         break;
       case 'page':
@@ -287,7 +293,7 @@ const OperationStatusPage = ({ location }: Props) => {
           <ItemContentTab
             dataBoxContent={dataBoxContent}
             listMockupDataCompany={listDataTableRawOperation}
-            totalPage={total}
+            totalPage={totalRawOperation}
             perPage={paramsSearch?.pagination?.value}
             totalPage2={totalEventPage}
             perPage2={paramsSearch?.pagination2?.value}

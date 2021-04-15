@@ -62,7 +62,7 @@ const EventRegister = ({ location }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (stateTypeEvent === 'mockup') {
+    if (stateTypeEvent && stateTypeEvent === 'mockup') {
       dispatch(
         EventAction.getListDevice({
           per_page: 999999,
@@ -70,14 +70,16 @@ const EventRegister = ({ location }: Props) => {
         })
       );
     } else {
-      EventAction.getListDevice({
-        per_page: 999999,
-        com_id: dataSubmit?.company?.value,
-        pos_id: dataSubmit?.area?.value,
-        type: '0',
-      });
+      dispatch(
+        EventAction.getListDevice({
+          per_page: 999999,
+          com_id: dataSubmit?.company?.value,
+          pos_id: dataSubmit?.area?.value,
+          type: '0',
+        })
+      );
     }
-  }, [dataSubmit?.company, dataSubmit?.area]);
+  }, [dataSubmit?.company?.value, dataSubmit?.area?.value]);
 
   useEffect(() => {
     switch (type) {

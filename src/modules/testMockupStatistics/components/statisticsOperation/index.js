@@ -281,14 +281,20 @@ const OperationStatusPage = ({ location, history }: Props) => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(total / item.value)
+              ? paramsSearch.page
+              : Math.ceil(total / item.value),
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1,
+          page2:
+            paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalEventPage / item.value),
         });
         break;
       case 'page':
@@ -362,7 +368,13 @@ const OperationStatusPage = ({ location, history }: Props) => {
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={deviceList && deviceList.slice(1)}
+            listStatusCompanySelect={
+              deviceList &&
+              deviceList.slice(1).map((item) => ({
+                id: item?.id,
+                label: item?.company?.com_name,
+              }))
+            }
             subTitle={false}
             isProcessing={isLoading}
           />
