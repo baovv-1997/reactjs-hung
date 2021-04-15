@@ -36,6 +36,9 @@ const initialState = {
   optionFilters: [],
   isProcessing: false,
   isProcessingDetail: false,
+  isProcessingCompany: false,
+  isProcessingDevice: false,
+  isProcessingPos: false,
 };
 
 const commonSilice = createSlice({
@@ -54,6 +57,7 @@ const commonSilice = createSlice({
     getPosList: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
+      state.isProcessingPos = true;
     },
     getPosListSuccess: (state, action) => {
       const allOption = [
@@ -73,14 +77,17 @@ const commonSilice = createSlice({
       state.type = action.type;
       state.isProcessing = false;
       state.posList = [...allOption, ...posListFormat];
+      state.isProcessingPos = false;
     },
     getPosListFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.isProcessingPos = true;
     },
     getCompanyList: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
+      state.isProcessingCompany = true;
     },
     getCompanyListSuccess: (state, action) => {
       const allOption = [
@@ -101,15 +108,18 @@ const commonSilice = createSlice({
       state.isProcessing = false;
       state.comList =
         listCompany.length > 1 ? [...allOption, ...listCompany] : listCompany;
+      state.isProcessingCompany = false;
     },
     getCompanyListFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.isProcessingCompany = false;
     },
 
     getListDevice: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
+      state.isProcessingDevice = true;
     },
 
     getListDeviceSuccess: (state, action) => {
@@ -132,10 +142,12 @@ const commonSilice = createSlice({
       state.isProcessing = false;
       state.deviceList =
         deviceList.length > 1 ? [...allOption, ...deviceList] : deviceList;
+      state.isProcessingDevice = false;
     },
     getListDeviceFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.isProcessingDevice = false;
     },
 
     getEventList: (state, action) => {

@@ -35,6 +35,7 @@ type Props = {
   handleSubmitSearch: Function,
   chartData: any,
   id: string,
+  isProcessingRaw: boolean,
 };
 
 const ItemContentTab = ({
@@ -51,6 +52,7 @@ const ItemContentTab = ({
   handleSubmitSearch,
   chartData,
   id,
+  isProcessingRaw,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -145,9 +147,10 @@ const ItemContentTab = ({
           tableHeads={headStatusCompany}
           tableBody={rawData}
           // isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination mt-0">
-          {totalPage > perPage && (
+          {totalPage > perPage && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}

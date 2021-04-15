@@ -21,14 +21,13 @@ import ItemContentTab from './ItemContentTab';
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { posList, comList, isProcessingDetail } = useSelector(
+  const { posList, comList, isProcessingPos } = useSelector(
     (state) => state.commons
   );
   const {
     rawData,
     totalRawData,
     cardInfo,
-    isProcessing,
     isProcessingRaw,
     chartData,
   } = useSelector((state) => state.operationStatistics);
@@ -364,10 +363,11 @@ const OperationStatusPage = () => {
   }, [posList]);
 
   return (
-    <>
-      {(isProcessingRaw || isProcessing || isProcessingDetail) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 운영 통계" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 운영 통계" />
+      {isProcessingPos ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -375,6 +375,7 @@ const OperationStatusPage = () => {
             paramsSearch={paramsSearch}
             listStatusCompanySelect={posList.slice(1)}
             listMockupType={listMockupType}
+            isProcessing={isProcessingPos}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -458,6 +459,7 @@ const OperationStatusPage = () => {
                         }}
                         chartData={chartData}
                         id={com.id}
+                        isProcessingRaw={isProcessingRaw}
                       />
                     </Tab>
                   ))}
@@ -465,8 +467,8 @@ const OperationStatusPage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

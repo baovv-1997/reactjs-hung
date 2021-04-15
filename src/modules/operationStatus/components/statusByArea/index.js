@@ -2,11 +2,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
 import Loading from 'commons/components/Loading';
-
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
 import { getPosList, getCompanyList } from 'commons/redux';
@@ -17,7 +15,7 @@ import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { posList, comList, isProcessingDetail } = useSelector(
+  const { posList, comList, isProcessingCompany } = useSelector(
     (state) => state?.commons
   );
   const {
@@ -25,8 +23,7 @@ const OperationStatusPage = () => {
     totalRawData,
     cardInfo,
     dataChart,
-    isProcessing,
-    isProcessingTrend,
+    isProcessingRaw,
   } = useSelector((operator) => operator?.operationStatus);
   const defaultOption = {
     id: 1,
@@ -230,10 +227,11 @@ const OperationStatusPage = () => {
   }, [posList]);
 
   return (
-    <>
-      {(isProcessingTrend || isProcessing || isProcessingDetail) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 발전 현황" />
+      {isProcessingCompany ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -241,6 +239,7 @@ const OperationStatusPage = () => {
             paramsSearch={paramsSearch}
             listStatusCompanySelect={posList.slice(1)}
             listMockupType={listMockupType}
+            isProcessing={isProcessingCompany}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -299,6 +298,7 @@ const OperationStatusPage = () => {
                       id={item.id}
                       totalPage={totalRawData}
                       chartData={dataChart}
+                      isProcessingRaw={isProcessingRaw}
                     />
                   </Tab>
                 ))}
@@ -306,9 +306,8 @@ const OperationStatusPage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
-    // </MainLayout>
+      )}
+    </div>
   );
 };
 

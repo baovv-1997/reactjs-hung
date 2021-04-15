@@ -38,8 +38,7 @@ const OperationStatusPage = ({ location }: Props) => {
     rawData,
     totalRawData,
     cardInfo,
-    isProcessingTrend,
-    isProcessing,
+    isProcessingRaw,
   } = useSelector((state) => state?.operationStatus);
 
   const {
@@ -49,6 +48,8 @@ const OperationStatusPage = ({ location }: Props) => {
     totalEventPage,
     isProcessingDetail,
     optionFilters,
+    isProcessingCompany,
+    isProcessingDevice,
   } = useSelector((state) => state?.commons);
 
   const defaultOption = {
@@ -348,10 +349,11 @@ const OperationStatusPage = ({ location }: Props) => {
   };
 
   return (
-    <div>
-      {(isProcessing || isProcessingDetail || isProcessingTrend) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 운영 현황" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 운영 현황" />
+      {isProcessingCompany || isProcessingDevice ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -361,6 +363,7 @@ const OperationStatusPage = ({ location }: Props) => {
               comList && comList.length > 1 ? comList.slice(1) : comList
             }
             listMockupType={listMockupType}
+            isProcessing={isProcessingCompany}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -476,6 +479,8 @@ const OperationStatusPage = ({ location }: Props) => {
                         handleChangeSearch={handleChangeSearch}
                         id={device.id}
                         chartData={dataChart}
+                        isProcessingRawEvent={isProcessingDetail}
+                        isProcessingRaw={isProcessingRaw}
                       />
                     </Tab>
                   ))}
@@ -483,9 +488,8 @@ const OperationStatusPage = ({ location }: Props) => {
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
-    // </MainLayout>
   );
 };
 

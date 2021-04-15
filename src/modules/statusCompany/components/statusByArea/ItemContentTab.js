@@ -23,6 +23,7 @@ type Props = {
   activeTab: any,
   chartData: any,
   id: number,
+  isProcessingRaw: boolean,
 };
 
 const ItemContentTab = ({
@@ -36,6 +37,7 @@ const ItemContentTab = ({
   activeTab,
   chartData,
   id,
+  isProcessingRaw,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -100,9 +102,10 @@ const ItemContentTab = ({
           tableHeads={headStatusByCompany}
           tableBody={rawData}
           // isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination mt-0">
-          {totalRawData > paramsSearch?.pagination?.value && (
+          {totalRawData > paramsSearch?.pagination?.value && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}

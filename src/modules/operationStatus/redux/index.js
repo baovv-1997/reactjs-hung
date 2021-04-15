@@ -5,7 +5,7 @@ const operationStatusSlide = createSlice({
   name: 'operationStatus',
   initialState: {
     isProcessing: false,
-    isProcessingTrend: false,
+    isProcessingRaw: false,
     total: 0,
     eventList: [],
     deviceList: [],
@@ -15,10 +15,6 @@ const operationStatusSlide = createSlice({
   },
 
   reducers: {
-    getListOperationStatus: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
     getListDevice: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
@@ -71,19 +67,21 @@ const operationStatusSlide = createSlice({
 
     getTrendChart: (state, action) => {
       state.type = action.type;
-      state.isProcessingTrend = true;
+      state.isProcessingRaw = true;
+      state.totalRawData = 0;
     },
     getTrendChartSuccess: (state, action) => {
       state.type = action.type;
-      state.isProcessingTrend = false;
+      state.isProcessingRaw = false;
       state.rawData = action.data;
       state.totalRawData = action.total;
       state.currentPage = action.currentPage;
     },
     getTrendChartFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessingTrend = false;
+      state.isProcessingRaw = false;
       state.rawData = [];
+      state.totalRawData = 0;
     },
 
     getCardInfo: (state, action) => {
@@ -102,28 +100,34 @@ const operationStatusSlide = createSlice({
 const { actions, reducer } = operationStatusSlide;
 
 export const {
-  getListOperationStatus,
   getListDevice,
   getListDeviceSuccess,
   getListDeviceFailed,
+
   getEventList,
   getEventListSuccess,
   getEventListFailed,
+
   deleteEvent,
   deleteEventSuccess,
   deleteEventFailed,
+
   addNewEvent,
   addNewEventSuccess,
   addNewEventFailed,
+
   updateEvent,
   updateEventSuccess,
   updateEventFailed,
+
   getDataChart,
   getDataChartSuccess,
   getDataChartFailed,
+
   getTrendChart,
   getTrendChartSuccess,
   getTrendChartFailed,
+
   getCardInfo,
   getCardInfoSuccess,
   getCardInfoFailed,

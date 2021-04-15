@@ -12,11 +12,9 @@ import {
   addEventFilter,
 } from 'commons/redux';
 import { listMockupType, listParkingLot } from 'mockData/listCompany';
-// import * as SignInAction from 'modules/accounts/redux';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-// import { getListInverter } from 'modules/accounts/redux';
 import Loading from 'commons/components/Loading';
 import ItemContentTab from './ItemContentTab';
 import {
@@ -40,13 +38,13 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     optionFilters,
     eventList,
     totalEventPage,
+    isProcessingCompany,
   } = useSelector((state) => state?.commons);
 
   const {
     rawData,
     totalRawData,
     cardInfo,
-    isProcessing,
     chartData,
     isProcessingRaw,
   } = useSelector((state) => state?.operationStatistics);
@@ -458,10 +456,11 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   };
 
   return (
-    <>
-      {(isProcessing || isProcessingDetail || isProcessingRaw) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 운영 현황" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 운영 현황" />
+      {isProcessingCompany ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -471,6 +470,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
               comList && comList.length > 1 ? comList.slice(1) : comList
             }
             listMockupType={listMockupType}
+            isProcessing={isProcessingCompany}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -584,6 +584,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                         }}
                         chartData={chartData}
                         id={device.id}
+                        isProcessingRaw={isProcessingRaw}
+                        isProcessingRawEvent={isProcessingDetail}
                       />
                     </Tab>
                   ))}
@@ -591,8 +593,8 @@ const OperatorStatisticCompany = ({ location }: Props) => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

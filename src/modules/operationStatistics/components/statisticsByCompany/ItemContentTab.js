@@ -53,6 +53,8 @@ type Props = {
   dateTime: Object,
   chartData: any,
   id: string,
+  isProcessingRaw: boolean,
+  isProcessingRawEvent: boolean,
 };
 
 const ItemContentTab = ({
@@ -75,10 +77,9 @@ const ItemContentTab = ({
   dateTime,
   chartData,
   id,
+  isProcessingRaw,
+  isProcessingRawEvent,
 }: Props) => {
-  // const history = useHistory();
-  // const { userInfo } = useSelector((state) => state?.account);
-  // const roles = userInfo?.roles[0]?.name || '';
   const dataLengthChart = [
     {
       id: 1,
@@ -172,9 +173,10 @@ const ItemContentTab = ({
           tableHeads={statisticsOperatorCompany}
           tableBody={rawData}
           // isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination mt-0 mb-3">
-          {totalPage > perPage && (
+          {totalPage > perPage && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}
@@ -245,17 +247,10 @@ const ItemContentTab = ({
         onClickRow={handleClickDetail}
         listOption={operator_event_filter}
         optionDefault={optionFilters}
+        isLoading={isProcessingRawEvent}
       />
-      {/* {(roles === 'admin' || roles === 'company') && (
-        <div className="group-btn-register text-right">
-          <Button onClick={() => history.push(ROUTERS.EVENT_REGISTER)}>
-            등록
-          </Button>
-        </div>
-      )} */}
-
       <div className="opacity d-block pagination mt-0">
-        {totalPage2 > perPage2 && (
+        {totalPage2 > perPage2 && !isProcessingRawEvent && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

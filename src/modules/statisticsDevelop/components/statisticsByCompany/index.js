@@ -25,9 +25,8 @@ import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
   const [menuTab, setMenuTab] = useState('');
-  const { comList, deviceList } = useSelector((state) => state?.commons);
-  const isProcessingCommons = useSelector(
-    (state) => state?.commons?.isProcessing
+  const { comList, deviceList, isProcessingCompany } = useSelector(
+    (state) => state?.commons
   );
   const {
     rawData,
@@ -36,7 +35,7 @@ const OperationStatusPage = () => {
     totalRadiationRawData,
     radiationList,
     dataChart,
-    isProcessing,
+    isProcessingRaw2,
     isProcessingRaw,
   } = useSelector((state) => state.statisticsDevelop);
 
@@ -444,10 +443,11 @@ const OperationStatusPage = () => {
     deviceList &&
     deviceList.filter((item) => item.ds_type === '0' || !item?.ds_type);
   return (
-    <>
-      {(isProcessingRaw || isProcessing || isProcessingCommons) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 통계" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 발전 통계" />
+      {isProcessingCompany ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -455,6 +455,7 @@ const OperationStatusPage = () => {
             paramsSearch={paramsSearch}
             listStatusCompanySelect={comList.slice(1)}
             listMockupType={listMockupType}
+            isProcessing={isProcessingCompany}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -569,6 +570,8 @@ const OperationStatusPage = () => {
                           }}
                           id={device?.id}
                           chartData={dataChart}
+                          isProcessingRaw={isProcessingRaw}
+                          isProcessingRaw2={isProcessingRaw2}
                         />
                       </Tab>
                     ))}
@@ -577,8 +580,8 @@ const OperationStatusPage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

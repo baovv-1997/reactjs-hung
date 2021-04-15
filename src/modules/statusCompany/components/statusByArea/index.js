@@ -20,9 +20,8 @@ import ItemContentTab from './ItemContentTab';
 const StatusByAreaCompany = () => {
   const [menuTab, setMenuTab] = useState('');
 
-  const { posList, comList } = useSelector((state) => state?.commons);
-  const isProcessingCommons = useSelector(
-    (state) => state?.commons?.isProcessing
+  const { posList, comList, isProcessingPos } = useSelector(
+    (state) => state?.commons
   );
 
   const { userInfo } = useSelector((state) => state.account);
@@ -32,7 +31,6 @@ const StatusByAreaCompany = () => {
     rawData,
     cardInfo,
     chartData,
-    isProcessing,
     isProcessingRaw,
   } = useSelector((state) => state.statusCompany);
 
@@ -222,12 +220,13 @@ const StatusByAreaCompany = () => {
       posName: posList && posList[1] && posList[1].pos_name,
     });
   }, [posList]);
-  console.log('comList[0]', comList[0]);
+
   return (
-    <>
-      {(isProcessingCommons || isProcessing || isProcessingRaw) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 발전 현황" />
+      {isProcessingPos ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -235,6 +234,7 @@ const StatusByAreaCompany = () => {
             paramsSearch={paramsSearch}
             listStatusCompanySelect={posList.slice(1)}
             listMockupType={listMockupType}
+            isProcessing={isProcessingPos}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -309,6 +309,7 @@ const StatusByAreaCompany = () => {
                         totalRawData={totalRawData}
                         activeTab={menuTab}
                         id={item?.id}
+                        isProcessingRaw={isProcessingRaw}
                       />
                     </Tab>
                   ))}
@@ -316,8 +317,8 @@ const StatusByAreaCompany = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 
