@@ -12,8 +12,8 @@ import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
 import Table from 'commons/components/Table';
 import { DEVICE_HEAD_TABLE } from 'constants/tableHeadData';
-import { getListCompany, getListDevice, getListPosition } from '../redux';
 import { ROLE_COMPANY } from 'constants/index';
+import { getListCompany, getListDevice, getListPosition } from '../redux';
 
 type Props = {
   history: {
@@ -169,13 +169,11 @@ const DeviceManagement = ({ history }: Props) => {
           </span>
         </div>
         <div className="wrapper-device__head-menu__search">
-          {roleName !== ROLE_COMPANY && (
-            <div className="wrapper-device__head-menu__search__options">
-              <p className="search-option-title">분류</p>{' '}
-              <span className="search-option-character">|</span>{' '}
-              {renderRadioList}
-            </div>
-          )}
+          <div className="wrapper-device__head-menu__search__options">
+            <p className="search-option-title">분류</p>{' '}
+            <span className="search-option-character">|</span> {renderRadioList}
+          </div>
+
           <div lassName="wrapper-device__head-menu__search__select">
             <Select
               listItem={renderListOptions()}

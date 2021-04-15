@@ -8,20 +8,20 @@ import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import { getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import ROUTERS from 'constants/routers';
+// import ROUTERS from 'constants/routers';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
-type Props = {
-  location: {
-    pathname: string,
-  },
-  history: {
-    push: Function,
-  },
-};
+// type Props = {
+//   location: {
+//     pathname: string,
+//   },
+//   history: {
+//     push: Function,
+//   },
+// };
 
-const OperationStatusPage = ({ location, history }: Props) => {
+const OperationStatusPage = () => {
   const {
     deviceList,
     optionFilters,
@@ -355,12 +355,12 @@ const OperationStatusPage = ({ location, history }: Props) => {
   };
 
   //  click vào table bên dưới đến trang chi tiết
-  const handleClickDetail = (item) => {
-    history.push({
-      pathname: `${ROUTERS.EVENT}/detail/${item.id}`,
-      state: { prevRoute: location.pathname },
-    });
-  };
+  // const handleClickDetail = (item) => {
+  //   history.push({
+  //     pathname: `${ROUTERS.EVENT}/detail/${item.id}`,
+  //     state: { prevRoute: location.pathname },
+  //   });
+  // };
 
   return (
     <div className="content-wrap">
@@ -404,7 +404,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
                   ? moment(paramsSearch?.to).format('YYYY-MM')
                   : moment(paramsSearch?.to).format('YYYY-MM-DD'),
             }}
-            handleClickDetail={handleClickDetail}
+            handleClickDetail={() => {}}
             isProcessingRaw={isProcessingRaw}
             isProcessingRawEvent={isProcessingDetail}
           />
