@@ -4,7 +4,6 @@ import Input from 'commons/components/Input';
 import Radio from 'commons/components/Radio';
 import { isNumberKey, isOnPasteNumber } from 'helpers/index';
 import ItemDevice from './ItemDevice';
-import Loading from 'commons/components/Loading';
 import { Button } from 'commons/components/Button';
 import { ROLE_COMPANY } from 'constants/index';
 import { ROLE_ADMIN } from 'constants/index';
@@ -76,7 +75,6 @@ const SignIn = ({
 
   return (
     <div className="page-register">
-      {isProcessing && <Loading />}
       <div className="sign-in">
         <div className="sign-desc mb-3">
           등록 요청시 담당자가 관련 내용을 확인 후 서버에 계정 등록을 도와드릴

@@ -12,7 +12,6 @@ import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
 import Table from 'commons/components/Table';
 import { DEVICE_HEAD_TABLE } from 'constants/tableHeadData';
-import Loading from 'commons/components/Loading';
 import { getListCompany, getListDevice, getListPosition } from '../redux';
 import { ROLE_COMPANY } from 'constants/index';
 
@@ -158,115 +157,109 @@ const DeviceManagement = ({ history }: Props) => {
   };
 
   return (
-    <>
-      {isLoading && <Loading />}
-      <div className="wrapper-device">
-        <div className="wrapper-device__head-menu">
-          <div className="wrapper-device__head-menu__title">
-            <img src={IMAGES.iconTitle} alt="icon-title-device" />
-            <span className="wrapper-device__head-menu__title__text">
-              기기 정보
-            </span>
-            <span className="wrapper-device__head-menu__title__des">
-              관리자 계정 정보를 수정하실 수 있습니다
-            </span>
-          </div>
-          <div className="wrapper-device__head-menu__search">
-            {roleName !== ROLE_COMPANY && (
-              <div className="wrapper-device__head-menu__search__options">
-                <p className="search-option-title">분류</p>{' '}
-                <span className="search-option-character">|</span>{' '}
-                {renderRadioList}
-              </div>
-            )}
-            <div lassName="wrapper-device__head-menu__search__select">
-              <Select
-                listItem={renderListOptions()}
-                onChange={(option) => onChangeSelect(option)}
-                option={selectOption}
-                placeholder={`${
-                  currentOption === 'pos_id' ? '설치위치 선택' : '업체 선택'
-                }`}
-              />
-            </div>
-            <div className="wrapper-device__head-menu__search__input">
-              <Input
-                placeholder="업체명, 구분, 설치위치로 검색해보세요."
-                customClass="wrapper-input-search"
-                onChange={handleInputChange}
-                value={valueSearch}
-                onKeyPress={(e) => handleKeyDown(e)}
-              />
-              <img
-                src={IMAGES.icon_search}
-                alt="Icon Search"
-                className="search__icon"
-                // onClick={() => handleClick(searchValue)}
-                role="presentation"
-              />
-            </div>
-            <Button customClass="custom-btn" onClick={handleSubmitSearch}>
-              검색
-            </Button>
-          </div>
+    <div className="wrapper-device">
+      <div className="wrapper-device__head-menu">
+        <div className="wrapper-device__head-menu__title">
+          <img src={IMAGES.iconTitle} alt="icon-title-device" />
+          <span className="wrapper-device__head-menu__title__text">
+            기기 정보
+          </span>
+          <span className="wrapper-device__head-menu__title__des">
+            관리자 계정 정보를 수정하실 수 있습니다
+          </span>
         </div>
-        <div className="wrapper-device__table">
-          <Table
-            tableHeads={DEVICE_HEAD_TABLE}
-            tableBody={deviceList}
-            onClickRow={handleClickTableRow}
-            isShowId
-          />
-          <div className="d-flex justify-content-end">
-            <Button
-              customClass="custom-btn"
-              onClick={() => {
-                history.push(ROUTERS.REGISTER_DEVICE);
-              }}
-            >
-              등록
-            </Button>
-          </div>
-          {totalPage > perPage && (
-            <div className="wrapper-device__pagination">
-              <Pagination
-                activePage={activePage}
-                itemsCountPerPage={perPage}
-                totalItemsCount={totalPage}
-                pageRangeDisplayed={5}
-                onChange={handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-                firstPageText={
-                  <img
-                    src={IMAGES.double_arrow_left}
-                    alt=""
-                    className="double-prev"
-                  />
-                }
-                lastPageText={
-                  <img
-                    src={IMAGES.double_arrow_right}
-                    alt=""
-                    className="double-prev"
-                  />
-                }
-                prevPageText={
-                  <img src={IMAGES.arrow_left} alt="" className="double-prev" />
-                }
-                nextPageText={
-                  <img
-                    src={IMAGES.arrow_right1}
-                    alt=""
-                    className="double-prev"
-                  />
-                }
-              />
+        <div className="wrapper-device__head-menu__search">
+          {roleName !== ROLE_COMPANY && (
+            <div className="wrapper-device__head-menu__search__options">
+              <p className="search-option-title">분류</p>{' '}
+              <span className="search-option-character">|</span>{' '}
+              {renderRadioList}
             </div>
           )}
+          <div lassName="wrapper-device__head-menu__search__select">
+            <Select
+              listItem={renderListOptions()}
+              onChange={(option) => onChangeSelect(option)}
+              option={selectOption}
+              placeholder={`${
+                currentOption === 'pos_id' ? '설치위치 선택' : '업체 선택'
+              }`}
+            />
+          </div>
+          <div className="wrapper-device__head-menu__search__input">
+            <Input
+              placeholder="업체명, 구분, 설치위치로 검색해보세요."
+              customClass="wrapper-input-search"
+              onChange={handleInputChange}
+              value={valueSearch}
+              onKeyPress={(e) => handleKeyDown(e)}
+            />
+            <img
+              src={IMAGES.icon_search}
+              alt="Icon Search"
+              className="search__icon"
+              // onClick={() => handleClick(searchValue)}
+              role="presentation"
+            />
+          </div>
+          <Button customClass="custom-btn" onClick={handleSubmitSearch}>
+            검색
+          </Button>
         </div>
       </div>
-    </>
+      <div className="wrapper-device__table">
+        <Table
+          tableHeads={DEVICE_HEAD_TABLE}
+          tableBody={deviceList}
+          onClickRow={handleClickTableRow}
+          isShowId
+          isLoading={isLoading}
+        />
+        <div className="d-flex justify-content-end">
+          <Button
+            customClass="custom-btn"
+            onClick={() => {
+              history.push(ROUTERS.REGISTER_DEVICE);
+            }}
+          >
+            등록
+          </Button>
+        </div>
+        {totalPage > perPage && !isLoading && (
+          <div className="wrapper-device__pagination">
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={perPage}
+              totalItemsCount={totalPage}
+              pageRangeDisplayed={5}
+              onChange={handlePageChange}
+              itemClass="page-item"
+              linkClass="page-link"
+              firstPageText={
+                <img
+                  src={IMAGES.double_arrow_left}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              lastPageText={
+                <img
+                  src={IMAGES.double_arrow_right}
+                  alt=""
+                  className="double-prev"
+                />
+              }
+              prevPageText={
+                <img src={IMAGES.arrow_left} alt="" className="double-prev" />
+              }
+              nextPageText={
+                <img src={IMAGES.arrow_right1} alt="" className="double-prev" />
+              }
+            />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

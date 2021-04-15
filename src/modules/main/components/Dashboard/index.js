@@ -197,7 +197,6 @@ const MainPage = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
       <div className="main-page">
         <Search
           placeholder="회사명이나 구역명으로 검색해보세요."
@@ -250,9 +249,7 @@ const MainPage = () => {
               key={item.id}
             />
           ))}
-
-        {renderPositionActive}
-
+        {isLoading ? <Loading /> : <>{renderPositionActive}</>}
         {cardPositionMain &&
           cardPositionMain?.map((posItem) => (
             <Draggable disabled={!searchCompany} bounds="parent">

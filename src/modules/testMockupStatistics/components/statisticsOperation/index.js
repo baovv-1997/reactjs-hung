@@ -8,7 +8,6 @@ import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import { getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import Loading from 'commons/components/Loading';
 import ROUTERS from 'constants/routers';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
@@ -32,7 +31,6 @@ const OperationStatusPage = ({ location, history }: Props) => {
     isProcessingDetail,
   } = useSelector((state) => state?.commons);
   const {
-    isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
@@ -355,9 +353,9 @@ const OperationStatusPage = ({ location, history }: Props) => {
 
   return (
     <>
-      {(isProcessing || isProcessingRaw || isLoading || isProcessingDetail) && (
+      {/* {(isProcessing || isProcessingRaw || isLoading || isProcessingDetail) && (
         <Loading />
-      )}
+      )} */}
       <div className="content-wrap">
         <TitleHeader title="테스트(실증단지) 운영 통계" />
         <div className="content-body page-company">
@@ -366,6 +364,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
             paramsSearch={paramsSearch}
             listStatusCompanySelect={deviceList && deviceList.slice(1)}
             subTitle={false}
+            isProcessing={isLoading}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
@@ -394,6 +393,8 @@ const OperationStatusPage = ({ location, history }: Props) => {
                     : moment(paramsSearch?.to).format('YYYY-MM-DD'),
               }}
               handleClickDetail={handleClickDetail}
+              isProcessingEvent={isProcessingDetail}
+              isProcessingRaw={isProcessingRaw}
             />
           </div>
         </div>

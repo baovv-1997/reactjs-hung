@@ -6,6 +6,9 @@ const testSolarMonitoringStatusSlide = createSlice({
   initialState: {
     isProcessing: false,
     isProcessingRaw: false,
+    isProcessingCard: false,
+    isProcessingChart: false,
+    isProcessingRaw2: false,
     listDataTableRaw: [],
     total: 0,
     totalMockup: 0,
@@ -32,23 +35,24 @@ const testSolarMonitoringStatusSlide = createSlice({
   reducers: {
     getCardInformation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCard = true;
     },
     getCardInformationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
       state.dataBox = data;
     },
 
     getCardInformationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
     },
 
     getDataRawTable: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
 
     getDataRawTableSuccess: (state, action) => {
@@ -91,39 +95,40 @@ const testSolarMonitoringStatusSlide = createSlice({
 
     getDataTrendChart: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataTrendChartSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = (data && data) || [];
     },
 
     getDataTrendChartFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
     },
 
     getCardInformationOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCart = true;
     },
     getCardInformationOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
       state.dataBoxOperation = data;
     },
 
     getCardInformationOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
     },
 
     getDataRawTableOperation: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
 
     getDataRawTableOperationSuccess: (state, action) => {
@@ -169,23 +174,24 @@ const testSolarMonitoringStatusSlide = createSlice({
 
     getDataTrendChartOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataTrendChartOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = (data && data) || [];
     },
     getDataTrendChartOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = [];
     },
 
     getDataRawTableMockupOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessingRaw = true;
+      state.isProcessingRaw2 = true;
+      state.totalMockup = 0;
     },
 
     getDataRawTableMockupOperationSuccess: (state, action) => {
@@ -210,14 +216,14 @@ const testSolarMonitoringStatusSlide = createSlice({
             `${item?.ds_max_power.toLocaleString('en') || 0}W/㎡`, // TODO
         }));
       state.type = action.type;
-      state.isProcessingRaw = false;
+      state.isProcessingRaw2 = false;
       state.totalMockup = (data && data.total) || 0;
       state.listDataTableRawMockup = listDataTableRaw;
     },
 
     getDataRawTableMockupOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessingRaw = false;
+      state.isProcessingRaw2 = false;
       state.totalMockup = 0;
       state.listDataTableRawMockup = [];
     },

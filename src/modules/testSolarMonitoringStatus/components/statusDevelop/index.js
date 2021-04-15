@@ -9,11 +9,9 @@ import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import * as ActionStatusGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
-import Loading from 'commons/components/Loading';
 
 const StatusByAreaCompany = () => {
   const {
-    isProcessing,
     dataBox,
     listDataTableRaw,
     total,
@@ -22,7 +20,7 @@ const StatusByAreaCompany = () => {
   } = useSelector((state) => state?.testSolarMonitoringStatus);
   const { companyId } = useSelector((state) => state?.solarDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
-  const { comList } = useSelector((state) => state?.commons);
+  const { comList, isProcessing } = useSelector((state) => state?.commons);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -217,46 +215,45 @@ const StatusByAreaCompany = () => {
   };
 
   return (
-    <>
-      {(isProcessingRaw || isProcessing) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 발전 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 발전 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={comList && comList.slice(1)}
+          subTitle={false}
+          isProcessing={isProcessing}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            listMockupDataCompany={listDataTableRaw}
+            powerData={powerData}
             handleChangeSearch={handleChangeSearch}
+            performanceData={performanceData}
+            insolationData={insolationData}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList && comList.slice(1)}
-            subTitle={false}
+            dataChart={dataChart}
+            isProcessingRaw={isProcessingRaw}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              listMockupDataCompany={listDataTableRaw}
-              powerData={powerData}
-              handleChangeSearch={handleChangeSearch}
-              performanceData={performanceData}
-              insolationData={insolationData}
-              paramsSearch={paramsSearch}
-              dataChart={dataChart}
-            />
-            <div className="opacity d-block pagination">
-              {total > paramsSearch?.pagination?.value && (
-                <div className="wrapper-device__pagination mt-0">
-                  <Pagination
-                    activePage={paramsSearch?.page}
-                    itemsCountPerPage={paramsSearch?.pagination?.value}
-                    totalItemsCount={total}
-                    pageRangeDisplayed={5}
-                    onChange={(e) => handleChangeSearch(e, 'page')}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-              )}
-            </div>
+          <div className="opacity d-block pagination">
+            {total > paramsSearch?.pagination?.value && !isProcessingRaw && (
+              <div className="wrapper-device__pagination mt-0">
+                <Pagination
+                  activePage={paramsSearch?.page}
+                  itemsCountPerPage={paramsSearch?.pagination?.value}
+                  totalItemsCount={total}
+                  pageRangeDisplayed={5}
+                  onChange={(e) => handleChangeSearch(e, 'page')}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

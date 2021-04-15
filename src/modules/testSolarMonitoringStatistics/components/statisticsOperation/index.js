@@ -8,7 +8,6 @@ import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import { getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import Loading from 'commons/components/Loading';
 import ROUTERS from 'constants/routers';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
@@ -29,9 +28,9 @@ const OperationStatusPage = ({ location, history }: Props) => {
     eventList,
     totalEventPage,
     isProcessingDetail,
+    isProcessing,
   } = useSelector((state) => state?.commons);
   const {
-    isProcessing,
     total,
     dataChartOperation,
     listDataTableRawOperation,
@@ -359,53 +358,53 @@ const OperationStatusPage = ({ location, history }: Props) => {
   };
 
   return (
-    <>
-      {(isProcessing || isProcessingRaw || isProcessingDetail) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 운영 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={
+            deviceList &&
+            deviceList.slice(1).map((item) => ({
+              id: item?.id,
+              label: item?.company?.com_name,
+            }))
+          }
+          subTitle={false}
+          isProcessing={isProcessing}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRawOperation}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalEventPage}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={eventList}
+            isShowModalSorting={isShowModalSorting}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={
-              deviceList &&
-              deviceList.slice(1).map((item) => ({
-                id: item?.id,
-                label: item?.company?.com_name,
-              }))
-            }
-            subTitle={false}
+            dataChartOperation={dataChartOperation}
+            optionFilters={optionFilters}
+            handleChangeSearch={handleChangeSearch}
+            timeDate={{
+              from:
+                paramsSearch?.classification === 'month'
+                  ? moment(paramsSearch?.from).format('YYYY-MM')
+                  : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+              to:
+                paramsSearch?.classification === 'month'
+                  ? moment(paramsSearch?.to).format('YYYY-MM')
+                  : moment(paramsSearch?.to).format('YYYY-MM-DD'),
+            }}
+            handleClickDetail={handleClickDetail}
+            isProcessingRaw={isProcessingRaw}
+            isProcessingRawEvent={isProcessingDetail}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              listMockupDataCompany={listDataTableRawOperation}
-              totalPage={total}
-              perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalEventPage}
-              perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={eventList}
-              isShowModalSorting={isShowModalSorting}
-              paramsSearch={paramsSearch}
-              dataChartOperation={dataChartOperation}
-              optionFilters={optionFilters}
-              handleChangeSearch={handleChangeSearch}
-              timeDate={{
-                from:
-                  paramsSearch?.classification === 'month'
-                    ? moment(paramsSearch?.from).format('YYYY-MM')
-                    : moment(paramsSearch?.from).format('YYYY-MM-DD'),
-                to:
-                  paramsSearch?.classification === 'month'
-                    ? moment(paramsSearch?.to).format('YYYY-MM')
-                    : moment(paramsSearch?.to).format('YYYY-MM-DD'),
-              }}
-              handleClickDetail={handleClickDetail}
-            />
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

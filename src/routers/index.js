@@ -4,7 +4,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ROUTERS from 'constants/routers';
-import Loading from 'commons/components/Loading';
+// import Loading from 'commons/components/Loading';
 import MainLayout from 'layout/MainLayout';
 import { API } from '../apis';
 import PrivateRoute from './PrivateRoute';
@@ -116,7 +116,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <MainLayout>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={null}>
           <Switch>
             <Route exact path={ROUTERS.LOGIN} component={SingIn} />
             <PrivateRoute

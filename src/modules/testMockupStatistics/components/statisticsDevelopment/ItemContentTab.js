@@ -31,6 +31,8 @@ type Props = {
   dataTableBottom: Array<{}>,
   timeDate: Object,
   dataChart: any,
+  isProcessingRaw: boolean,
+  isProcessingRaw2: boolean,
 };
 
 const ItemContentTab = ({
@@ -45,6 +47,8 @@ const ItemContentTab = ({
   dataTableBottom,
   timeDate,
   dataChart,
+  isProcessingRaw,
+  isProcessingRaw2,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -110,9 +114,10 @@ const ItemContentTab = ({
           tableHeads={headTestMockupStatistics}
           tableBody={dataTableStatisticsCompany}
           isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination mt-0">
-          {totalPage > perPage && (
+          {totalPage > perPage && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}
@@ -174,9 +179,10 @@ const ItemContentTab = ({
         tableHeads={headTestMockupStatisticsOfModule}
         tableBody={dataTableBottom}
         isShowId
+        isLoading={isProcessingRaw2}
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage2 > perPage2 && (
+        {totalPage2 > perPage2 && !isProcessingRaw && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

@@ -219,112 +219,49 @@ const EditEvent = ({ match, location }: Props) => {
 
   return (
     <>
-      {isProcessingDetail && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 운영 현황"
           descSub="설비 이력, 보수 이력을 등록하실 수 있습니다."
         />
         <TitleSubHeader title="이벤트 상세 내용" />
-        <div className="table-form">
-          <div className="item-row d-flex">
-            <div className="colum-left">분류</div>
-            <div className="colum-right">
-              <div className="group-radio">
-                <Radio
-                  onChange={() =>
-                    setDataSubmit({
-                      ...dataSubmit,
-                      typeEvent: '1',
-                    })
-                  }
-                  isChecked={typeEvent === '1'}
-                  name="typeEvent"
-                  labelRadio="설비 이력"
-                  id="event"
-                  disabled={
-                    (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
-                    (roleName !== ROLE_COMPANY &&
-                      userId !== eventList?.user_id &&
-                      eventList?.evt_type === '0')
-                  }
-                />
-                <Radio
-                  onChange={() =>
-                    setDataSubmit({
-                      ...dataSubmit,
-                      typeEvent: '2',
-                    })
-                  }
-                  isChecked={typeEvent === '2'}
-                  labelRadio="보수 이력"
-                  name="typeEvent"
-                  id="history"
-                  disabled={
-                    (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
-                    (roleName !== ROLE_COMPANY &&
-                      userId !== eventList?.user_id &&
-                      eventList?.evt_type === '0')
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="item-row d-flex">
-            <div className="colum-left">모듈정보</div>
-            <div className="colum-right">
-              <div className="item-role">
-                <div className="group-select">
-                  {eventList?.ds_type !== '3' && (
-                    <div className="group-item">
-                      <SelectDropdown
-                        placeholder="업체 선택"
-                        listItem={(comList && comList.slice(1)) || []}
-                        onChange={(option) => handleChange(option, 'company')}
-                        option={company || null}
-                        noOptionsMessage={() => '옵션 없음'}
-                        disabled={
-                          (roleName !== ROLE_ADMIN &&
-                            eventList?.evt_type === '0') ||
-                          (roleName !== ROLE_COMPANY &&
-                            userId !== eventList?.user_id &&
-                            eventList?.evt_type === '0')
-                        }
-                      />
-                      <img src={images.icon_next} alt="" />
-                    </div>
-                  )}
-                  {eventList?.ds_type !== '3' && (
-                    <div className="group-item">
-                      <SelectDropdown
-                        placeholder="구역 선택"
-                        listItem={(posList && posList.slice(1)) || []}
-                        onChange={(option) => handleChange(option, 'area')}
-                        option={area || null}
-                        noOptionsMessage={() => '옵션 없음'}
-                        disabled={
-                          (roleName !== ROLE_ADMIN &&
-                            eventList?.evt_type === '0') ||
-                          (roleName !== ROLE_COMPANY &&
-                            userId !== eventList?.user_id &&
-                            eventList?.evt_type === '0')
-                        }
-                      />
-                      <img src={images.icon_next} alt="" />
-                    </div>
-                  )}
-
-                  <div className="group-item">
-                    <SelectDropdown
-                      placeholder="모듈 선택"
-                      listItem={
-                        eventList?.evt_type === '3'
-                          ? listInverterSolar
-                          : (area && listInverterSolar) || []
+        {isProcessingDetail ? (
+          <>
+            <div className="table-form">
+              <div className="item-row d-flex">
+                <div className="colum-left">분류</div>
+                <div className="colum-right">
+                  <div className="group-radio">
+                    <Radio
+                      onChange={() =>
+                        setDataSubmit({
+                          ...dataSubmit,
+                          typeEvent: '1',
+                        })
                       }
-                      onChange={(option) => handleChange(option, 'inverter')}
-                      option={inverter || null}
-                      noOptionsMessage={() => '옵션 없음'}
+                      isChecked={typeEvent === '1'}
+                      name="typeEvent"
+                      labelRadio="설비 이력"
+                      id="event"
+                      disabled={
+                        (roleName !== ROLE_ADMIN &&
+                          eventList?.evt_type === '0') ||
+                        (roleName !== ROLE_COMPANY &&
+                          userId !== eventList?.user_id &&
+                          eventList?.evt_type === '0')
+                      }
+                    />
+                    <Radio
+                      onChange={() =>
+                        setDataSubmit({
+                          ...dataSubmit,
+                          typeEvent: '2',
+                        })
+                      }
+                      isChecked={typeEvent === '2'}
+                      labelRadio="보수 이력"
+                      name="typeEvent"
+                      id="history"
                       disabled={
                         (roleName !== ROLE_ADMIN &&
                           eventList?.evt_type === '0') ||
@@ -336,50 +273,125 @@ const EditEvent = ({ match, location }: Props) => {
                   </div>
                 </div>
               </div>
+              <div className="item-row d-flex">
+                <div className="colum-left">모듈정보</div>
+                <div className="colum-right">
+                  <div className="item-role">
+                    <div className="group-select">
+                      {eventList?.ds_type !== '3' && (
+                        <div className="group-item">
+                          <SelectDropdown
+                            placeholder="업체 선택"
+                            listItem={(comList && comList.slice(1)) || []}
+                            onChange={(option) =>
+                              handleChange(option, 'company')
+                            }
+                            option={company || null}
+                            noOptionsMessage={() => '옵션 없음'}
+                            disabled={
+                              (roleName !== ROLE_ADMIN &&
+                                eventList?.evt_type === '0') ||
+                              (roleName !== ROLE_COMPANY &&
+                                userId !== eventList?.user_id &&
+                                eventList?.evt_type === '0')
+                            }
+                          />
+                          <img src={images.icon_next} alt="" />
+                        </div>
+                      )}
+                      {eventList?.ds_type !== '3' && (
+                        <div className="group-item">
+                          <SelectDropdown
+                            placeholder="구역 선택"
+                            listItem={(posList && posList.slice(1)) || []}
+                            onChange={(option) => handleChange(option, 'area')}
+                            option={area || null}
+                            noOptionsMessage={() => '옵션 없음'}
+                            disabled={
+                              (roleName !== ROLE_ADMIN &&
+                                eventList?.evt_type === '0') ||
+                              (roleName !== ROLE_COMPANY &&
+                                userId !== eventList?.user_id &&
+                                eventList?.evt_type === '0')
+                            }
+                          />
+                          <img src={images.icon_next} alt="" />
+                        </div>
+                      )}
+
+                      <div className="group-item">
+                        <SelectDropdown
+                          placeholder="모듈 선택"
+                          listItem={
+                            eventList?.evt_type === '3'
+                              ? listInverterSolar
+                              : (area && listInverterSolar) || []
+                          }
+                          onChange={(option) =>
+                            handleChange(option, 'inverter')
+                          }
+                          option={inverter || null}
+                          noOptionsMessage={() => '옵션 없음'}
+                          disabled={
+                            (roleName !== ROLE_ADMIN &&
+                              eventList?.evt_type === '0') ||
+                            (roleName !== ROLE_COMPANY &&
+                              userId !== eventList?.user_id &&
+                              eventList?.evt_type === '0')
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="item-row d-flex mh-300">
+                <div className="colum-left">내용</div>
+                <div className="colum-right">
+                  <textarea
+                    placeholder=""
+                    name="content"
+                    rows="12"
+                    maxLength="5000"
+                    className="form-control"
+                    value={content}
+                    disabled={
+                      (roleName !== ROLE_ADMIN &&
+                        eventList?.evt_type === '0') ||
+                      (roleName !== ROLE_COMPANY &&
+                        userId !== eventList?.user_id &&
+                        eventList?.evt_type === '0')
+                    }
+                    onChange={(e) => handleChange(e.target.value, 'content')}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="item-row d-flex mh-300">
-            <div className="colum-left">내용</div>
-            <div className="colum-right">
-              <textarea
-                placeholder=""
-                name="content"
-                rows="12"
-                maxLength="5000"
-                className="form-control"
-                value={content}
-                disabled={
+            <div className="group-btn-bottom">
+              <Button
+                onClick={() =>
+                  setModalConform({
+                    ...modalConform,
+                    isShow: true,
+                  })
+                }
+                isDisabled={
                   (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
                   (roleName !== ROLE_COMPANY &&
                     userId !== eventList?.user_id &&
                     eventList?.evt_type === '0')
                 }
-                onChange={(e) => handleChange(e.target.value, 'content')}
-              />
+              >
+                수정 완료
+              </Button>
+              <Button onClick={() => history.push(location?.state?.prevRoute)}>
+                취소
+              </Button>
             </div>
-          </div>
-        </div>
-        <div className="group-btn-bottom">
-          <Button
-            onClick={() =>
-              setModalConform({
-                ...modalConform,
-                isShow: true,
-              })
-            }
-            isDisabled={
-              (roleName !== ROLE_ADMIN && eventList?.evt_type === '0') ||
-              (roleName !== ROLE_COMPANY &&
-                userId !== eventList?.user_id &&
-                eventList?.evt_type === '0')
-            }
-          >
-            수정 완료
-          </Button>
-          <Button onClick={() => history.push(location?.state?.prevRoute)}>
-            취소
-          </Button>
-        </div>
+          </>
+        ) : (
+          <Loading />
+        )}
       </div>
 
       <ModalPopup

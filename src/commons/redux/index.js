@@ -140,7 +140,7 @@ const commonSilice = createSlice({
 
     getEventList: (state, action) => {
       state.isProcessingDetail = true;
-
+      state.totalEventPage = 0;
       state.type = action.type;
     },
 
@@ -155,6 +155,7 @@ const commonSilice = createSlice({
     getEventListFailed: (state, action) => {
       state.isProcessingDetail = false;
       state.type = action.type;
+      state.totalEventPage = 0;
     },
     deleteEvent: (state, action) => {
       state.type = action.type;

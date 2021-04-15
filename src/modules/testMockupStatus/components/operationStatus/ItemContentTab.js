@@ -40,6 +40,8 @@ type Props = {
   handleClickDetail: Function,
   dataChartOperation: Object,
   optionFilters: any,
+  isProcessingRaw: boolean,
+  isProcessingEvent: boolean,
 };
 
 const ItemContentTab = ({
@@ -56,6 +58,8 @@ const ItemContentTab = ({
   handleClickDetail,
   dataChartOperation,
   optionFilters,
+  isProcessingRaw,
+  isProcessingEvent,
 }: Props) => {
   const history = useHistory();
   const { userInfo } = useSelector((state) => state?.account);
@@ -123,9 +127,10 @@ const ItemContentTab = ({
           tableHeads={headTestMockupOperationStatus}
           tableBody={listMockupDataCompany}
           isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination">
-          {totalPage > perPage && (
+          {totalPage > perPage && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}
@@ -206,6 +211,7 @@ const ItemContentTab = ({
         onClickRow={handleClickDetail}
         listOption={test_modal_search}
         optionDefault={optionFilters}
+        isLoading={isProcessingEvent}
       />
       {(roles === ROLE_ADMIN || roles === ROLE_COMPANY) && (
         <div className="group-btn-register text-right">
@@ -222,7 +228,7 @@ const ItemContentTab = ({
         </div>
       )}
       <div className="opacity d-block pagination mt-0">
-        {totalPage2 > perPage2 && (
+        {totalPage2 > perPage2 && !isProcessingEvent && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

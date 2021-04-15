@@ -6,14 +6,12 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import Loading from 'commons/components/Loading';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const { deviceList } = useSelector((state) => state?.commons);
+  const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const {
-    isProcessing,
     total,
     dataChartOperation,
     listDataTableRaw,
@@ -21,6 +19,7 @@ const OperationStatusPage = () => {
     totalMockup,
     listDataTableRawMockup,
     isProcessingRaw,
+    isProcessingRaw2,
   } = useSelector((state) => state?.testSolarMonitoringStatus);
 
   const [randomNumber, setRandomNumber] = useState(null);
@@ -244,40 +243,40 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <>
-      {(isProcessingRaw || isProcessing) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 운영 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 운영 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={
+            deviceList &&
+            deviceList.slice(1).map((item) => ({
+              id: item?.id,
+              label: item?.company.com_name,
+            }))
+          }
+          subTitle={false}
+          isProcessing={isProcessing}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRaw}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalMockup}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={listDataTableRawMockup}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={
-              deviceList &&
-              deviceList.slice(1).map((item) => ({
-                id: item?.id,
-                label: item?.company.com_name,
-              }))
-            }
-            subTitle={false}
+            dataChartOperation={dataChartOperation}
+            handleChangeSearch={handleChangeSearch}
+            isProcessingRaw={isProcessingRaw}
+            isProcessingRaw2={isProcessingRaw2}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              listMockupDataCompany={listDataTableRaw}
-              totalPage={total}
-              perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalMockup}
-              perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={listDataTableRawMockup}
-              paramsSearch={paramsSearch}
-              dataChartOperation={dataChartOperation}
-              handleChangeSearch={handleChangeSearch}
-            />
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

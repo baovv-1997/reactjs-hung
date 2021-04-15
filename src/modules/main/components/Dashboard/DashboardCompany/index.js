@@ -140,17 +140,20 @@ const DashboardCompany = () => {
     });
   return (
     <>
-      {isLoading && <Loading />}
-      <div className="content-wrap">
+      <div className="content-wrap mh-50">
         <TitleHeader
           title="설치 업체"
           descSub="실증단지 내 설치된 업체들의 발전 데이터를 확인하실 수 있습니다."
         />
-
-        <div className="list-company">{renderInverter}</div>
-
+        {isLoading ? (
+          <div className="mt-5 pt-5">
+            <Loading />
+          </div>
+        ) : (
+          <div className="list-company">{renderInverter}</div>
+        )}
         <div className="opacity d-block pagination">
-          {total > perPage && (
+          {total > perPage && !isLoading && (
             <div className="wrapper-device__pagination">
               <Pagination
                 activePage={activePage}

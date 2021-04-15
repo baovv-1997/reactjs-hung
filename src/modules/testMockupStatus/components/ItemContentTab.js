@@ -17,6 +17,7 @@ type Props = {
   performanceData: Object,
   insolationData: Object,
   dataChart: Array<{}>,
+  isProcessingRaw: boolean,
 };
 
 const ItemContentTab = ({
@@ -27,6 +28,7 @@ const ItemContentTab = ({
   insolationData,
   paramsSearch,
   dataChart,
+  isProcessingRaw,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -94,6 +96,7 @@ const ItemContentTab = ({
           tableHeads={headTestMockupStatus}
           tableBody={listMockupDataCompany}
           isShowId
+          isLoading={isProcessingRaw}
         />
       </div>
     </div>

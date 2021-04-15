@@ -38,6 +38,8 @@ type Props = {
   optionFilters: Object,
   timeDate: Object,
   handleClickDetail: Function,
+  isProcessingRaw: boolean,
+  isProcessingRawEvent: boolean,
 };
 
 const ItemContentTab = ({
@@ -55,6 +57,8 @@ const ItemContentTab = ({
   optionFilters,
   timeDate,
   handleClickDetail,
+  isProcessingRaw,
+  isProcessingRawEvent,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -145,9 +149,10 @@ const ItemContentTab = ({
           tableHeads={headStatusCompany}
           tableBody={listMockupDataCompany}
           isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination mt-0 mb-3">
-          {totalPage > perPage && (
+          {totalPage > perPage && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}
@@ -223,6 +228,7 @@ const ItemContentTab = ({
           []
         }
         isShowId
+        isLoading={isProcessingRawEvent}
         handleCheckboxSort={(option) => handleChangeSearch(option, 'checkBox')}
         handleShowModalSorting={() => handleChangeSearch('', 'modal')}
         showModalSort={{
@@ -234,7 +240,7 @@ const ItemContentTab = ({
         onClickRow={handleClickDetail}
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage2 > perPage2 && (
+        {totalPage2 > perPage2 && !isProcessingRawEvent && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}
