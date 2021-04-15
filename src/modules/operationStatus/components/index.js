@@ -320,7 +320,7 @@ const OperationStatusPage = ({ location }: Props) => {
     if (paramsSearch?.company) {
       getEventListCallback({
         com_id: paramsSearch?.company,
-        inverter_ids: menuTab,
+        ds_id: menuTab,
         page: paramsSearch?.page2,
         per_page: paramsSearch?.pagination2?.value,
         type: optionFilters,
@@ -353,7 +353,7 @@ const OperationStatusPage = ({ location }: Props) => {
       comName: paramsSearch?.comName,
     });
   };
-
+  console.log('sssssssssssss');
   return (
     <div className="content-wrap">
       <TitleHeader title="실증단지 운영 현황" />
