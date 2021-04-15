@@ -29,7 +29,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: companyId || (comList && comList[1] && comList[1]?.id) || null,
+    company: companyId || null,
     mockupType: null,
     parkingLot: null,
     power: true,
@@ -46,6 +46,7 @@ const StatusByAreaCompany = () => {
     }, TIME_REQUEST);
     return () => clearInterval(interval);
   }, []);
+
   const powerData = {
     type: 'power',
     data: [
@@ -111,12 +112,12 @@ const StatusByAreaCompany = () => {
       },
     ],
   };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(CommonAction.getCompanyList());
   }, []);
 
-  const dispatch = useDispatch();
   // call api getCardInformation
   const handleGetCardInformation = useCallback(
     (company) => {
@@ -163,6 +164,16 @@ const StatusByAreaCompany = () => {
     paramsSearch?.pagination?.value,
     randomNumber,
   ]);
+
+  useEffect(() => {
+    setParamsSearch({
+      ...paramsSearch,
+      company:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].id
+          : comList && comList[0] && comList[0].id,
+    });
+  }, [comList]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
@@ -224,7 +235,9 @@ const StatusByAreaCompany = () => {
         <GroupSelectSidebar
           handleChangeSearch={handleChangeSearch}
           paramsSearch={paramsSearch}
-          listStatusCompanySelect={comList && comList.slice(1)}
+          listStatusCompanySelect={
+            comList && comList.length > 1 ? comList.slice(1) : comList
+          }
           subTitle={false}
           isProcessing={isProcessing}
         />
