@@ -70,14 +70,14 @@ const EditEvent = ({ match, location }: Props) => {
   });
 
   useEffect(() => {
-    if (eventList?.ds_type === '1' || eventList?.ds_type === '2') {
+    if (eventList?.ds_type === '0') {
       dispatch(EventAction.getCompanyList({ sort_by: 'id', sort_dir: 'asc' }));
     }
     // eslint-disable-next-line
-  }, []);
+  }, [eventList?.ds_type]);
 
   useEffect(() => {
-    if (eventList?.ds_type === '1' || eventList?.ds_type === '2') {
+    if (eventList?.ds_type === '0') {
       dispatch(
         EventAction.getListDevice({
           per_page: 999999,
@@ -97,7 +97,7 @@ const EditEvent = ({ match, location }: Props) => {
   }, [dataSubmit?.company, dataSubmit?.area]);
 
   useEffect(() => {
-    if (eventList?.ds_type === '1' || eventList?.ds_type === '2') {
+    if (eventList?.ds_type === '0') {
       dispatch(
         EventAction.getPosList({
           per_page: 99999999,

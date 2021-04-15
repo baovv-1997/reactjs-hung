@@ -143,7 +143,7 @@ const FormDetail = ({ accountDetail, history }: Props) => {
           {accountDetail &&
             accountDetail.roles &&
             accountDetail.roles[0] &&
-            accountDetail?.roles[0] === ROLE_ADMIN && (
+            accountDetail?.roles[0].name === ROLE_ADMIN && (
               <Button
                 customClass="btn-delete"
                 onClick={() => {

@@ -168,8 +168,9 @@ const EventDetail = ({ match, location }: Props) => {
               )}
               <Button
                 onClick={() =>
-                  history.push(location?.state?.prevRoute) ||
-                  history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)
+                  location?.state?.prevRoute
+                    ? history.push(location?.state?.prevRoute)
+                    : history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)
                 }
               >
                 목록
