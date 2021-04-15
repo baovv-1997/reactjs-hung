@@ -441,8 +441,15 @@ const OperationStatusPage = () => {
   useEffect(() => {
     setParamsSearch({
       ...paramsSearch,
-      company: comList && comList[1] && comList[1].id,
-      comName: comList && comList[1] && comList[1].com_name,
+      company:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].id
+          : comList && comList[0] && comList[0].id,
+
+      comName:
+        comList && comList.length > 1
+          ? comList && comList[1] && comList[1].com_name
+          : comList && comList[0] && comList[0].com_name,
     });
   }, [comList]);
 
@@ -456,7 +463,9 @@ const OperationStatusPage = () => {
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={comList.slice(1)}
+            listStatusCompanySelect={
+              comList.length > 1 ? comList.slice(1) : comList
+            }
             listMockupType={listMockupType}
           />
           <div className="content-body-left w-100">

@@ -240,7 +240,6 @@ const StatusByAreaCompany = () => {
       comName: paramsSearch?.comName,
     });
   };
-
   return (
     <>
       {(isProcessing || isProcessingCommons || isProcessingRaw) && <Loading />}
