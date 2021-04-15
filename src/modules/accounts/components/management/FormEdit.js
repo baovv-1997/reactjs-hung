@@ -41,7 +41,9 @@ const FormDetail = ({ accountDetail, history }: Props) => {
   const [devices, setDevices] = useState([]);
   const [comSelected, setComSelected] = useState({});
   // const comID = userInfo?.com_id;
-  const roles = userInfo?.roles?.name;
+  const roles = userInfo?.roles[0]?.name;
+
+  console.log(userInfo?.roles);
   const [inputValue, setInputValue] = useState({
     name: accountDetail?.name,
     phone: accountDetail?.phone,
