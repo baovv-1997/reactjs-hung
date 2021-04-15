@@ -442,6 +442,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         break;
     }
   }, [paramsSearch?.classification]);
+  
   const handleSubmitSearch = () => {
     dispatch(
       getStatisticOperatorChartData({

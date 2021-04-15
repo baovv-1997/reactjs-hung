@@ -53,6 +53,7 @@ const mainSlice = createSlice({
 
     getListDevice: (state) => {
       state.isLoading = true;
+      state.totalPage = 0;
     },
 
     getListDeviceSuccess: (state, action) => {
@@ -83,6 +84,7 @@ const mainSlice = createSlice({
     getListDeviceFailed: (state, action) => {
       state.isLoading = false;
       state.type = action.type;
+      state.totalPage = 0;
     },
     getDeivceDetail: (state, action) => {
       state.isLoading = true;
