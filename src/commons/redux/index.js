@@ -82,7 +82,7 @@ const commonSilice = createSlice({
     getPosListFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
-      state.isProcessingPos = true;
+      state.isProcessingPos = false;
     },
     getCompanyList: (state, action) => {
       state.type = action.type;
