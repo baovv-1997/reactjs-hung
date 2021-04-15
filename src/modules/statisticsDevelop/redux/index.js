@@ -21,6 +21,7 @@ const statisticsDevelopSlide = createSlice({
     getStatisticsDevelopRaw: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.totalRawData = 0;
     },
     getStatisticsDevelopRawSuccess: (state, action) => {
       const { data } = action.data;
@@ -32,11 +33,13 @@ const statisticsDevelopSlide = createSlice({
     getStatisticsDevelopRawFailed: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = false;
+      state.totalRawData = 0;
     },
 
     getRadiationRaw: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw2 = true;
+      state.totalRadiationRawData = 0;
     },
     getRadiationRawSuccess: (state, action) => {
       const { data } = action.data;
@@ -48,6 +51,7 @@ const statisticsDevelopSlide = createSlice({
     getRadiationRawFailed: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw2 = false;
+      state.totalRadiationRawData = 0;
     },
 
     getStatisticDevelopChartData: (state, action) => {

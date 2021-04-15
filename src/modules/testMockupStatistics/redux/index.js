@@ -186,7 +186,7 @@ const testMockupStatisticsSlide = createSlice({
     getDataRawTableMockupStatisticGenerator: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw2 = true;
-      state.total = 0;
+      state.totalMockup = 0;
     },
 
     getDataRawTableMockupStatisticGeneratorSuccess: (state, action) => {

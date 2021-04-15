@@ -10,24 +10,26 @@ const statisticsDevelopSlide = createSlice({
     isProcessingChart: false,
     total: 0,
     rawData: [],
-    totalRawData: null,
+    totalRawData: 0,
   },
 
   reducers: {
     getStatisticOperatorRawData: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.totalRawData = 0;
     },
     getStatisticOperatorRawDataSuccess: (state, action) => {
       const { data } = action.data;
       state.type = action.type;
       state.rawData = data;
-      state.totalRawData = action.data.total;
+      state.totalRawData = action?.data?.total;
       state.isProcessingRaw = false;
     },
     getStatisticOperatorRawDataFailed: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = false;
+      state.totalRawData = 0;
     },
     getStatisticOperatorChartData: (state, action) => {
       state.type = action.type;

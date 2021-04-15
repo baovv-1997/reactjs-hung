@@ -181,7 +181,7 @@ const testMockupStatusSlide = createSlice({
     getDataTestMKRawEventTableOperation: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
-      state.total = 0;
+      state.totalEvent = 0;
     },
     getDataTestMKRawEventTableOperationSuccess: (state, action) => {
       const { data } = action;
