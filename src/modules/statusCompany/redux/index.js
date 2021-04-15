@@ -6,6 +6,7 @@ const statusCompanySlide = createSlice({
   initialState: {
     isProcessing: false,
     isProcessingRaw: false,
+    isProcessingCart: false,
     listStatusCompany: [],
     listStatusCompanySelect: [],
     total: 0,
@@ -86,31 +87,31 @@ const statusCompanySlide = createSlice({
 
     getStatusGeneratorCard: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCart = true;
     },
     getStatusGeneratorCardSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
       state.cardInfo = data;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
     },
     getStatusGeneratorCardFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
     },
 
     getStatusGeneratorChartData: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getStatusGeneratorChartDataSuccess: (state, action) => {
       state.type = action.type;
       state.chartData = action.data;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
     },
     getStatusGeneratorChartDataFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
     },
   },
 });
@@ -121,12 +122,15 @@ export const {
   getListStatusCompany,
   getListStatusCompanySuccess,
   getListStatusCompanyFailed,
+
   getStatusGeneratorRaw,
   getStatusGeneratorRawSuccess,
   getStatusGeneratorRawFailed,
+
   getStatusGeneratorCard,
   getStatusGeneratorCardSuccess,
   getStatusGeneratorCardFailed,
+
   getStatusGeneratorChartData,
   getStatusGeneratorChartDataSuccess,
   getStatusGeneratorChartDataFailed,

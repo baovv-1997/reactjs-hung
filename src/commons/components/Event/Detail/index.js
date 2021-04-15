@@ -82,93 +82,101 @@ const EventDetail = ({ match, location }: Props) => {
 
   return (
     <>
-      {isProcessingDetail && <Loading />}
       <div className="content-wrap">
         <TitleHeader
           title="실증단지 운영 현황"
           descSub="설비 이력, 보수 이력을 등록하실 수 있습니다."
         />
         <TitleSubHeader title="이벤트 상세 내용" />
-
-        <div className="table-form">
-          <div className="item-row d-flex">
-            <div className="colum-left">분류</div>
-            <div className="colum-right">{eventList?.evt_type_label}</div>
-          </div>
-          <div className="item-row d-flex">
-            <div className="colum-left">모듈정보</div>
-            <div className="colum-right">
-              {eventList?.ds_type !== '3' && <span>{eventList?.com_name}</span>}
-              {eventList?.com_name &&
-                eventList?.pos_name &&
-                eventList?.ds_type !== '3' && (
-                  <img
-                    src={images.arrow_right}
-                    alt=""
-                    className="mx-2 position-top-1"
-                  />
-                )}
-              {eventList?.ds_type !== '3' && <span>{eventList?.pos_name}</span>}
-              {eventList?.com_name &&
-                eventList?.pos_name &&
-                eventList?.ds_type !== '3' && (
-                  <img
-                    src={images.arrow_right}
-                    alt=""
-                    className="mx-2 position-top-1"
-                  />
-                )}
-              <span>{eventList?.ds_name}</span>
+        {isProcessingDetail ? (
+          <>
+            <div className="table-form">
+              <div className="item-row d-flex">
+                <div className="colum-left">분류</div>
+                <div className="colum-right">{eventList?.evt_type_label}</div>
+              </div>
+              <div className="item-row d-flex">
+                <div className="colum-left">모듈정보</div>
+                <div className="colum-right">
+                  {eventList?.ds_type !== '3' && (
+                    <span>{eventList?.com_name}</span>
+                  )}
+                  {eventList?.com_name &&
+                    eventList?.pos_name &&
+                    eventList?.ds_type !== '3' && (
+                      <img
+                        src={images.arrow_right}
+                        alt=""
+                        className="mx-2 position-top-1"
+                      />
+                    )}
+                  {eventList?.ds_type !== '3' && (
+                    <span>{eventList?.pos_name}</span>
+                  )}
+                  {eventList?.com_name &&
+                    eventList?.pos_name &&
+                    eventList?.ds_type !== '3' && (
+                      <img
+                        src={images.arrow_right}
+                        alt=""
+                        className="mx-2 position-top-1"
+                      />
+                    )}
+                  <span>{eventList?.ds_name}</span>
+                </div>
+              </div>
+              <div className="item-row d-flex mh-300">
+                <div className="colum-left">내용</div>
+                <div className="colum-right">{eventList?.evt_content}</div>
+              </div>
             </div>
-          </div>
-          <div className="item-row d-flex mh-300">
-            <div className="colum-left">내용</div>
-            <div className="colum-right">{eventList?.evt_content}</div>
-          </div>
-        </div>
-        <div className="group-btn-delete text-right mb-4">
-          {((roleName === ROLE_ADMIN && eventList?.evt_type !== '0') ||
-            (roleName === ROLE_COMPANY &&
-              userId === eventList?.user_id &&
-              eventList?.evt_type !== '0')) && (
-            <Button
-              onClick={() =>
-                setModalConfirm({
-                  ...modalConform,
-                  isShow: true,
-                })
-              }
-              customClass="btn-red"
-            >
-              삭제
-            </Button>
-          )}
-        </div>
-        <div className="group-btn-bottom">
-          {((roleName === ROLE_ADMIN && eventList?.evt_type !== '0') ||
-            (roleName === ROLE_COMPANY &&
-              userId === eventList?.user_id &&
-              eventList?.evt_type !== '0')) && (
-            <Button
-              onClick={() =>
-                history.push({
-                  pathname: `${ROUTERS.EVENT}/edit/${id}`,
-                  state: { prevRoute: location.state.prevRoute },
-                })
-              }
-            >
-              수정
-            </Button>
-          )}
-          <Button
-            onClick={() =>
-              history.push(location?.state?.prevRoute) ||
-              history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)
-            }
-          >
-            목록
-          </Button>
-        </div>
+            <div className="group-btn-delete text-right mb-4">
+              {((roleName === ROLE_ADMIN && eventList?.evt_type !== '0') ||
+                (roleName === ROLE_COMPANY &&
+                  userId === eventList?.user_id &&
+                  eventList?.evt_type !== '0')) && (
+                <Button
+                  onClick={() =>
+                    setModalConfirm({
+                      ...modalConform,
+                      isShow: true,
+                    })
+                  }
+                  customClass="btn-red"
+                >
+                  삭제
+                </Button>
+              )}
+            </div>
+            <div className="group-btn-bottom">
+              {((roleName === ROLE_ADMIN && eventList?.evt_type !== '0') ||
+                (roleName === ROLE_COMPANY &&
+                  userId === eventList?.user_id &&
+                  eventList?.evt_type !== '0')) && (
+                <Button
+                  onClick={() =>
+                    history.push({
+                      pathname: `${ROUTERS.EVENT}/edit/${id}`,
+                      state: { prevRoute: location.state.prevRoute },
+                    })
+                  }
+                >
+                  수정
+                </Button>
+              )}
+              <Button
+                onClick={() =>
+                  history.push(location?.state?.prevRoute) ||
+                  history.push(ROUTERS.OPERATION_STATUS_BY_COMPANY)
+                }
+              >
+                목록
+              </Button>
+            </div>
+          </>
+        ) : (
+          <Loading />
+        )}
       </div>
       <ModalPopup
         isOpen={modalConform.isShow}

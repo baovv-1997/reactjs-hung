@@ -7,13 +7,11 @@ import Pagination from 'react-js-pagination';
 import TitleHeader from 'commons/components/TitleHeader';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import Loading from 'commons/components/Loading';
 import * as ActionStatusGenerator from '../redux';
 import ItemContentTab from './ItemContentTab';
 
 const StatusByAreaCompany = () => {
   const {
-    isProcessing,
     dataBox,
     listDataTableRaw,
     total,
@@ -24,7 +22,7 @@ const StatusByAreaCompany = () => {
 
   const { inverterId } = useSelector((state) => state?.testDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
-  const { deviceList } = useSelector((state) => state?.commons);
+  const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -170,7 +168,6 @@ const StatusByAreaCompany = () => {
     },
     [dispatch]
   );
-
   useEffect(() => {
     if (paramsSearch?.company) {
       handleGetDataRawTable({
@@ -242,7 +239,6 @@ const StatusByAreaCompany = () => {
 
   return (
     <>
-      {(isProcessingRaw || isProcessing) && <Loading />}
       <div className="content-wrap">
         <TitleHeader title="테스트(목업) 발전 현황" />
         <div className="content-body page-company">
@@ -257,6 +253,7 @@ const StatusByAreaCompany = () => {
               }))
             }
             subTitle={false}
+            isProcessing={isProcessing}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
@@ -267,9 +264,10 @@ const StatusByAreaCompany = () => {
               insolationData={insolationData}
               paramsSearch={paramsSearch}
               dataChart={dataChart}
+              isProcessingRaw={isProcessingRaw}
             />
             <div className="opacity d-block pagination">
-              {total > paramsSearch?.pagination?.value && (
+              {total > paramsSearch?.pagination?.value && !isProcessingRaw && (
                 <div className="wrapper-device__pagination mt-0">
                   <Pagination
                     activePage={paramsSearch?.page}

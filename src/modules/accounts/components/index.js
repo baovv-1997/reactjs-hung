@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import ModalPopup from 'commons/components/Modal';
 import Input from 'commons/components/Input';
 import Button from 'commons/components/Button';
-import Loading from 'commons/components/Loading';
 import { API } from 'apis';
 import ROUTERS from 'constants/routers';
 import { listType } from 'constants/listKey';
@@ -381,8 +380,6 @@ const SignUp = () => {
 
   return (
     <div className="page-login">
-      {isProcessing && <Loading />}
-
       <div className="sign-up">
         <div className="login-name">LOGIN</div>
         <div className="from-login">

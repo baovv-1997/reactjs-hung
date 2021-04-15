@@ -5,7 +5,9 @@ const testMockupStatusSlide = createSlice({
   name: 'testMockupStatus',
   initialState: {
     isProcessing: false,
+    isProcessingCard: false,
     isProcessingRaw: false,
+    isProcessingChart: false,
     total: 0,
     totalRawOperation: 0,
     dataCardOperation: {
@@ -25,23 +27,24 @@ const testMockupStatusSlide = createSlice({
   reducers: {
     getCardInformationTestMk: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCard = true;
     },
     getCardInformationTestMkSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
       state.dataBox = data;
     },
 
     getCardInformationTestMkFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
     },
 
     getDataRawTableTestMk: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
 
     getDataRawTableTestMkSuccess: (state, action) => {
@@ -84,56 +87,58 @@ const testMockupStatusSlide = createSlice({
 
     getDataTrendChartTestMk: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataTrendChartTestMkSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = (data && data) || [];
     },
 
     getDataTrendChartTestMkFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
     },
 
     getCardTestMKStatusOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCard = true;
     },
     getCardTestMKStatusOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
       state.dataCardOperation = data;
     },
     getCardTestMKStatusOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
     },
 
     getDataTestMKChartStatusOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataTestMKChartStatusOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = data;
       state.totalRawOperation = data?.total;
     },
     getDataTestMKChartStatusOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = {};
     },
 
     getDataTestMKRawTableOperation: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
+
     getDataTestMKRawTableOperationSuccess: (state, action) => {
       const { data, params } = action;
       const listDataTableRaw =
@@ -173,10 +178,10 @@ const testMockupStatusSlide = createSlice({
       state.total = 0;
       state.listDataTableRawOperation = [];
     },
-
     getDataTestMKRawEventTableOperation: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
+      state.total = 0;
     },
     getDataTestMKRawEventTableOperationSuccess: (state, action) => {
       const { data } = action;

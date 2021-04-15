@@ -7,7 +7,6 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import Loading from 'commons/components/Loading';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
@@ -15,7 +14,6 @@ const OperationStatusPage = () => {
   const { deviceList } = useSelector((state) => state?.commons);
   const isLoading = useSelector((state) => state?.commons?.isProcessing);
   const {
-    isProcessing,
     dataBoxCard,
     dataChart,
     listDataTableRaw,
@@ -23,6 +21,7 @@ const OperationStatusPage = () => {
     total,
     totalMockup,
     isProcessingRaw,
+    isProcessingRaw2,
   } = useSelector((state) => state?.testMockupStatistics);
   const [randomNumber, setRandomNumber] = useState(null);
   const defaultOption = {
@@ -324,7 +323,7 @@ const OperationStatusPage = () => {
 
   return (
     <>
-      {(isProcessing || isProcessingRaw || isLoading) && <Loading />}
+      {/* {(isProcessing || isProcessingRaw || isLoading) && <Loading />} */}
       <div className="content-wrap">
         <TitleHeader title="테스트(목업) 발전 통계" />
         <div className="content-body page-company">
@@ -339,6 +338,7 @@ const OperationStatusPage = () => {
               }))
             }
             subTitle={false}
+            isProcessing={isLoading}
           />
           <div className="content-body-left w-100 border-pd-20">
             <ItemContentTab
@@ -362,6 +362,8 @@ const OperationStatusPage = () => {
                     ? moment(paramsSearch?.to).format('YYYY-MM')
                     : moment(paramsSearch?.to).format('YYYY-MM-DD'),
               }}
+              isProcessingRaw={isProcessingRaw}
+              isProcessingRaw2={isProcessingRaw2}
             />
           </div>
         </div>

@@ -7,14 +7,12 @@ import TitleHeader from 'commons/components/TitleHeader';
 import { TIME_REQUEST } from 'constants/index';
 import * as CommonAction from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
-import Loading from 'commons/components/Loading';
 import * as ActionGenerator from '../../redux';
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  const { deviceList } = useSelector((state) => state?.commons);
+  const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const {
-    isProcessing,
     dataBoxCard,
     dataChart,
     listDataTableRaw,
@@ -283,47 +281,46 @@ const OperationStatusPage = () => {
   };
 
   return (
-    <>
-      {(isProcessingRaw || isProcessing) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="테스트(실증단지) 발전 통계" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    <div className="content-wrap">
+      <TitleHeader title="테스트(실증단지) 발전 통계" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={
+            deviceList &&
+            deviceList.slice(1).map((item) => ({
+              id: item?.id,
+              label: item?.company.com_name,
+            }))
+          }
+          subTitle={false}
+          isProcessing={isProcessing}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            dataTableStatisticsCompany={listDataTableRaw}
+            totalPage={total}
+            perPage={paramsSearch?.pagination?.value}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={
-              deviceList &&
-              deviceList.slice(1).map((item) => ({
-                id: item?.id,
-                label: item?.company.com_name,
-              }))
-            }
-            subTitle={false}
+            dataChart={dataChart}
+            handleChangeSearch={handleChangeSearch}
+            timeDate={{
+              from:
+                paramsSearch?.classification === 'month'
+                  ? moment(paramsSearch?.from).format('YYYY-MM')
+                  : moment(paramsSearch?.from).format('YYYY-MM-DD'),
+              to:
+                paramsSearch?.classification === 'month'
+                  ? moment(paramsSearch?.to).format('YYYY-MM')
+                  : moment(paramsSearch?.to).format('YYYY-MM-DD'),
+            }}
+            isProcessingRaw={isProcessingRaw}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              dataTableStatisticsCompany={listDataTableRaw}
-              totalPage={total}
-              perPage={paramsSearch?.pagination?.value}
-              paramsSearch={paramsSearch}
-              dataChart={dataChart}
-              handleChangeSearch={handleChangeSearch}
-              timeDate={{
-                from:
-                  paramsSearch?.classification === 'month'
-                    ? moment(paramsSearch?.from).format('YYYY-MM')
-                    : moment(paramsSearch?.from).format('YYYY-MM-DD'),
-                to:
-                  paramsSearch?.classification === 'month'
-                    ? moment(paramsSearch?.to).format('YYYY-MM')
-                    : moment(paramsSearch?.to).format('YYYY-MM-DD'),
-              }}
-            />
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

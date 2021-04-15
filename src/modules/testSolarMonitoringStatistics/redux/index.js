@@ -7,6 +7,8 @@ const testSMStatisticsGeneratorSlide = createSlice({
   initialState: {
     isProcessing: false,
     isProcessingRaw: false,
+    isProcessingChart: false,
+    isProcessingCart: false,
     total: 0,
     dataBoxCard: {
       prod_day: 0,
@@ -28,38 +30,39 @@ const testSMStatisticsGeneratorSlide = createSlice({
   reducers: {
     getCardInformationStatisticsGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCart = true;
     },
     getCardInformationStatisticsGeneratorSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
       state.dataBoxCard = data;
     },
     getCardInformationStatisticsGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
     },
 
     getDataTrendChartStatisticsGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataTrendChartStatisticsGeneratorSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = data;
     },
     getDataTrendChartStatisticsGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = {};
     },
 
     getDataRawTableGenerator: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
 
     getDataRawTableGeneratorSuccess: (state, action) => {
@@ -102,38 +105,39 @@ const testSMStatisticsGeneratorSlide = createSlice({
 
     getCardInformationStatisticsOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCart = true;
     },
     getCardInformationStatisticsOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
       state.dataCardOperation = data;
     },
     getCardInformationStatisticsOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
     },
 
     getDataTrendChartStatisticsOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataTrendChartStatisticsOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = data;
     },
     getDataTrendChartStatisticsOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = [];
     },
 
     getDataRawTableOperation: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
     getDataRawTableOperationSuccess: (state, action) => {
       const { data, params } = action;

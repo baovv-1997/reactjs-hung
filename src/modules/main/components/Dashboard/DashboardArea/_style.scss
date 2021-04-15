@@ -24,14 +24,18 @@
   width: pxToRem(23);
   height: pxToRem(29);
 }
+
 .header__select {
   position: fixed;
   top: pxToRem(12);
   z-index: 999;
   margin-left: pxToRem(40);
+
   .css-4ljt47-MenuList {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 
     /* Hide scrollbar for Chrome, Safari and Opera */
     &::-webkit-scrollbar {
@@ -40,4 +44,8 @@
 
     border-radius: pxToRem(15);
   }
+}
+
+.mh-100vh {
+  min-height: 100vh;
 }

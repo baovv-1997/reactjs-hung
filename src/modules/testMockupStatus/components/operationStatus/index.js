@@ -9,7 +9,6 @@ import { addEventFilter, getEventList } from 'commons/redux';
 import GroupSelectSidebar from 'commons/components/GroupSelectSidebar';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
-import Loading from 'commons/components/Loading';
 import ItemContentTab from './ItemContentTab';
 import * as ActionGenerator from '../../redux';
 
@@ -27,9 +26,9 @@ const OperationStatusPage = ({ location }: Props) => {
     eventList,
     totalEventPage,
     isProcessingDetail,
+    isProcessing,
   } = useSelector((state) => state?.commons);
   const {
-    isProcessing,
     totalRawOperation,
     dataChartOperation,
     listDataTableRawOperation,
@@ -274,43 +273,43 @@ const OperationStatusPage = ({ location }: Props) => {
   };
 
   return (
-    <>
-      {(isProcessing || isProcessingDetail || isProcessingRaw) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="테스트(목업) 운영 현황" />
-        <div className="content-body page-company">
-          <GroupSelectSidebar
-            handleChangeSearch={handleChangeSearch}
+    <div className="content-wrap">
+      <TitleHeader title="테스트(목업) 운영 현황" />
+      <div className="content-body page-company">
+        <GroupSelectSidebar
+          handleChangeSearch={handleChangeSearch}
+          paramsSearch={paramsSearch}
+          listStatusCompanySelect={
+            deviceList &&
+            deviceList.slice(1).map((item) => ({
+              id: item?.id,
+              label: item?.company.com_name,
+            }))
+          }
+          subTitle={false}
+          isProcessing={isProcessing}
+        />
+        <div className="content-body-left w-100 border-pd-20">
+          <ItemContentTab
+            dataBoxContent={dataBoxContent}
+            listMockupDataCompany={listDataTableRawOperation}
+            totalPage={totalRawOperation}
+            perPage={paramsSearch?.pagination?.value}
+            totalPage2={totalEventPage}
+            perPage2={paramsSearch?.pagination2?.value}
+            dataTableBottom={eventList}
+            isShowModalSorting={isShowModalSorting}
             paramsSearch={paramsSearch}
-            listStatusCompanySelect={
-              deviceList &&
-              deviceList.slice(1).map((item) => ({
-                id: item?.id,
-                label: item?.company.com_name,
-              }))
-            }
-            subTitle={false}
+            dataChartOperation={dataChartOperation}
+            optionFilters={optionFilters}
+            handleChangeSearch={handleChangeSearch}
+            handleClickDetail={handleClickDetail}
+            isProcessingRaw={isProcessingRaw}
+            isProcessingEvent={isProcessingDetail}
           />
-          <div className="content-body-left w-100 border-pd-20">
-            <ItemContentTab
-              dataBoxContent={dataBoxContent}
-              listMockupDataCompany={listDataTableRawOperation}
-              totalPage={totalRawOperation}
-              perPage={paramsSearch?.pagination?.value}
-              totalPage2={totalEventPage}
-              perPage2={paramsSearch?.pagination2?.value}
-              dataTableBottom={eventList}
-              isShowModalSorting={isShowModalSorting}
-              paramsSearch={paramsSearch}
-              dataChartOperation={dataChartOperation}
-              optionFilters={optionFilters}
-              handleChangeSearch={handleChangeSearch}
-              handleClickDetail={handleClickDetail}
-            />
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

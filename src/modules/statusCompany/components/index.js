@@ -13,24 +13,22 @@ import {
   getStatusGeneratorChartData,
   getStatusGeneratorCard,
 } from 'modules/statusCompany/redux';
-
-import Loading from 'commons/components/Loading';
 import ItemContentTab from './ItemContentTab';
+import Loading from 'commons/components/Loading';
 
 const StatusByAreaCompany = () => {
   const dispatch = useDispatch();
   const [menuTab, setMenuTab] = useState('');
 
-  const { comList, deviceList } = useSelector((state) => state?.commons);
-  const isProcessingCommons = useSelector(
-    (state) => state?.commons?.isProcessing
+  const { comList, deviceList, isProcessingCompany } = useSelector(
+    (state) => state?.commons
   );
+
   const {
     totalRawData,
     rawData,
     cardInfo,
     chartData,
-    isProcessing,
     isProcessingRaw,
   } = useSelector((state) => state?.statusCompany);
   const { companyId } = useSelector((state) => state?.main);
@@ -241,10 +239,11 @@ const StatusByAreaCompany = () => {
     });
   };
   return (
-    <>
-      {(isProcessing || isProcessingCommons || isProcessingRaw) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 현황" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 발전 현황" />
+      {isProcessingCompany ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
@@ -254,6 +253,7 @@ const StatusByAreaCompany = () => {
               comList.length > 1 ? comList.slice(1) : comList
             }
             listMockupType={listMockupType}
+            isProcessing={isProcessingCompany}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -333,6 +333,7 @@ const StatusByAreaCompany = () => {
                         totalRawData={totalRawData}
                         activeTab={menuTab}
                         id={device?.id}
+                        isProcessingRaw={isProcessingRaw}
                       />
                     </Tab>
                   ))}
@@ -340,8 +341,8 @@ const StatusByAreaCompany = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

@@ -5,7 +5,6 @@ import moment from 'moment';
 import Loading from 'commons/components/Loading';
 import { Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-// import MainLayout from 'layout/MainLayout';
 import TitleHeader from 'commons/components/TitleHeader';
 import { listParkingLot } from 'mockData/listCompany';
 import { getPosList, getCompanyList } from 'commons/redux';
@@ -20,22 +19,20 @@ import {
 import ItemContentTab from './ItemContentTab';
 
 const OperationStatusPage = () => {
-  // const { userInfo } = useSelector((state) => state.account);
   const [menuTab, setMenuTab] = useState('');
   const { listStatusCompanySelect } = useSelector(
     (state) => state?.statusCompany
   );
 
-  const { posList, comList } = useSelector((state) => state?.commons);
-  const isProcessingCommons = useSelector(
-    (state) => state?.commons?.isProcessing
+  const { posList, comList, isProcessingPos } = useSelector(
+    (state) => state?.commons
   );
+
   const {
     rawData,
     totalRawData,
     cardInfo,
     dataChart,
-    isProcessing,
     isProcessingRaw,
   } = useSelector((state) => state?.statisticsDevelop);
 
@@ -406,16 +403,18 @@ const OperationStatusPage = () => {
   }, [posList]);
 
   return (
-    <>
-      {(isProcessingCommons || isProcessing || isProcessingRaw) && <Loading />}
-      <div className="content-wrap">
-        <TitleHeader title="실증단지 발전 통계" />
+    <div className="content-wrap">
+      <TitleHeader title="실증단지 발전 통계" />
+      {isProcessingPos ? (
+        <Loading />
+      ) : (
         <div className="content-body page-company">
           <GroupSelectSidebar
             handleChangeSearch={handleChangeSearch}
             listParkingLot={listParkingLot}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={posList.slice(1)}
+            isProcessing={isProcessingPos}
           />
           <div className="content-body-left w-100">
             <div className="h-100">
@@ -433,7 +432,6 @@ const OperationStatusPage = () => {
                           {com?.label === '전체'
                             ? paramsSearch?.posName
                             : com?.label}
-
                           {com?.label === '전체' && <span>전체</span>}
                         </div>
                       }
@@ -496,6 +494,7 @@ const OperationStatusPage = () => {
                         }}
                         chartData={dataChart}
                         id={com.id}
+                        isProcessingRaw={isProcessingRaw}
                       />
                     </Tab>
                   ))}
@@ -503,8 +502,8 @@ const OperationStatusPage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

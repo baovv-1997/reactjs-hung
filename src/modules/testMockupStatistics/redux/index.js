@@ -6,6 +6,9 @@ const testMockupStatisticsSlide = createSlice({
   initialState: {
     isProcessing: false,
     isProcessingRaw: false,
+    isProcessingCard: false,
+    isProcessingChart: false,
+    isProcessingRaw2: false,
     total: 0,
     dataBoxCard: {
       prod_day: 0,
@@ -29,38 +32,39 @@ const testMockupStatisticsSlide = createSlice({
   reducers: {
     getCardTestMKStatisticsGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCard = true;
     },
     getCardTestMKStatisticsGeneratorSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
       state.dataBoxCard = data;
     },
     getCardTestMKStatisticsGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
     },
 
     getTrendChartTestMKStatisticsGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getTrendChartTestMKStatisticsGeneratorSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = data;
     },
     getTrendChartTestMKStatisticsGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = [];
     },
 
     getDataTestMKRawTableGenerator: (state, action) => {
       state.type = action.type;
       state.isProcessingRaw = true;
+      state.total = 0;
     },
 
     getDataTestMKRawTableGeneratorSuccess: (state, action) => {
@@ -103,38 +107,39 @@ const testMockupStatisticsSlide = createSlice({
 
     getCardTestMKStatisticsOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCard = true;
     },
     getCardTestMKStatisticsOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
       state.dataCardOperation = data;
     },
     getCardTestMKStatisticsOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCard = false;
     },
 
     getDataChartTestMKStatisticsOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getDataChartTestMKStatisticsOperationSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = data;
     },
     getDataChartTestMKStatisticsOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChartOperation = [];
     },
 
     getDataRawTestMKStatisticOperation: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
+      state.total = 0;
     },
     getDataRawTestMKStatisticOperationSuccess: (state, action) => {
       const { data, params } = action;
@@ -168,11 +173,11 @@ const testMockupStatisticsSlide = createSlice({
       state.total = (data && data.total) || 0;
       state.listDataTableRawOperation = listDataTableRaw;
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
     },
     getDataRawTestMKStatisticOperationFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
       state.total = 0;
       state.listDataTableRawOperation = [];
     },
@@ -180,7 +185,8 @@ const testMockupStatisticsSlide = createSlice({
     // table bottom
     getDataRawTableMockupStatisticGenerator: (state, action) => {
       state.type = action.type;
-      state.isProcessingRaw = true;
+      state.isProcessingRaw2 = true;
+      state.total = 0;
     },
 
     getDataRawTableMockupStatisticGeneratorSuccess: (state, action) => {
@@ -204,14 +210,14 @@ const testMockupStatisticsSlide = createSlice({
             `${item?.dm_rad.toLocaleString('en') || 0}kWh/㎡·10초`,
         }));
       state.type = action.type;
-      state.isProcessingRaw = false;
+      state.isProcessingRaw2 = false;
       state.totalMockup = (data && data.total) || 0;
       state.listDataTableRawMockup = listDataTableRaw;
     },
 
     getDataRawTableMockupStatisticGeneratorFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessingRaw = false;
+      state.isProcessingRaw2 = false;
       state.totalMockup = 0;
       state.listDataTableRawMockup = [];
     },

@@ -4,7 +4,9 @@ import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
 export const LoadingSmall = () => (
-  <Spinner animation="border" variant="warning" size="sm" />
+  <div className="loading-component">
+    <Spinner animation="border" variant="warning" size="sm" />
+  </div>
 );
 
 export default LoadingSmall;

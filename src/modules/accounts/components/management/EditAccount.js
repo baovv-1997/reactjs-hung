@@ -31,20 +31,22 @@ const EditAccount = ({ match, history }: Props) => {
 
   return (
     <>
-      {isProcessing && <Loading />}
-      <div className="account">
-        <TitleHeader
-          title="관리자 계정 수정"
-          descSub="관리자 계정 정보를 수정하실 수 있습니다."
-        />
-        <TitleSubHeader title="계정 정보" />
-
-        <FormEdit
-          history={history}
-          accountDetail={accountDetail}
-          // deviceList={accountDetail && accountDetail.devices}
-        />
-      </div>
+      {isProcessing ? (
+        <Loading />
+      ) : (
+        <div className="account">
+          <TitleHeader
+            title="관리자 계정 수정"
+            descSub="관리자 계정 정보를 수정하실 수 있습니다."
+          />
+          <TitleSubHeader title="계정 정보" />
+          <FormEdit
+            history={history}
+            accountDetail={accountDetail}
+            // deviceList={accountDetail && accountDetail.devices}
+          />
+        </div>
+      )}
     </>
   );
 };

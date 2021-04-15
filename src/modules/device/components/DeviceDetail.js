@@ -29,19 +29,22 @@ const DeviceDetail = ({ match, history }: Props) => {
 
   return (
     <>
-      {isLoading && <Loading />}
-      <div className="wrapper-device">
-        <div className="wrapper-device__head-menu">
-          <TitleHeader
-            title="기기 관리"
-            descSub="기기 정보를 수정하실 수 있습니다"
-          />
-        </div>
-        <div className="device-detail">
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="wrapper-device">
+          <div className="wrapper-device__head-menu">
+            <TitleHeader
+              title="기기 관리"
+              descSub="기기 정보를 수정하실 수 있습니다"
+            />
+          </div>
           <TitleSubHeader title="기기 정보" />
-          <FormDetail data={deviceDetail} history={history} />
+          <div className="device-detail">
+            <FormDetail data={deviceDetail} history={history} />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -13,7 +13,6 @@ import {
   headTestSolarMonitoringOperationStatus,
   headTestMockupStatisticsOfModule,
 } from '../constant';
-// import LineSeriesChart from '../chart';
 import BoxGroup from './BoxGroup';
 import GroupCompareChart from './GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
@@ -31,6 +30,7 @@ type Props = {
     id: number,
   }>,
   dataChartOperation: Array<{}>,
+  isProcessingRaw: boolean,
 };
 
 const ItemContentTab = ({
@@ -44,6 +44,8 @@ const ItemContentTab = ({
   perPage2,
   dataTableBottom,
   dataChartOperation,
+  isProcessingRaw2,
+  isProcessingRaw,
 }: Props) => {
   const dataLengthChart = [
     {
@@ -122,9 +124,10 @@ const ItemContentTab = ({
           tableHeads={headTestSolarMonitoringOperationStatus}
           tableBody={listMockupDataCompany}
           isShowId
+          isLoading={isProcessingRaw}
         />
         <div className="opacity d-block pagination">
-          {totalPage > perPage && (
+          {totalPage > perPage && !isProcessingRaw && (
             <div className="wrapper-device__pagination mt-0">
               <Pagination
                 activePage={paramsSearch?.page}
@@ -185,9 +188,10 @@ const ItemContentTab = ({
         tableHeads={headTestMockupStatisticsOfModule}
         tableBody={dataTableBottom}
         isShowId
+        isLoading={isProcessingRaw2}
       />
       <div className="opacity d-block pagination mt-0">
-        {totalPage2 > perPage2 && (
+        {totalPage2 > perPage2 && !isProcessingRaw2 && (
           <div className="wrapper-device__pagination mt-0">
             <Pagination
               activePage={paramsSearch?.page2}

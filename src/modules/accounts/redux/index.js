@@ -206,21 +206,18 @@ const accountSlice = createSlice({
 
     logOut: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
     },
     logOutSuccess: (state) => {
       state.type = '';
       state.token = '';
       state.userInfo = '';
       state.eventNotifications = [];
-      state.isProcessing = false;
     },
     logOutFalied: (state, action) => {
       state.type = action.type;
       state.token = '';
       state.userInfo = '';
       state.eventNotifications = [];
-      state.isProcessing = false;
     },
 
     getEventNotification: (state, action) => {

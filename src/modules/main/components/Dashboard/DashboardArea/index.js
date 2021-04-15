@@ -96,7 +96,6 @@ const DashboardArea = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
       <div
         className="dashboard-area"
         style={{ backgroundImage: `url('${bgImage}')` }}
@@ -137,23 +136,30 @@ const DashboardArea = () => {
             temperature={totalInfo?.temperature}
           />
         </div>
-        <div className="dashboard-area__card">
-          {cardMeasureArea &&
-            cardMeasureArea?.map((posItem, index) => (
-              <Card
-                key={index}
-                title={posItem?.company?.com_name}
-                listCompany={[posItem?.company]}
-                amountElectricDay={posItem?.card?.prod_today}
-                amountElectricMonth={posItem?.card?.prod_inmonth}
-                electricRealtime={posItem?.card?.prod_realtime}
-                cumulativeElectric={posItem?.card?.prod_sum}
-                ratePower={posItem?.card?.performance_ratio}
-                isEvent={!!posItem?.card?.event}
-                logoClick={handleLogoClick}
-                titleClick={() => handleTitleClick(posItem?.company?.id)}
-              />
-            ))}
+
+        <div className="dashboard-area__card position-relative mh-100vh">
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              {cardMeasureArea &&
+                cardMeasureArea?.map((posItem, index) => (
+                  <Card
+                    key={index}
+                    title={posItem?.company?.com_name}
+                    listCompany={[posItem?.company]}
+                    amountElectricDay={posItem?.card?.prod_today}
+                    amountElectricMonth={posItem?.card?.prod_inmonth}
+                    electricRealtime={posItem?.card?.prod_realtime}
+                    cumulativeElectric={posItem?.card?.prod_sum}
+                    ratePower={posItem?.card?.performance_ratio}
+                    isEvent={!!posItem?.card?.event}
+                    logoClick={handleLogoClick}
+                    titleClick={() => handleTitleClick(posItem?.company?.id)}
+                  />
+                ))}
+            </>
+          )}
         </div>
       </div>
     </>

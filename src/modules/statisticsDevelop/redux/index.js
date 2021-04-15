@@ -12,73 +12,72 @@ const statisticsDevelopSlide = createSlice({
     totalRadiationRawData: null,
     totalRawData: null,
     chartData: [],
+    isProcessingChart: false,
+    isProcessingCart: false,
+    isProcessingRaw2: false,
   },
 
   reducers: {
-    getListStatisticsDevelop: (state, action) => {
-      state.type = action.type;
-      state.isProcessing = true;
-    },
     getStatisticsDevelopRaw: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingRaw = true;
     },
     getStatisticsDevelopRawSuccess: (state, action) => {
       const { data } = action.data;
       state.type = action.type;
       state.rawData = data;
       state.totalRawData = action.data.total;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
     },
     getStatisticsDevelopRawFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingRaw = false;
     },
 
     getRadiationRaw: (state, action) => {
       state.type = action.type;
-      state.isProcessingRaw = true;
+      state.isProcessingRaw2 = true;
     },
     getRadiationRawSuccess: (state, action) => {
       const { data } = action.data;
       state.type = action.type;
       state.radiationList = data;
       state.totalRadiationRawData = action.data.total;
-      state.isProcessingRaw = false;
+      state.isProcessingRaw2 = false;
     },
     getRadiationRawFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessingRaw = false;
+      state.isProcessingRaw2 = false;
     },
 
     getStatisticDevelopChartData: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingChart = true;
     },
     getStatisticDevelopChartDataSuccess: (state, action) => {
       state.type = action.type;
       state.dataChart = action.data;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
     },
     getStatisticDevelopChartDataFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingChart = false;
       state.dataChart = [];
     },
 
     getStatisticDevelopCard: (state, action) => {
       state.type = action.type;
-      state.isProcessing = true;
+      state.isProcessingCart = true;
     },
     getStatisticDevelopCardSuccess: (state, action) => {
       const { data } = action;
       state.type = action.type;
       state.cardInfo = data;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
     },
     getStatisticDevelopCardFailed: (state, action) => {
       state.type = action.type;
-      state.isProcessing = false;
+      state.isProcessingCart = false;
       state.cardInfo = {};
     },
   },
@@ -87,16 +86,18 @@ const statisticsDevelopSlide = createSlice({
 const { actions, reducer } = statisticsDevelopSlide;
 
 export const {
-  getListStatisticsDevelop,
   getStatisticsDevelopRaw,
   getStatisticsDevelopRawSuccess,
   getStatisticsDevelopRawFailed,
+
   getRadiationRaw,
   getRadiationRawSuccess,
   getRadiationRawFailed,
+
   getStatisticDevelopChartData,
   getStatisticDevelopChartDataSuccess,
   getStatisticDevelopChartDataFailed,
+
   getStatisticDevelopCard,
   getStatisticDevelopCardSuccess,
   getStatisticDevelopCardFailed,

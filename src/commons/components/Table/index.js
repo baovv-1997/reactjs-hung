@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import { Table } from 'react-bootstrap';
 import TableHead from './TableHead';
 import TableRow from './TableRow';
+import Loading from 'commons/components/Loading';
 
 type Props = {
   tableHeads: Array<{ id: number, name: string }>,
@@ -17,6 +18,7 @@ type Props = {
   handleShowModalSorting?: Function,
   listOption?: Array<{}>,
   optionDefault?: Array<string>,
+  isLoading: boolean,
 };
 
 const TableData = ({
@@ -32,6 +34,7 @@ const TableData = ({
   handleShowModalSorting = () => {},
   listOption = [],
   optionDefault = [],
+  isLoading,
 }: Props) => {
   const renderBodyTable =
     tableBody &&
@@ -61,7 +64,7 @@ const TableData = ({
   };
 
   return (
-    <Table striped bordered hover responsive>
+    <Table striped bordered hover responsive className="position-relative">
       <thead>
         <TableHead
           listItems={tableHeads}
@@ -72,7 +75,17 @@ const TableData = ({
           optionDefault={optionDefault}
         />
       </thead>
-      <tbody>{renderBody()}</tbody>
+      <tbody>
+        {isLoading ? (
+          <tr className="p-3 text-center table-no-data w-100">
+            <td colSpan={tableHeads && tableHeads.length} className="pt-5 mt-3">
+              <Loading />
+            </td>
+          </tr>
+        ) : (
+          <>{renderBody()}</>
+        )}
+      </tbody>
     </Table>
   );
 };
