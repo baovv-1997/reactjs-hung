@@ -15,8 +15,6 @@ import {
   getTotalMetric,
 } from 'modules/main/redux';
 import Draggable from 'react-draggable';
-// import { fixedPointX } from 'helpers';
-// import { mockDataMainCompany } from 'mockData/mainData';
 import { Card } from 'commons/components/Card';
 import { useHistory } from 'react-router-dom';
 import ROUTERS from 'constants/routers';
@@ -42,7 +40,7 @@ const MainPage = () => {
     totalMetric,
   } = useSelector((state) => state.main);
   const { userInfo } = useSelector((state) => state?.account);
-  const count = useRef(1);
+  const count = useRef(0);
   const inputRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState({
     label: '',
@@ -54,6 +52,9 @@ const MainPage = () => {
   const [typeSearch, setTypeSearch] = useState({ type: '', id: null });
   const [labelMatric, setLabelMatric] = useState('전체');
   const [searchCompany, setSearchCompany] = useState(false);
+
+  const roleUser =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.id;
 
   const debouncedSearchTerm = useDebounce(searchTerm.label, 500);
 
@@ -67,24 +68,39 @@ const MainPage = () => {
   const { data: totalInfo, chart } = totalMetric;
 
   useEffect(() => {
-    dispatch(getListPosition());
+    if (roleUser === 2) {
+      dispatch(getListPosition({ com_id: userInfo.com_id }));
+      dispatch(getTotalMetric({ com_id: userInfo.com_id }));
+    } else {
+      dispatch(getListPosition());
+      dispatch(getTotalMetric());
+    }
     dispatch(getListCompany());
   }, []);
 
   useEffect(() => {
-    dispatch(getCardMeasureMain({ type: 'summary', pos_id: count.current }));
-    dispatch(getTotalMetric());
-  }, []);
+    if (listPositions) {
+      dispatch(
+        getCardMeasureMain({
+          type: 'summary',
+          pos_id: listPositions[count.current]?.id,
+        })
+      );
+    }
+  }, [listPositions]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       count.current += 1;
-      if (count.current > listPositions.length) {
-        count.current = 1;
+      if (count.current > listPositions.length - 1) {
+        count.current = 0;
       }
       if (!typeSearch.type) {
         dispatch(
-          getCardMeasureMain({ type: 'summary', pos_id: count.current })
+          getCardMeasureMain({
+            type: 'summary',
+            pos_id: listPositions[count.current]?.id,
+          })
         );
       }
     }, 30000);
@@ -101,7 +117,9 @@ const MainPage = () => {
           dispatch(getTotalMetric({ com_id: typeSearch.id }));
           break;
         default:
-          dispatch(getTotalMetric());
+          if (roleUser === 2)
+            dispatch(getTotalMetric({ com_id: userInfo.com_id }));
+          else dispatch(getTotalMetric({ com_id: userInfo.com_id }));
           break;
       }
     }, 10000);

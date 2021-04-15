@@ -29,15 +29,25 @@ const DashboardArea = () => {
     positionId,
     totalMetric,
   } = useSelector((state) => state?.main);
+  const { userInfo } = useSelector((state) => state?.account);
   const { data: totalInfo, chart } = totalMetric;
   const [bgImage, setBgImage] = useState(null);
   const [positionName, setPositionName] = useState(null);
   const [optionDropdown, setOptionDropdown] = useState(null);
 
+  const roleUser =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.id;
+
+  console.log(roleUser, 'role');
+
   const posId = useRef(positionId);
 
   useEffect(() => {
-    dispatch(getListPosition());
+    if (roleUser === 2) {
+      dispatch(getListPosition({ com_id: userInfo.com_id }));
+    } else {
+      dispatch(getListPosition());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -50,10 +60,7 @@ const DashboardArea = () => {
       // set positionId = 0 to set default dropdown
       dispatch(setPositionId({ id: 0 }));
     } else {
-      const indexDefault = listPositions.findIndex((item) =>
-        item?.label.includes('본관 남측')
-      );
-      setOptionDropdown(listPositions[indexDefault]);
+      setOptionDropdown(listPositions[0]);
     }
   }, [listPositions, positionId]);
 
