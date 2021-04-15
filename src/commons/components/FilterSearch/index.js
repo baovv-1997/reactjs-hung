@@ -70,6 +70,7 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
           <div className="colum-right">
             <div className="d-flex justify-content-start date-group align-items-center">
               <div className="title-label">검색기간</div>
+              <div className="title-label">검색기간</div>
               <div className="input-date">
                 <DatePicker
                   selected={paramsSearch?.from}
@@ -95,11 +96,11 @@ export const FilterSearch = ({ handleChangeSearch, paramsSearch }: Props) => {
                         )
                   }
                   maxDate={paramsSearch?.to}
-                  locale="ko"
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
+                  locale="ko"
                   showMonthYearPicker={paramsSearch?.classification === 'month'}
                   showYearPicker={paramsSearch?.classification === 'year'}
                   placeholderText="시간 선택"

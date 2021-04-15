@@ -201,13 +201,13 @@ const MainPage = () => {
   const renderPositionActive = cardPositionMain.length
     ? cardPositionMain?.map((posItem) => (
         <img
-          key={posItem.position?.id}
+          key={posItem?.position?.id}
           src={IMAGES.icon_location_on}
           alt=""
           className="location"
           style={{
-            top: `${posItem.position?.pos_map_y}px`,
-            left: `${posItem.position?.pos_map_x}px`,
+            top: `${posItem?.position?.pos_map_y}px`,
+            left: `${posItem?.position?.pos_map_x}px`,
           }}
         />
       ))

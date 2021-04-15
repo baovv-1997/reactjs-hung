@@ -142,6 +142,7 @@ const accountSlice = createSlice({
     getAccountList: (state, action) => {
       state.type = action.type;
       state.isProcessing = true;
+      state.totalPage = 0;
     },
     getAccountListSuccess: (state, action) => {
       if (!action.isDetail) {
@@ -172,6 +173,7 @@ const accountSlice = createSlice({
     getAccountListFailed: (state, action) => {
       state.type = action.type;
       state.isProcessing = false;
+      state.totalPage = 0;
     },
 
     updateAccount: (state, action) => {

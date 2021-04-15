@@ -155,6 +155,7 @@ export const FilterSearch = ({
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
+                  locale="ko"
                   showMonthYearPicker={paramsSearch?.classification === 'month'}
                   showYearPicker={paramsSearch?.classification === 'year'}
                   placeholderText="시간 선택"
