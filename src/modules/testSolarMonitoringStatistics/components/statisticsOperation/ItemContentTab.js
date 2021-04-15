@@ -10,6 +10,9 @@ import { FilterSearch } from 'commons/components/FilterSearch';
 import { listPaginationType5PerPage } from 'constants/listKey';
 import { operator_event_filter } from 'constants/optionCheckbox';
 import IMAGES from 'themes/images';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
+import LineChart2 from 'commons/components/LineChart/LineChart2';
+import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 import {
   headStatusCompany,
   headOperationStatusByAreaCompany,
@@ -17,9 +20,6 @@ import {
 import BoxGroup from '../BoxGroup';
 import GroupCompareChart from '../GroupCompareChart';
 import GroupActionDownload from '../GroupActionDownload';
-import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
-import LineChart2 from 'commons/components/LineChart/LineChart2';
-import { CONTRACT_FORMAT_TIME_CHART } from 'constants/index';
 
 type Props = {
   listMockupDataCompany: any,
