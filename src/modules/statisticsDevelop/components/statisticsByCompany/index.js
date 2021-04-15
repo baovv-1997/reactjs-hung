@@ -237,14 +237,20 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(totalRawData / item.value)
+              ? paramsSearch.page
+              : Math.ceil(totalRawData / item.value),
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1,
+          page2:
+            paramsSearch.page2 < Math.ceil(totalRadiationRawData / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalRadiationRawData / item.value),
         });
         break;
       case 'inverter':

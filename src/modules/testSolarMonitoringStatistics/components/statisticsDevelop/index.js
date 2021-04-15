@@ -245,7 +245,10 @@ const OperationStatusPage = () => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(total / item.value)
+              ? paramsSearch.page
+              : Math.ceil(total / item.value),
         });
         break;
       case 'page':

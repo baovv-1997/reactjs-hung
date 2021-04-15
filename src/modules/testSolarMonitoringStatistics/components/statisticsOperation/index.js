@@ -288,14 +288,20 @@ const OperationStatusPage = ({ location, history }: Props) => {
         setParamsSearch({
           ...paramsSearch,
           pagination: item,
-          page: 1,
+          page:
+            paramsSearch.page < Math.ceil(total / item.value)
+              ? paramsSearch.page
+              : Math.ceil(total / item.value),
         });
         break;
       case 'pagination2':
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: 1,
+          page2:
+            paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalEventPage / item.value),
         });
         break;
       case 'page':
