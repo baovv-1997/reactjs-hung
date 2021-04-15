@@ -20,7 +20,7 @@ const StatusByAreaCompany = () => {
   } = useSelector((state) => state?.testMockupStatus);
   const dispatch = useDispatch();
 
-  const { inverterId } = useSelector((state) => state?.testDashboard);
+  // const { inverterId } = useSelector((state) => state?.testDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const defaultOption = {
@@ -30,7 +30,7 @@ const StatusByAreaCompany = () => {
   };
   const defaultSearch = {
     page: 1,
-    company: inverterId || null,
+    company: null,
     mockupType: null,
     parkingLot: null,
     power: true,
@@ -126,11 +126,9 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       company:
-        (deviceList &&
-          deviceList.slice(1) &&
-          deviceList.slice(1)[0] &&
-          deviceList.slice(1)[0].id) ||
-        null,
+        deviceList && deviceList.length > 1
+          ? deviceList && deviceList[1] && deviceList[1].id
+          : deviceList && deviceList[0] && deviceList[0].id,
     });
   }, [deviceList]);
   // call api getCardInformation
@@ -246,11 +244,12 @@ const StatusByAreaCompany = () => {
             handleChangeSearch={handleChangeSearch}
             paramsSearch={paramsSearch}
             listStatusCompanySelect={
-              deviceList &&
-              deviceList.slice(1).map((item) => ({
-                id: item?.id,
-                label: item?.company.com_name,
-              }))
+              deviceList && deviceList.length > 1
+                ? deviceList.slice(1).map((item) => ({
+                    id: item?.id,
+                    label: item?.company.com_name,
+                  }))
+                : deviceList
             }
             subTitle={false}
             isProcessing={isProcessing}

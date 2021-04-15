@@ -24,6 +24,8 @@ const OperationStatusPage = () => {
   const { posList, comList, isProcessingPos } = useSelector(
     (state) => state.commons
   );
+
+  const { userInfo } = useSelector((state) => state.account);
   const {
     rawData,
     totalRawData,
@@ -71,12 +73,21 @@ const OperationStatusPage = () => {
   /**
    * get company list
    */
-  const getPosListCallback = useCallback(() => {
-    dispatch(getPosList());
-  }, [dispatch]);
+  const getPosListCallback = useCallback(
+    (params) => {
+      dispatch(getPosList(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    getPosListCallback();
+    getPosListCallback({
+      com_id: userInfo?.com_id ? userInfo?.com_id : '',
+      type: '0',
+      sort_dir: 'asc',
+      sort_by: 'id',
+      per_page: 999,
+    });
   }, [getPosListCallback]);
 
   /**

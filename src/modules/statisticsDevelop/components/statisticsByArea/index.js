@@ -24,6 +24,8 @@ const OperationStatusPage = () => {
     (state) => state?.statusCompany
   );
 
+  const { userInfo } = useSelector((state) => state.account);
+
   const { posList, comList, isProcessingPos } = useSelector(
     (state) => state?.commons
   );
@@ -76,7 +78,7 @@ const OperationStatusPage = () => {
   /**
    * get company list
    */
-  const getListCompanyCallback = useCallback(
+  const getListPosCallback = useCallback(
     (params) => {
       dispatch(getPosList(params));
     },
@@ -84,14 +86,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getListCompanyCallback({
-      pos_id: paramsSearch?.posSelected,
+    getListPosCallback({
+      com_id: userInfo?.com_id ? userInfo?.com_id : '',
       type: '0',
       sort_dir: 'asc',
       sort_by: 'id',
       per_page: 999,
     });
-  }, [getListCompanyCallback]);
+  }, [getListPosCallback]);
 
   /**
    * get Event List data
