@@ -443,7 +443,9 @@ const OperationStatusPage = () => {
                             gradientInsolation: `${raw?.dm_o_current}A`,
                             powerGeneration: `${raw?.dm_power}KW`,
                             cumulativePowerGeneration: `${
-                              raw?.dm_power_eff ? raw?.dm_power_eff : 0
+                              raw?.dm_performance_ratio
+                                ? raw?.dm_performance_ratio
+                                : 0
                             }%`,
                             rateOfPowerGeneration: `${raw?.dm_freq}HZ`,
                           }))

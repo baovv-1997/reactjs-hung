@@ -11,10 +11,10 @@ export const ROUTES = {
   API_GET_LIST_COMPANY: `/company`,
   API_GET_LIST_POSITION: `/position`,
   API_GET_LIST_DEVICE: `/device`,
-  UPDATE_DEVICE: (id) => `device/${id}`,
+  UPDATE_DEVICE: (id) => `/device/${id}`,
   GET_POS: '/position',
   ACCOUNTS: '/account',
-  UPDATE_ACCOUNT: (id) => `account/${id}`,
+  UPDATE_ACCOUNT: (id) => `/account/${id}`,
   GET_DASHBOARD_TEST_MOCKUP: `/data/test-mockup/cards`,
   GET_DASHBOARD_TEST_SOLAR: `/data/test-solar-monitoring/cards`,
   GET_DASHBOARD: `/data/solar-monitoring/cards`,
@@ -40,7 +40,7 @@ export const ROUTES = {
   GENERATOR_STATISTICS_RAW:
     '/data/solar-monitoring/statistic/generator/raw-measure',
   OPERATOR_STATISTICS_CARD: `/data/solar-monitoring/statistic/operation/cards`,
-  OPERATOR_STATISTICS_RAW: `data/solar-monitoring/statistic/generator/raw-measure`,
+  OPERATOR_STATISTICS_RAW: `/data/solar-monitoring/statistic/generator/raw-measure`,
   OPERATOR_STATISTICS_CHART: `/data/solar-monitoring/statistic/operation/chart`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_CARD: `/data/test-solar-monitoring/status-operation/status-cards`,
   API_TEST_SOLAR_MONITORING_STATUS_OPERATION_RAW: `/data/test-solar-monitoring/status-operation/raw-data`,
@@ -79,11 +79,12 @@ export const ROUTES = {
 
   //  Download CSV solar-monitoring
   API_DOWN_EXCEL_SOLAR_MONITORING: (name) =>
-    `${API_URI}/data/export/solar-monitoring/${name}`,
+    `${API_URI}/data/export/solar-monitoring/${name}&status=true`,
   //  Download CSV Mockup
-  API_DOWN_EXCEL_MOCKUP: (name) => `${API_URI}/data/export/test-mockup/${name}`,
+  API_DOWN_EXCEL_MOCKUP: (name) =>
+    `${API_URI}/data/export/test-mockup/${name}&status=true`,
   API_DOWN_EXCEL_TEST_SOLAR_MONITORING: (name) =>
-    `${API_URI}/data/export/test-solar-monitoring/${name}`,
+    `${API_URI}/data/export/test-solar-monitoring/${name}&status=true`,
 
   LOG_OUT: '/auth/logout',
 };
