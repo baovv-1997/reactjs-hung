@@ -127,8 +127,7 @@ const OperationStatusPage = () => {
         com_id: paramsSearch?.company,
         per_page: 9999999,
         type: '0',
-        sort_dir: 'asc',
-        sort_by: 'id',
+        sort: ['pos_id|asc', 'id|asc'],
       });
     }
   }, [getDevicesCallback, paramsSearch?.company]);
@@ -451,6 +450,12 @@ const OperationStatusPage = () => {
           : comList && comList[0] && comList[0].com_name,
     });
   }, [comList]);
+
+  useEffect(() => {
+    if (deviceList && deviceList.length === 1) {
+      setMenuTab(deviceList[0]?.id);
+    }
+  }, [deviceList]);
 
   return (
     <div className="content-wrap">
