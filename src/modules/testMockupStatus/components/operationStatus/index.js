@@ -169,7 +169,7 @@ const OperationStatusPage = ({ location }: Props) => {
     if (paramsSearch?.company) {
       dispatch(
         getEventList({
-          inverter_id: paramsSearch?.company || null,
+          ds_id: paramsSearch?.company || null,
           per_page: paramsSearch?.pagination2?.value,
           page: paramsSearch?.page2,
           type: optionFilters,
@@ -270,7 +270,7 @@ const OperationStatusPage = ({ location }: Props) => {
       state: { prevRoute: location.pathname },
     });
   };
-
+  console.log(deviceList, 'deviceList');
   return (
     <div className="content-wrap">
       <TitleHeader title="테스트(목업) 운영 현황" />

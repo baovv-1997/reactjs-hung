@@ -239,7 +239,7 @@ const FormEdit = ({ data, history }: Props) => {
         }}
       >
         취소 시 수정 내역은 전부 사라집니다.
-        <br /> 정말 취소하시겠습니까?
+        <br /> 그래도 취소하시겠습니까?
       </ModalPopup>
 
       <ModalPopup

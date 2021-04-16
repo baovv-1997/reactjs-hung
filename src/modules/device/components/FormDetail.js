@@ -155,7 +155,7 @@ const FormDetail = ({ data, history }: Props) => {
         <Button
           customClass="btn-cancel"
           onClick={() => {
-            setIsCancel(true);
+            history.push(ROUTERS.DEVICE);
           }}
         >
           목록

@@ -193,7 +193,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     if (paramsSearch?.company) {
       getEventListCallback({
         com_id: paramsSearch?.company,
-        inverter_ids: menuTab,
+        ds_id: menuTab,
         page: paramsSearch?.page2,
         per_page: paramsSearch?.pagination2?.value,
         type: optionFilters,
@@ -442,6 +442,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         break;
     }
   }, [paramsSearch?.classification]);
+  
   const handleSubmitSearch = () => {
     dispatch(
       getStatisticOperatorChartData({
