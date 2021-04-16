@@ -6,7 +6,7 @@ const solarDashBoardSlice = createSlice({
   initialState: {
     isLoading: false,
     listDevice: [],
-    companyId: null,
+    inverterId: null,
     type: '',
     total: 0,
     current_page: 0,
@@ -42,7 +42,7 @@ const solarDashBoardSlice = createSlice({
     },
     setCompanyId: (state, action) => {
       state.type = action.type;
-      state.companyId = action.payload.id;
+      state.inverterId = action.payload.id;
     },
   },
 });
