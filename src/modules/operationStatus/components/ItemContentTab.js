@@ -145,7 +145,7 @@ const ItemContentTab = ({
 
       <TitleSubHeader title="실시간 계측 현황" />
       <GroupActionDownload
-        linkDownTable={`operator/status?inverter_id=${activeTab}&com_id=${paramsSearch?.company}`}
+        linkDownTable={`operator/status?inverter_id=${activeTab}&com_id=${paramsSearch?.company}&status=true`}
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
       />

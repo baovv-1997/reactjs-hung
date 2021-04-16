@@ -120,7 +120,7 @@ const ItemContentTab = ({
       <GroupActionDownload
         paramsSearch={paramsSearch}
         handleChangeSearch={handleChangeSearch}
-        linkDownTable={`generator/status?inverter_id=${paramsSearch?.company}`}
+        linkDownTable={`generator/status?inverter_id=${paramsSearch?.company}&status=true`}
       />
       <div className="mb-4">
         <Table
