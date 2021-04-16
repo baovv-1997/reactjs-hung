@@ -20,6 +20,8 @@
 
   &__info {
     padding: pxToRem(23) 0 pxToRem(23) pxToRem(15);
+    display: flex;
+    align-items: center;
 
     span {
       margin-left: pxToRem(5);

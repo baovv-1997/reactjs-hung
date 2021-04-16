@@ -31,7 +31,9 @@ export const Radio = ({
           disabled={disabled}
         />
         <span className="checkmark" />
-        <span className="label">{labelRadio}</span>
+        <span className={`label ${isChecked ? 'label-checked' : ''}`}>
+          {labelRadio}
+        </span>
       </label>
     </div>
   );

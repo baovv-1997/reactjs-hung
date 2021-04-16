@@ -245,12 +245,8 @@ export const checkIsNumber = (field) => {
     field === 'dateTime' ||
     field === 'inverterID' ||
     field === 'inverterName' ||
-    field === 'moduleTemperature' ||
-    field === 'outsideTemperature' ||
-    field === 'powerGeneration' ||
     field === 'rateOfPowerGeneration' ||
     field === 'cumulativePowerGeneration' ||
-    field === 'gradientInsolation' ||
     field === 'horizontalInsolation' ||
     field === 'dmProddMonth' ||
     field === 'dmProddDay' ||

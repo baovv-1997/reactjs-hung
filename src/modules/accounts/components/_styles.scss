@@ -1,7 +1,7 @@
 .page-login {
   height: 100vh;
   position: relative;
-  background-image: url("../../../assets/images/bg-login.jpg");
+  background-image: url('../../../assets/images/bg-login.jpg');
   background-size: cover;
   background-position: pxToRem(-4) pxToRem(-140);
 
@@ -107,7 +107,7 @@
           cursor: pointer;
 
           &::after {
-            content: "";
+            content: '';
             position: absolute;
             left: 0;
             right: 0;
@@ -130,7 +130,8 @@
       font-weight: normal;
       line-height: 1.45;
       text-align: left;
-      color: rgba($bg-button, 0.8);
+      color: $color-black;
+      opacity: 0.8;
     }
   }
 }
@@ -229,7 +230,7 @@
   }
 
   .customer-select {
-    .css-26l3qy-menu>div * {
+    .css-26l3qy-menu > div * {
       padding: 0.3125rem 0.5rem !important;
     }
 
