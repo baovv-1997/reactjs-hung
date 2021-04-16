@@ -20,7 +20,7 @@ const StatusByAreaCompany = () => {
   } = useSelector((state) => state?.testSolarMonitoringStatus);
   const { companyId } = useSelector((state) => state?.solarDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
-  const { comList, isProcessing } = useSelector((state) => state?.commons);
+  const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const defaultOption = {
     id: 1,
     value: 6,
@@ -115,7 +115,12 @@ const StatusByAreaCompany = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CommonAction.getCompanyList());
+    dispatch(
+      CommonAction.getListDevice({
+        per_page: 9999999,
+        type: '2',
+      })
+    );
   }, []);
 
   // call api getCardInformation
@@ -169,11 +174,11 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       company:
-        comList && comList.length > 1
-          ? comList && comList[1] && comList[1].id
-          : comList && comList[0] && comList[0].id,
+        deviceList && deviceList.length > 1
+          ? deviceList && deviceList[1] && deviceList[1].id
+          : deviceList && deviceList[0] && deviceList[0].id,
     });
-  }, [comList]);
+  }, [deviceList]);
 
   const handleChangeSearch = (item, name) => {
     switch (name) {
@@ -236,7 +241,12 @@ const StatusByAreaCompany = () => {
           handleChangeSearch={handleChangeSearch}
           paramsSearch={paramsSearch}
           listStatusCompanySelect={
-            comList && comList.length > 1 ? comList.slice(1) : comList
+            deviceList && deviceList.length > 1
+              ? deviceList.slice(1).map((item) => ({
+                  id: item?.id,
+                  label: item?.company.com_name,
+                }))
+              : deviceList
           }
           subTitle={false}
           isProcessing={isProcessing}
