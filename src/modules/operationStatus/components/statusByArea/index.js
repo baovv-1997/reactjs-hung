@@ -314,9 +314,20 @@ const OperationStatusPage = () => {
                         rateOfPowerGeneration: `${rawItem?.dm_freq}HZ`,
                       }))}
                       dataBoxContent={{
-                        angleOfIncidence: cardInfo?.ds_incidence_angle || null,
-                        azimuth: cardInfo?.ds_azimuth_angle || null,
-                        moduleOutput: cardInfo?.dm_power || null,
+                        angleOfIncidence:
+                          (cardInfo?.ds_incidence_angle &&
+                            cardInfo?.ds_incidence_angle.toLocaleString(
+                              'en'
+                            )) ||
+                          '0',
+                        azimuth:
+                          (cardInfo?.ds_azimuth_angle &&
+                            cardInfo?.ds_azimuth_angle.toLocaleString('en')) ||
+                          '0',
+                        moduleOutput:
+                          (cardInfo?.dm_power &&
+                            cardInfo?.dm_power.toLocaleString('en')) ||
+                          '0',
                         moduleColor: cardInfo?.ds_color || null,
                       }}
                       handleChangeSearch={handleChangeSearch}
