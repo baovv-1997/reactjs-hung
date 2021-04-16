@@ -30,9 +30,9 @@ const FormRegister = ({ history }: Props) => {
   const dispatch = useDispatch();
   const posOptionList = useSelector((state) => state?.device?.posOptionList);
   const companyOptions = useSelector((state) => state?.device?.companyOptions);
-  // const errorsAddDevice = useSelector(
-  //   (state) => state?.device?.errorsAddDevice
-  // );
+  const errorsAddDevice = useSelector(
+    (state) => state?.device?.errorsAddDevice
+  );
   const dataAddNew = useSelector((state) => state?.device?.dataAddNew);
   const { userInfo } = useSelector((state) => state.account);
   const type = useSelector((state) => state?.device?.type);
@@ -159,15 +159,15 @@ const FormRegister = ({ history }: Props) => {
     }
   }, [type]);
 
-  // const errorsMessage =
-  //   errorsAddDevice &&
-  //   Object.values(errorsAddDevice).map((item, index) => {
-  //     return (
-  //       <ul className="error-list" key={index}>
-  //         <li><span className="text-danger top-2 mr-1">*</span>{item && item[0]}</li>
-  //       </ul>
-  //     );
-  //   });
+  const errorsMessage =
+    errorsAddDevice &&
+    Object.values(errorsAddDevice).map((item, index) => {
+      return (
+        <ul className="error-list" key={index}>
+          <li>{item && item[0]}</li>
+        </ul>
+      );
+    });
   return (
     <div>
       <div className="register__form col-span">
@@ -362,7 +362,7 @@ const FormRegister = ({ history }: Props) => {
         textBtnRight="확인"
         customClassButton="btn-custom"
       >
-        필드에 유효한 정보를 입력하십시오
+        {errorsMessage}
       </ModalPopup>
 
       <ModalPopup

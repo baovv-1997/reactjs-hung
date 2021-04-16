@@ -335,7 +335,10 @@ const OperationStatusPage = () => {
                     id: item?.id,
                     label: item?.company?.com_name,
                   }))
-                : deviceList
+                : deviceList.map((item) => ({
+                    id: item?.id,
+                    label: item?.company.com_name,
+                  }))
             }
             subTitle={false}
             isProcessing={isLoading}

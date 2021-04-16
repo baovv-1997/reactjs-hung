@@ -128,7 +128,7 @@ const StatusByAreaCompany = () => {
     (company) => {
       dispatch(
         ActionStatusGenerator.getCardInformation({
-          com_id: company,
+          inverter_id: company,
         })
       );
     },
@@ -143,10 +143,12 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    handleGetCardInformation(paramsSearch?.company);
-    handleGetDataTrendChart({
-      com_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      handleGetCardInformation(paramsSearch?.company);
+      handleGetDataTrendChart({
+        inverter_id: paramsSearch?.company,
+      });
+    }
   }, [handleGetCardInformation, paramsSearch?.company, randomNumber]);
 
   // call api getDataRawTable
@@ -158,16 +160,19 @@ const StatusByAreaCompany = () => {
   );
 
   useEffect(() => {
-    handleGetDataRawTable({
-      per_page: paramsSearch?.pagination?.value,
-      page: paramsSearch?.page,
-      com_id: paramsSearch?.company,
-    });
+    if (paramsSearch?.company) {
+      handleGetDataRawTable({
+        per_page: paramsSearch?.pagination?.value,
+        page: paramsSearch?.page,
+        inverter_id: paramsSearch?.company,
+      });
+    }
   }, [
     handleGetDataRawTable,
     paramsSearch?.page,
     paramsSearch?.pagination?.value,
     randomNumber,
+    paramsSearch?.company,
   ]);
 
   useEffect(() => {
@@ -244,9 +249,12 @@ const StatusByAreaCompany = () => {
             deviceList && deviceList.length > 1
               ? deviceList.slice(1).map((item) => ({
                   id: item?.id,
+                  label: item?.company?.com_name,
+                }))
+              : deviceList.map((item) => ({
+                  id: item?.id,
                   label: item?.company.com_name,
                 }))
-              : deviceList
           }
           subTitle={false}
           isProcessing={isProcessing}

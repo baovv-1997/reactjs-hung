@@ -31,8 +31,7 @@ type Props = {
 const FormDetail = ({ accountDetail, history }: Props) => {
   const dispatch = useDispatch();
 
-  const errors = useSelector((state) => state?.account?.errors);
-  const type = useSelector((state) => state?.account?.type);
+  const { errors, type, userInfo } = useSelector((state) => state?.account);
 
   const [isUpdateFailed, setIsUpdateFailed] = useState(false);
   // const [isCancel, setIsCancel] = useState(false);
@@ -140,10 +139,10 @@ const FormDetail = ({ accountDetail, history }: Props) => {
         </div>
 
         <div className="account__btn-group">
-          {accountDetail &&
-            accountDetail.roles &&
-            accountDetail.roles[0] &&
-            accountDetail?.roles[0].name === ROLE_ADMIN && (
+          {userInfo &&
+            userInfo.roles &&
+            userInfo.roles[0] &&
+            userInfo?.roles[0].name === ROLE_ADMIN && (
               <Button
                 customClass="btn-delete"
                 onClick={() => {
