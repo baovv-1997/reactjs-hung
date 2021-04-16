@@ -90,7 +90,7 @@
   .modal-body {
     width: 100%;
     white-space: pre-line;
-    padding: 0 pxToRem(30);
+    padding: 0 pxToRem(50);
     margin: 0;
     max-height: pxToRem(680);
     overflow: auto;
@@ -208,6 +208,6 @@
   }
 }
 
-.modal-footer>* {
+.modal-footer > * {
   margin: 0;
 }

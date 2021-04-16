@@ -32,28 +32,31 @@
 
   .label {
     font-size: pxToRem(15);
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.47;
     letter-spacing: pxToRem(-0.45);
     color: $black-active;
   }
+  .label-checked {
+    font-weight: $medium;
+  }
 
-  input:disabled~.checkmark {
+  input:disabled ~ .checkmark {
     opacity: 0.6;
   }
 
-  &:hover input~.checkmark {
+  &:hover input ~ .checkmark {
     background-color: $white;
   }
 
-  input:checked~.checkmark {
+  input:checked ~ .checkmark {
     background-image: url('../../../assets/images/icon_radio_on.svg');
     background-position: center center;
     background-size: cover;
     border: 0;
   }
 
-  input:checked~.checkmark:after {
+  input:checked ~ .checkmark:after {
     display: block;
   }
 }
