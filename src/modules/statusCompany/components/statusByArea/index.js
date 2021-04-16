@@ -56,13 +56,12 @@ const StatusByAreaCompany = () => {
   /**
    * get position list list
    */
-  const getPosListCallback = useCallback(() => {
-    dispatch(
-      getPosList({
-        com_id: userInfo?.com_id ? userInfo?.com_id : '',
-      })
-    );
-  }, [dispatch]);
+  const getPosListCallback = useCallback(
+    (params) => {
+      dispatch(getPosList(params));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     getPosListCallback({
@@ -223,6 +222,12 @@ const StatusByAreaCompany = () => {
       posName: posList && posList[1] && posList[1].pos_name,
     });
   }, [posList]);
+
+  useEffect(() => {
+    if (comList && comList.length === 1) {
+      setMenuTab(comList[0]?.id);
+    }
+  }, [comList]);
 
   return (
     <div className="content-wrap">

@@ -462,6 +462,12 @@ const OperatorStatisticCompany = ({ location }: Props) => {
     );
   };
 
+  useEffect(() => {
+    if (deviceList && deviceList.length === 1) {
+      setMenuTab(deviceList[0]?.id);
+    }
+  }, [deviceList]);
+
   return (
     <div className="content-wrap">
       <TitleHeader title="실증단지 운영 현황" />

@@ -376,6 +376,12 @@ const OperationStatusPage = () => {
     });
   }, [posList]);
 
+  useEffect(() => {
+    if (comList && comList.length === 1) {
+      setMenuTab(comList[0]?.id);
+    }
+  }, [comList]);
+
   return (
     <div className="content-wrap">
       <TitleHeader title="실증단지 운영 통계" />

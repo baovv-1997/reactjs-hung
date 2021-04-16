@@ -13,9 +13,8 @@ import ItemContentTab from './ItemContentTab';
 import { getDataChart, getTrendChart, getCardInfo } from '../../redux';
 
 const OperationStatusPage = () => {
-  const [menuTab, setMenuTab] = useState('');
-
   const { userInfo } = useSelector((state) => state.account);
+  const [menuTab, setMenuTab] = useState('');
 
   const { posList, comList, isProcessingCompany } = useSelector(
     (state) => state?.commons
@@ -81,13 +80,15 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getCompanyListCallback({
-      pos_id: paramsSearch?.posSelected,
-      type: '0',
-      sort_dir: 'asc',
-      sort_by: 'id',
-      per_page: 999,
-    });
+    if (paramsSearch?.posSelected) {
+      getCompanyListCallback({
+        pos_id: paramsSearch?.posSelected,
+        type: '0',
+        sort_dir: 'asc',
+        sort_by: 'id',
+        per_page: 999,
+      });
+    }
   }, [getCompanyListCallback, paramsSearch?.posSelected]);
 
   /**
@@ -101,12 +102,14 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getTrendChartCallback({
-      com_id: menuTab,
-      pos_id: paramsSearch?.posSelected,
-      page: paramsSearch?.page,
-      per_page: paramsSearch?.pagination?.value,
-    });
+    if (paramsSearch?.posSelected) {
+      getTrendChartCallback({
+        com_id: menuTab,
+        pos_id: paramsSearch?.posSelected,
+        page: paramsSearch?.page,
+        per_page: paramsSearch?.pagination?.value,
+      });
+    }
   }, [
     getTrendChartCallback,
     paramsSearch?.posSelected,
@@ -126,10 +129,12 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getCardInfoCallback({
-      com_id: menuTab,
-      pos_id: paramsSearch?.posSelected,
-    });
+    if (paramsSearch?.posSelected) {
+      getCardInfoCallback({
+        com_id: menuTab,
+        pos_id: paramsSearch?.posSelected,
+      });
+    }
   }, [getCardInfoCallback, paramsSearch?.posSelected, menuTab]);
 
   /**
@@ -143,10 +148,12 @@ const OperationStatusPage = () => {
   );
 
   useEffect(() => {
-    getDataChartCallback({
-      com_id: menuTab,
-      pos_id: paramsSearch?.posSelected,
-    });
+    if (paramsSearch?.posSelected) {
+      getDataChartCallback({
+        com_id: menuTab,
+        pos_id: paramsSearch?.posSelected,
+      });
+    }
   }, [getDataChartCallback, paramsSearch?.posSelected, menuTab]);
 
   const handleChangeSearch = (item, name) => {
@@ -231,6 +238,12 @@ const OperationStatusPage = () => {
       posName: paramsSearch?.posName,
     });
   };
+
+  useEffect(() => {
+    if (comList && comList.length === 1) {
+      setMenuTab(comList[0]?.id);
+    }
+  }, [comList]);
 
   useEffect(() => {
     setParamsSearch({
