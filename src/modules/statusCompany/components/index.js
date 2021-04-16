@@ -68,16 +68,17 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       company:
-        companyId || (comList && comList.length > 1)
+        companyId ||
+        (comList && comList.length > 1
           ? comList && comList[1] && comList[1].id
-          : comList && comList[0] && comList[0].id,
+          : comList && comList[0] && comList[0].id),
 
       comName:
         comList && comList.length > 1
           ? comList && comList[1] && comList[1].com_name
           : comList && comList[0] && comList[0].com_name,
     });
-  }, [comList]);
+  }, [comList, companyId]);
 
   /**
    * get Device list
