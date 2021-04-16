@@ -309,9 +309,10 @@ const OperatorStatisticCompany = ({ location }: Props) => {
         setParamsSearch({
           ...paramsSearch,
           pagination2: item,
-          page2: paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
-          ? paramsSearch.page2
-          : Math.ceil(totalEventPage / item.value),
+          page2:
+            paramsSearch.page2 < Math.ceil(totalEventPage / item.value)
+              ? paramsSearch.page2
+              : Math.ceil(totalEventPage / item.value),
         });
         break;
       case 'page':
@@ -459,6 +460,12 @@ const OperatorStatisticCompany = ({ location }: Props) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (deviceList && deviceList.length === 1) {
+      setMenuTab(deviceList[0]?.id);
+    }
+  }, [deviceList]);
 
   return (
     <div className="content-wrap">

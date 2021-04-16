@@ -116,7 +116,7 @@ const ItemContentTab = ({
         </div>
 
         <div className="group-char-right">
-          {activeTab === id.toString() && chartData && (
+          {activeTab?.toString() === id?.toString() && chartData && (
             <LineChart2
               dataChart={chartData}
               unitLine1="V"

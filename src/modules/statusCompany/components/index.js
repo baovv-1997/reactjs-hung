@@ -238,6 +238,13 @@ const StatusByAreaCompany = () => {
       comName: paramsSearch?.comName,
     });
   };
+
+  useEffect(() => {
+    if (deviceList && deviceList.length === 1) {
+      setMenuTab(deviceList[0]?.id);
+    }
+  }, [deviceList]);
+
   return (
     <div className="content-wrap">
       <TitleHeader title="실증단지 발전 현황" />
