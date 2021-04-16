@@ -20,7 +20,7 @@ const StatusByAreaCompany = () => {
   } = useSelector((state) => state?.testMockupStatus);
   const dispatch = useDispatch();
 
-  // const { inverterId } = useSelector((state) => state?.testDashboard);
+  const { inverterId } = useSelector((state) => state?.testDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const defaultOption = {
@@ -126,9 +126,10 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       company:
-        deviceList && deviceList.length > 1
+        inverterId ||
+        (deviceList && deviceList.length > 1
           ? deviceList && deviceList[1] && deviceList[1].id
-          : deviceList && deviceList[0] && deviceList[0].id,
+          : deviceList && deviceList[0] && deviceList[0].id),
     });
   }, [deviceList]);
   // call api getCardInformation

@@ -18,7 +18,7 @@ const StatusByAreaCompany = () => {
     dataChart,
     isProcessingRaw,
   } = useSelector((state) => state?.testSolarMonitoringStatus);
-  const { companyId } = useSelector((state) => state?.solarDashboard);
+  const { inverterId } = useSelector((state) => state?.solarDashboard);
   const [randomNumber, setRandomNumber] = useState(null);
   const { deviceList, isProcessing } = useSelector((state) => state?.commons);
   const defaultOption = {
@@ -29,7 +29,7 @@ const StatusByAreaCompany = () => {
 
   const defaultSearch = {
     page: 1,
-    company: companyId || null,
+    company: null,
     mockupType: null,
     parkingLot: null,
     power: true,
@@ -179,9 +179,10 @@ const StatusByAreaCompany = () => {
     setParamsSearch({
       ...paramsSearch,
       company:
-        deviceList && deviceList.length > 1
+        inverterId ||
+        (deviceList && deviceList.length > 1
           ? deviceList && deviceList[1] && deviceList[1].id
-          : deviceList && deviceList[0] && deviceList[0].id,
+          : deviceList && deviceList[0] && deviceList[0].id),
     });
   }, [deviceList]);
 
