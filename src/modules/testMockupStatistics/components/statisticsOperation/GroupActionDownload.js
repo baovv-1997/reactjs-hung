@@ -2,22 +2,22 @@
 // libs
 import React, { memo } from 'react';
 import SelectDropdown from 'commons/components/Select';
-import Button from 'commons/components/Button';
 import { listPaginationType5PerPage } from 'constants/listKey';
 import { ButtonDownIMG } from 'commons/components/ButtonDownIMG';
+import { ButtonDownExcel } from 'commons/components/ButtonDownExcel';
 
 type Props = {
   paramsSearch: Object,
   handleChangeSearch: Function,
-  handleDownloadTrend: Function,
+  linkDownTable: string,
   text: string,
 };
 
 export const GroupActionDownload = ({
   paramsSearch,
   handleChangeSearch,
-  handleDownloadTrend,
   text,
+  linkDownTable,
 }: Props) => (
   <div className="group-option-table d-flex  justify-content-between">
     <SelectDropdown
@@ -29,7 +29,11 @@ export const GroupActionDownload = ({
     />
     <div className="group-btn-download">
       <ButtonDownIMG />
-      <Button onClick={() => handleDownloadTrend('raw')}>{text}</Button>
+      <ButtonDownExcel
+        linkDownTable={linkDownTable}
+        keyName="test_mockup"
+        text={text}
+      />
     </div>
   </div>
 );
