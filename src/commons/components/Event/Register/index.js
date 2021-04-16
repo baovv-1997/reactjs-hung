@@ -34,7 +34,8 @@ const EventRegister = ({ location }: Props) => {
   const { type, deviceList, comList, posList } = useSelector(
     (state) => state.commons
   );
-  const listInverterSolar = deviceList && deviceList.slice(1);
+  const listInverterSolar =
+    deviceList && deviceList.length > 1 ? deviceList.slice(1) : deviceList;
 
   const [modalConform, setModalConform] = useState({
     isShow: false,
@@ -259,6 +260,8 @@ const EventRegister = ({ location }: Props) => {
                       <img src={images.icon_next} alt="" />
                     </div>
                   )}
+
+                  {console.log(stateTypeEvent, 'stateTypeEvent')}
                   <div className="group-item">
                     <SelectDropdown
                       placeholder="모듈 선택"

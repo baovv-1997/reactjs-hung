@@ -95,8 +95,7 @@ const StatusByAreaCompany = () => {
         com_id: paramsSearch?.company,
         per_page: 9999999,
         type: '0',
-        sort_dir: 'asc',
-        sort_by: 'id',
+        sort: ['pos_id|asc', 'id|asc'],
       });
     }
   }, [getDevices, paramsSearch?.company]);

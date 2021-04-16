@@ -50,7 +50,9 @@ const EditEvent = ({ match, location }: Props) => {
     userInfo.roles[0] &&
     userInfo.roles[0].name;
 
-  const listInverterSolar = (deviceList && deviceList.slice(1)) || [];
+  const listInverterSolar =
+    (deviceList && deviceList.length > 1 ? deviceList.slice(1) : deviceList) ||
+    [];
   const [modalConform, setModalConform] = useState({
     isShow: false,
     content: '현황을 등록하시겠습니까?',
