@@ -186,7 +186,7 @@ const StatusByAreaCompany = () => {
     switch (name) {
       case 'statusCompany':
         setParamsSearch({
-          ...paramsSearch,
+          ...defaultSearch,
           company: item.id,
           page: 1,
         });
