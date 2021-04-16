@@ -21,9 +21,11 @@ function* updateDevice(action) {
         data,
       });
     } else {
+      const { errors } = response.data;
       // In case: request failed
       yield put({
         type: 'device/updateDeviceFailed',
+        errors,
       });
     }
   } catch (error) {

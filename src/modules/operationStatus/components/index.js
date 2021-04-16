@@ -477,7 +477,7 @@ const OperationStatusPage = ({ location }: Props) => {
                               'YYYY-MM-DD hh:mm:ss'
                             ),
                             installer: event?.com_name,
-                            inverterID: event?.username,
+                            inverterID: event?.ds_id,
                             installationLocation: event?.pos_name,
                             eventName: event?.evt_type_label,
                             contents: event?.evt_content,
