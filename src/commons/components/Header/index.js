@@ -18,9 +18,7 @@ type Props = {
 const ModalEvent = lazy(() => import('./ModalEvent'));
 const Header = ({ location }: Props) => {
   const dispatch = useDispatch();
-  const { eventNotifications, type, userInfo } = useSelector(
-    (state) => state?.account
-  );
+  const { eventNotifications, type } = useSelector((state) => state?.account);
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -28,33 +26,26 @@ const Header = ({ location }: Props) => {
   const solarEvent = notifications.filter((item) => item.ds_type === '0');
   const testMockupEvent = notifications.filter((item) => item.ds_type === '2');
   const testSolarEvent = notifications.filter((item) => item.ds_type === '3');
-  const roleUser =
-    userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.id;
+
   const wrapperRef = useRef(null);
   const iconRef = useRef(null);
   useEffect(() => {
-    if (roleUser !== 3) {
-      dispatch(getEventNotification());
-    }
+    dispatch(getEventNotification());
   }, []);
 
   useEffect(() => {
-    if (roleUser !== 3) {
-      switch (type) {
-        case 'accounts/getEventNotificationSuccess':
-          setNotifications(eventNotifications);
-          break;
-        default:
-          break;
-      }
+    switch (type) {
+      case 'accounts/getEventNotificationSuccess':
+        setNotifications(eventNotifications);
+        break;
+      default:
+        break;
     }
   }, [type]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (roleUser !== 3) {
-        dispatch(getEventNotification());
-      }
+      dispatch(getEventNotification());
     }, 10000);
 
     return () => clearInterval(interval);

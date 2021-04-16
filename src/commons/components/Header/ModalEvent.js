@@ -40,7 +40,7 @@ const ModalEvent = ({
               key={item.id}
             >
               <span>[{item.evt_type_label}] </span>
-              {item.evt_content}
+              {item.com_name}
             </p>
           ))}
         </div>

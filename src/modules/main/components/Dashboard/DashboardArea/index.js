@@ -38,8 +38,6 @@ const DashboardArea = () => {
   const roleUser =
     userInfo && userInfo.roles && userInfo.roles[0] && userInfo?.roles[0]?.id;
 
-  console.log(roleUser, 'role');
-
   const posId = useRef(positionId);
 
   useEffect(() => {
