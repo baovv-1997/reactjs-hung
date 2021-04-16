@@ -238,6 +238,7 @@ const OperationStatusPage = ({ location, history }: Props) => {
           per_page: paramsSearch?.pagination2?.value,
           page: paramsSearch?.page2,
           type: optionFilters,
+          ds_type: [3],
         })
       );
     }

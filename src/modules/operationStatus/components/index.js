@@ -323,6 +323,7 @@ const OperationStatusPage = ({ location }: Props) => {
         page: paramsSearch?.page2,
         per_page: paramsSearch?.pagination2?.value,
         type: optionFilters,
+        ds_type: [0],
       });
     }
   }, [
