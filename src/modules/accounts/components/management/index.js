@@ -24,9 +24,16 @@ const AccountManagement = ({ history }: Props) => {
   const isProcessing = useSelector((state) => state?.account?.isProcessing);
   const totalPage = useSelector((state) => state?.account?.totalPage);
   const perPage = useSelector((state) => state?.account?.perPage);
-  const [currentOption, setCurrentOption] = useState('all');
+  const { userInfo } = useSelector((state) => state.account);
   const [valueSearch, setValueSearch] = useState('');
   const [activePage, setActivePage] = useState(1);
+
+  const roleName =
+    userInfo && userInfo.roles && userInfo.roles[0] && userInfo.roles[0].name;
+
+  const [currentOption, setCurrentOption] = useState(
+    roleName === 'company' ? 'company' : 'all'
+  );
 
   // handle input change
   const handleInputChange = (e) => {
@@ -41,6 +48,34 @@ const AccountManagement = ({ history }: Props) => {
     setActivePage(1);
   };
 
+  const handleDisableRadio = (key) => {
+    let isDisable = false;
+    switch (key) {
+      case 'all':
+        if (roleName === 'company') {
+          isDisable = true;
+        }
+        break;
+      case 'admin':
+        if (roleName === 'company') {
+          isDisable = true;
+        }
+        break;
+      case 'company':
+        isDisable = false;
+        break;
+      case 'monitoring':
+        if (roleName === 'company') {
+          isDisable = true;
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    return isDisable;
+  };
   // render list radio
   const renderRadioList = accountOptions.map((item) => (
     <Radio
@@ -50,6 +85,7 @@ const AccountManagement = ({ history }: Props) => {
       onChange={onChangeOption}
       isChecked={currentOption === item.key}
       labelRadio={item.label}
+      disabled={handleDisableRadio(item.key)}
     />
   ));
 
