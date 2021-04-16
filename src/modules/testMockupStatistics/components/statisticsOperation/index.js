@@ -94,7 +94,6 @@ const OperationStatusPage = ({ location, history }: Props) => {
         type: '3',
       })
     );
-    dispatch(CommonAction.getCompanyList());
   }, []);
   useEffect(() => {
     setParamsSearch({
