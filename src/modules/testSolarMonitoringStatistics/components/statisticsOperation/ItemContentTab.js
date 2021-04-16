@@ -204,9 +204,7 @@ const ItemContentTab = ({
         />
         <div className="group-btn-download">
           <ButtonDownExcel
-            linkDownTable={`operator/event?inverter_id=${paramsSearch?.company}`}
-            // TODO UPDATE
-            // &type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}
+            linkDownTable={`operator/event?inverter_id=${paramsSearch?.company}&type=${paramsSearch?.classification}&time_to=${timeDate?.to}&&time_from=${timeDate?.from}`}
             keyName="test_solar"
           />
         </div>
