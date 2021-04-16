@@ -80,9 +80,16 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   const [isShowModalSorting, setIsShowModalSorting] = useState(false);
   const [paramsSearch, setParamsSearch] = useState(defaultSearch);
   const dataBoxContent = {
-    angleOfIncidence: cardInfo?.ds_azimuth_angle,
-    azimuth: cardInfo?.ds_incidence_angle,
-    moduleOutput: cardInfo?.dm_power,
+    angleOfIncidence:
+      (cardInfo?.ds_azimuth_angle &&
+        cardInfo?.ds_azimuth_angle.toLocaleString('en')) ||
+      '0',
+    azimuth:
+      (cardInfo?.ds_incidence_angle &&
+        cardInfo?.ds_incidence_angle.toLocaleString('en')) ||
+      '0',
+    moduleOutput:
+      (cardInfo?.dm_power && cardInfo?.dm_power.toLocaleString('en')) || '0',
     moduleColor: cardInfo?.ds_color,
   };
 
