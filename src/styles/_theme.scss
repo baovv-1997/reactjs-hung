@@ -374,3 +374,7 @@ button.h-32 {
 .mh-50 {
   min-height: 50vh;
 }
+
+.react-datepicker button {
+  outline: none !important;
+}
