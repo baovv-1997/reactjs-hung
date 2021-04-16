@@ -112,6 +112,7 @@ const mainSlice = createSlice({
     updateDeviceFailed: (state, action) => {
       state.isLoading = false;
       state.type = action.type;
+      state.errorsAddDevice = action?.errors;
     },
 
     addDevice: (state, action) => {
@@ -130,6 +131,7 @@ const mainSlice = createSlice({
     },
     resetDeviceType: (state) => {
       state.type = '';
+      state.errorsAddDevice = {};
     },
   },
 });

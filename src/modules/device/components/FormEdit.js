@@ -8,7 +8,7 @@ import Button from 'commons/components/Button';
 import ModalPopup from 'commons/components/Modal';
 import ROUTERS from 'constants/routers';
 import InputPhone from 'commons/components/Input/InputPhone';
-import { updateDevice } from '../redux';
+import { updateDevice, resetDeviceType } from '../redux';
 
 type Props = {
   data: {
@@ -39,12 +39,12 @@ type Props = {
 
 const FormEdit = ({ data, history }: Props) => {
   const dispatch = useDispatch();
-  const type = useSelector((state) => state?.device?.type);
+  const { type, errorsAddDevice } = useSelector((state) => state?.device);
   const [nameManager, setNameManager] = useState(data?.ds_manager);
   const [incidenceAngle, setIncidenceAngle] = useState(
     data?.ds_incidence_angle
   );
-
+  const [isUpdateFailed, setIsUpdateFailed] = useState(false);
   const [phoneManager, setPhoneManager] = useState(data?.ds_manager_phone);
   const [azimuthAngle, setAzimuthAngle] = useState(data?.ds_azimuth_angle);
   const [isCancel, setIsCancel] = useState(false);
@@ -84,7 +84,9 @@ const FormEdit = ({ data, history }: Props) => {
       case 'device/updateDeviceSuccess':
         setIsSuccess(true);
         break;
-
+      case 'device/updateDeviceFailed':
+        setIsUpdateFailed(true);
+        break;
       default:
         break;
     }
@@ -108,6 +110,16 @@ const FormEdit = ({ data, history }: Props) => {
       })
     );
   };
+
+  const errorsMessage =
+    errorsAddDevice &&
+    Object.values(errorsAddDevice).map((item, index) => {
+      return (
+        <ul className="error-list" key={index}>
+          <li>{item && item[0]}</li>
+        </ul>
+      );
+    });
 
   return (
     <div>
@@ -292,6 +304,26 @@ const FormEdit = ({ data, history }: Props) => {
         }}
       >
         수정 완료되었습니다.
+      </ModalPopup>
+
+      <ModalPopup
+        isOpen={isUpdateFailed}
+        isShowHeader
+        title="확인"
+        isShowIconClose
+        isShowFooter
+        handleCloseIcon={() => {
+          setIsUpdateFailed(false);
+          dispatch(resetDeviceType());
+        }}
+        handleClose={() => {
+          setIsUpdateFailed(false);
+          dispatch(resetDeviceType());
+        }}
+        textBtnRight="확인"
+        customClassButton="btn-custom"
+      >
+        {errorsMessage}
       </ModalPopup>
     </div>
   );
