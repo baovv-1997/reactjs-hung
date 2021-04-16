@@ -29,11 +29,11 @@ const OperationStatusPage = ({ location }: Props) => {
     isProcessing,
   } = useSelector((state) => state?.commons);
   const {
-    totalRawOperation,
     dataChartOperation,
     listDataTableRawOperation,
     dataCardOperation,
     isProcessingRaw,
+    total,
   } = useSelector((state) => state?.testMockupStatus);
   const [randomNumber, setRandomNumber] = useState(null);
 
@@ -216,9 +216,9 @@ const OperationStatusPage = ({ location }: Props) => {
           ...paramsSearch,
           pagination: item,
           page:
-            paramsSearch.page < Math.ceil(totalRawOperation / item.value)
+            paramsSearch.page < Math.ceil(total / item.value)
               ? paramsSearch.page
-              : Math.ceil(totalRawOperation / item.value),
+              : Math.ceil(total / item.value),
         });
         break;
       case 'pagination2':
@@ -297,7 +297,7 @@ const OperationStatusPage = ({ location }: Props) => {
           <ItemContentTab
             dataBoxContent={dataBoxContent}
             listMockupDataCompany={listDataTableRawOperation}
-            totalPage={totalRawOperation}
+            totalPage={total}
             perPage={paramsSearch?.pagination?.value}
             totalPage2={totalEventPage}
             perPage2={paramsSearch?.pagination2?.value}
