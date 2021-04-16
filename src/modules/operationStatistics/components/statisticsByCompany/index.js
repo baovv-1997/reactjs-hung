@@ -470,9 +470,9 @@ const OperatorStatisticCompany = ({ location }: Props) => {
   };
 
   useEffect(() => {
-    if (deviceList && deviceList.length === 1) {
-      setMenuTab(deviceList[0]?.id);
-    }
+    // if (deviceList && deviceList.length === 1) {
+    setMenuTab(deviceList[0]?.id);
+    // }
   }, [deviceList]);
 
   return (
@@ -500,6 +500,7 @@ const OperatorStatisticCompany = ({ location }: Props) => {
                 }
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
+                activeKey={menuTab}
               >
                 {deviceList &&
                   deviceList.map((device) => (

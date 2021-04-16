@@ -405,9 +405,9 @@ const OperationStatusPage = () => {
   }, [posList]);
 
   useEffect(() => {
-    if (comList && comList.length === 1) {
-      setMenuTab(comList[0]?.id);
-    }
+    // if (comList && comList.length === 1) {
+    setMenuTab(comList[0]?.id);
+    // }
   }, [comList]);
 
   return (
@@ -430,6 +430,7 @@ const OperationStatusPage = () => {
                 defaultActiveKey={comList && comList[0] && comList[0].id}
                 className="list-order tab-list"
                 onSelect={(eventKey) => onSelect(eventKey)}
+                activeKey={menuTab}
               >
                 {comList &&
                   comList.map((com) => (
